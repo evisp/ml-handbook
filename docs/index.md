@@ -2,6 +2,7 @@
 
 A practical, curated handbook for a 9‑month journey from foundations to modern machine learning and deep learning. It emphasizes hands-on skills, conceptual clarity, and links to high-quality resources.
 
+
 ## How to use this handbook
 
 - Navigate with the left sidebar to browse sections and lessons.  

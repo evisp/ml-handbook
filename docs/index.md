@@ -23,43 +23,10 @@ A practical, curated handbook for a 9‑month journey from foundations to modern
 ## Table of contents
 
 - Tools  
-  - [Overview](01-tools/index.md)  
-  - [Git & GitHub](01-tools/git-and-github.md)  
-  - [Python setup](01-tools/python-setup.md)  
-
-- Math  
-  - [Overview](02-math/index.md)  
-  - [Linear algebra](02-math/linear-algebra.md)  
-  - [Calculus](02-math/calculus.md)  
-  - [Probability](02-math/probability.md)  
-
-- Data analysis  
-  - [Overview](03-data/index.md)  
-  - [Data wrangling](03-data/data-wrangling.md)  
-  - [Visualization](03-data/visualization.md)  
-  - [Feature engineering](03-data/feature-engineering.md)  
-
-- Core ML  
-  - [Overview](04-ml/index.md)  
-  - [Supervised learning](04-ml/supervised-learning.md)  
-  - [Unsupervised learning](04-ml/unsupervised-learning.md)  
-  - [Model evaluation](04-ml/model-evaluation.md)  
-
-- Deep learning  
-  - [Overview](05-deep-learning/index.md)  
-  - [Neural networks](05-deep-learning/neural-networks.md)  
-  - [Convolutional networks](05-deep-learning/cnn.md)  
-  - [RNNs & Transformers](05-deep-learning/rnn-transformers.md)  
-
-- Projects & deployment  
-  - [Projects overview](06-projects/index.md)  
-  - [Capstone guidelines](06-projects/capstone-guidelines.md)  
-  - [Deployment overview](07-deployment/index.md)  
-  - [Model serving](07-deployment/model-serving.md)  
-
-- Appendix  
-  - [References](99-appendix/references.md)  
-  - [Resources](99-appendix/resources.md)  
+    - [Overview](01-tools/index.md)  
+    - [Git & GitHub](01-tools/git-and-github.md)
+    - [VS code setup](01-tools/vscode-setup.md)  
+    - [Jupyter notebook setup](01-tools/notebook-setup.md)  
 
 ## Learning path (suggested)
 

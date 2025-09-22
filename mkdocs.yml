@@ -1,5 +1,7 @@
 site_name: Holberton ML Handbook
-repo_url: https://github.com/evisp/ml-handbook.git
+site_url: https://evisp.github.io/ml-handbook/
+repo_url: https://github.com/evisp/ml-handbook
+edit_uri: edit/main/docs/
 theme:
   name: material
 nav:

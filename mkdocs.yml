@@ -1,0 +1,10 @@
+site_name: Holberton ML Handbook
+repo_url: https://github.com/evisp/ml-handbook.git
+theme:
+  name: material
+nav:
+  - Home: index.md
+  - Tools:
+    - Overview: 01-tools/index.md
+    - Git & GitHub: 01-tools/git-and-github.md
+    - Python setup: 01-tools/python-setup.md

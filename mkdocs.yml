@@ -9,4 +9,5 @@ nav:
   - Tools:
     - Overview: 01-tools/index.md
     - Git & GitHub: 01-tools/git-and-github.md
-    - Python setup: 01-tools/python-setup.md
+    - Jupyter noteboo setup: 01-tools/notebook-setup.md
+    - VS code setup: 01-tools/vscode-setup.md 

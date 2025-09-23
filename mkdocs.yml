@@ -4,10 +4,34 @@ repo_url: https://github.com/evisp/ml-handbook
 edit_uri: edit/main/docs/
 theme:
   name: material
+
 nav:
   - Home: index.md
+
   - Tools:
     - Overview: 01-tools/index.md
     - Git & GitHub: 01-tools/git-and-github.md
     - Jupyter notebook setup: 01-tools/notebook-setup.md
-    - VS code setup: 01-tools/vscode-setup.md 
+    - VS Code setup: 01-tools/vscode-setup.md
+
+  - Math:
+    - Overview: 02-math/index.md
+    - Linear algebra: 02-math/linear-algebra.md
+    - Calculus: 02-math/calculus.md
+    - Probability & statistics: 02-math/probability-statistics.md
+
+  - Data:
+    - Overview: 03-data/index.md
+    - Pandas essentials: 03-data/pandas.md
+    - Visualization: 03-data/visualization.md
+    - Data wrangling: 03-data/data-wrangling.md
+    - Data collection: 03-data/data-collection.md
+    - SQL databases: 03-data/sql.md
+    - NoSQL (MongoDB): 03-data/mongo.md
+
+  - Core ML:
+    - Overview: 04-core-ml/index.md
+    - ML lifecycle: 04-core-ml/lifecycle.md
+    - Model foundations: 04-core-ml/classical-ml.md
+    - Supervised learning: 04-core-ml/supervised.md
+    - Unsupervised learning: 04-core-ml/unsupervised.md

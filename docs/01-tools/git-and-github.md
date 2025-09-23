@@ -12,7 +12,7 @@ This tutorial shows you how to set up and use Git and GitHub for effective versi
 
 **Professional context:** Every ML team uses Git for code management, GitHub for collaboration, and version control for tracking model experiments and dataset changes. Mastering these tools early accelerates your integration into professional ML workflows.
 
-![Git Workflow](https://imgur.com/a/zWzdFyW)
+![Git Workflow](https://i.imgur.com/1P7SAo0.png)
 
 
 ## Prerequisites & Learning Objectives
@@ -182,11 +182,7 @@ cd repository
 
 
 **External resources for deeper learning:**
+
 - [Pro Git Book](https://git-scm.com/book) - comprehensive Git reference
 - [GitHub Flow](https://guides.github.com/introduction/flow/) - branching strategies for teams  
 - [Git Branching Interactive Tutorial](https://learngitbranching.js.org/) - visual practice environment
-
-**Practice exercises:**
-- Create a branch, make changes, and merge back to main
-- Fork a public ML repository and submit a pull request
-- Set up `.gitignore` for Python/Jupyter projects with common ML file patterns

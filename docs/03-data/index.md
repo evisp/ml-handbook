@@ -2,7 +2,7 @@
 
 Turn raw data into answers. Short, practical lessons that take data from messy to model‑ready.
 
-![Data](blob:https://imgur.com/85662926-79e8-42b7-b1a3-e0495e704146)
+![Data](https://i.imgur.com/pKqt6ZP.png)
 
 ## [Pandas](./pandas.md)
 **Load, explore, and reshape data fast**

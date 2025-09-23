@@ -12,7 +12,7 @@ This tutorial shows you how to set up and use Git and GitHub for effective versi
 
 **Professional context:** Every ML team uses Git for code management, GitHub for collaboration, and version control for tracking model experiments and dataset changes. Mastering these tools early accelerates your integration into professional ML workflows.
 
-![Git Workflow](../../imgs/git.png)
+![Git Workflow](/imgs/git.png)
 
 
 ## Prerequisites & Learning Objectives

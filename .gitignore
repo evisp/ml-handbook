@@ -1,0 +1,113 @@
+# Byte-compiled / caches
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyc
+*.pyd
+*.so
+*.dylib
+*.dll
+
+# Jupyter checkpoints and temp
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+*.ipynb_convert*
+*.nbconvert.ipynb
+
+# Jupyter outputs (optional: keep if needed)
+# Uncomment to encourage reproducibility via re-run
+# *.ipynb
+
+# Virtual/envs and Python tooling
+.env
+.envrc
+.venv
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+pip-wheel-metadata/
+pip-wheel-*
+site-packages/
+
+# Packaging / build
+build/
+dist/
+.eggs/
+*.egg-info/
+*.egg
+*.whl
+
+# Logs and reports
+*.log
+logs/
+wandb/
+mlruns/
+ray_results/
+lightning_logs/
+
+# IDE/editor
+.vscode/
+.idea/
+*.code-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Data (project-specific - adjust paths)
+data/
+data_raw/
+data_raw/**
+data_tmp/
+data_tmp/**
+datasets/
+datasets/**
+!data/README.md
+
+# Checkpoints / models / artifacts
+checkpoints/
+checkpoints/**
+outputs/
+outputs/**
+artifacts/
+artifacts/**
+models/
+models/**
+*.pt
+*.pth
+*.ckpt
+*.h5
+*.pkl
+*.joblib
+*.onnx
+*.tflite
+*.safetensors
+*.bin
+*.gguf
+*.engine
+
+# Compressed archives and large binaries
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.7z
+*.xz
+*.parquet
+*.feather
+*.arrow
+*.npz
+*.npy
+*.csv
+*.tsv
+*.pptx
+
+# Cache from data/ML tools
+__cache__/
+.cache/
+.ipynb_checkpoints
+.dvc/
+.metastore/
+.tensorboard-info/

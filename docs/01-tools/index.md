@@ -16,7 +16,7 @@ Never lose code again. Track every change, work safely with teammates, and showc
 
 **Write code, see results instantly**
 
-Perfect for experimenting with data and trying out ideas. Comes with all the math and data tools you need - no complex setup required. Just install and start exploring your data.
+Perfect for experimenting with data and trying out ideas. Comes with all the math and data tools you need - no complex setup required. Just install and start exploring your data
 
 **You'll learn:** Interactive coding, instant visualizations, and sharing your discoveries
 

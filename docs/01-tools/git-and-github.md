@@ -62,7 +62,7 @@ GitHub requires secure authentication through Personal Access Tokens (PATs) inst
 - Navigate to **Settings → Developer settings → Personal access tokens → Tokens (classic)**
 - Click **Generate new token (classic)**
 - Select scopes: `repo`, `workflow`, `write:packages`
-- Set expiration (90 days recommended for learning)
+- Set expiration (no expiration, or 90 days)
 - Copy the token immediately
 - See [short video tutorial](https://www.youtube.com/watch?v=0C-B6bFuQYU)
 
@@ -70,97 +70,90 @@ GitHub requires secure authentication through Personal Access Tokens (PATs) inst
 
 **Expected outcome:** You have a PAT that starts with `ghp_` and is 40+ characters long.
 
-### Step 3: Initialize and Configure Your First Repository
+### Step 3: Create Your Repository on GitHub First
 
-Create a new project folder and initialize Git tracking:
+The most streamlined approach is to **create your repository directly on GitHub, then clone it to your local machine**. This eliminates potential conflicts and simplifies the authentication process.
+
+**Create a new repository on GitHub:**
+- Navigate to github.com and click the green "New" button
+- Name your repository (e.g., `my-ml-project`)
+- Keep it public for learning purposes
+- **Important:** Leave "Initialize this repository with a README" **unchecked**
+- Click "Create repository"
+
+**Why this approach works better:** Creating an empty repository first gives you a clean foundation and GitHub generates the exact clone URL you need, eliminating configuration errors.
+
+### Step 4: Clone Your Repository Locally
+
+Since you already have your Personal Access Token, you can clone the repository using the embedded authentication method:
 
 ```bash
-mkdir my-ml-project
-cd my-ml-project
-git init
+git clone https://username:token@github.com/username/repository-name.git
 ```
 
-**Why this works:** `git init` creates a hidden `.git` folder that tracks all changes in your project.
+**Make sure to replace `username`, `token` and `repository-name` with your actual data. 
+
+**Example:**
+```bash
+git clone https://your-username:ghp_your_token_here@github.com/your-username/my-ml-project.git
+cd my-ml-project
+```
+
+**Why embed the token:** This method stores your credentials temporarily and eliminates repeated authentication prompts during your session.
 
 **Expected output:**
 ```
-Initialized empty Git repository in /path/to/my-ml-project/.git/
+Cloning into 'my-ml-project'...
+remote: Enumerating objects: 3, done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+Receiving objects: 100% (3/3), done.
 ```
 
-### Step 4: Master the Core Git Workflow
+### Step 5: Master the Essential Git Workflow
 
-The fundamental Git workflow follows this pattern: **modify → stage → commit → push**.
+Now that your repository is connected, follow the fundamental pattern: **create/modify → stage → commit → push**.
 
-![Git Workflow](https://miro.medium.com/v2/1*W1LPtxxrJ0J1cq_Pv_OWbQ.png)
+**Create your first file:**
+```bash
+echo "# My ML Project" > README.md # this creates a file with heading "My ML Project"
+echo "This repository contains my machine learning experiments." >> README.md
+```
 
-
-**Check repository status:**
+**Check what's changed:**
 ```bash
 git status
 ```
 
-**Create a test file and stage it:**
+**Stage your changes:**
 ```bash
-echo "# My ML Project" > README.md
 git add README.md
 ```
 
-**Commit your changes:**
+**Commit with a descriptive message:**
 ```bash
-git commit -m "Add initial README file"
+git commit -m "Add project README with initial description"
 ```
 
-**Why descriptive messages matter:** Clear commit messages help you and teammates understand project evolution. Use present tense ("Add feature" not "Added feature").
-
-**Expected output after commit:**
-```
-[main (root-commit) abc1234] Add initial README file
- 1 file changed, 1 insertion(+)
- create mode 100644 README.md
-```
-
-### Step 5: Connect to GitHub and Push Changes
-
-**Create a repository on GitHub:**
-- Go to github.com, click "New repository"
-- Name it `my-ml-project`
-- Leave "Initialize with README" unchecked
-- Click "Create repository"
-
-**Link your local repository to GitHub:**
+**Push to GitHub:**
 ```bash
-git remote add origin https://github.com/YOUR_USERNAME/my-ml-project.git
-git branch -M main
-git push -u origin main
+git push origin main
 ```
 
-**Authenticate when prompted:** Use your GitHub username and your PAT as the password.
+**Why this workflow matters:** This four-step process (modify → add → commit → push) forms the essential of version control. Each commit creates a checkpoint you can return to, and pushing synchronizes your work with GitHub.
 
-**Troubleshooting authentication:** If push fails with authentication errors:
-```bash
-# Remove existing remote
-git remote remove origin
-# Add remote with token in URL (for persistent authentication)
-git remote add origin https://YOUR_PAT@github.com/YOUR_USERNAME/my-ml-project.git
-git push -u origin main
+**Expected output after pushing:**
+```
+Enumerating objects: 3, done.
+Counting objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 245 bytes | 245.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0)
+To https://github.com/username/my-ml-project.git
+ * [new branch]      main -> main
 ```
 
-**Expected outcome:** Your code appears on GitHub, and future `git push` commands work without additional setup.
+**Pro tip:** Always use present-tense commit messages ("Add feature" not "Added feature") to maintain consistency with Git's own messaging style.
 
-### Step 6: Practice Collaboration Workflow
-
-**Pull changes from GitHub:**
-```bash
-git pull
-```
-
-**Clone existing repositories:**
-```bash
-git clone https://github.com/username/repository.git
-cd repository
-```
-
-**Quick reference for daily use:**
+### Quick reference for daily use
 
 | Command | Purpose | When to Use |
 |---------|---------|-------------|

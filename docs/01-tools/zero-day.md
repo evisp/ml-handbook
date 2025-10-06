@@ -18,15 +18,13 @@ Starting ML training without proper account setup and tool configuration leads t
 The intranet serves as your central hub for all course materials, project specifications, and progress tracking.
 
 **Access the platform:**
-- Navigate to [https://intranet.hbtn.io/](https://intranet.hbtn.io/)
-- Log in with the credentials provided to you by email
-- Bookmark this page for daily access
+- Navigate to [https://intranet.hbtn.io/](https://intranet.hbtn.io/). Then **log in with the credentials provided to you by email**. You may bookmark this page for easy daily access. 
 
 **Why this matters:** The intranet contains all project requirements, learning resources, and submission deadlines. It's your single source of truth throughout the program.
 
 **Complete your profile:**
 - Click on your profile icon (bottom left corner)
-- **Critical step:** Fill in all mandatory fields marked with asterisks (*)
+- **Critical step:** Fill in all mandatory fields marked with asterisks (\*)
 - Add a (professional) profile photo
 - Save your changes
 - **At this phase, do not yet change the password**.
@@ -39,14 +37,9 @@ The intranet serves as your central hub for all course materials, project specif
 Slack serves as your real-time communication channel with instructors, mentors, and fellow students throughout the program.
 
 **Access Slack:**
-- Locate the Slack icon or link within the intranet (left side panel on the navigation menu)
-- Click to launch Slack
-- **Important:** Use the **same credentials** as your intranet login
-- Alternatively, download the Slack desktop app for better notifications
+Locate the Slack icon or link within the intranet (left side panel on the navigation menu). Click to **launch Slack**. 
 
-
-**Join your cohort channel:**
-- You'll automatically be added to your cohort's group channel
+**Important:** Use the **same credentials** as your intranet login. Alternatively, download the Slack desktop app for better notifications. You'll automatically be added to your cohort's group channel. 
 
 ### Step 3: Create Your GitHub Account
 
@@ -57,10 +50,9 @@ GitHub hosts your code repositories and integrates with the platform's automated
 Alternatively,
 
 **Create your account:**
-- Navigate to [https://github.com/signup](https://github.com/signup)
-- Enter your email address (use a professional email you'll access long-term)
-- Create a strong password
-- Choose a professional username (avoid numbers or special characters if possible)
+- Navigate to [https://github.com/signup](https://github.com/signup). Enter your email address (use a professional email you'll access long-term) and create a strong password. 
+
+> Choose a professional username (avoid numbers or special characters if possible)
 
 **Why username matters:** Your GitHub username becomes part of your professional identity. Choose something you'd be comfortable sharing with future employers, as your ML projects will remain visible in your portfolio.
 
@@ -72,16 +64,14 @@ Alternatively,
 Containers on Demand (COD) provides pre-configured Linux machines with all necessary ML libraries installed, eliminating local setup complexity.
 
 **Access the platform:**
-- Navigate to [https://cod.hbtn.io/sign_in](https://cod.hbtn.io/sign_in)
-- Log in with your **same intranet credentials**
-- Wait for the dashboard to load
+- Navigate to [https://cod.hbtn.io/sign_in](https://cod.hbtn.io/sign_in). Once there, log in with your **same intranet credentials** and *wait* for the dashboard to load
 
 **Why cloud environments matter:** COD ensures everyone works in identical environments with consistent library versions, eliminating "it works on my machine" problems common in ML development.
 
 **Configure your container settings:**
 
 **Step 4.1: Select your region**
-- Locate the "Region" dropdown at the top of the page
+- Locate the "Region" dropdown at the top of the page 
 - **Important:** Select **Europe** for optimal performance and compliance
 - This choice affects connection speed and data residency
 

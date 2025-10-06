@@ -4,6 +4,12 @@ Three essential tools to get your machine learning projects off the ground. Each
 
 ![Tools](https://i.imgur.com/s1bZ4Mw.png)
 
+## [Zero Day Set Up](./zero-day.md)
+
+**Get ready for your Machine Learning journey**
+
+You'll configure your learning platform access, communication channels, version control, and development environment to ensure you're ready for day one of training.
+
 ## [Git and GitHub](./git-and-github.md)
 
 **Save your work and collaborate with others**

@@ -98,11 +98,6 @@ Containers on Demand (COD) provides pre-configured Linux machines with all neces
 
 **Why this container:** `ml_ubuntu_2204` comes pre-installed with Python, NumPy, pandas, scikit-learn, TensorFlow, PyTorch, and other essential ML libraries on Ubuntu 22.04 LTS.
 
-**Step 4.4: Customize VS Code settings**
-- Click the gear icon (⚙️) in the bottom-left corner
-- Select "Color Theme"
-- Choose **Dark+ (default dark)** or your preferred theme
-
 > Important info: the container on demand expands after 4 hours. You need to repeat this process any time you work witht the platform. You can add *more time* as you are working.
 
 ### Quick Reference for Daily Workflow

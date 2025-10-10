@@ -6,7 +6,7 @@ Real-world machine learning (and software work) almost always involves reading, 
 
 For this hands-on practice, you'll step through a mini-project working with a common data format (JSON), using real-world-style user data. You'll build small functions and use loops to transform, filter, and analyze the data, exactly the skillset needed for both ML work and technical interviews.
 
-![Data Structures Illustration](blob:https://imgur.com/50a0e566-6fe6-48ee-968c-df5918911dd1)
+![Data Structures Illustration](https://i.imgur.com/pfNbPkj.png)
 
 You'll use a set of sample user data provided by [JSONPlaceholder](https://jsonplaceholder.typicode.com/users), which mimics the structure of typical web APIs. Each user includes fields like name, email, address, company, etc.
 

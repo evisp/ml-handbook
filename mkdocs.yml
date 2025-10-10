@@ -43,6 +43,7 @@ nav:
     - Git & GitHub: 01-tools/git-and-github.md
     - Jupyter notebook setup: 01-tools/notebook-setup.md
     - VS Code setup: 01-tools/vscode-setup.md
+    - Python Warm Up: 01-tools/python-warm-up.md 
 
   - Math:
     - Overview: 02-math/index.md

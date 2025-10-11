@@ -193,7 +193,7 @@ The dot product of two vectors $$\mathbf{v_1} \cdot \mathbf{v_2}$$ is the sum of
 **Why it matters:** The dot product measures similarity. In ML, cosine similarity for text embeddings relies on the dot product. Neural networks compute dot products between inputs and weights.
 
 
-![Dot Product](https://www.reddit.com/media?url=https%3A%2F%2Fpreview.redd.it%2Fdleemfbrtly41.gif%3Fwidth%3D960%26format%3Dmp4%26s%3Dffdd197be17003dfdc61d9ec910421ceb3321a81)
+![Dot Product](https://upload.wikimedia.org/wikipedia/commons/a/aa/Cross_product_animation.gif)
 
 ```python
 def dot_product(vec1, vec2):

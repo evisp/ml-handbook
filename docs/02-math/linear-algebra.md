@@ -32,11 +32,13 @@ Before learning about operations, let's establish essential vocabulary:
 **Scalar:** A single number (e.g., 5, -3.14, 0.5)
 
 **Vector:** An ordered collection of numbers representing magnitude and direction. Can be thought of as
+
 - An arrow in space (geometric view)
 - A list of coordinates (computer science view)
 - A point in `n`-dimensional space (mathematical view)
 
 **Matrix:** A rectangular array of numbers arranged in rows and columns. Represents:
+
 - A linear transformation (e.g., rotation, scaling, shearing)
 - A collection of vectors (each row or column is a vector)
 - A dataset (`rows = samples`, `columns = features`)
@@ -488,6 +490,7 @@ A × B =
 ```
 
 **How it works:**
+
 - First row of $$A$$: `[1][2][3]`, first column of $$B$$: `[7][9][11]` → $$1×7 + 2×9 + 3×11 = 58$$
 - First row of $$A$$: `[1][2][3]`, second column of $$B$$: `[8][10][12]` → $$1×8 + 2×10 + 3×12 = 64$$
 
@@ -559,12 +562,14 @@ Transposed matrix (3×2):
 **Key accomplishments:** You've built geometric intuition for vectors and matrices, learned the fundamental operations of linear algebra, implemented these operations in pure Python, and connected each concept to machine learning applications.
 
 **Best practices:**
+
 - **Visualize operations geometrically** before implementing them algorithmically
 - **Check dimensions carefully** before matrix operations to avoid errors
 - **Understand the why** behind each operation, not just the mechanics
 - **Practice with small examples** (2D, 3D) before scaling to high dimensions
 
 **Connections to ML:**
+
 - **Linear regression:** Solve $$\mathbf{w} = (X^TX)^{-1}X^T\mathbf{y}$$ using matrix operations
 - **Neural networks:** Each layer computes $$\mathbf{h} = \sigma(W\mathbf{x} + \mathbf{b})$$
 - **PCA:** Find eigenvectors of covariance matrix $$C = \frac{1}{n}X^TX$$

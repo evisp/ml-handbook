@@ -2,7 +2,8 @@
 
 Build the math intuition that powers machine learning. Short, focused lessons with clear examples and practice you can use right away.
 
-![Math Foundations](https://imgur.com/b0APGoj)
+![Math Foundations](https://i.imgur.com/b0APGoj.png)
+
 
 **The language of data and models**
 

@@ -15,7 +15,12 @@ Learn modern machine learning by doing. Clear steps, small wins, and projects th
 - Anyone who wants a focused ML guide without fluff.
 
 ## What's inside
-- [Tools](./01-tools/index.md): Set up the essentials for productive ML work: Git/GitHub, Jupyter, and VS Code
+
+- **Tools:** Set up Git/GitHub, Jupyter Notebooks, VS Code, and sharpen Python fundamentals
+- **Math:** Master linear algebra, NumPy, calculus, and probability/statistics for ML
+- **Data:** Collect, clean, visualize, and query data with pandas, SQL, and MongoDB
+- **Core ML:** Understand the ML lifecycle and implement supervised and unsupervised learning algorithms
+
 
 ## Suggested path
 - Foundations first: Tools → Math → Data.

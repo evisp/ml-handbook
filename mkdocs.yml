@@ -66,6 +66,7 @@ nav:
   - Math:
     - Overview: 02-math/index.md
     - Linear algebra: 02-math/linear-algebra.md
+    - NumPy: 02-math/numpy.md
     - Calculus: 02-math/calculus.md
     - Probability & statistics: 02-math/probability-statistics.md
 

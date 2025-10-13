@@ -576,11 +576,7 @@ Transposed matrix (3×2):
 - **SVMs:** Solve optimization problems using matrix formulations
 
 ### External resources
-- [3Blue1Brown: Essence of Linear Algebra](https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab) - visual and intuitive explanations
 
-Based on the search results, here are two excellent **free** alternatives to include alongside 3Blue1Brown:
-
-**External resources:**
 - [3Blue1Brown: Essence of Linear Algebra](https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab) - visual and intuitive explanations
 - [Interactive Linear Algebra (Georgia Tech)](https://textbooks.math.gatech.edu/ila/) - free interactive online textbook with visualizations and exercises
 

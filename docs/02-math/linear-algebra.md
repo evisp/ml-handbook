@@ -578,7 +578,7 @@ Transposed matrix (3×2):
 ### External resources
 
 - [3Blue1Brown: Essence of Linear Algebra](https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab) - visual and intuitive explanations
-- [Interactive Linear Algebra (Georgia Tech)](https://textbooks.math.gatech.edu/ila/) - free interactive online textbook with visualizations and exercises
+ - [Interactive Linear Algebra (Georgia Tech)](https://textbooks.math.gatech.edu/ila/) - free interactive online textbook with visualizations and exercises
 
 
 **Next tutorial:** Learn to implement these operations efficiently using NumPy, Python's numerical computing library optimized for array operations.

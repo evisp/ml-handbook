@@ -25,7 +25,7 @@ Points are earned for correct answers, reasoning, and teamwork.
 ### Round 1 – True or False Showdown
 
 - This round will include quick statements from all topics.
-- Points double for each correct answer (1 → 2 → 4 → 8 → 16),
+- Points increase for each correct answer (1 → 2 → 3 → 4 → 5),
 but one wrong answer resets your score to `0`
 - Speed and accuracy matter.
 

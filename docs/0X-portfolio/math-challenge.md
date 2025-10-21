@@ -1,5 +1,7 @@
 # ML Math Challenge - Competition Overview
 
+![Math Challenge](https://i.imgur.com/U1c6P0h.png)
+
 ## Objective
 
 This friendly competition is designed to help you **review and connect key math concepts** that form the foundation of Machine Learning (`Linear Algebra`, `Calculus`, and `Probability`.)

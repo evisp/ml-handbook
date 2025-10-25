@@ -72,6 +72,7 @@ nav:
 
   - Data:
     - Overview: 03-data/index.md
+    - Exploratory Data Analysis: 03-data/eda.md
     - Pandas essentials: 03-data/pandas.md
     - Visualization: 03-data/visualization.md
     - Data wrangling: 03-data/data-wrangling.md

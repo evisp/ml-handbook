@@ -4,6 +4,15 @@ Turn raw data into answers. Short, practical lessons that take data from messy t
 
 ![Data](https://i.imgur.com/pKqt6ZP.png)
 
+## [Data Fundamentals](./data-fundamentals.md)
+
+**Understanding the data pipeline**
+
+Learn why data quality determines ML success and master the six-phase pipeline: collection, exploration, cleaning, transformation, splitting, and storage.
+
+**You'll learn:** Data types, quality dimensions, common challenges (imbalanced, missing, drift), and best practices for reproducible workflows
+
+
 ## [Pandas](./pandas.md)
 **Load, explore, and reshape data fast**
 

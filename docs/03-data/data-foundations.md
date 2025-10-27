@@ -136,6 +136,7 @@ If your training data only includes customers from one region, your model won't 
 - Detect using statistical methods (Z-score, IQR)
 - Decide: Remove, cap, or keep based on domain knowledge
 
+
 **ML connection:** Dirty data creates noisy patterns that models learn incorrectly. One extreme outlier can skew an entire regression line. Missing values handled poorly can introduce bias or cause crashes during training.
 
 ![Data Cleaning](https://i.imgur.com/XiG1YvG.jpeg)

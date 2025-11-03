@@ -69,7 +69,9 @@ Choosing the right visualization depends on your data structure and the question
 
 ![Distribution Visualizations](https://i.imgur.com/Rr5ERuT.jpeg)
 
-#### Histogram Shows frequency distribution by grouping continuous data into bins. Reveals shape (normal, skewed, bimodal), spread, and outliers.
+#### Histogram 
+
+Shows frequency distribution by grouping continuous data into bins. Reveals shape (normal, skewed, bimodal), spread, and outliers.
 
 Use it when exploring numerical features like age, price, or income to understand central tendency and variability.
 

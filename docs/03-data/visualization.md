@@ -112,7 +112,7 @@ Compares training vs validation performance across models, revealing overfitting
 
 ### Relationship Visualizations
 
-![Relationship Visualizations](blob:https://imgur.com/14172838-18eb-4dbb-8240-b450a31903d6)
+![Relationship Visualizations](https://i.imgur.com/twMW1VI.png)
 
 > Reveal relationships, correlations, and patterns between variables.
 

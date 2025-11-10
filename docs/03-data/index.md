@@ -4,7 +4,7 @@ Turn raw data into answers. Short, practical lessons that take data from messy t
 
 ![Data](https://i.imgur.com/pKqt6ZP.png)
 
-## [Data Fundamentals](./data-fundamentals.md)
+## [Data Fundamentals](./data-foundations.md)
 
 **Understanding the data pipeline**
 
@@ -28,7 +28,7 @@ Tell a clear story with plots that highlight trends, comparisons, and outliers u
 
 **You’ll learn:** Histograms, box plots, scatter plots, line charts, and choosing the right chart for the question
 
-## [Data wrangling](./data-wrangling.md)
+## [Data Processing](./data-processing.md)
 
 **From messy to usable**
 

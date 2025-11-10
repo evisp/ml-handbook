@@ -75,7 +75,7 @@ nav:
     - Data Foundations: 03-data/data-foundations.md
     - Pandas essentials: 03-data/pandas.md
     - Visualization: 03-data/visualization.md
-    - Data Processing: 03-data/data-procesing.md
+    - Data Processing: 03-data/data-processing.md
     - Data collection: 03-data/data-collection.md
     - SQL databases: 03-data/sql.md
     - NoSQL (MongoDB): 03-data/mongo.md

@@ -283,7 +283,7 @@ Different features often have vastly different ranges. Scaling puts them on comp
 ```python
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler
 
-# Min-Max Scaling: Scales to  range[10]
+# Min-Max Scaling: Scales to  range
 scaler = MinMaxScaler()
 df[['age', 'income']] = scaler.fit_transform(df[['age', 'income']])
 
@@ -308,9 +308,9 @@ axes.set_title('Before Scaling')
 axes.set_xlabel('Income')
 
 # After scaling
-axes.hist(df['income'], bins=30)[10]
-axes.set_title('After Scaling')[10]
-axes.set_xlabel('Scaled Income')[10]
+axes.hist(df['income'], bins=30)
+axes.set_title('After Scaling')
+axes.set_xlabel('Scaled Income')
 plt.tight_layout()
 plt.show()
 ```
@@ -395,7 +395,7 @@ df['date'] = pd.to_datetime(df['date'])
 df['year'] = df['date'].dt.year
 df['month'] = df['date'].dt.month
 df['day_of_week'] = df['date'].dt.dayofweek
-df['is_weekend'] = df['day_of_week'].isin().astype(int)[15][16]
+df['is_weekend'] = df['day_of_week'].isin().astype(int)
 
 # Interaction features
 df['price_x_quality'] = df['price'] * df['quality_score']
@@ -686,18 +686,18 @@ df = pd.read_csv('large_file.csv', usecols=relevant_cols)
 
 ### Preprocessing Sequence Checklist
 
-- [ ] Load and explore data (`.info()`, `.describe()`, `.head()`)
-- [ ] Check for missing values (`.isnull().sum()`)
-- [ ] Remove duplicates (`.drop_duplicates()`)
-- [ ] Fix data types (`.astype()`, `pd.to_datetime()`)
-- [ ] Handle outliers (based on domain knowledge)
-- [ ] Engineer features (ratios, date parts, interactions)
-- [ ] **Split into train/test sets**
-- [ ] Impute missing values (fit on train only)
-- [ ] Encode categorical variables (fit on train only)
-- [ ] Scale numeric features (fit on train only)
-- [ ] Validate final data (check shapes, null counts)
-- [ ] Save preprocessing objects (`.pkl` files)
+- Load and explore data (`.info()`, `.describe()`, `.head()`)
+- Check for missing values (`.isnull().sum()`)
+- Remove duplicates (`.drop_duplicates()`)
+- Fix data types (`.astype()`, `pd.to_datetime()`)
+- Handle outliers (based on domain knowledge)
+- Engineer features (ratios, date parts, interactions)
+- Split into train/test sets
+- Impute missing values (fit on train only)
+- Encode categorical variables (fit on train only)
+- Scale numeric features (fit on train only)
+- Validate final data (check shapes, null counts)
+- Save preprocessing objects (`.pkl` files)
 
 ## Summary & Next Steps
 

@@ -74,7 +74,7 @@ SQL is the standard language for interacting with relational databases. It lets 
 
 ## Step-by-Step Guide
 
-### Phase 1: Creating a Database
+###   1: Creating a Database
 
 > Databases contain tables; tables contain data. Start by creating the container.
 
@@ -106,7 +106,7 @@ SELECT DATABASE();
 DROP DATABASE company_data;
 ```
 
-### Phase 2: Creating Tables
+###   2: Creating Tables
 
 Tables define structure with columns, data types, and constraints.
 
@@ -174,7 +174,7 @@ ALTER TABLE employees
 DROP COLUMN contact_number;
 ```
 
-### Phase 3: Selecting Data
+###   3: Selecting Data
 
 **SELECT** retrieves data from tables. It's the most common SQL operation.
 
@@ -246,7 +246,7 @@ SELECT * FROM employees
 LIMIT 10 OFFSET 20;
 ```
 
-### Phase 4: Inserting Data
+###   4: Inserting Data
 
 **INSERT** adds new rows to tables.
 
@@ -275,7 +275,7 @@ VALUES (NULL, 'Mike', 'Brown', 'mike@company.com', '2025-03-15', 60000.00, 2);
 -- NULL for AUTO_INCREMENT primary key
 ```
 
-### Phase 5: Updating Data
+###   5: Updating Data
 
 **UPDATE** modifies existing rows.
 
@@ -308,7 +308,7 @@ UPDATE employees SET salary = 50000.00;
 UPDATE employees SET salary = 50000.00 WHERE employee_id = 10;
 ```
 
-### Phase 6: Deleting Data
+###   6: Deleting Data
 
 **DELETE** removes rows from tables.
 
@@ -344,7 +344,7 @@ DELETE FROM employees WHERE employee_id = 20;
 - **DROP TABLE:** Deletes entire table and structure
 - **TRUNCATE:** Removes all rows faster than DELETE (but can't undo)
 
-### Phase 7: Using Subqueries
+###   7: Using Subqueries
 
 **Subqueries** are queries nested inside other queries, useful for complex filtering and calculations.
 
@@ -392,7 +392,7 @@ FROM employees e1;
 
 **Alternative:** JOINs often perform better than subqueries for relating tables.
 
-### Phase 8: Using MySQL Functions
+###   8: Using MySQL Functions
 
 MySQL provides built-in functions for calculations, text manipulation, and data transformation.
 

@@ -79,6 +79,8 @@ nav:
     - Data collection: 03-data/data-collection.md
     - SQL databases: 03-data/sql.md
     - NoSQL (MongoDB): 03-data/mongo.md
+    - NoSQL (MongoDB install): 03-data/mongo-install.md
+
 
   - Core ML:
     - Overview: 04-core-ml/index.md

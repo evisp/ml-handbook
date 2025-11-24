@@ -85,7 +85,7 @@ nav:
   - Core ML:
     - Overview: 04-data/index.md
     - Introduction: 04-core-ml/ml-intro.md
-    - Categories: 04-core-ml/ml-categories.md
+    - ML Categories: 04-core-ml/ml-categories.md
     - ML Lifecycle: 04-core-ml/lifecycle.md
     - Regression: 04-core-ml/regression.md
     - Classification: 04-core-ml/classification.md

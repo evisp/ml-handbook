@@ -271,7 +271,6 @@ You don't need a PhD, but certain foundations make learning easier:
 **External resources:**
 
 - [Google's ML Crash Course](https://developers.google.com/machine-learning/crash-course) - Interactive introduction with exercises
-- [Fast.ai Practical Deep Learning](https://www.fast.ai/) - Top-down approach focusing on building models
 - [Scikit-learn Documentation](https://scikit-learn.org/stable/tutorial/index.html) - Python's primary ML library tutorials
 
 > **Remember:** Machine learning is a tool, not magic. Master the fundamentals, question assumptions, and prioritize data quality. With these foundations, you'll build models that work reliably in the real world.

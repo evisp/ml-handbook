@@ -83,7 +83,7 @@ nav:
 
 
   - Core ML:
-    - Overview: 04-data/index.md
+    - Overview: 04-core-ml/index.md
     - Introduction: 04-core-ml/ml-intro.md
     - ML Categories: 04-core-ml/ml-categories.md
     - ML Lifecycle: 04-core-ml/lifecycle.md

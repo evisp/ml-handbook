@@ -67,7 +67,7 @@ The company provides three data sources:
 
 You discover issues: `5%` of records have missing square footage, luxury homes over `$2M` are rare (only `200` examples), and recent renovations aren't captured anywhere.
 
-![Data Collection](blob:https://imgur.com/db59168b-92f3-4fdc-af61-fe2d2a8c29ac)
+![Data Collection](https://i.imgur.com/zG9GWJI.jpeg)
 
 **Key decisions:**
 
@@ -81,7 +81,7 @@ Use all three sources and merge by address. Accept that luxury home predictions 
 
 **What happens:** You handle missing values, remove duplicates, fix inconsistencies, encode categorical variables, scale features, and split data for training/validation/testing.
 
-![Data Preparation](blob:https://imgur.com/278c353a-f9ed-41ab-812f-735a5ef56bc1)
+![Data Preparation](https://i.imgur.com/ftdFcaZ.png)
 **House price example:**
 
 **Cleaning:** Remove 500 duplicate listings, fix address inconsistencies ("St." vs "Street"), drop 12 impossible values (negative square footage, sale prices of $1).
@@ -104,7 +104,7 @@ Use all three sources and merge by address. Accept that luxury home predictions 
 
 **What happens:** You select candidate algorithms, train them on training data, tune hyperparameters using validation data, and compare performance. This is where models actually learn.
 
-![Train Model](blob:https://imgur.com/6968a8b0-c6a8-492e-b71c-da5857c028d4)
+![Train Model](https://i.imgur.com/XrPBHin.png)
 
 **House price example:**
 
@@ -148,7 +148,7 @@ Use all three sources and merge by address. Accept that luxury home predictions 
 
 **What happens:** You package the model, integrate with existing systems, build monitoring infrastructure, and ensure it runs reliably at scale.
 
-![Model Deployment](blob:https://imgur.com/790ea4dc-7c0c-4f6b-bc33-2527754563fe)
+![Model Deployment](https://i.imgur.com/GgcwX2G.png)
 
 **House price example:**
 

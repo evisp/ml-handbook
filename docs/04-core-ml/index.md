@@ -1,41 +1,58 @@
-# Core ML Overview
+# Core Machine Learning Overview 
 
 Build solid ML skills step by step. Clear goals, small projects, and habits that make models reliable in the real world.
 
 ![Core Machine Learning](https://i.imgur.com/gTaOirS.png)
 
+
+## [Introduction to Machine Learning](./ml-intro.md)
+**What ML is and when to use it**
+
+Understand the difference between ML, AI, and Deep Learning. Learn when ML makes sense and when traditional programming is better. Preview the full workflow before diving into algorithms.
+
+**You'll learn:** ML definitions, real-world applications, when to use ML, prerequisites check
+
 ## [ML Lifecycle](./lifecycle.md)
-**From idea to impact**
+**From problem to production**
 
-See the full journey: define the problem, prepare data, build a baseline, evaluate with the right metrics, deploy, and monitor. Learn to loop—measure, improve, and repeat.
+See the complete journey: define the problem, collect and prepare data, train models, evaluate with proper metrics, deploy, and monitor. Learn to iterate—measure, improve, repeat.
 
-**You’ll learn:** Framing problems, setting metrics, experiment tracking, deployment basics, and monitoring
+**You'll learn:** Problem framing, data preparation, experiment tracking, model evaluation, deployment basics, monitoring
 
-## [Model foundations](./classical-ml.md)
+## [Regression](./regression.md)
+**Predict continuous values**
 
-**The classics that still win**
+Master Linear Regression from the ground up. Understand cost functions, training processes, and evaluation metrics. Learn to spot and fix overfitting.
 
-Master the workhorses: linear/logistic regression, trees, ensembles, and k‑NN. Understand bias–variance, regularization, cross‑validation, and when simple beats complex.
+**You'll learn:** Linear regression, polynomial regression, cost functions (MSE), R², RMSE, MAE, bias-variance tradeoff
 
-**You’ll learn:** Baselines, feature–target fit, regularization, cross‑validation, and strong starter models
+## [Classification](./classification.md)
+**Predict categories**
 
-## [Supervised learning](./supervised.md)
+Build classifiers that generalize. From Logistic Regression to Decision Trees and Random Forests. Master evaluation metrics and confusion matrices.
 
-**Predict with labels**
+**You'll learn:** Logistic regression, decision trees, random forests, accuracy, precision, recall, F1, ROC-AUC
 
-Build classifiers and regressors that generalize. Compare models, tune hyperparameters, and read learning curves to avoid overfitting.
+## [Supervised Advanced](./supervised-advanced.md)
+**Expand your toolkit**
 
-**You’ll learn:** Pipelines, metrics (accuracy, F1, ROC‑AUC, MAE/RMSE), hyperparameter search, and model selection
+Add KNN, Naive Bayes, and SVM to your arsenal. Compare algorithms and learn when to use each. Build intuition for model selection.
 
-## [Unsupervised learning](./unsupervised.md)
+**You'll learn:** k-Nearest Neighbors, Naive Bayes, Support Vector Machines, algorithm comparison, model selection
 
-**Find structure without labels**
+## [Unsupervised Learning](./unsupervised.md)
+**Find patterns without labels**
 
-Discover patterns and reduce noise. Cluster similar items and compress features while keeping signal.
+Discover hidden structure in data. Cluster similar items and compress features while keeping signal. Master evaluation without ground truth.
 
-**You’ll learn:** k‑means, hierarchical clustering, DBSCAN, PCA, t‑SNE/UMAP basics, and evaluation without labels
+**You'll learn:** K-means clustering, hierarchical clustering, DBSCAN, PCA, dimensionality reduction, evaluation strategies
 
-***
+## [Reinforcement & Next Steps](./reinforcement.md)
+**Learning through rewards**
 
-Start simple, measure honestly, and improve in small steps. A clear baseline plus good metrics will take most projects farther than fancy tricks.
+Understand how agents learn from interaction. Explore Q-Learning basics and see where RL fits. Chart your path forward in ML and deep learning.
 
+**You'll learn:** RL fundamentals, Q-Learning intro, key ML concepts summary, next learning steps, project ideas
+
+
+> Start simple, measure honestly, and improve in small steps. A clear baseline plus good metrics beats fancy algorithms every time.

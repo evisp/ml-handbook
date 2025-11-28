@@ -25,11 +25,11 @@ Most business metrics are continuous numbers (revenue, time, quantity, price), m
 
 ## Running Example: Predicting Apartment Rent
 
-Throughout this tutorial, we'll follow a real estate platform building a rent prediction system. They have data on 10,000 apartments across a city; each with features like `size`, `location`, `number of bedrooms`, `building age`, and `distance to transit`. 
+Throughout this tutorial, we'll follow a real estate platform building a rent prediction system. They have data on 10,000 apartments across Tirana—each with features like `size_m2`, `location`, `number of bedrooms`, `building age`, and `distance to center`. 
 
 **Their goal is predicting monthly rent for new listings** so property owners can price competitively and renters can identify fair deals.
 
-**Success metric:** Predictions within `$50` of actual rent (roughly `10%` error for typical `$500/month` apartments).
+**Success metric:** Predictions within **€50** of actual rent (roughly **10%** error for typical **€500/month** apartments).
 
 This example anchors every concept with concrete decisions and results you can evaluate.
 
@@ -41,7 +41,7 @@ This example anchors every concept with concrete decisions and results you can e
 
 **Key characteristics:**
 
-- **Output is numeric and continuous:** $850/month, not "expensive" or "affordable"
+- **Output is numeric and continuous:** €850/month, not "expensive" or "affordable"
 - **Learns from labeled examples:** Historical data with known rents trains the model
 - **Finds patterns in features:** Discovers how size, location, and age affect rent
 - **Generalizes to new data:** Predicts rent for apartments not in training set
@@ -51,7 +51,7 @@ This example anchors every concept with concrete decisions and results you can e
 | Regression | Classification |
 |-----------|---------------|
 | Predicts numbers | Predicts categories |
-| "How much?" → $850 | "Which class?" → Expensive/Affordable |
+| "How much?" → €850 | "Which class?" → Expensive/Affordable |
 | Infinite possible outputs | Fixed number of classes |
 | MAE, RMSE, R² metrics | Accuracy, precision, recall metrics |
 
@@ -138,9 +138,10 @@ print(f"Predicted rent: ${predicted_rent[0]:.0f}/month")
 
 **Interpreting results:**
 
-If $\beta_1 = €6/\text{m}^2$ and $\beta_0 = €150$, the model equation is:
+If $\beta_1 = 6\text{€}/\text{m}^2$ and $\beta_0 = 150\text{€}$, the model equation is:
 
-$$ \text{Rent} = €150 + €6 \times \text{m}^2 $$
+$$ \text{Rent} = 150 + 6 \times \text{size\_m2} $$
+
 
 **Rent = €150 + €6 × Area**
 

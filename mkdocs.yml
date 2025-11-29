@@ -88,7 +88,7 @@ nav:
     - ML Categories: 04-core-ml/ml-categories.md
     - ML Lifecycle: 04-core-ml/lifecycle.md
     - Regression: 04-core-ml/regression.md
-    - Classification: 04-core-ml/classification.md
+    - Classification: 04-core-ml/supervised.md
     - Supervised Advanced: 04-core-ml/supervised-advanced.md
     - Unsupervised Learning: 04-core-ml/unsupervised.md
     - Reinforcement & Next Steps: 04-core-ml/reinforcement.md

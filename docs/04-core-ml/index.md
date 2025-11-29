@@ -26,7 +26,7 @@ Master Linear Regression from the ground up. Understand cost functions, training
 
 **You'll learn:** Linear regression, polynomial regression, cost functions (MSE), R², RMSE, MAE, bias-variance tradeoff
 
-## [Classification](./classification.md)
+## [Classification](./supervised.md)
 **Predict categories**
 
 Build classifiers that generalize. From Logistic Regression to Decision Trees and Random Forests. Master evaluation metrics and confusion matrices.

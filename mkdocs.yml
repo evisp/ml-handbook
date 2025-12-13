@@ -90,5 +90,8 @@ nav:
     - Regression: 04-core-ml/regression.md
     - Classification: 04-core-ml/supervised.md
     - Classification Advanced: 04-core-ml/supervised-advanced.md
-    - Unsupervised Learning: 04-core-ml/unsupervised.md
+    - Unsupervised Learning Overview: 04-core-ml/unsupervised.md
+    - Unsupervised Learning Clustering: 04-core-ml/clustering.md
+    - Unsupervised Learning Dimensionality Reduction: 04-core-ml/dim_reduction.md
+
     - Reinforcement & Next Steps: 04-core-ml/reinforcement.md

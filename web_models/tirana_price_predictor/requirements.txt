@@ -1,0 +1,6 @@
+Flask==3.0.3
+joblib==1.4.2
+pandas==2.2.3
+numpy==2.2.6
+xgboost==2.1.1
+python-dotenv==1.0.1

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tirana Apartment Price Studio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="page">
+        <header class="header">
+            <div class="brand">
+                <div class="brand-mark">TP</div>
+                <div class="brand-text">
+                    <div class="brand-title">Tirana Price Studio</div>
+                    <div class="brand-subtitle">Data‑driven apartment valuation</div>
+                </div>
+            </div>
+            <nav class="header-meta">
+                <span class="tag">Model: XGBoost</span>
+                <span class="tag">R²: 0.71 (test)</span>
+            </nav>
+        </header>
+
+        <main class="main">
+            <section class="card card-form">
+                <h1>Apartment Price Estimator</h1>
+                <p class="lead">
+                    Enter key property details to obtain an estimated market value for apartments in Tirana.
+                </p>
+
+                <form id="predict-form" class="form-grid">
+                    <div class="form-group">
+                        <label for="area_m2">Area (m²)</label>
+                        <input type="number" id="area_m2" name="area_m2" value="80" min="20" max="300" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bathrooms">Bathrooms</label>
+                        <input type="number" id="bathrooms" name="bathrooms" value="1" min="1" max="4" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bedrooms">Bedrooms</label>
+                        <input type="number" id="bedrooms" name="bedrooms" value="2" min="0" max="5" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="floor">Floor</label>
+                        <input type="number" id="floor" name="floor" value="2" min="0" max="20">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="furnishing">Furnishing</label>
+                        <select id="furnishing" name="furnishing">
+                            <option value="unfurnished" selected>Unfurnished</option>
+                            <option value="fully_furnished">Fully furnished</option>
+                            <option value="partially_furnished">Partially furnished</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dist_to_blloku_km">Distance to Blloku (km)</label>
+                        <input type="number" id="dist_to_blloku_km" name="dist_to_blloku_km"
+                               value="1.5" step="0.1" min="0" max="10">
+                    </div>
+
+                    <fieldset class="form-group form-group-full amenities">
+                        <legend>Amenities</legend>
+                        <div class="amenities-list">
+                            <label><input type="checkbox" id="has_elevator" name="has_elevator"> Elevator</label>
+                            <label><input type="checkbox" id="has_parking" name="has_parking"> Parking</label>
+                            <label><input type="checkbox" id="has_garage" name="has_garage"> Garage</label>
+                            <label><input type="checkbox" id="has_terrace" name="has_terrace"> Terrace</label>
+                        </div>
+                    </fieldset>
+
+                    <div class="form-actions form-group-full">
+                        <button type="submit" class="btn-primary">Predict Price</button>
+                        <span class="hint">Model estimates are indicative and not financial advice.</span>
+                    </div>
+                </form>
+            </section>
+
+            <section class="card card-result">
+                <h2>Estimated Market Value</h2>
+
+                <div id="result" class="result result-placeholder">
+                    Fill in the form on the left and submit to see an estimated price.
+                </div>
+
+                <div class="result-grid">
+                    <div class="metric-block">
+                        <div class="metric-label">Central estimate</div>
+                        <div class="metric-value" id="metric-price">—</div>
+                    </div>
+                    <div class="metric-block">
+                        <div class="metric-label">Estimated range</div>
+                        <div class="metric-sub" id="metric-range">—</div>
+                    </div>
+                    <div class="metric-block">
+                        <div class="metric-label">Indicative €/m²</div>
+                        <div class="metric-sub" id="metric-ppm2">—</div>
+                    </div>
+                </div>
+
+                <div class="result-comment" id="result-comment">
+                    The estimate will appear here together with an indicative range once you submit the form.
+                </div>
+
+                <div class="model-notes">
+                    <h3>Model summary</h3>
+                    <ul>
+                        <li>Trained on 4,246 apartment listings in Tirana.</li>
+                        <li>Key drivers: bathrooms, area, proximity to Blloku, and parking amenities.</li>
+                        <li>Average test error approximately €38,000 on typical transactions.</li>
+                    </ul>
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="footer">
+            <span>© {{ 2025 }} Tirana Price Studio</span>
+            <span>Internal prototype · Not for public distribution</span>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

@@ -96,42 +96,42 @@ This is a practical pipeline that works across clustering and dimensionality red
 
 ![Unsupervised workflow](https://i.imgur.com/fZhDy1v.jpeg)
 
-1. **Define the objective**
+**1. Define the objective**
 
-   - Are you trying to segment, visualize, compress, or detect unusual cases?
-   - What decision will change if the result is useful?
+- Are you trying to segment, visualize, compress, or detect unusual cases?
+- What decision will change if the result is useful?
 
-2. **Assemble the right dataset**
+**2. Assemble the right dataset**
 
-   - Choose entities (customers, sessions, products) and time windows.
-   - Ensure the features represent behavior you actually want to group/visualize.
+- Choose entities (customers, sessions, products) and time windows.
+- Ensure the features represent behavior you actually want to group/visualize.
 
 3. **Prepare features**
 
-   - Handle missing values, inconsistent formats, and extreme outliers.
-   - Normalize/scale where appropriate so “distance” is meaningful.
-   - Remove or rethink features that create accidental grouping (IDs, timestamps that encode cohorts, etc.).
+- Handle missing values, inconsistent formats, and extreme outliers.
+- Normalize/scale where appropriate so “distance” is meaningful.
+- Remove or rethink features that create accidental grouping (IDs, timestamps that encode cohorts, etc.).
 
 4. **Fit an unsupervised method**
 
-   - Produce groupings or representations.
-   - Keep track of settings and preprocessing so results are reproducible.
+- Produce groupings or representations.
+- Keep track of settings and preprocessing so results are reproducible.
 
 5. **Evaluate without labels**
 
-   - Check stability (across seeds, samples, time windows).
-   - Check interpretability (can people describe the structure?).
-   - Check usefulness (does it enable a better decision or workflow?).
+- Check stability (across seeds, samples, time windows).
+- Check interpretability (can people describe the structure?).
+- Check usefulness (does it enable a better decision or workflow?).
 
 6. **Interpret and communicate**
 
-   - Convert patterns into plain-language descriptions and recommended actions.
-   - Identify "borderline" cases and what additional data would clarify them.
+- Convert patterns into plain-language descriptions and recommended actions.
+- Identify "borderline" cases and what additional data would clarify them.
 
 7. **Iterate**
 
-   - Adjust features, preprocessing, or objective.
-   - Re-run and compare results in a controlled way.
+- Adjust features, preprocessing, or objective.
+- Re-run and compare results in a controlled way.
 
 
 

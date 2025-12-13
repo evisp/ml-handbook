@@ -106,29 +106,29 @@ This is a practical pipeline that works across clustering and dimensionality red
 - Choose entities (customers, sessions, products) and time windows.
 - Ensure the features represent behavior you actually want to group/visualize.
 
-3. **Prepare features**
+**3. Prepare features**
 
 - Handle missing values, inconsistent formats, and extreme outliers.
 - Normalize/scale where appropriate so “distance” is meaningful.
 - Remove or rethink features that create accidental grouping (IDs, timestamps that encode cohorts, etc.).
 
-4. **Fit an unsupervised method**
+**4. Fit an unsupervised method**
 
 - Produce groupings or representations.
 - Keep track of settings and preprocessing so results are reproducible.
 
-5. **Evaluate without labels**
+**5. Evaluate without labels**
 
 - Check stability (across seeds, samples, time windows).
 - Check interpretability (can people describe the structure?).
 - Check usefulness (does it enable a better decision or workflow?).
 
-6. **Interpret and communicate**
+**6. Interpret and communicate**
 
 - Convert patterns into plain-language descriptions and recommended actions.
 - Identify "borderline" cases and what additional data would clarify them.
 
-7. **Iterate**
+**7. Iterate**
 
 - Adjust features, preprocessing, or objective.
 - Re-run and compare results in a controlled way.

@@ -89,7 +89,7 @@ PCA finds new axes in feature space, called **principal components**, that are:
 
 - Linear combinations of the original features.
 - Ordered so that the first component captures as much variance as possible.
-- Mutually orthogonal, with each subsequent component capturing the largest remaining variance.[1]
+- Mutually orthogonal, with each subsequent component capturing the largest remaining variance. 
 
 Geometrically, PCA **rotates the coordinate system** so that the axes align with the directions where the data spreads out the most. After this rotation, you can drop the less important axes and keep only the first few components, which gives a compressed but informative representation of each data point.
 
@@ -101,14 +101,14 @@ When you run PCA, you get principal component directions, component scores for e
 
 - Which directions carry most of the information.
 - How many components you need to keep a chosen fraction (e.g., 90–95%) of the total variance.
-- Where each sample lies in this compressed coordinate system.[1]
+- Where each sample lies in this compressed coordinate system. 
 
 Typical applications include:
 
 - Creating 2D/3D plots of high‑dimensional data to visually inspect patterns (e.g., whether classes or clusters separate).
 - Reducing dimensionality before clustering to improve stability and speed.
 - Compressing features for downstream models while retaining most of the signal.
-- Denoising by discarding components with very small variance that mainly capture noise.[1]
+- Denoising by discarding components with very small variance that mainly capture noise. 
 
 > PCA has limitations. 
 
@@ -126,9 +126,9 @@ t‑SNE is a non‑linear dimensionality reduction method designed mainly for **
 t‑SNE focuses on preserving **local neighborhoods** rather than global distances:
 
 - In the original high‑dimensional space, it measures how similar each pair of points is, using probabilities that emphasize close neighbors.
-- It then searches for a 2D or 3D embedding where points that were close remain close, and dissimilar points are free to move apart.[1]
+- It then searches for a 2D or 3D embedding where points that were close remain close, and dissimilar points are free to move apart. 
 
-The result is usually a plot where cluster‑like structures visually stand out: similar items form tight groups, while dissimilar items move away. This makes t‑SNE a powerful tool for visually inspecting embeddings from images, text, or deep models.[1]
+The result is usually a plot where cluster‑like structures visually stand out: similar items form tight groups, while dissimilar items move away. This makes t‑SNE a powerful tool for visually inspecting embeddings from images, text, or deep models. 
 
 ![TSNE](https://i.imgur.com/LVwm5nV.png)
 
@@ -140,7 +140,7 @@ However, t‑SNE has important limitations:
 
 - It is intended for **visualization**, not as a general feature generator for production models.
 - It is sensitive to hyperparameters and random initialization, so layouts can differ between runs.
-- It distorts global distances, so the relative positions of distant clusters should not be over‑interpreted.[1]
+- It distorts global distances, so the relative positions of distant clusters should not be over‑interpreted. 
 
 The axes themselves have no direct meaning; the main value is in the relative arrangement of nearby points and the presence of cluster‑like groupings.
 
@@ -157,7 +157,7 @@ In practice, a common pattern is:
 
 1. Scale and clean features.
 2. Optionally apply PCA to reduce to a moderate number of dimensions.
-3. Run t‑SNE on the PCA output to create a 2D map that is easier to interpret and compute.[1]
+3. Run t‑SNE on the PCA output to create a 2D map that is easier to interpret and compute. 
 
 ![PCS VS TSNE](https://i.imgur.com/7xl2lUc.jpeg)
 

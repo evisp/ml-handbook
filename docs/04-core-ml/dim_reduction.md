@@ -64,17 +64,17 @@ In practice, PCA is often implemented via SVD on the centered data matrix becaus
 
 Eigendecomposition and SVD share a common idea-both identify important directions and their strengths—but they operate on different objects and have different requirements.
 
-- **Eigendecomposition**
+**Eigendecomposition**
 
-  - Works on certain square matrices (for example, symmetric covariance matrices).
-  - Yields eigenvalues and eigenvectors of that matrix.
-  - Common in theory for understanding PCA via the covariance matrix.
+- Works on certain square matrices (for example, symmetric covariance matrices).
+- Yields eigenvalues and eigenvectors of that matrix.
+- Common in theory for understanding PCA via the covariance matrix.
 
-- **SVD**
+**SVD**
 
-  - Works on any \(m \times n\) data matrix.
-  - Yields singular values and left/right singular vectors.
-  - Common in implementations to compute principal components directly from data.
+- Works on any \(m \times n\) data matrix.
+- Yields singular values and left/right singular vectors.
+- Common in implementations to compute principal components directly from data.
 
 You can think of eigendecomposition as the **theoretical lens** and SVD as the **practical tool** you apply to real datasets. In most real ML code, you rely on SVD under the hood, but conceptually you are still looking for the main directions of variation described by eigen‑style reasoning.
 

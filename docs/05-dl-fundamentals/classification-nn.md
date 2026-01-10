@@ -153,6 +153,7 @@ The neural network’s job is to take those numbers and output a prediction like
 ### What “good training” looks like
 
 Using the spam example, progress often looks like this:
+
 - Early epochs: the model misses obvious spam and produces inconsistent confidence scores.
 - Mid training: the model learns stronger signals (for example, suspicious link patterns) and accuracy rises.
 - Later epochs: improvements slow down; at this stage, validation performance matters most to ensure the model is not just memorizing training emails. 
@@ -274,19 +275,7 @@ Then move to:
 
 If you want clearer intuition for what’s happening inside neural networks (without starting from heavy formulas), these 3Blue1Brown resources are a strong next step:
 
-- **Neural Networks (topic page / series hub)**  
-  https://www.3blue1brown.com/topics/neural-networks 
+- [Neural Networks (topic page / series hub)](https://www.3blue1brown.com/topics/neural-networks) 
+- [But what is a neural network? (Deep Learning, Chapter 1)](https://www.youtube.com/watch?v=aircAruvnKk)
 
-- **“But what is a neural network?” (Deep Learning, Chapter 1)**  
-  https://www.youtube.com/watch?v=aircAruvnKk 
-
-- **“Gradient descent, how neural networks learn” (Deep Learning, Chapter 2)**  
-  https://www.youtube.com/watch?v=IHZwWFHWa-w 
-
-If you want optional math intuition that supports neural networks:
-
-- **Essence of Linear Algebra (topic page)**  
-  https://www.3blue1brown.com/topics/linear-algebra 
-
-- **Essence of Calculus (topic page)**  
-  https://www.3blue1brown.com/topics/calculus 
+- [Gradient descent, how neural networks learn (Deep Learning, Chapter 2)](https://www.youtube.com/watch?v=IHZwWFHWa-w)

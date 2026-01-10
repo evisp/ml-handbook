@@ -94,4 +94,19 @@ nav:
     - Unsupervised Learning Clustering: 04-core-ml/clustering.md
     - Unsupervised Learning Dimensionality Reduction: 04-core-ml/dim_reduction.md
 
-    - Reinforcement & Next Steps: 04-core-ml/reinforcement.md
+  - Deep Learning Fundamentals:
+    - Overview: 05-dl-fundamentals/index.md
+    - Classification Using Neural Networks: 05-dl-fundamentals/classification-nn.md
+    - TensorFlow 2 & Keras: 05-dl-fundamentals/tf-keras.md
+    - Optimization: 05-dl-fundamentals/optimization.md
+    - Error Analysis: 05-dl-fundamentals/error-analysis.md
+    - Regularization: 05-dl-fundamentals/regularization.md
+
+  - Deep Learning Architectures:
+    - Overview: 06-dl-architectures/index.md
+    - Convolutions and Pooling: 06-dl-architectures/convolutions-pooling.md
+    - Convolutional Neural Networks: 06-dl-architectures/cnns.md
+    - Data Augmentation: 06-dl-architectures/data-augmentation.md
+    - Deep Convolutional Architectures: 06-dl-architectures/deep-cnns.md
+    - Transfer Learning: 06-dl-architectures/transfer-learning.md
+    - Object Detection: 06-dl-architectures/object-detection.md

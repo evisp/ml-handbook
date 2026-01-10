@@ -47,12 +47,5 @@ Discover hidden structure in data. Cluster similar items and compress features w
 
 **You'll learn:** K-means clustering, hierarchical clustering, DBSCAN, PCA, dimensionality reduction, evaluation strategies
 
-## [Reinforcement & Next Steps](./reinforcement.md)
-**Learning through rewards**
-
-Understand how agents learn from interaction. Explore Q-Learning basics and see where RL fits. Chart your path forward in ML and deep learning.
-
-**You'll learn:** RL fundamentals, Q-Learning intro, key ML concepts summary, next learning steps, project ideas
-
 
 > Start simple, measure honestly, and improve in small steps. A clear baseline plus good metrics beats fancy algorithms every time.

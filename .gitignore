@@ -7,6 +7,7 @@ __pycache__/
 *.so
 *.dylib
 *.dll
+*.keras
 
 # Jupyter checkpoints and temp
 .ipynb_checkpoints

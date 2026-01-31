@@ -11,15 +11,6 @@ Move from classic ML to neural networks by using fully connected layers for clas
 **You'll learn:** Perceptrons and MLPs, activations (ReLU, sigmoid, softmax), cross-entropy loss, forward/backward pass intuition, basic multiclass classification with neural nets
 
 
-
-## [TensorFlow 2 & Keras](./tf-keras.md)
-**Train models with modern deep learning tools**
-
-Learn to build, train, and evaluate neural networks using TensorFlow 2 and Keras, exactly as required in the TensorFlow 2 & Keras project. Focus on the APIs you actually use in assignments.
-
-**You'll learn:** Keras Sequential and Functional APIs, layers and models, compiling with optimizers and losses, training loops (`fit`, `evaluate`, `predict`), saving and loading models
-
-
 ## [Optimization](./optimization.md)
 **Make training actually converge**
 

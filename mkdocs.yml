@@ -97,7 +97,6 @@ nav:
   - Deep Learning Fundamentals:
     - Overview: 05-dl-fundamentals/index.md
     - Classification Using Neural Networks: 05-dl-fundamentals/classification-nn.md
-    - TensorFlow 2 & Keras: 05-dl-fundamentals/tf-keras.md
     - Optimization: 05-dl-fundamentals/optimization.md
     - Error Analysis: 05-dl-fundamentals/error-analysis.md
     - Regularization: 05-dl-fundamentals/regularization.md

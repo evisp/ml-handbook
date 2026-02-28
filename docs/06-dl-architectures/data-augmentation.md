@@ -28,6 +28,8 @@ Example: flipping a “left arrow” to the right, or rotating digits like 6/9, 
 You can think of augmentation as “safe changes” that keep the label the same but make the training images more varied.  
 A good strategy is to pick **2–4** augmentations that match real-world variation for your dataset, then tune how strong they are.
 
+![Data Augmentation](https://i.imgur.com/br4CYRC.jpeg)
+
 ### 1) Geometry (position and shape)
 
 Use these when objects can appear in different places, sizes, or orientations.
@@ -64,8 +66,6 @@ These are strong regularizers, but you should test carefully because they can ch
 
 > Rule of thumb: Start with geometry + a little lighting, get a baseline, then add stronger methods only if you need them.
 
-
-![Augmentation types diagram](IMAGE_PLACEHOLDER)
 
 ## Practical: Data augmentation in TensorFlow (two clean ways)
 

@@ -1,0 +1,3248 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://evisp.github.io/ml-handbook/02-math/probability-statistics/">
+      
+      
+        <link rel="prev" href="../calculus/">
+      
+      
+        <link rel="next" href="../../03-data/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>Probability & statistics - Holberton ML Handbook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#probability-statistics-for-machine-learning" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Holberton ML Handbook" class="md-header__button md-logo" aria-label="Holberton ML Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Holberton ML Handbook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Probability & statistics
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="cyan"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/evisp/ml-handbook" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../01-tools/" class="md-tabs__link">
+          
+  
+  
+  Tools
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+  Math
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../03-data/" class="md-tabs__link">
+          
+  
+  
+  Data
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../04-core-ml/" class="md-tabs__link">
+          
+  
+  
+  Core ML
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../05-dl-fundamentals/" class="md-tabs__link">
+          
+  
+  
+  Deep Learning Fundamentals
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../06-dl-architectures/" class="md-tabs__link">
+          
+  
+  
+  Deep Learning Architectures
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Holberton ML Handbook" class="md-nav__button md-logo" aria-label="Holberton ML Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Holberton ML Handbook
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/evisp/ml-handbook" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/zero-day/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Zero day
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/git-and-github/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git & GitHub
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/notebook-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jupyter notebook setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/vscode-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/python-warm-up/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python Warm Up
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Math
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Math
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../linear-algebra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linear algebra
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../numpy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NumPy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../calculus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calculus
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Probability & statistics
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Probability & statistics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why This Matters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites-learning-objectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites &amp; Learning Objectives
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Concepts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core Concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-probability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is Probability?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#random-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Random Variables
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#basic-probability-notation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basic Probability Notation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#independent-vs-disjoint-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Independent vs Disjoint Events
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#addition-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Addition Rule
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multiplication-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multiplication Rule
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conditional-probability-and-bayes-theorem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conditional Probability and Bayes' Theorem
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#probability-distributions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Probability Distributions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Probability Distributions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#probability-mass-function-pmf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Probability Mass Function (PMF)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#probability-density-function-pdf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Probability Density Function (PDF)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cumulative-distribution-function-cdf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cumulative Distribution Function (CDF)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#percentiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Percentiles
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mean-variance-and-standard-deviation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mean, Variance, and Standard Deviation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-probability-distributions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Probability Distributions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Probability Distributions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#uniform-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Uniform Distribution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#normal-gaussian-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Normal (Gaussian) Distribution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bernoulli-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bernoulli Distribution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#binomial-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Binomial Distribution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#poisson-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Poisson Distribution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exponential-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exponential Distribution
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary &amp; Next Steps
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Data
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/data-foundations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/pandas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pandas essentials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/visualization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visualization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/data-processing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Processing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/data-collection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data collection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/sql/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SQL databases
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/mongo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NoSQL (MongoDB)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/mongo-install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NoSQL (MongoDB install)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core ML
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Core ML
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/ml-intro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/ml-categories/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ML Categories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/lifecycle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ML Lifecycle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/regression/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regression
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/supervised/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/supervised-advanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification Advanced
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/unsupervised/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unsupervised Learning Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/clustering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unsupervised Learning Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/dim_reduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unsupervised Learning Dimensionality Reduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Learning Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deep Learning Fundamentals
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-dl-fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-dl-fundamentals/classification-nn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification Using Neural Networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-dl-fundamentals/optimization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-dl-fundamentals/error-analysis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Error Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-dl-fundamentals/regularization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regularization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Learning Architectures
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deep Learning Architectures
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-dl-architectures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-dl-architectures/convolutions-pooling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Convolutions and Pooling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-dl-architectures/cnns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Convolutional Neural Networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-dl-architectures/data-augmentation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Augmentation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-dl-architectures/deep-cnns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Convolutional Architectures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-dl-architectures/transfer-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transfer Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-dl-architectures/object-detection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Detection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why This Matters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites-learning-objectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites &amp; Learning Objectives
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Concepts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core Concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-probability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is Probability?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#random-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Random Variables
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#basic-probability-notation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basic Probability Notation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#independent-vs-disjoint-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Independent vs Disjoint Events
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#addition-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Addition Rule
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multiplication-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multiplication Rule
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conditional-probability-and-bayes-theorem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conditional Probability and Bayes' Theorem
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#probability-distributions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Probability Distributions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Probability Distributions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#probability-mass-function-pmf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Probability Mass Function (PMF)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#probability-density-function-pdf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Probability Density Function (PDF)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cumulative-distribution-function-cdf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cumulative Distribution Function (CDF)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#percentiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Percentiles
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mean-variance-and-standard-deviation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mean, Variance, and Standard Deviation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-probability-distributions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Probability Distributions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Probability Distributions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#uniform-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Uniform Distribution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#normal-gaussian-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Normal (Gaussian) Distribution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bernoulli-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bernoulli Distribution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#binomial-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Binomial Distribution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#poisson-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Poisson Distribution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exponential-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exponential Distribution
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary &amp; Next Steps
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Math
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="probability-statistics-for-machine-learning">Probability &amp; Statistics for Machine Learning</h1>
+<p>This tutorial introduces probability and statistics fundamentals that are essential for understanding and applying machine learning. You'll learn to quantify uncertainty, understand distributions, and learn how probabilistic thinking enables ML models to make predictions under uncertainty.</p>
+<p><strong>Estimated time:</strong> 70 minutes</p>
+<h2 id="why-this-matters">Why This Matters</h2>
+<p><strong>Problem statement:</strong> Machine learning models don't make perfectly accurate predictions—they work with noisy, incomplete data and must quantify uncertainty. Without probability theory, we cannot model randomness, evaluate model reliability, or understand why algorithms make certain predictions.</p>
+<p><strong>Practical benefits:</strong> Probability provides the mathematical framework for handling uncertainty. Understanding distributions helps you choose appropriate models, compute confidence intervals, detect outliers, and interpret what predictions actually mean. Statistics enables you to validate model improvements and make data-driven decisions backed by evidence.</p>
+<p><strong>Professional context:</strong> Every ML algorithm involves probability. Classification models output probability distributions over classes ("80% cat, 20% dog"), regression models have probabilistic error terms, and neural networks learn probability distributions. Understanding these foundations is essential for building and trusting ML systems.</p>
+<p><img alt="Probability" src="https://i.imgur.com/Ton4Txi.png" /></p>
+<h2 id="prerequisites-learning-objectives">Prerequisites &amp; Learning Objectives</h2>
+<p><strong>Required knowledge:</strong>
+- Basic algebra and arithmetic
+- Understanding of functions and graphs
+- Familiarity with summation notation
+- Basic Python (minimal needed)</p>
+<p><strong>Learning outcomes:</strong>
+- Understand what probability measures and how to compute it
+- Distinguish between independent and disjoint events
+- Apply addition and multiplication rules for probabilities
+- Work with probability distributions and density functions
+- Compute and interpret mean, variance, and standard deviation
+- Recognize common distributions and their ML applications</p>
+<h2 id="core-concepts">Core Concepts</h2>
+<h3 id="what-is-probability">What is Probability?</h3>
+<blockquote>
+<p>Probability is a number between 0 and 1 that measures the <strong>likelihood</strong> of an event occurring.</p>
+</blockquote>
+<p><strong>Properties:</strong></p>
+<ul>
+<li>
+<div class="arithmatex">\[0 \leq P(A) \leq 1$$ for any event $$A\]</div>
+</li>
+<li>
+<div class="arithmatex">\[P(\text{certain event}) = 1\]</div>
+</li>
+<li>
+<div class="arithmatex">\[P(\text{impossible event}) = 0\]</div>
+</li>
+</ul>
+<p><strong>Example:</strong> Rolling a fair die</p>
+<ul>
+<li>
+<div class="arithmatex">\[P(\text{rolling a 6}) = \frac{1}{6} \approx 0.167\]</div>
+</li>
+<li>
+<div class="arithmatex">\[P(\text{rolling even number}) = \frac{3}{6} = 0.5\]</div>
+</li>
+<li>$<span class="arithmatex">\(P(\text{rolling 7}) = 0\)</span>$ (impossible)</li>
+</ul>
+<blockquote>
+<p>In ML, probability models uncertainty. A classifier doesn't say "this IS a cat"—it says "I'm 85% confident this is a cat."</p>
+</blockquote>
+<h3 id="random-variables">Random Variables</h3>
+<p>A <strong>random variable</strong> is a variable whose value is determined by chance.</p>
+<p><strong>Types:</strong></p>
+<ul>
+<li><strong>Discrete:</strong> Countable values (coin flips, dice rolls, number of customers)</li>
+<li><strong>Continuous:</strong> Any value in a range (height, temperature, prediction error)</li>
+</ul>
+<blockquote>
+<p>Features are random variables (customer age varies), predictions have uncertainty, and errors are random.</p>
+</blockquote>
+<h3 id="basic-probability-notation">Basic Probability Notation</h3>
+<p><strong>Key notation:</strong></p>
+<ul>
+<li>$<span class="arithmatex">\(P(A)\)</span>$: Probability event $<span class="arithmatex">\(A\)</span>$ occurs</li>
+<li>$<span class="arithmatex">\(P(A \cap B)\)</span>$: Probability both $<span class="arithmatex">\(A\)</span>$ AND $<span class="arithmatex">\(B\)</span>$ occur</li>
+<li>$<span class="arithmatex">\(P(A \cup B)\)</span>$: Probability $<span class="arithmatex">\(A\)</span>$ OR $<span class="arithmatex">\(B\)</span>$ occurs</li>
+<li>$<span class="arithmatex">\(P(A|B)\)</span>$: Probability of $<span class="arithmatex">\(A\)</span>$ given $<span class="arithmatex">\(B\)</span>$ occurred (conditional)</li>
+<li>$<span class="arithmatex">\(P(A^c)\)</span>$: Probability $<span class="arithmatex">\(A\)</span>$ does NOT occur (complement)</li>
+</ul>
+<p><strong>Complement rule:</strong></p>
+<div class="arithmatex">\[
+P(A^c) = 1 - P(A)
+\]</div>
+<p><strong>Example:</strong> Weather forecasting</p>
+<ul>
+<li>
+<div class="arithmatex">\[P(\text{rain}) = 0.3\]</div>
+</li>
+<li>
+<div class="arithmatex">\[P(\text{no rain}) = 1 - 0.3 = 0.7\]</div>
+</li>
+</ul>
+<h3 id="independent-vs-disjoint-events">Independent vs Disjoint Events</h3>
+<p>These concepts are different and often confused.</p>
+<p><strong>Disjoint (Mutually Exclusive):</strong> Cannot both happen simultaneously</p>
+<ul>
+<li>Rolling a 3 AND rolling a 5 on one die (impossible)</li>
+<li>$<span class="arithmatex">\(A \cap B = \emptyset\)</span>$ (empty)</li>
+<li>If $<span class="arithmatex">\(A\)</span>$ happens, $<span class="arithmatex">\(B\)</span>$ definitely doesn't</li>
+</ul>
+<p><strong>Independent:</strong> One event doesn't affect the other's probability</p>
+<ul>
+<li>Flipping two different coins</li>
+<li>
+<div class="arithmatex">\[P(A \cap B) = P(A) \cdot P(B)\]</div>
+</li>
+<li>Knowing $<span class="arithmatex">\(A\)</span>$ occurred doesn't change $<span class="arithmatex">\(P(B)\)</span>$</li>
+</ul>
+<p><img alt="Independent Events" src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Independent_and_Non-independent_Probability_Events.jpg" /></p>
+<p><strong>Critical distinction:</strong> Disjoint events are NEVER independent (unless probability is 0). If events can't occur together, they're dependent!</p>
+<blockquote>
+<p>Naive Bayes (a ML model) assumes features are independent. Checking this assumption matters for model accuracy.</p>
+</blockquote>
+<h3 id="addition-rule">Addition Rule</h3>
+<p><img alt="Addition Rule" src="https://cdn.corporatefinanceinstitute.com/assets/addition-rule-for-probabilities1.png" /></p>
+<p>Computes probability that at least one event occurs.</p>
+<p><strong>General addition rule:</strong>
+$$
+P(A \cup B) = P(A) + P(B) - P(A \cap B)
+$$</p>
+<p><strong>Why subtract?</strong> Adding $<span class="arithmatex">\(P(A) + P(B)\)</span>$ double-counts the overlap.</p>
+<p><strong>Special case (disjoint):</strong>
+$$
+P(A \cup B) = P(A) + P(B)
+$$</p>
+<p><strong>Example:</strong> Drawing a card</p>
+<ul>
+<li>
+<div class="arithmatex">\[P(\text{Heart}) = \frac{13}{52} = 0.25\]</div>
+</li>
+<li>
+<div class="arithmatex">\[P(\text{Ace}) = \frac{4}{52} = 0.077\]</div>
+</li>
+<li>
+<div class="arithmatex">\[P(\text{Ace of Hearts}) = \frac{1}{52} = 0.019\]</div>
+</li>
+<li>
+<div class="arithmatex">\[P(\text{Heart OR Ace}) = 0.25 + 0.077 - 0.019 = 0.308\]</div>
+</li>
+</ul>
+<h3 id="multiplication-rule">Multiplication Rule</h3>
+<p>Computes probability that both events occur.</p>
+<p><strong>General multiplication rule:</strong>
+$$
+P(A \cap B) = P(A) \cdot P(B|A)
+$$</p>
+<p><strong>Independent events:</strong>
+$$
+P(A \cap B) = P(A) \cdot P(B)
+$$</p>
+<p><strong>Example:</strong> Drawing two cards without replacement</p>
+<ul>
+<li>
+<div class="arithmatex">\[P(\text{first ace}) = \frac{4}{52}\]</div>
+</li>
+<li>
+<div class="arithmatex">\[P(\text{second ace | first ace}) = \frac{3}{51}\]</div>
+</li>
+<li>
+<div class="arithmatex">\[P(\text{both aces}) = \frac{4}{52} \times \frac{3}{51} = 0.0045\]</div>
+</li>
+</ul>
+<p><strong>ML connection:</strong> Computing joint probabilities in probabilistic models.</p>
+<h3 id="conditional-probability-and-bayes-theorem">Conditional Probability and Bayes' Theorem</h3>
+<p><strong>Conditional probability:</strong> Probability of $<span class="arithmatex">\(A\)</span>$ given $<span class="arithmatex">\(B\)</span>$ occurred</p>
+<div class="arithmatex">\[
+P(A|B) = \frac{P(A \cap B)}{P(B)}
+\]</div>
+<p><strong>Bayes' Theorem (fundamental for ML):</strong>
+$$
+P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B)}
+$$</p>
+<p><img alt="Bayes Theorem" src="https://towardsdatascience.com/wp-content/uploads/2020/03/1CnoTGGO7XeUpUMeXDrIfvA.png" /></p>
+<p><strong>Example:</strong> Medical testing</p>
+<ul>
+<li>Disease prevalence: $<span class="arithmatex">\(P(\text{disease}) = 0.01\)</span>$ (1%)</li>
+<li>Test accuracy: $<span class="arithmatex">\(P(\text{positive | disease}) = 0.95\)</span>$</li>
+<li>False positive rate: $<span class="arithmatex">\(P(\text{positive | no disease}) = 0.05\)</span>$</li>
+</ul>
+<p>Even with a positive test, the actual probability of having the disease is only about 16% because the disease is rare!</p>
+<p><strong>ML connection:</strong> Classification uses Bayes' theorem to compute $<span class="arithmatex">\(P(\text{class | features})\)</span>$ from $<span class="arithmatex">\(P(\text{features | class})\)</span>$.</p>
+<h2 id="probability-distributions">Probability Distributions</h2>
+<p>A <strong>probability distribution</strong> describes how probability is allocated across possible values.</p>
+<p><strong>Types:</strong></p>
+<ul>
+<li><strong>Discrete:</strong> Probability Mass Function (PMF) - specific values have probabilities</li>
+<li><strong>Continuous:</strong> Probability Density Function (PDF) - probabilities over ranges</li>
+</ul>
+<blockquote>
+<p>All probabilities sum (discrete) or integrate (continuous) to 1.</p>
+</blockquote>
+<p><strong>Example:</strong> Fair die has uniform distribution</p>
+<ul>
+<li>
+<div class="arithmatex">\[P(X = 1) = P(X = 2) = \cdots = P(X = 6) = \frac{1}{6}\]</div>
+</li>
+</ul>
+<h3 id="probability-mass-function-pmf">Probability Mass Function (PMF)</h3>
+<p>For discrete variables, PMF gives $<span class="arithmatex">\(P(X = x)\)</span>$ for each value.</p>
+<p><strong>Properties:</strong>
+- $<span class="arithmatex">\(p_X(x) \geq 0\)</span>$ for all $<span class="arithmatex">\(x\)</span>$
+- $<span class="arithmatex">\(\sum_x p_X(x) = 1\)</span>$</p>
+<p><strong>Example:</strong> Number of heads in 3 coin flips</p>
+<table>
+<thead>
+<tr>
+<th>Heads (x)</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P(X = x)</td>
+<td>1/8</td>
+<td>3/8</td>
+<td>3/8</td>
+<td>1/8</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Classification outputs are PMFs over classes.</p>
+</blockquote>
+<h3 id="probability-density-function-pdf">Probability Density Function (PDF)</h3>
+<p>For continuous variables, PDF $<span class="arithmatex">\(f(x)\)</span>$ describes relative likelihood.</p>
+<p><strong>Key difference:</strong> For continuous variables, $<span class="arithmatex">\(P(X = x) = 0\)</span>$ for any specific $<span class="arithmatex">\(x\)</span>$. We compute probabilities over intervals:</p>
+<div class="arithmatex">\[
+P(a \leq X \leq b) = \int_a^b f(x) \, dx
+\]</div>
+<p><strong>Properties:</strong></p>
+<ul>
+<li>
+<div class="arithmatex">\[f(x) \geq 0\]</div>
+</li>
+<li>
+<div class="arithmatex">\[\int_{-\infty}^{\infty} f(x) \, dx = 1\]</div>
+</li>
+<li>Height $<span class="arithmatex">\(f(x)\)</span>$ is NOT a probability (can exceed 1)</li>
+</ul>
+<blockquote>
+<p>Regression assumes errors follow a PDF (usually Gaussian/normal distribution).</p>
+</blockquote>
+<h3 id="cumulative-distribution-function-cdf">Cumulative Distribution Function (CDF)</h3>
+<p>The CDF gives probability that a random variable is less than or equal to a value:</p>
+<div class="arithmatex">\[
+F(x) = P(X \leq x)
+\]</div>
+<p><strong>Properties:</strong></p>
+<ul>
+<li>
+<div class="arithmatex">\[0 \leq F(x) \leq 1\]</div>
+</li>
+<li>$<span class="arithmatex">\(F(x)\)</span>$ is non-decreasing</li>
+<li>
+<div class="arithmatex">\[F(-\infty) = 0$$, $$F(\infty) = 1\]</div>
+</li>
+</ul>
+<p><strong>Use:</strong> Compute probability over range
+$$
+P(a &lt; X \leq b) = F(b) - F(a)
+$$</p>
+<p><strong>Example:</strong> For standard normal distribution</p>
+<ul>
+<li>$<span class="arithmatex">\(F(0) = 0.5\)</span>$ (50% of values below 0)</li>
+<li>$<span class="arithmatex">\(F(1) = 0.841\)</span>$ (84.1% of values below 1)</li>
+<li>$<span class="arithmatex">\(P(-1 \leq X \leq 1) = F(1) - F(-1) = 0.683\)</span>$ (68.3%)</li>
+</ul>
+<h2 id="percentiles">Percentiles</h2>
+<p>The <strong>p-th percentile</strong> is the value below which p% of observations fall.</p>
+<p><strong>Common percentiles:</strong></p>
+<ul>
+<li>25th (Q1), 50th (median), 75th (Q3)</li>
+<li>Interquartile Range: $<span class="arithmatex">\(IQR = Q3 - Q1\)</span>$</li>
+</ul>
+<p><img alt="Percentiles" src="https://cdn.prod.website-files.com/6634a8f8dd9b2a63c9e6be83/669d6424745bdd71a1da2d6b_360209.image2.jpeg" /></p>
+<p><strong>Outlier detection:</strong> Values outside $<span class="arithmatex">\([Q1 - 1.5 \times IQR, Q3 + 1.5 \times IQR]\)</span>$</p>
+<p><strong>ML connection:</strong> "This model's 90th percentile error is 5 units" means 90% of predictions have error ≤ 5.</p>
+<h2 id="mean-variance-and-standard-deviation">Mean, Variance, and Standard Deviation</h2>
+<p>Let's use a simple dataset to illustrate: <strong>Test scores: 70, 75, 80, 85, 90</strong></p>
+<p><strong>Mean (average):</strong>
+$$
+\mu = \frac{70 + 75 + 80 + 85 + 90}{5} = \frac{400}{5} = 80
+$$</p>
+<p>The mean is the "center" or typical value.</p>
+<p><strong>Variance (spread):</strong>
+$$
+\sigma^2 = \frac{(70-80)^2 + (75-80)^2 + (80-80)^2 + (85-80)^2 + (90-80)^2}{5}
+$$
+$$
+= \frac{100 + 25 + 0 + 25 + 100}{5} = \frac{250}{5} = 50
+$$</p>
+<p>Variance measures average squared distance from mean.</p>
+<p><strong>Standard deviation:</strong>
+$$
+\sigma = \sqrt{50} \approx 7.07
+$$</p>
+<p>Standard deviation is typical distance from mean, in original units.</p>
+<p><strong>Interpretation:</strong> Most scores are within ±7 points of the average (80).</p>
+<p><strong>Properties:</strong></p>
+<ul>
+<li>Higher variance/std dev = more spread out data</li>
+<li>Zero variance = all values identical</li>
+<li>Units: variance is squared, std dev matches data units</li>
+</ul>
+<p><strong>ML connection:</strong> </p>
+<ul>
+<li>Mean Squared Error (MSE) is the variance of prediction errors</li>
+<li>Standard deviation tells you typical prediction error magnitude</li>
+<li>Models try to minimize variance of errors</li>
+</ul>
+<h2 id="common-probability-distributions">Common Probability Distributions</h2>
+<h3 id="uniform-distribution">Uniform Distribution</h3>
+<p><strong>Intuition:</strong> All values equally likely in a range.</p>
+<p><img alt="Uniform Distribution" src="https://i.imgur.com/tFcTqV6.png" /></p>
+<p><strong>Use cases:</strong></p>
+<ul>
+<li>Random initialization of neural network weights</li>
+<li>Generating test data</li>
+<li>Modeling "no prior knowledge" scenarios</li>
+</ul>
+<p><strong>Example:</strong> Roll a fair die - each number has probability 1/6</p>
+<p><strong>ML application:</strong> Dropout in neural networks randomly selects neurons uniformly.</p>
+<h3 id="normal-gaussian-distribution">Normal (Gaussian) Distribution</h3>
+<p><strong>Intuition:</strong> Bell-shaped curve, most values near the mean, symmetric.</p>
+<p><img alt="Normal Gaussian" src="https://i.imgur.com/qniH7kn.png" /></p>
+<p><strong>Use cases:</strong></p>
+<ul>
+<li>Natural measurements (height, IQ)</li>
+<li>Modeling errors and noise</li>
+<li>Central Limit Theorem applications</li>
+</ul>
+<p><strong>Parameters:</strong> Mean $<span class="arithmatex">\(\mu\)</span>$, variance $<span class="arithmatex">\(\sigma^2\)</span>$</p>
+<p><strong>68-95-99.7 rule:</strong></p>
+<ul>
+<li>68% of data within 1 standard deviation of mean</li>
+<li>95% within 2 standard deviations</li>
+<li>99.7% within 3 standard deviations</li>
+</ul>
+<p><strong>ML applications:</strong></p>
+<ul>
+<li>Linear regression assumes normal error distribution</li>
+<li>Gaussian Naive Bayes classifier</li>
+<li>Gaussian Processes</li>
+<li>Many algorithms assume normality for mathematical convenience</li>
+</ul>
+<h3 id="bernoulli-distribution">Bernoulli Distribution</h3>
+<p><strong>Intuition:</strong> Single yes/no trial (success/failure).</p>
+<p><img alt="Bernoulli" src="https://i.imgur.com/IgEStQ0.png" /></p>
+<p><strong>Use cases:</strong></p>
+<ul>
+<li>Coin flip (heads/tails)</li>
+<li>Binary classification (cat/not cat)</li>
+<li>Click/no click on ad</li>
+</ul>
+<p><strong>Parameters:</strong> $<span class="arithmatex">\(p\)</span>$ = probability of success</p>
+<p><strong>ML connection:</strong> Logistic regression outputs Bernoulli probabilities for binary classification.</p>
+<h3 id="binomial-distribution">Binomial Distribution</h3>
+<p><strong>Intuition:</strong> Number of successes in $<span class="arithmatex">\(n\)</span>$ independent yes/no trials.</p>
+<p><img alt="Binomial" src="https://i.imgur.com/KQCkIx5.png" /></p>
+<p><strong>Use cases:</strong></p>
+<ul>
+<li>Number of heads in 10 coin flips</li>
+<li>Number of customers who buy product</li>
+<li>Number of correct answers on multiple-choice test</li>
+</ul>
+<p><strong>Parameters:</strong> $<span class="arithmatex">\(n\)</span>$ (trials), $<span class="arithmatex">\(p\)</span>$ (success probability)</p>
+<p><strong>Mean:</strong> $<span class="arithmatex">\(np\)</span>$, <strong>Variance:</strong> $<span class="arithmatex">\(np(1-p)\)</span>$</p>
+<p><strong>Example:</strong> Flip coin 10 times, expect 5 heads on average if fair.</p>
+<h3 id="poisson-distribution">Poisson Distribution</h3>
+<p><strong>Intuition:</strong> Number of events occurring in fixed time/space interval when events happen independently at constant average rate.</p>
+<p><img alt="Poisson" src="https://i.imgur.com/2ThK4Zs.png" /></p>
+<p><strong>Use cases:</strong></p>
+<ul>
+<li>Number of emails received per hour</li>
+<li>Customer arrivals at store per day</li>
+<li>Website visits per minute</li>
+<li>Rare events</li>
+</ul>
+<p><strong>Parameters:</strong> $<span class="arithmatex">\(\lambda\)</span>$ (average rate)</p>
+<p><strong>ML connection:</strong> Poisson regression for count data (predicting number of occurrences).</p>
+<h3 id="exponential-distribution">Exponential Distribution</h3>
+<p><strong>Intuition:</strong> Time between events in a Poisson process.</p>
+<p><img alt="Exponential" src="https://i.imgur.com/EgLJYai.png" /></p>
+<p><strong>Use cases:</strong>
+- Time until next customer arrives
+- Lifetime of electronic component
+- Time between failures</p>
+<p><strong>Parameters:</strong> $<span class="arithmatex">\(\lambda\)</span>$ (rate)</p>
+<p><strong>Relationship:</strong> If events follow Poisson, time between events follows exponential.</p>
+<h2 id="quick-reference">Quick Reference</h2>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Definition</th>
+<th>ML Application</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Probability</td>
+<td>Likelihood measure, 0 to 1</td>
+<td>Quantifying uncertainty</td>
+</tr>
+<tr>
+<td>Independent</td>
+<td>$<span class="arithmatex">\(P(A \cap B) = P(A)P(B)\)</span>$</td>
+<td>Naive Bayes assumption</td>
+</tr>
+<tr>
+<td>Addition rule</td>
+<td>$<span class="arithmatex">\(P(A \cup B) = P(A) + P(B) - P(A \cap B)\)</span>$</td>
+<td>Multiple outcomes</td>
+</tr>
+<tr>
+<td>Conditional</td>
+<td>$<span class="arithmatex">\(P(A\|B) = \frac{P(A \cap B)}{P(B)}\)</span>$</td>
+<td>Context-dependent prediction</td>
+</tr>
+<tr>
+<td>Bayes' theorem</td>
+<td>$<span class="arithmatex">\(P(A\|B) = \frac{P(B\|A)P(A)}{P(B)}\)</span>$</td>
+<td>Classification</td>
+</tr>
+<tr>
+<td>Mean</td>
+<td>Center of distribution</td>
+<td>Expected value</td>
+</tr>
+<tr>
+<td>Variance</td>
+<td>Spread measure</td>
+<td>Error magnitude</td>
+</tr>
+<tr>
+<td>Normal distribution</td>
+<td>Bell curve</td>
+<td>Error modeling</td>
+</tr>
+<tr>
+<td>PMF</td>
+<td>Discrete probabilities</td>
+<td>Classification outputs</td>
+</tr>
+<tr>
+<td>PDF</td>
+<td>Continuous density</td>
+<td>Regression errors</td>
+</tr>
+<tr>
+<td>CDF</td>
+<td>Cumulative probability</td>
+<td>Percentiles, p-values</td>
+</tr>
+</tbody>
+</table>
+<h2 id="summary-next-steps">Summary &amp; Next Steps</h2>
+<p><strong>Key accomplishments:</strong> You've learned how probability quantifies uncertainty, mastered probability rules, understood distributions as models of randomness, computed statistical measures, and connected concepts to ML applications.</p>
+<p><strong>Best practices:</strong></p>
+<ul>
+<li>Check distribution assumptions before applying methods</li>
+<li>Visualize data distributions to verify model fit</li>
+<li>Consider base rates (priors) in classification</li>
+<li>Use appropriate metrics for your distribution type</li>
+</ul>
+<p><strong>Connections to ML:</strong></p>
+<ul>
+<li>Classification outputs probability distributions (softmax)</li>
+<li>Regression assumes error distributions (usually normal)</li>
+<li>Uncertainty quantification uses probability</li>
+<li>Bayesian ML treats parameters as random variables</li>
+</ul>
+<p><strong>External resources:</strong>
+- <a href="https://www.khanacademy.org/math/statistics-probability">Khan Academy: Probability &amp; Statistics</a> - interactive lessons
+- <a href="https://www.youtube.com/watch?v=HZGCoVF3YvM">3Blue1Brown: Bayes' Theorem</a> - visual explanation
+- <a href="https://seeing-theory.brown.edu/">Seeing Theory</a> - visual introduction to probability</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.path", "navigation.top", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

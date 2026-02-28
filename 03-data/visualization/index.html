@@ -1,0 +1,3412 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://evisp.github.io/ml-handbook/03-data/visualization/">
+      
+      
+        <link rel="prev" href="../pandas/">
+      
+      
+        <link rel="next" href="../data-processing/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>Visualization - Holberton ML Handbook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#data-visualization-seeing-patterns-in-data" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Holberton ML Handbook" class="md-header__button md-logo" aria-label="Holberton ML Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Holberton ML Handbook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Visualization
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="cyan"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/evisp/ml-handbook" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../01-tools/" class="md-tabs__link">
+          
+  
+  
+  Tools
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../02-math/" class="md-tabs__link">
+          
+  
+  
+  Math
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+  Data
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../04-core-ml/" class="md-tabs__link">
+          
+  
+  
+  Core ML
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../05-dl-fundamentals/" class="md-tabs__link">
+          
+  
+  
+  Deep Learning Fundamentals
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../06-dl-architectures/" class="md-tabs__link">
+          
+  
+  
+  Deep Learning Architectures
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Holberton ML Handbook" class="md-nav__button md-logo" aria-label="Holberton ML Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Holberton ML Handbook
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/evisp/ml-handbook" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/zero-day/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Zero day
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/git-and-github/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git & GitHub
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/notebook-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jupyter notebook setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/vscode-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/python-warm-up/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python Warm Up
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Math
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Math
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-math/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-math/linear-algebra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linear algebra
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-math/numpy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NumPy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-math/calculus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calculus
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-math/probability-statistics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Probability & statistics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Data
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-foundations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pandas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pandas essentials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visualization
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visualization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why This Matters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Concepts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core Concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-data-visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is Data Visualization?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-visualization-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Visualization Pipeline
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#visual-encoding-channels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visual Encoding Channels
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matplotlib-vs-seaborn-complementary-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Matplotlib vs Seaborn: Complementary Tools
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visualization-types-and-their-purposes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visualization Types and Their Purposes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Visualization Types and Their Purposes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#distribution-visualizations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Distribution Visualizations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Distribution Visualizations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#histogram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Histogram
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#box-plot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Box Plot
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#violin-plot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Violin Plot
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comparison-visualizations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparison Visualizations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Comparison Visualizations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bar-chart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bar Chart
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#grouped-bar-chart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Grouped Bar Chart
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#relationship-visualizations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Relationship Visualizations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Relationship Visualizations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scatter-plot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scatter Plot
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#line-plot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Line Plot
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#heatmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Heatmap
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regression-plot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Regression Plot
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#composition-visualizations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Composition Visualizations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Composition Visualizations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pie-chart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pie Chart
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stacked-bar-chart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stacked Bar Chart
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-visualization-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Visualization Workflow
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Visualization Workflow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-define-your-question" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1: Define Your Question
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-choose-the-right-visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2: Choose the Right Visualization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-3-create-the-visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 3: Create the Visualization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-4-customize-for-clarity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 4: Customize for Clarity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-5-interpret-and-act" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 5: Interpret and Act
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-visualization-challenges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Visualization Challenges
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Visualization Challenges">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overplotting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overplotting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#choosing-colors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Choosing Colors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scale-and-range-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scale and Range Issues
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#too-much-information" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Too Much Information
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best Practices
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-reference-visualization-selection-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Reference: Visualization Selection Guide
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary &amp; Next Steps
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-processing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Processing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-collection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data collection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sql/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SQL databases
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mongo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NoSQL (MongoDB)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mongo-install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NoSQL (MongoDB install)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core ML
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Core ML
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/ml-intro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/ml-categories/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ML Categories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/lifecycle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ML Lifecycle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/regression/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regression
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/supervised/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/supervised-advanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification Advanced
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/unsupervised/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unsupervised Learning Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/clustering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unsupervised Learning Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/dim_reduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unsupervised Learning Dimensionality Reduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Learning Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deep Learning Fundamentals
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-dl-fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-dl-fundamentals/classification-nn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification Using Neural Networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-dl-fundamentals/optimization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-dl-fundamentals/error-analysis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Error Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-dl-fundamentals/regularization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regularization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Learning Architectures
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deep Learning Architectures
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-dl-architectures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-dl-architectures/convolutions-pooling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Convolutions and Pooling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-dl-architectures/cnns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Convolutional Neural Networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-dl-architectures/data-augmentation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Augmentation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-dl-architectures/deep-cnns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Convolutional Architectures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-dl-architectures/transfer-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transfer Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-dl-architectures/object-detection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Detection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why This Matters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Concepts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core Concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-data-visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is Data Visualization?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-visualization-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Visualization Pipeline
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#visual-encoding-channels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visual Encoding Channels
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matplotlib-vs-seaborn-complementary-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Matplotlib vs Seaborn: Complementary Tools
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visualization-types-and-their-purposes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visualization Types and Their Purposes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Visualization Types and Their Purposes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#distribution-visualizations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Distribution Visualizations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Distribution Visualizations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#histogram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Histogram
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#box-plot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Box Plot
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#violin-plot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Violin Plot
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comparison-visualizations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparison Visualizations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Comparison Visualizations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bar-chart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bar Chart
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#grouped-bar-chart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Grouped Bar Chart
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#relationship-visualizations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Relationship Visualizations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Relationship Visualizations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scatter-plot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scatter Plot
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#line-plot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Line Plot
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#heatmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Heatmap
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regression-plot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Regression Plot
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#composition-visualizations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Composition Visualizations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Composition Visualizations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pie-chart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pie Chart
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stacked-bar-chart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stacked Bar Chart
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-visualization-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Visualization Workflow
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Visualization Workflow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-define-your-question" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1: Define Your Question
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-choose-the-right-visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2: Choose the Right Visualization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-3-create-the-visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 3: Create the Visualization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-4-customize-for-clarity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 4: Customize for Clarity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-5-interpret-and-act" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 5: Interpret and Act
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-visualization-challenges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Visualization Challenges
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Visualization Challenges">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overplotting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overplotting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#choosing-colors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Choosing Colors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scale-and-range-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scale and Range Issues
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#too-much-information" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Too Much Information
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best Practices
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-reference-visualization-selection-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Reference: Visualization Selection Guide
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary &amp; Next Steps
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Data
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="data-visualization-seeing-patterns-in-data">Data Visualization: Seeing Patterns in Data</h1>
+<p>This tutorial introduces the essential role of visualization in machine learning workflows and guides you through choosing and creating effective visualizations. You'll understand why seeing your data visually is crucial for building successful models and learn the systematic approach to exploring data through charts and graphs.</p>
+<p><strong>Estimated time:</strong> 45 minutes</p>
+<p><strong>Hands-on practice:</strong> For practical code examples using the Albania House Prices dataset, see the <a href="../../notebooks/data_foundations/2.%20Data%20Visualization.ipynb">companion Jupyter notebook</a>.</p>
+<h2 id="why-this-matters">Why This Matters</h2>
+<p><strong>Problem statement:</strong> </p>
+<blockquote>
+<p>You can't understand what you can't see. </p>
+</blockquote>
+<p><strong>Data hidden in tables remains abstract</strong>, making it nearly impossible to spot patterns, outliers, or relationships that directly impact model performance. A correlation of 0.85 between features means little until you see the actual scatter plot. An imbalanced dataset with 95% of one class isn't obvious from summary statistics alone, but a bar chart makes it immediately clear.</p>
+<p><strong>Professional context:</strong> Data scientists create dozens of exploratory plots before selecting model features. Companies that visualize data pipelines catch errors 3-5x faster than those relying on numerical validation alone. The ability to choose the right visualization and communicate insights visually separates junior practitioners from senior data scientists. Stakeholders rarely read statistical reports, but they always remember compelling visualizations.</p>
+<p><img alt="Data Visualization Overview" src="https://i.imgur.com/kRAJaHV.png" /></p>
+<h2 id="core-concepts">Core Concepts</h2>
+<h3 id="what-is-data-visualization">What is Data Visualization?</h3>
+<p><strong>Data visualization is the graphical representation of information</strong>, transforming numerical values into visual forms like charts, graphs, and plots. In machine learning contexts, visualization serves three purposes:</p>
+<ul>
+<li><strong>Exploratory Analysis:</strong> Discovering patterns, distributions, and relationships before modeling</li>
+<li><strong>Diagnostic Analysis:</strong> Understanding why models succeed or fail through residual plots, confusion matrices, and learning curves</li>
+<li><strong>Communication:</strong> Presenting findings to technical and non-technical audiences</li>
+</ul>
+<h3 id="the-visualization-pipeline">The Visualization Pipeline</h3>
+<p><strong>Data → Chart Type Selection → Encoding → Rendering → Interpretation</strong></p>
+<p><img alt="Data Visualization Pipeline" src="https://i.imgur.com/anfb8Ap.jpeg" /></p>
+<p>Each step requires decisions: What question am I answering? Which chart type reveals this pattern best? How should I map data to visual properties? What customizations improve clarity?</p>
+<h3 id="visual-encoding-channels">Visual Encoding Channels</h3>
+<p>Visual encoding maps data values to visual properties:</p>
+<ul>
+<li><strong>Position:</strong> Most accurate encoding (x-axis, y-axis placement)</li>
+<li><strong>Length:</strong> Highly effective (bar heights, line lengths)</li>
+<li><strong>Angle:</strong> Moderately effective (pie slices)</li>
+<li><strong>Area:</strong> Less accurate (bubble sizes)</li>
+<li><strong>Color:</strong> Good for categories, challenging for continuous values</li>
+<li><strong>Shape:</strong> Effective for categorical distinctions</li>
+</ul>
+<p>The hierarchy matters because position encodings (scatter plots) communicate information more accurately than area encodings (bubble charts), affecting how viewers interpret your data.</p>
+<h3 id="matplotlib-vs-seaborn-complementary-tools">Matplotlib vs Seaborn: Complementary Tools</h3>
+<p><strong>Matplotlib</strong> provides complete control over every plot element, requiring explicit commands for each component. Think of it as the foundation layer.</p>
+<p><strong>Seaborn</strong> builds on Matplotlib, offering high-level interfaces for statistical visualizations with better default aesthetics and built-in statistical computations.</p>
+<p><strong>When to use each:</strong> Use Matplotlib for custom plots, precise control, and fundamental chart types. Use Seaborn for statistical analysis, quick exploratory plots, and when you need beautiful defaults with minimal code.</p>
+<h2 id="visualization-types-and-their-purposes">Visualization Types and Their Purposes</h2>
+<p>Choosing the right visualization depends on your data structure and the question you're answering. Using the wrong chart type obscures insights or misleads viewers.</p>
+<h3 id="distribution-visualizations">Distribution Visualizations</h3>
+<blockquote>
+<p>Understand how values are spread across a variable.</p>
+</blockquote>
+<p><img alt="Distribution Visualizations" src="https://i.imgur.com/Rr5ERuT.jpeg" /></p>
+<h4 id="histogram">Histogram</h4>
+<p>Shows frequency distribution by grouping continuous data into bins. Reveals shape (normal, skewed, bimodal), spread, and outliers.</p>
+<p>Use it when exploring numerical features like age, price, or income to understand central tendency and variability.</p>
+<h4 id="box-plot">Box Plot</h4>
+<p>Displays five-number summary (min, Q1, median, Q3, max) plus outliers. Compact representation ideal for comparing distributions across categories.</p>
+<p>Use when comparing numerical distributions across groups (price by zone, salary by department). It can help to quickly identifies outliers that might require handling. Reveals class imbalance when box plots for different target classes differ dramatically.</p>
+<h4 id="violin-plot">Violin Plot</h4>
+<p>Combines box plot with kernel density estimation, showing distribution shape through width variations.</p>
+<p>Use when you need both summary statistics and distribution shape, especially for multimodal distributions that box plots miss.</p>
+<p>It helps to reveal complex distributional patterns that inform feature engineering and model selection decisions.</p>
+<h3 id="comparison-visualizations">Comparison Visualizations</h3>
+<p><img alt="Comparison Visualizations" src="https://i.imgur.com/uEpM3cA.png" /></p>
+<blockquote>
+<p>Compare values across categories or groups.</p>
+</blockquote>
+<h4 id="bar-chart">Bar Chart</h4>
+<p>Uses rectangular bars to represent values across discrete categories. Bar heights encode magnitudes, making comparisons immediate.</p>
+<p>Use when comparing metrics across categories (sales by region, model accuracy by algorithm).</p>
+<p>Compares model performance metrics across different algorithms or hyperparameter settings. Horizontal bars work well for many categories or long labels.</p>
+<h4 id="grouped-bar-chart">Grouped Bar Chart</h4>
+<p>Places multiple bars side-by-side for each category, enabling multi-variable comparisons.</p>
+<p>Use when comparing multiple metrics simultaneously (precision and recall across classifiers).</p>
+<p>Compares training vs validation performance across models, revealing overfitting when bars differ significantly.</p>
+<h3 id="relationship-visualizations">Relationship Visualizations</h3>
+<p><img alt="Relationship Visualizations" src="https://i.imgur.com/twMW1VI.png" /></p>
+<blockquote>
+<p>Reveal relationships, correlations, and patterns between variables.</p>
+</blockquote>
+<h4 id="scatter-plot">Scatter Plot</h4>
+<p>Displays individual data points using two numerical variables for x and y positions. Reveals correlations, clusters, and outliers.</p>
+<p>Use when exploring relationships between continuous variables (size vs price, age vs salary).</p>
+<p>It validates linear regression assumptions. Strong linear patterns suggest predictive relationships. Clusters indicate potential for classification. Outliers far from trends require investigation.</p>
+<h4 id="line-plot">Line Plot</h4>
+<p>Connects data points with lines, emphasizing trends and changes over sequences (often time).</p>
+<p>Use when showing trends over time (stock prices, model performance across epochs, website traffic).</p>
+<p>Tracks training and validation loss/accuracy across epochs. Diverging lines signal overfitting.</p>
+<h4 id="heatmap">Heatmap</h4>
+<p>Uses color intensity to represent values in a matrix format. Particularly effective for correlation matrices.</p>
+<p>Use when visualizing relationships between many variables simultaneously (correlation matrix, confusion matrix).</p>
+<p>Identifies highly correlated features that might cause multicollinearity. Confusion matrices reveal which classes models confuse most frequently.</p>
+<h4 id="regression-plot">Regression Plot</h4>
+<p>Scatter plot with fitted regression line and confidence interval bands.</p>
+<p>Use when assessing linear relationships and prediction confidence.</p>
+<p>Visualizes regression model fit quality. Wide confidence bands indicate high uncertainty requiring more data or better features.</p>
+<h3 id="composition-visualizations">Composition Visualizations</h3>
+<p><img alt="Composition Visualizations" src="https://i.imgur.com/bjUk19b.png" /></p>
+<blockquote>
+<p>Show how parts contribute to a whole.</p>
+</blockquote>
+<h4 id="pie-chart">Pie Chart</h4>
+<p>Circular chart divided into slices representing proportions of a whole. Most effective for 3-5 categories.</p>
+<p>Use when showing simple proportions where exact values matter less than relative sizes (market share, budget allocation).</p>
+<p>It visualizes class distribution in classification problems. Reveals severe imbalance requiring resampling techniques.</p>
+<p>However, human perception struggles with angle comparisons. Use sparingly and only when showing parts of 100%.</p>
+<h4 id="stacked-bar-chart">Stacked Bar Chart</h4>
+<p>Bars divided into segments representing component contributions.</p>
+<p>Use when comparing both totals and component breakdowns across categories.</p>
+<p>It shows how feature importance varies across different model versions or datasets.</p>
+<h2 id="the-visualization-workflow">The Visualization Workflow</h2>
+<p><img alt="Visualization Workflow" src="https://i.imgur.com/8uJTqZt.png" /></p>
+<h3 id="phase-1-define-your-question">Phase 1: Define Your Question</h3>
+<blockquote>
+<p>Clarify what you're trying to understand before creating visualizations.</p>
+</blockquote>
+<p><strong>Key questions:</strong></p>
+<ul>
+<li>What pattern am I looking for? (distribution, relationship, comparison, trend)</li>
+<li>What decisions will this visualization inform?</li>
+<li>Who is the audience? (technical team vs business stakeholders)</li>
+</ul>
+<p><strong>ML connection:</strong> Exploratory analysis requires different visualizations than model diagnostics or stakeholder presentations. Asking "Why did this model fail on these samples?" guides you toward residual plots and confusion matrices, not histograms.</p>
+<p><strong>Example questions:</strong></p>
+<ul>
+<li>"Are features correlated?" → Heatmap</li>
+<li>"Is the target class balanced?" → Bar chart or pie chart</li>
+<li>"Does feature X predict target Y?" → Scatter plot or regression plot</li>
+<li>"How are values distributed?" → Histogram or box plot</li>
+</ul>
+<h3 id="phase-2-choose-the-right-visualization">Phase 2: Choose the Right Visualization</h3>
+<blockquote>
+<p>Match visualization type to data structure and question.</p>
+</blockquote>
+<p><strong>Decision framework:</strong></p>
+<ul>
+<li><strong>One numerical variable:</strong> Histogram, box plot, violin plot</li>
+<li><strong>One categorical variable:</strong> Bar chart, pie chart</li>
+<li><strong>Two numerical variables:</strong> Scatter plot, line plot (if sequential), regression plot</li>
+<li><strong>One numerical + one categorical:</strong> Box plot, violin plot, grouped bar chart</li>
+<li><strong>Two categorical variables:</strong> Heatmap, stacked bar chart, count plot</li>
+<li><strong>Multiple numerical variables:</strong> Correlation heatmap, pair plot, parallel coordinates</li>
+</ul>
+<h3 id="phase-3-create-the-visualization">Phase 3: Create the Visualization</h3>
+<blockquote>
+<p>Implement the chosen visualization with appropriate libraries and parameters.</p>
+</blockquote>
+<ul>
+<li><strong>Matplotlib approach:</strong> Build plots layer-by-layer with explicit control over every element.</li>
+<li><strong>Seaborn approach:</strong> Use high-level functions that handle statistical computations and styling automatically.</li>
+</ul>
+<p><strong>Key implementation considerations:</strong></p>
+<ul>
+<li><strong>Figure size:</strong> Larger plots for presentations, smaller for reports</li>
+<li><strong>Color choices:</strong> Colorblind-friendly palettes, meaningful color schemes</li>
+<li><strong>Labels and titles:</strong> Clear, descriptive text without jargon</li>
+<li><strong>Axis scales:</strong> Linear, logarithmic, or custom based on data range</li>
+</ul>
+<h3 id="phase-4-customize-for-clarity">Phase 4: Customize for Clarity</h3>
+<blockquote>
+<p>Improve readability and eliminate ambiguity.</p>
+</blockquote>
+<p><strong>Essential customizations:</strong></p>
+<ul>
+<li><strong>Titles and labels:</strong> Every plot needs descriptive title and labeled axes with units</li>
+<li><strong>Legends:</strong> Required when multiple categories or series appear</li>
+<li><strong>Gridlines:</strong> Subtle gridlines aid value reading without cluttering</li>
+<li><strong>Annotations:</strong> Highlight specific points or regions of interest</li>
+<li><strong>Color schemes:</strong> Use consistent, accessible palettes</li>
+<li><strong>Font sizes:</strong> Readable at intended viewing distance</li>
+</ul>
+<h3 id="phase-5-interpret-and-act">Phase 5: Interpret and Act</h3>
+<blockquote>
+<p>Extract insights that guide next steps in your ML workflow.</p>
+</blockquote>
+<p><strong>Interpretation questions:</strong></p>
+<ul>
+<li>What patterns are visible? (clusters, trends, outliers)</li>
+<li>What surprises appear? (unexpected relationships, missing values)</li>
+<li>What actions should follow? (data cleaning, feature engineering, model selection)</li>
+</ul>
+<p><strong>ML connection:</strong> Visualization insights directly inform pipeline decisions:</p>
+<ul>
+<li><strong>Skewed distributions</strong> → Apply transformations (log, square root)</li>
+<li><strong>Outliers</strong> → Investigate causes, decide to keep/remove/cap</li>
+<li><strong>Missing value patterns</strong> → Choose imputation strategy</li>
+<li><strong>Class imbalance</strong> → Apply resampling or adjust class weights</li>
+<li><strong>Feature correlations</strong> → Remove redundant features or apply PCA</li>
+<li><strong>Non-linear relationships</strong> → Engineer polynomial features or choose non-linear models</li>
+</ul>
+<h2 id="common-visualization-challenges">Common Visualization Challenges</h2>
+<h3 id="overplotting">Overplotting</h3>
+<p><strong>Problem:</strong> Too many data points overlap, obscuring density and patterns.</p>
+<p><strong>Impact:</strong> Cannot see true data distribution, clusters appear as uniform blobs.</p>
+<p><strong>Solutions:</strong></p>
+<ul>
+<li><strong>Transparency (alpha):</strong> Make points semi-transparent to show density</li>
+<li><strong>Sampling:</strong> Plot random subset for initial exploration</li>
+<li><strong>Binning:</strong> Use hexbin plots or 2D histograms</li>
+<li><strong>Jitter:</strong> Add small random noise to separate overlapping points</li>
+</ul>
+<h3 id="choosing-colors">Choosing Colors</h3>
+<p><strong>Problem:</strong> Color choices that aren't colorblind-safe or don't convey meaning appropriately.</p>
+<p><strong>Impact:</strong> ~8% of men and ~0.5% of women can't distinguish red-green, making many default palettes useless to them.</p>
+<p><strong>Solutions:</strong></p>
+<ul>
+<li><strong>Use colorblind-safe palettes:</strong> Viridis, Cividis, colorbrewer schemes</li>
+<li><strong>Don't rely solely on color:</strong> Use shapes or line styles too</li>
+<li><strong>Sequential palettes:</strong> For continuous values (light to dark)</li>
+<li><strong>Diverging palettes:</strong> For values with meaningful zero (negative to positive)</li>
+<li><strong>Qualitative palettes:</strong> For categorical data</li>
+</ul>
+<p>Model comparison plots become meaningless if stakeholders can't distinguish the colors representing different algorithms.</p>
+<h3 id="scale-and-range-issues">Scale and Range Issues</h3>
+<p><strong>Problem:</strong> Inappropriate axis scales that hide patterns or mislead.</p>
+<p><strong>Impact:</strong> Linear scales compress high values, making trends invisible. Truncated axes exaggerate small differences.</p>
+<p><strong>Solutions:</strong></p>
+<ul>
+<li><strong>Log scales:</strong> For data spanning orders of magnitude</li>
+<li><strong>Start axes at zero:</strong> For bar charts and comparisons</li>
+<li><strong>Full range:</strong> Show complete data range unless justified otherwise</li>
+<li><strong>Breaks:</strong> Indicate discontinuous axes explicitly</li>
+</ul>
+<p><strong>ML connection:</strong> Learning curves plotted on inappropriate scales can hide early overfitting or make converged training appear unstable.</p>
+<h3 id="too-much-information">Too Much Information</h3>
+<p><strong>Problem:</strong> Cramming multiple messages into one visualization, creating confusion.</p>
+<p><strong>Impact:</strong> Viewers miss key insights when overwhelmed by complexity.</p>
+<p><strong>Solutions:</strong></p>
+<ul>
+<li><strong>One message per plot:</strong> Focus each visualization on single insight</li>
+<li><strong>Progressive disclosure:</strong> Start simple, add complexity gradually</li>
+<li><strong>Small multiples:</strong> Create grid of related simple plots rather than one complex plot</li>
+<li><strong>Annotations:</strong> Guide viewers to important patterns</li>
+</ul>
+<p>Model diagnostic dashboards should separate concerns: one plot for learning curves, another for confusion matrix, another for feature importance. Combining them dilutes each message.</p>
+<h2 id="best-practices">Best Practices</h2>
+<p><strong>Start simple, add complexity only when necessary:</strong> Begin with basic plot, add elements that enhance understanding. Remove anything that doesn't serve the message.</p>
+<p><strong>Label everything explicitly:</strong> Titles, axis labels, legends, and units should be clear without external context. Future you will forget what <code>variable_3</code> means.</p>
+<p><strong>Choose appropriate chart types:</strong> Bar charts for comparisons, scatter plots for relationships, histograms for distributions. Wrong chart type obscures rather than reveals.</p>
+<p><strong>Use consistent styling:</strong> Maintain color schemes, fonts, and layouts across related visualizations. Consistency reduces cognitive load.</p>
+<p><strong>Consider colorblindness:</strong> Use colorblind-safe palettes. Never encode information only through color.</p>
+<p><strong>Size appropriately:</strong> Match figure size to viewing context. Presentation slides need larger fonts than research papers.</p>
+<p><strong>Annotate insights:</strong> Highlight patterns, outliers, or thresholds directly on plots. Don't make viewers search for the message.</p>
+<p><strong>Test with audience:</strong> Show drafts to representative viewers. What's obvious to you may confuse others.</p>
+<p><strong>Version and save source code:</strong> Save visualization code, not just images. Reproducibility requires the ability to regenerate plots with updated data.</p>
+<p><strong>Know when to use 3D:</strong> Almost never. 3D charts look impressive but make reading values nearly impossible. Flat projections usually communicate better.</p>
+<h2 id="quick-reference-visualization-selection-guide">Quick Reference: Visualization Selection Guide</h2>
+<table>
+<thead>
+<tr>
+<th>Data Structure</th>
+<th>Question Type</th>
+<th>Best Visualization</th>
+<th>Library Recommendation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>One numerical</td>
+<td>Distribution shape</td>
+<td>Histogram, Box plot</td>
+<td>Matplotlib, Seaborn</td>
+</tr>
+<tr>
+<td>One categorical</td>
+<td>Category counts</td>
+<td>Bar chart, Pie chart</td>
+<td>Matplotlib, Seaborn</td>
+</tr>
+<tr>
+<td>Two numerical</td>
+<td>Relationship strength</td>
+<td>Scatter plot, Regression plot</td>
+<td>Matplotlib, Seaborn</td>
+</tr>
+<tr>
+<td>Two numerical (time)</td>
+<td>Trend over time</td>
+<td>Line plot</td>
+<td>Matplotlib</td>
+</tr>
+<tr>
+<td>Numerical + Categorical</td>
+<td>Distribution by group</td>
+<td>Box plot, Violin plot</td>
+<td>Seaborn</td>
+</tr>
+<tr>
+<td>Many numerical</td>
+<td>Correlations</td>
+<td>Heatmap, Pair plot</td>
+<td>Seaborn</td>
+</tr>
+<tr>
+<td>Actual vs Predicted</td>
+<td>Model accuracy</td>
+<td>Scatter plot, Residual plot</td>
+<td>Matplotlib</td>
+</tr>
+<tr>
+<td>Classification errors</td>
+<td>Confusion patterns</td>
+<td>Confusion matrix heatmap</td>
+<td>Seaborn</td>
+</tr>
+<tr>
+<td>Training progress</td>
+<td>Overfitting detection</td>
+<td>Learning curves</td>
+<td>Matplotlib</td>
+</tr>
+</tbody>
+</table>
+<h2 id="summary-next-steps">Summary &amp; Next Steps</h2>
+<p><strong>Key accomplishments:</strong> You've learned why visualization is fundamental to ML success, understood how to choose appropriate chart types for different data structures and questions, recognized common visualization pitfalls and solutions, and connected effective visualization practices to model development and communication.</p>
+<p><strong>Critical insights:</strong></p>
+<ul>
+<li><strong>See before you model:</strong> Visualization prevents costly modeling mistakes by revealing data issues early</li>
+<li><strong>Match chart to question:</strong> Different analytical questions require different visualization types</li>
+<li><strong>Clarity over complexity:</strong> Simple, well-labeled plots communicate better than elaborate designs</li>
+<li><strong>Iterate visually:</strong> Create dozens of exploratory plots to understand data deeply</li>
+</ul>
+<p><strong>Connections to previous topics:</strong></p>
+<ul>
+<li><strong>Data Foundations:</strong> Visualization reveals the data quality issues identified in data pipelines</li>
+<li><strong>Statistics:</strong> Distributions, correlations, and statistical tests become concrete through visualization</li>
+<li><strong>Pandas:</strong> DataFrames integrate seamlessly with visualization libraries for rapid exploration</li>
+</ul>
+<p><strong>External resources:</strong></p>
+<ul>
+<li><a href="https://matplotlib.org/stable/contents.html">Matplotlib Official Documentation</a> - comprehensive reference and tutorials</li>
+<li><a href="https://seaborn.pydata.org/examples/index.html">Seaborn Gallery</a> - visual examples of all plot types</li>
+<li><a href="https://datavizcatalogue.com/">The Data Visualisation Catalogue</a> - guide to choosing chart types</li>
+<li><a href="https://colorbrewer2.org/">ColorBrewer</a> - colorblind-safe palette generator</li>
+</ul>
+<blockquote>
+<p><strong>Remember:</strong> Data visualization isn't about making pretty pictures—it's about seeing patterns that guide better decisions. Master visualization, and you'll build better models because you'll understand your data deeply.</p>
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.path", "navigation.top", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,106 @@
+/* Enhanced code block styling */
+.highlight {
+  margin: 1em 0;
+  border-radius: 0.25rem;
+}
+
+/* Better inline code appearance */
+code {
+  padding: 0.1em 0.3em;
+  border-radius: 0.2em;
+  font-size: 0.9em;
+}
+
+/* Improve table readability */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.5em 0;
+}
+
+table th {
+  background-color: var(--md-default-fg-color--lightest);
+  font-weight: 600;
+  padding: 0.8em;
+}
+
+table td {
+  padding: 0.6em;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+}
+
+/* Math formula styling - better contrast */
+.MathJax {
+  font-size: 1.1em !important;
+}
+
+/* Blockquote styling for tips/notes */
+blockquote {
+  border-left: 4px solid var(--md-accent-fg-color);
+  padding-left: 1em;
+  margin: 1.5em 0;
+  font-style: italic;
+  background-color: var(--md-default-fg-color--lightest);
+  padding: 1em;
+  border-radius: 0.25rem;
+}
+
+/* Enhance "Expected output" sections */
+pre code {
+  line-height: 1.5;
+}
+
+/* Better spacing for headers */
+h2, h3 {
+  margin-top: 2em;
+  margin-bottom: 0.8em;
+}
+
+/* Improve list spacing in tutorial sections */
+article ul, article ol {
+  margin: 1em 0;
+  padding-left: 1.5em;
+}
+
+article li {
+  margin: 0.5em 0;
+}
+
+/* Make bold text more prominent but not overwhelming */
+strong {
+  font-weight: 600;
+  color: var(--md-typeset-color);
+}
+
+/* Add subtle hover effect to links */
+a:hover {
+  text-decoration: underline;
+}
+
+/* Better spacing for code with explanations */
+p + pre {
+  margin-top: 1em;
+}
+
+pre + p {
+  margin-top: 1em;
+}
+
+/* Responsive images */
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  margin: 1.5em auto;
+  display: block;
+}
+
+/* Quick reference tables - compact style */
+.md-typeset table:not([class]) {
+  font-size: 0.9em;
+}
+
+/* Improve admonition (note/warning boxes) */
+.admonition {
+  margin: 1.5em 0;
+}

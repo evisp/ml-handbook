@@ -255,7 +255,7 @@ A beginner-friendly way to understand classic YOLO is this:
 
 This helps the model organize predictions across the image.
 
-![Grid YOLO](https://www.researchgate.net/publication/386530790/figure/fig4/AS:11431281429932204@1746722833608/Main-idea-of-YOLO-12-This-figure-illustrates-the-YOLO-architecture-showcasing-its.tif)
+![Grid YOLO](https://blog.cronn.de/img/posts/yolo/yolodetection-grid.jpeg)
 
 ### What YOLO Predicts
 
@@ -386,7 +386,7 @@ Usually, those two boxes are:
 - The **predicted box**
 - The **ground-truth box** (the correct answer from the labeled dataset)
 
-![IoU](https://www.researchgate.net/publication/369760111/figure/fig1/AS:11431281136774273@1680578399530/ntersection-over-Union-IoU-a-The-IoU-is-calculated-by-dividing-the-intersection-of.ppm)
+![IoU](https://static.wikidocs.net/images/page/173743/IOU_02.png)
 
 ### Why IoU Matters
 

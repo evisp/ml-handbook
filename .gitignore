@@ -113,3 +113,32 @@ __cache__/
 .dvc/
 .metastore/
 .tensorboard-info/
+
+
+# Config / model description
+*.yaml
+*.yml
+
+# Models
+*.onnx
+
+# Images
+*.jpg
+*.jpeg
+*.png
+*.bmp
+*.gif
+*.webp
+
+# Videos
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.wmv
+*.webm
+
+# Optional: ignore media folders completely
+images/
+videos/
+

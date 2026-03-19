@@ -1,0 +1,4842 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://evisp.github.io/ml-handbook/06-dl-architectures/object-detection/">
+      
+      
+        <link rel="prev" href="../transfer-learning/">
+      
+      
+        <link rel="next" href="../../0X-portfolio/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.5">
+    
+    
+      
+        <title>Object Detection - Holberton ML Handbook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#object-detection-with-yolo" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Holberton ML Handbook" class="md-header__button md-logo" aria-label="Holberton ML Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Holberton ML Handbook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Object Detection
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="cyan"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/evisp/ml-handbook" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../01-tools/" class="md-tabs__link">
+          
+  
+  
+  Tools
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../02-math/" class="md-tabs__link">
+          
+  
+  
+  Math
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../03-data/" class="md-tabs__link">
+          
+  
+  
+  Data
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../04-core-ml/" class="md-tabs__link">
+          
+  
+  
+  Core ML
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../05-dl-fundamentals/" class="md-tabs__link">
+          
+  
+  
+  Deep Learning Fundamentals
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+  Deep Learning Architectures
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../0X-portfolio/" class="md-tabs__link">
+          
+  
+  
+  Portfolio Project
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Holberton ML Handbook" class="md-nav__button md-logo" aria-label="Holberton ML Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Holberton ML Handbook
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/evisp/ml-handbook" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/zero-day/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Zero day
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/git-and-github/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git & GitHub
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/notebook-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jupyter notebook setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/vscode-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/python-warm-up/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python Warm Up
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Math
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Math
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-math/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-math/linear-algebra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linear algebra
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-math/numpy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NumPy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-math/calculus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calculus
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-math/probability-statistics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Probability & statistics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Data
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/data-foundations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/pandas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pandas essentials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/visualization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visualization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/data-processing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Processing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/data-collection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data collection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/sql/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SQL databases
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/mongo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NoSQL (MongoDB)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/mongo-install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NoSQL (MongoDB install)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core ML
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Core ML
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/ml-intro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/ml-categories/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ML Categories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/lifecycle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ML Lifecycle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/regression/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regression
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/supervised/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/supervised-advanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification Advanced
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/unsupervised/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unsupervised Learning Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/clustering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unsupervised Learning Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/dim_reduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unsupervised Learning Dimensionality Reduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Learning Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deep Learning Fundamentals
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-dl-fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-dl-fundamentals/classification-nn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification Using Neural Networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-dl-fundamentals/optimization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-dl-fundamentals/error-analysis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Error Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-dl-fundamentals/regularization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regularization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Learning Architectures
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deep Learning Architectures
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../convolutions-pooling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Convolutions and Pooling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cnns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Convolutional Neural Networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-augmentation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Augmentation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deep-cnns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Convolutional Architectures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../transfer-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transfer Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Detection
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Detection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#from-classification-to-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From Classification to Detection
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="From Classification to Detection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#image-classification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Image Classification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#localization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Localization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#object-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Object Detection
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-object-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is Object Detection?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What is Object Detection?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-a-bounding-box" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is a Bounding Box?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-old-approach-sliding-windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Old Approach: Sliding Windows
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Old Approach: Sliding Windows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-the-sliding-windows-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is the Sliding Windows Algorithm?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-sliding-windows-makes-sense" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Sliding Windows Makes Sense
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-main-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Main Problem
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-multiple-sizes-are-needed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Multiple Sizes Are Needed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#main-weaknesses-of-sliding-windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Main Weaknesses of Sliding Windows
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-it-still-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why It Still Matters
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-big-shift-single-shot-detectors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Big Shift: Single-Shot Detectors
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Big Shift: Single-Shot Detectors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-a-single-shot-detector" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is a Single-Shot Detector?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-single-shot-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why “Single-Shot” Matters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-this-leads-to-yolo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why This Leads to YOLO
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-the-yolo-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is the YOLO Algorithm?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What is the YOLO Algorithm?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-core-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Core Idea
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-grid-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Grid Idea
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-yolo-predicts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What YOLO Predicts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What YOLO Predicts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-box-position" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Box Position
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-box-size" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Box Size
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-objectness-score" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Objectness Score
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-class-probabilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Class Probabilities
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-yolo-is-fast" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why YOLO Is Fast
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-main-tradeoff" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Main Tradeoff
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-yolo-makes-predictions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How YOLO Makes Predictions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How YOLO Makes Predictions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-the-image-enters-the-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: The Image Enters the Network
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-the-model-predicts-candidate-boxes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: The Model Predicts Candidate Boxes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-low-confidence-predictions-are-removed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Low-Confidence Predictions Are Removed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-overlapping-predictions-are-cleaned-up" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Overlapping Predictions Are Cleaned Up
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-final-detections-remain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Final Detections Remain
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#iou-intersection-over-union" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IoU: Intersection over Union
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="IoU: Intersection over Union">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-iou" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Is IoU?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-iou-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why IoU Matters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-do-you-calculate-iou" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Do You Calculate IoU?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#intuition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Intuition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simple-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Simple Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-iou-is-used" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why IoU Is Used
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-non-max-suppression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is Non-Max Suppression?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What is Non-Max Suppression?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Problem
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-non-max-suppression-does" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Non-Max Suppression Does
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-nms-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How NMS Works
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-iou-appears-again" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why IoU Appears Again
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#important-clarification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Important Clarification
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-are-anchor-boxes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Are Anchor Boxes?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What Are Anchor Boxes?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-they-are-needed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why They Are Needed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-main-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Main Idea
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#intuition_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Intuition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-anchor-boxes-help" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Anchor Boxes Help
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#common-pitfalls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Pitfalls
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-yolo-uses-confidence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How YOLO Uses Confidence
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How YOLO Uses Confidence">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objectness-score" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objectness Score
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#class-probability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Class Probability
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#confidence-in-practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Confidence in Practice
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-evaluate-object-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to Evaluate Object Detection
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How to Evaluate Object Detection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#precision-and-recall" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Precision and Recall
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Precision and Recall">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#precision" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Precision
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recall" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recall
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is mAP?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What is mAP?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-does-map-mean" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Does mAP Mean?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-map-is-better-than-plain-accuracy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why mAP Is Better Than Plain Accuracy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#high-level-process-for-calculating-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        High-Level Process for Calculating mAP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-iou-is-used-in-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How IoU Is Used in mAP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ap-vs-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AP vs mAP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-about-map05095" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What About mAP@0.5:0.95?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-the-core-ideas-connect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How the Core Ideas Connect
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-pitfalls_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Pitfalls
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Pitfalls">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-confusing-classification-with-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Confusing Classification with Detection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-thinking-iou-measures-confidence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Thinking IoU Measures Confidence
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-thinking-nms-improves-prediction-quality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Thinking NMS Improves Prediction Quality
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-thinking-anchor-boxes-are-final-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Thinking Anchor Boxes Are Final Objects
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-ignoring-box-location-during-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Ignoring Box Location During Evaluation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-confusing-ap-with-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Confusing AP with mAP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-believing-yolo-is-only-about-speed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Believing YOLO Is Only About Speed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#intuition-recap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Intuition Recap
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#final-learning-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Final Learning Checklist
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Portfolio Project
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Portfolio Project
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../0X-portfolio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#from-classification-to-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From Classification to Detection
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="From Classification to Detection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#image-classification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Image Classification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#localization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Localization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#object-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Object Detection
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-object-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is Object Detection?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What is Object Detection?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-a-bounding-box" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is a Bounding Box?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-old-approach-sliding-windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Old Approach: Sliding Windows
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Old Approach: Sliding Windows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-the-sliding-windows-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is the Sliding Windows Algorithm?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-sliding-windows-makes-sense" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Sliding Windows Makes Sense
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-main-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Main Problem
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-multiple-sizes-are-needed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Multiple Sizes Are Needed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#main-weaknesses-of-sliding-windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Main Weaknesses of Sliding Windows
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-it-still-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why It Still Matters
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-big-shift-single-shot-detectors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Big Shift: Single-Shot Detectors
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Big Shift: Single-Shot Detectors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-a-single-shot-detector" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is a Single-Shot Detector?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-single-shot-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why “Single-Shot” Matters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-this-leads-to-yolo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why This Leads to YOLO
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-the-yolo-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is the YOLO Algorithm?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What is the YOLO Algorithm?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-core-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Core Idea
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-grid-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Grid Idea
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-yolo-predicts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What YOLO Predicts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What YOLO Predicts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-box-position" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Box Position
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-box-size" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Box Size
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-objectness-score" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Objectness Score
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-class-probabilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Class Probabilities
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-yolo-is-fast" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why YOLO Is Fast
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-main-tradeoff" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Main Tradeoff
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-yolo-makes-predictions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How YOLO Makes Predictions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How YOLO Makes Predictions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-the-image-enters-the-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: The Image Enters the Network
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-the-model-predicts-candidate-boxes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: The Model Predicts Candidate Boxes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-low-confidence-predictions-are-removed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Low-Confidence Predictions Are Removed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-overlapping-predictions-are-cleaned-up" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Overlapping Predictions Are Cleaned Up
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-final-detections-remain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Final Detections Remain
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#iou-intersection-over-union" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IoU: Intersection over Union
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="IoU: Intersection over Union">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-iou" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Is IoU?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-iou-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why IoU Matters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-do-you-calculate-iou" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Do You Calculate IoU?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#intuition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Intuition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simple-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Simple Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-iou-is-used" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why IoU Is Used
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-non-max-suppression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is Non-Max Suppression?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What is Non-Max Suppression?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Problem
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-non-max-suppression-does" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Non-Max Suppression Does
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-nms-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How NMS Works
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-iou-appears-again" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why IoU Appears Again
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#important-clarification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Important Clarification
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-are-anchor-boxes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Are Anchor Boxes?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What Are Anchor Boxes?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-they-are-needed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why They Are Needed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-main-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Main Idea
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#intuition_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Intuition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-anchor-boxes-help" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Anchor Boxes Help
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#common-pitfalls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Pitfalls
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-yolo-uses-confidence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How YOLO Uses Confidence
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How YOLO Uses Confidence">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objectness-score" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objectness Score
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#class-probability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Class Probability
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#confidence-in-practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Confidence in Practice
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-evaluate-object-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to Evaluate Object Detection
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How to Evaluate Object Detection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#precision-and-recall" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Precision and Recall
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Precision and Recall">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#precision" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Precision
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recall" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recall
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is mAP?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What is mAP?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-does-map-mean" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Does mAP Mean?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-map-is-better-than-plain-accuracy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why mAP Is Better Than Plain Accuracy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#high-level-process-for-calculating-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        High-Level Process for Calculating mAP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-iou-is-used-in-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How IoU Is Used in mAP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ap-vs-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AP vs mAP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-about-map05095" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What About mAP@0.5:0.95?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-the-core-ideas-connect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How the Core Ideas Connect
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-pitfalls_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Pitfalls
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Pitfalls">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-confusing-classification-with-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Confusing Classification with Detection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-thinking-iou-measures-confidence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Thinking IoU Measures Confidence
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-thinking-nms-improves-prediction-quality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Thinking NMS Improves Prediction Quality
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-thinking-anchor-boxes-are-final-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Thinking Anchor Boxes Are Final Objects
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-ignoring-box-location-during-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Ignoring Box Location During Evaluation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-confusing-ap-with-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Confusing AP with mAP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-believing-yolo-is-only-about-speed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Believing YOLO Is Only About Speed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#intuition-recap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Intuition Recap
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#final-learning-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Final Learning Checklist
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Deep Learning Architectures
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="object-detection-with-yolo">Object Detection with YOLO</h1>
+<h2 id="introduction">Introduction</h2>
+<p>Image classification answers a simple question: <strong>what is in this image?</strong><br />
+Object detection answers a harder one: <strong>what objects are in this image, and where are they?</strong></p>
+<p>That means object detection must do two jobs at once:</p>
+<ul>
+<li><strong>Classify</strong> each object, such as person, car, dog, or bicycle</li>
+<li><strong>Localize</strong> each object by drawing a bounding box around it</li>
+</ul>
+<p>This makes object detection much more challenging than image classification.<br />
+Instead of giving one label for a full image, the model must find multiple objects, separate them from the background, and place boxes in the correct locations.</p>
+<p><img alt="Object Detection Placeholder" src="https://deeplobe.ai/wp-content/uploads/2023/06/Object-detection-Real-world-applications-and-benefits.png" /></p>
+<h2 id="from-classification-to-detection">From Classification to Detection</h2>
+<p>Before studying YOLO, it helps to separate three related tasks.</p>
+<h3 id="image-classification">Image Classification</h3>
+<p>In image classification, the model looks at the whole image and predicts one main label.</p>
+<p>Example:</p>
+<ul>
+<li>A photo of a dog → <strong>dog</strong></li>
+<li>A photo of a car → <strong>car</strong></li>
+</ul>
+<p>This is the simplest task because the model does not need to say where the object is.</p>
+<p><img alt="Classification" src="https://camo.githubusercontent.com/2c77f234deb5e40bdfabf921a8b335690b22814c3706b196dd9c7fa0495147cb/68747470733a2f2f6d69726f2e6d656469756d2e636f6d2f6d61782f333834302f312a6f4233533579484868766f75674a6b50587563386f672e676966" /></p>
+<h3 id="localization">Localization</h3>
+<p>Localization adds one more job.<br />
+The model must predict:</p>
+<ul>
+<li>What the object is</li>
+<li>Where it is</li>
+</ul>
+<p>So instead of only saying “dog,” it also draws a bounding box around the dog.</p>
+<p><img alt="Localization" src="https://media.springernature.com/lw685/springer-static/image/chp%3A10.1007%2F978-981-96-1587-2_37/MediaObjects/618613_1_En_37_Fig2_HTML.png" /></p>
+<h3 id="object-detection">Object Detection</h3>
+<p>Object detection goes one step further.<br />
+Now the image may contain <strong>many objects</strong>, and the model must detect all of them.</p>
+<p>Example:</p>
+<ul>
+<li>One image may contain a dog, a bicycle, and two people</li>
+<li>The model must output four bounding boxes</li>
+<li>Each box must have a class label and a confidence score</li>
+</ul>
+<p><img alt="Object Detection" src="https://images.squarespace-cdn.com/content/v1/63d40fe2cbd65e16cb8098b6/1677619217385-Z95RQ90R4W9P15JTDW2R/object%2Bdetection.png" /></p>
+<p>This is why object detection is harder:</p>
+<ul>
+<li>There may be multiple objects</li>
+<li>Objects can overlap</li>
+<li>Objects can be small or large</li>
+<li>Some objects may appear only partly in the image</li>
+<li>The background may be cluttered</li>
+</ul>
+<p>A good mental model is this:</p>
+<ul>
+<li><strong>Classification</strong> = What is here?</li>
+<li><strong>Localization</strong> = What is here, and where?</li>
+<li><strong>Detection</strong> = What objects are here, where are they, and how many are there?</li>
+</ul>
+<h2 id="what-is-object-detection">What is Object Detection?</h2>
+<p>Object detection is the task of finding objects in an image and predicting a bounding box and class label for each one.</p>
+<p>A typical object detector outputs something like this:</p>
+<ul>
+<li>Box 1: person, 0.96 confidence</li>
+<li>Box 2: dog, 0.91 confidence</li>
+<li>Box 3: bicycle, 0.88 confidence</li>
+</ul>
+<p>Each prediction usually contains:</p>
+<ul>
+<li>A bounding box</li>
+<li>A class label</li>
+<li>A confidence score</li>
+</ul>
+<h3 id="what-is-a-bounding-box">What is a Bounding Box?</h3>
+<p>A bounding box is a rectangle that surrounds an object.</p>
+<p>It tells the model where the object is located.<br />
+Boxes are commonly represented in one of two ways:</p>
+<ul>
+<li><strong>Corner format</strong>: <span class="arithmatex">\((x_1, y_1, x_2, y_2)\)</span></li>
+<li><strong>Center format</strong>: <span class="arithmatex">\((x, y, w, h)\)</span></li>
+</ul>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(x, y\)</span> = box center</li>
+<li><span class="arithmatex">\(w\)</span> = width</li>
+<li><span class="arithmatex">\(h\)</span> = height</li>
+</ul>
+<p>The goal is not just to classify correctly, but to place the box as accurately as possible.</p>
+<p><img alt="Bounding Box" src="https://lh5.googleusercontent.com/Gh_LLHsD0WoA0nhAV3Z2hIctJoPNoGVsKkwopKVI1UA2ydeHnlLL84v8uAgAf6TcscmAL-xBQjgq6N_M5b3zZ-Di4b2tVp2_4q6QTyynsahVp-nCJpFVnk1FGKoZ1qtUE9egrI2h" /></p>
+<h2 id="the-old-approach-sliding-windows">The Old Approach: Sliding Windows</h2>
+<p>Before modern detectors like YOLO became popular, one common approach was the <strong>sliding windows algorithm</strong>.</p>
+<h3 id="what-is-the-sliding-windows-algorithm">What is the Sliding Windows Algorithm?</h3>
+<p>The idea is simple:</p>
+<ol>
+<li>Take a small window</li>
+<li>Place it over one part of the image</li>
+<li>Run a classifier on that window</li>
+<li>Move the window slightly</li>
+<li>Repeat across the whole image</li>
+</ol>
+<p>The classifier asks at each step:</p>
+<ul>
+<li>“Does this small region contain an object?”</li>
+<li>“If yes, what object is it?”</li>
+</ul>
+<p>This process is repeated many times over many parts of the image.</p>
+<h3 id="why-sliding-windows-makes-sense">Why Sliding Windows Makes Sense</h3>
+<p>This approach is intuitive because it turns detection into many small classification problems.</p>
+<p>Instead of asking the model to understand the whole image at once, we ask:</p>
+<ul>
+<li>Does this patch contain a dog?</li>
+<li>Does this patch contain a car?</li>
+<li>Does this patch contain a person?</li>
+</ul>
+<p>That idea is conceptually easy to understand, which is why it is a good learning starting point.</p>
+<h3 id="the-main-problem">The Main Problem</h3>
+<p>Sliding windows is <strong>very slow</strong>.</p>
+<p>Why?</p>
+<p>Because the model must check:</p>
+<ul>
+<li>Many positions</li>
+<li>Many window sizes</li>
+<li>Many aspect ratios</li>
+</ul>
+<p>For one image, that can mean thousands of separate classifications.</p>
+<h3 id="why-multiple-sizes-are-needed">Why Multiple Sizes Are Needed</h3>
+<p>Objects do not all appear at the same scale.</p>
+<ul>
+<li>A nearby car may be large</li>
+<li>A far-away car may be tiny</li>
+</ul>
+<p>So one fixed-size window is not enough.<br />
+You need many windows of different sizes.</p>
+<p>That increases the computation even more.</p>
+<h3 id="main-weaknesses-of-sliding-windows">Main Weaknesses of Sliding Windows</h3>
+<ul>
+<li><strong>Too slow</strong> for real-time use</li>
+<li>Repeats similar computations again and again</li>
+<li>Struggles with different object sizes efficiently</li>
+<li>Produces many overlapping candidate boxes</li>
+<li>Becomes expensive as images get larger</li>
+</ul>
+<h3 id="why-it-still-matters">Why It Still Matters</h3>
+<p>You should learn sliding windows because it explains the motivation behind modern object detection.</p>
+<p>It helps answer an important question:</p>
+<p><strong>Why did researchers want a new approach like YOLO?</strong></p>
+<p>Because they wanted a detector that could look at the image <strong>once</strong> instead of thousands of times.</p>
+<p><img alt="Sliding Window" src="https://miro.medium.com/v2/resize:fit:956/1*pLtq170Jg1RmJRWEewk5NQ.gif" /></p>
+<h2 id="the-big-shift-single-shot-detectors">The Big Shift: Single-Shot Detectors</h2>
+<p>Modern object detection became much faster when models stopped treating detection as thousands of separate classification problems.</p>
+<h3 id="what-is-a-single-shot-detector">What is a Single-Shot Detector?</h3>
+<blockquote>
+<blockquote>
+<p>A <strong>single-shot detector</strong> predicts object locations and class labels in one forward pass through the network.</p>
+</blockquote>
+</blockquote>
+<p>That means the model looks at the image once and directly outputs:</p>
+<ul>
+<li>Bounding boxes</li>
+<li>Confidence scores</li>
+<li>Class predictions</li>
+</ul>
+<p>This is very different from the sliding windows idea.</p>
+<h3 id="why-single-shot-matters">Why “Single-Shot” Matters</h3>
+<p>The phrase “single-shot” means detection happens in one main pass rather than through many repeated searches.</p>
+<p>This creates major advantages:</p>
+<ul>
+<li>Much faster inference</li>
+<li>Better fit for real-time applications</li>
+<li>More efficient use of shared image features</li>
+</ul>
+<p>Instead of separately analyzing every patch, the network learns the whole detection task end to end.</p>
+<h3 id="why-this-leads-to-yolo">Why This Leads to YOLO</h3>
+<p>YOLO is one of the best-known single-shot detectors.</p>
+<p>Its name stands for:</p>
+<p><strong>You Only Look Once</strong></p>
+<p>That name captures the core idea perfectly:</p>
+<ul>
+<li>Do not scan the image piece by piece</li>
+<li>Do not run thousands of mini-classifications</li>
+<li>Look once, predict everything</li>
+</ul>
+<h2 id="what-is-the-yolo-algorithm">What is the YOLO Algorithm?</h2>
+<blockquote>
+<blockquote>
+<p>YOLO is an object detection algorithm that predicts bounding boxes and class probabilities directly from the image in one pass.</p>
+</blockquote>
+</blockquote>
+<h3 id="the-core-idea">The Core Idea</h3>
+<p>YOLO treats object detection as a single learning problem.</p>
+<p>Instead of splitting the task into many separate steps, it trains one model to learn:</p>
+<ul>
+<li>Where objects are</li>
+<li>Whether an object exists</li>
+<li>What class each object belongs to</li>
+</ul>
+<p>This makes YOLO simple in concept and powerful in practice.</p>
+<h3 id="the-grid-idea">The Grid Idea</h3>
+<p>A beginner-friendly way to understand classic YOLO is this:</p>
+<ul>
+<li>Divide the image into a grid</li>
+<li>Each grid cell becomes responsible for detecting objects whose center falls inside it</li>
+<li>Each cell predicts one or more bounding boxes</li>
+<li>Each predicted box includes a confidence score and class information</li>
+</ul>
+<p>This helps the model organize predictions across the image.</p>
+<p><img alt="Grid YOLO" src="https://blog.cronn.de/img/posts/yolo/yolodetection-grid.jpeg" /></p>
+<h3 id="what-yolo-predicts">What YOLO Predicts</h3>
+<p>For each candidate object, YOLO typically predicts:</p>
+<ul>
+<li>Box position</li>
+<li>Box size</li>
+<li>Objectness score</li>
+<li>Class probabilities</li>
+</ul>
+<p>Let’s break that down.</p>
+<h4 id="1-box-position">1. Box Position</h4>
+<p>The model predicts where the object is located.</p>
+<h4 id="2-box-size">2. Box Size</h4>
+<p>The model predicts how wide and tall the object is.</p>
+<h4 id="3-objectness-score">3. Objectness Score</h4>
+<p>This answers:</p>
+<ul>
+<li>“Is there really an object here?”</li>
+<li>“How confident is the model that this box contains something meaningful?”</li>
+</ul>
+<h4 id="4-class-probabilities">4. Class Probabilities</h4>
+<p>If an object is present, the model predicts what it is:</p>
+<ul>
+<li>person</li>
+<li>dog</li>
+<li>car</li>
+<li>bicycle</li>
+<li>and so on</li>
+</ul>
+<h3 id="why-yolo-is-fast">Why YOLO Is Fast</h3>
+<p>YOLO is fast because the network shares computation across the entire image.</p>
+<p>Instead of repeatedly analyzing overlapping regions, it processes the image once and reuses learned visual features to make all predictions together.</p>
+<p>That makes YOLO especially useful in applications like:</p>
+<ul>
+<li>Self-driving systems</li>
+<li>Security cameras</li>
+<li>Robotics</li>
+<li>Sports analytics</li>
+<li>Mobile vision apps</li>
+</ul>
+<h3 id="the-main-tradeoff">The Main Tradeoff</h3>
+<p>YOLO gains speed by making strong, direct predictions.</p>
+<p>Historically, this sometimes meant a tradeoff:</p>
+<ul>
+<li>Extremely fast detection</li>
+<li>But more difficulty with very small objects or crowded scenes</li>
+</ul>
+<p>That tradeoff has improved a lot across newer YOLO versions, but the core learning idea stays the same.</p>
+<h2 id="how-yolo-makes-predictions">How YOLO Makes Predictions</h2>
+<p><img alt="Prediction Workflow" src="https://i.imgur.com/URebQ1v.png" /></p>
+<h3 id="step-1-the-image-enters-the-network">Step 1: The Image Enters the Network</h3>
+<p>The full image is sent into a convolutional neural network.</p>
+<p>The network extracts visual features such as:</p>
+<ul>
+<li>Edges</li>
+<li>Shapes</li>
+<li>Textures</li>
+<li>Patterns</li>
+</ul>
+<p>These features help the model recognize objects.</p>
+<h3 id="step-2-the-model-predicts-candidate-boxes">Step 2: The Model Predicts Candidate Boxes</h3>
+<p>The detector predicts many possible boxes across the image.</p>
+<p>Each candidate box usually includes:</p>
+<ul>
+<li>Position</li>
+<li>Size</li>
+<li>Objectness</li>
+<li>Class scores</li>
+</ul>
+<p>At this stage, there may be many candidate boxes for the same object.</p>
+<h3 id="step-3-low-confidence-predictions-are-removed">Step 3: Low-Confidence Predictions Are Removed</h3>
+<p>Predictions with very low confidence are usually filtered out first.</p>
+<p>This reduces noise and keeps only boxes that seem meaningful.</p>
+<h3 id="step-4-overlapping-predictions-are-cleaned-up">Step 4: Overlapping Predictions Are Cleaned Up</h3>
+<p>Many boxes may point to the same object.</p>
+<p>So the detector applies <strong>non-max suppression</strong> to remove duplicates.</p>
+<h3 id="step-5-final-detections-remain">Step 5: Final Detections Remain</h3>
+<p>The final result is a smaller set of predictions:</p>
+<ul>
+<li>One box per object, ideally</li>
+<li>A class label</li>
+<li>A confidence score</li>
+</ul>
+<p>This makes the output readable and useful.</p>
+<h2 id="iou-intersection-over-union">IoU: Intersection over Union</h2>
+<p>IoU is one of the most important ideas in object detection.</p>
+<h3 id="what-is-iou">What Is IoU?</h3>
+<p>IoU stands for <strong>Intersection over Union</strong>.</p>
+<p>It measures how much two bounding boxes overlap.</p>
+<p>Usually, those two boxes are:</p>
+<ul>
+<li>The <strong>predicted box</strong></li>
+<li>The <strong>ground-truth box</strong> (the correct answer from the labeled dataset)</li>
+</ul>
+<p><img alt="IoU" src="https://static.wikidocs.net/images/page/173743/IOU_02.png" /></p>
+<h3 id="why-iou-matters">Why IoU Matters</h3>
+<p>A predicted box may classify the right object but still be badly placed.</p>
+<p>IoU helps answer:</p>
+<p><strong>How well does the predicted box match the true box?</strong></p>
+<p>A higher IoU means better overlap.</p>
+<h3 id="how-do-you-calculate-iou">How Do You Calculate IoU?</h3>
+<p>IoU is defined as:</p>
+<div class="arithmatex">\[
+IoU = \frac{\text{Area of Overlap}}{\text{Area of Union}}
+\]</div>
+<p>Where:</p>
+<ul>
+<li><strong>Overlap</strong> = the shared area between the predicted box and the true box</li>
+<li><strong>Union</strong> = total area covered by both boxes together</li>
+</ul>
+<h3 id="intuition">Intuition</h3>
+<ul>
+<li>If two boxes do not overlap at all, IoU = 0</li>
+<li>If they overlap perfectly, IoU = 1</li>
+<li>If they overlap partly, IoU is somewhere between 0 and 1</li>
+</ul>
+<h3 id="simple-example">Simple Example</h3>
+<p>Suppose:</p>
+<ul>
+<li>Predicted box area = 100</li>
+<li>Ground-truth box area = 120</li>
+<li>Overlap area = 80</li>
+</ul>
+<p>Then:</p>
+<div class="arithmatex">\[
+IoU = \frac{80}{100 + 120 - 80} = \frac{80}{140} \approx 0.57
+\]</div>
+<p>So the boxes overlap fairly well, but not perfectly.</p>
+<h3 id="why-iou-is-used">Why IoU Is Used</h3>
+<p>IoU is used in at least two important ways:</p>
+<ul>
+<li>To decide whether a predicted box counts as correct</li>
+<li>To help remove duplicate predictions during non-max suppression</li>
+</ul>
+<p>In many evaluation settings, a prediction is considered correct only if its IoU is above some threshold, such as 0.5.</p>
+<p><img alt="IoU Placeholder" src="https://learnopencv.com/wp-content/uploads/2022/06/4-birds-prediction-types-1.jpg" /></p>
+<h2 id="what-is-non-max-suppression">What is Non-Max Suppression?</h2>
+<p>When a detector looks at an object, it often predicts several similar boxes around the same thing.</p>
+<p>That creates duplicates.</p>
+<h3 id="the-problem">The Problem</h3>
+<p>Imagine one dog in the image, but the model predicts:</p>
+<ul>
+<li>Box A with confidence 0.95</li>
+<li>Box B with confidence 0.91</li>
+<li>Box C with confidence 0.87</li>
+</ul>
+<p>All three boxes overlap heavily and describe the same dog.</p>
+<p>Without cleanup, the detector would appear to find three dogs instead of one.</p>
+<h3 id="what-non-max-suppression-does">What Non-Max Suppression Does</h3>
+<p>Non-max suppression, often called <strong>NMS</strong>, removes redundant boxes and keeps the best one.</p>
+<p>The word “max” refers to keeping the box with the highest confidence.</p>
+<h3 id="how-nms-works">How NMS Works</h3>
+<ol>
+<li>Start with all predicted boxes</li>
+<li>Keep the box with the highest confidence</li>
+<li>Compare it with the remaining boxes</li>
+<li>Remove boxes whose IoU with it is too high</li>
+<li>Repeat with the next highest-confidence box</li>
+</ol>
+<h3 id="why-iou-appears-again">Why IoU Appears Again</h3>
+<p>NMS uses IoU to decide whether two boxes are “too similar.”</p>
+<p>If two boxes overlap a lot, they probably refer to the same object.</p>
+<p>So NMS suppresses the weaker one.</p>
+<h3 id="example">Example</h3>
+<p>Suppose the top-scoring box has confidence 0.95.<br />
+If another box overlaps it with IoU 0.80, and the NMS threshold is 0.5, the second box is usually removed.</p>
+<p>Why?</p>
+<p>Because it is probably just a duplicate prediction of the same object.</p>
+<h3 id="important-clarification">Important Clarification</h3>
+<p>NMS does <strong>not</strong> improve a bad box.<br />
+It only filters overlapping predictions.</p>
+<p>That distinction is important.</p>
+<p>You may think NMS “fixes” detection quality.<br />
+It does not.</p>
+<p>It simply chooses which predictions survive.</p>
+<p><img alt="Non-Max Suppression Placeholder" src="https://www.researchgate.net/profile/Harshil-Jain-5/publication/345061606/figure/fig5/AS:952620386635777@1604133807448/Non-Maximal-Suppression.ppm" /></p>
+<h2 id="what-are-anchor-boxes">What Are Anchor Boxes?</h2>
+<p>Anchor boxes are a way to help the detector predict objects of different shapes and sizes.</p>
+<h3 id="why-they-are-needed">Why They Are Needed</h3>
+<p>A single location in an image may need to describe different possible objects:</p>
+<ul>
+<li>A tall person</li>
+<li>A wide car</li>
+<li>A small dog</li>
+<li>A narrow bottle</li>
+</ul>
+<p>If the model predicted only one generic box shape at each location, it would struggle to represent all these possibilities.</p>
+<h3 id="the-main-idea">The Main Idea</h3>
+<p>Anchor boxes are predefined reference boxes.</p>
+<p>They come in different:</p>
+<ul>
+<li>Widths</li>
+<li>Heights</li>
+<li>Aspect ratios</li>
+</ul>
+<p>The model does not always predict a box completely from scratch.<br />
+Instead, it learns how to adjust these reference boxes to better match actual objects.</p>
+<h3 id="intuition_1">Intuition</h3>
+<p>Think of anchor boxes as starting templates.</p>
+<p>For example, at one image location the model may consider:</p>
+<ul>
+<li>A tall narrow box</li>
+<li>A medium square box</li>
+<li>A wide short box</li>
+</ul>
+<p>Then it learns which one best fits the object and how to shift or resize it.</p>
+<h3 id="why-anchor-boxes-help">Why Anchor Boxes Help</h3>
+<p>They make it easier to detect:</p>
+<ul>
+<li>Multiple objects from the same region</li>
+<li>Objects with different proportions</li>
+<li>Objects that appear at different scales</li>
+</ul>
+<h3 id="common-pitfalls">Common Pitfalls</h3>
+<p>Anchor boxes are <strong>not</strong> actual detections.<br />
+They are starting shapes used to guide prediction.</p>
+<p>That is an important distinction.</p>
+<h2 id="how-yolo-uses-confidence">How YOLO Uses Confidence</h2>
+<p>In object detection, confidence is not just “how sure the class is.”</p>
+<p>Practicioners often confuse several different scores, so it helps to separate them.</p>
+<h3 id="objectness-score">Objectness Score</h3>
+<p>This score answers:</p>
+<ul>
+<li>Is there an object in this box?</li>
+<li>Or is this mostly background?</li>
+</ul>
+<h3 id="class-probability">Class Probability</h3>
+<p>This score answers:</p>
+<ul>
+<li>If an object is present, what class is it?</li>
+</ul>
+<h3 id="confidence-in-practice">Confidence in Practice</h3>
+<p>A final detection score often reflects both:</p>
+<ul>
+<li>Whether an object exists</li>
+<li>How likely the predicted class is</li>
+</ul>
+<p>So a box with high class probability but low objectness may still not be trusted much.</p>
+<p>This is why two boxes with the same label can still have different final scores.</p>
+<h2 id="how-to-evaluate-object-detection">How to Evaluate Object Detection</h2>
+<p>A detector is not judged only by whether it names objects correctly.</p>
+<p>It must also place boxes accurately.</p>
+<p>That is why object detection evaluation is more complex than simple classification accuracy.</p>
+<h3 id="precision-and-recall">Precision and Recall</h3>
+<p>Before mAP, you should know two basic ideas.</p>
+<h4 id="precision">Precision</h4>
+<p>Precision asks:</p>
+<p><strong>Of all the boxes the model predicted as objects, how many were correct?</strong></p>
+<p>High precision means:</p>
+<ul>
+<li>Few false positives</li>
+<li>The model does not make many bad detections</li>
+</ul>
+<h4 id="recall">Recall</h4>
+<p>Recall asks:</p>
+<p><strong>Of all the true objects in the image, how many did the model find?</strong></p>
+<p>High recall means:</p>
+<ul>
+<li>Few missed objects</li>
+<li>The model finds most of what is actually there</li>
+</ul>
+<p>These two ideas often trade off against each other.</p>
+<ul>
+<li>A very cautious detector may have high precision but low recall</li>
+<li>A very aggressive detector may have high recall but lower precision</li>
+</ul>
+<h2 id="what-is-map">What is mAP?</h2>
+<p>mAP is the standard summary metric for object detection.</p>
+<p>It is one of the most important evaluation concepts to understand.</p>
+<h3 id="what-does-map-mean">What Does mAP Mean?</h3>
+<p>mAP stands for <strong>mean Average Precision</strong>.</p>
+<p>Let’s separate the parts.</p>
+<ul>
+<li><strong>Precision</strong> tells how many predicted detections are correct</li>
+<li><strong>Average Precision (AP)</strong> summarizes precision across different recall levels for one class</li>
+<li><strong>mAP</strong> is the mean of AP values across classes</li>
+</ul>
+<p>So mAP gives one overall number that reflects detection quality across the dataset.</p>
+<h3 id="why-map-is-better-than-plain-accuracy">Why mAP Is Better Than Plain Accuracy</h3>
+<p>Plain accuracy is not enough for object detection because:</p>
+<ul>
+<li>There may be multiple objects per image</li>
+<li>Bounding box quality matters</li>
+<li>Confidence thresholds matter</li>
+<li>Duplicate detections matter</li>
+</ul>
+<p>mAP captures this more realistically.</p>
+<h3 id="high-level-process-for-calculating-map">High-Level Process for Calculating mAP</h3>
+<p>A begineer-friendly version is:</p>
+<ol>
+<li>Choose a class, such as “dog”</li>
+<li>Collect all predicted dog boxes from the dataset</li>
+<li>Sort them by confidence score</li>
+<li>Match predictions to ground-truth boxes</li>
+<li>Decide whether each prediction is a true positive or false positive using an IoU threshold</li>
+<li>Build a precision-recall curve</li>
+<li>Compute the area under that curve = AP for that class</li>
+<li>Repeat for all classes</li>
+<li>Average the AP values = mAP</li>
+</ol>
+<h3 id="how-iou-is-used-in-map">How IoU Is Used in mAP</h3>
+<p>A prediction is usually counted as correct only if:</p>
+<ul>
+<li>The class is correct</li>
+<li>The IoU with a ground-truth box is above a threshold</li>
+</ul>
+<p>For example:</p>
+<ul>
+<li><strong>mAP@0.5</strong> means a prediction counts as correct if IoU <span class="arithmatex">\(\geq 0.5\)</span></li>
+<li>A stricter evaluation may require higher overlap</li>
+</ul>
+<h3 id="ap-vs-map">AP vs mAP</h3>
+<p>This is a common source of confusion.</p>
+<ul>
+<li><strong>AP</strong> = one class</li>
+<li><strong>mAP</strong> = average across classes</li>
+</ul>
+<p>Example:</p>
+<ul>
+<li>AP for person = 0.82</li>
+<li>AP for dog = 0.76</li>
+<li>AP for bicycle = 0.70</li>
+</ul>
+<p>Then mAP is the average of those values.</p>
+<h3 id="what-about-map05095">What About mAP@0.5:0.95?</h3>
+<p>Some benchmarks report mAP over multiple IoU thresholds, often from 0.5 to 0.95.</p>
+<p>This is stricter than only using 0.5.</p>
+<p>Why?</p>
+<p>Because the detector must perform well not only at loose overlap thresholds, but also at tighter ones.</p>
+<p>That rewards more accurate localization.</p>
+<h2 id="how-the-core-ideas-connect">How the Core Ideas Connect</h2>
+<p>At this point, the major concepts should fit together like one system.</p>
+<ul>
+<li><strong>Object detection</strong> finds objects and their locations</li>
+<li><strong>Sliding windows</strong> is the older, slower way to do this</li>
+<li><strong>Single-shot detectors</strong> make predictions in one pass</li>
+<li><strong>YOLO</strong> is a famous single-shot detector</li>
+<li><strong>IoU</strong> measures how well boxes overlap</li>
+<li><strong>Non-max suppression</strong> removes duplicate boxes</li>
+<li><strong>Anchor boxes</strong> help model different shapes and sizes</li>
+<li><strong>mAP</strong> measures overall detection performance</li>
+</ul>
+<p>This is the big picture:</p>
+<ol>
+<li>The model predicts many boxes</li>
+<li>Confidence scores rank those boxes</li>
+<li>IoU helps judge overlap quality</li>
+<li>NMS removes duplicates</li>
+<li>mAP evaluates how well the full system performs</li>
+</ol>
+<h2 id="common-pitfalls_1">Common Pitfalls</h2>
+<p>These are the mistakes practicioners make most often.</p>
+<h3 id="1-confusing-classification-with-detection">1. Confusing Classification with Detection</h3>
+<p>Classification predicts one label for an image.<br />
+Detection predicts many boxes plus labels.</p>
+<h3 id="2-thinking-iou-measures-confidence">2. Thinking IoU Measures Confidence</h3>
+<p>It does not.<br />
+IoU measures overlap between boxes.</p>
+<h3 id="3-thinking-nms-improves-prediction-quality">3. Thinking NMS Improves Prediction Quality</h3>
+<p>It does not fix bad boxes.<br />
+It only removes redundant ones.</p>
+<h3 id="4-thinking-anchor-boxes-are-final-objects">4. Thinking Anchor Boxes Are Final Objects</h3>
+<p>They are just reference shapes used during prediction.</p>
+<h3 id="5-ignoring-box-location-during-evaluation">5. Ignoring Box Location During Evaluation</h3>
+<p>A detector can guess the right class and still be wrong if the box is badly placed.</p>
+<h3 id="6-confusing-ap-with-map">6. Confusing AP with mAP</h3>
+<p>AP is for one class.<br />
+mAP is averaged over classes.</p>
+<h3 id="7-believing-yolo-is-only-about-speed">7. Believing YOLO Is Only About Speed</h3>
+<p>YOLO is famous for speed, but the deeper idea is unified end-to-end detection in one model.</p>
+<h2 id="intuition-recap">Intuition Recap</h2>
+<p>A good way to remember the topic is this:</p>
+<ul>
+<li><strong>Sliding windows</strong>: search everywhere, many times</li>
+<li><strong>Single-shot detection</strong>: predict everything together</li>
+<li><strong>YOLO</strong>: one network, one pass, many predictions</li>
+<li><strong>IoU</strong>: how well boxes overlap</li>
+<li><strong>NMS</strong>: remove duplicate boxes</li>
+<li><strong>Anchor boxes</strong>: starting shapes for flexible predictions</li>
+<li><strong>mAP</strong>: the main score for detection quality</li>
+</ul>
+<p>If you understand these seven ideas clearly, you already have a strong foundation in object detection.</p>
+<h2 id="final-learning-checklist">Final Learning Checklist</h2>
+<p>You should be able to explain each of these after reading:</p>
+<ul>
+<li>What object detection is</li>
+<li>Why it is harder than classification</li>
+<li>How sliding windows works</li>
+<li>Why sliding windows is slow</li>
+<li>What a single-shot detector is</li>
+<li>Why YOLO is fast</li>
+<li>What YOLO predicts</li>
+<li>How IoU is computed</li>
+<li>Why non-max suppression is necessary</li>
+<li>What anchor boxes do</li>
+<li>What mAP measures</li>
+</ul>
+<p>That is the conceptual foundation needed before moving on to training pipelines, loss functions, datasets, or implementation details.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.path", "navigation.top", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

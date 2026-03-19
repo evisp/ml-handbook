@@ -1,0 +1,3357 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://evisp.github.io/ml-handbook/06-dl-architectures/deep-cnns/">
+      
+      
+        <link rel="prev" href="../data-augmentation/">
+      
+      
+        <link rel="next" href="../transfer-learning/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.5">
+    
+    
+      
+        <title>Deep Convolutional Architectures - Holberton ML Handbook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#deep-learning-architectures" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Holberton ML Handbook" class="md-header__button md-logo" aria-label="Holberton ML Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Holberton ML Handbook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Deep Convolutional Architectures
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="cyan"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/evisp/ml-handbook" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../01-tools/" class="md-tabs__link">
+          
+  
+  
+  Tools
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../02-math/" class="md-tabs__link">
+          
+  
+  
+  Math
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../03-data/" class="md-tabs__link">
+          
+  
+  
+  Data
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../04-core-ml/" class="md-tabs__link">
+          
+  
+  
+  Core ML
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../05-dl-fundamentals/" class="md-tabs__link">
+          
+  
+  
+  Deep Learning Fundamentals
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+  Deep Learning Architectures
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../0X-portfolio/" class="md-tabs__link">
+          
+  
+  
+  Portfolio Project
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Holberton ML Handbook" class="md-nav__button md-logo" aria-label="Holberton ML Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Holberton ML Handbook
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/evisp/ml-handbook" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/zero-day/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Zero day
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/git-and-github/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git & GitHub
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/notebook-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jupyter notebook setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/vscode-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/python-warm-up/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python Warm Up
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Math
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Math
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-math/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-math/linear-algebra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linear algebra
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-math/numpy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NumPy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-math/calculus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calculus
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-math/probability-statistics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Probability & statistics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Data
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/data-foundations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/pandas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pandas essentials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/visualization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visualization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/data-processing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Processing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/data-collection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data collection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/sql/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SQL databases
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/mongo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NoSQL (MongoDB)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/mongo-install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NoSQL (MongoDB install)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core ML
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Core ML
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/ml-intro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/ml-categories/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ML Categories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/lifecycle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ML Lifecycle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/regression/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regression
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/supervised/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/supervised-advanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification Advanced
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/unsupervised/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unsupervised Learning Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/clustering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unsupervised Learning Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/dim_reduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unsupervised Learning Dimensionality Reduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Learning Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deep Learning Fundamentals
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-dl-fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-dl-fundamentals/classification-nn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification Using Neural Networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-dl-fundamentals/optimization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-dl-fundamentals/error-analysis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Error Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-dl-fundamentals/regularization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regularization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Learning Architectures
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deep Learning Architectures
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../convolutions-pooling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Convolutions and Pooling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cnns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Convolutional Neural Networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-augmentation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Augmentation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Convolutional Architectures
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Convolutional Architectures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📋 Table of Contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-the-problem-why-deep-networks-failed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. The Problem: Why Deep Networks Failed
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. The Problem: Why Deep Networks Failed">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-gradients-flow-back-backpropagation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How gradients flow back (backpropagation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vanishing-gradients-signal-0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vanishing gradients (signal → 0)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exploding-gradients-signal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exploding gradients (signal → ∞)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-foundational-enablers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Foundational Enablers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Foundational Enablers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#relu-activation-fixed-vanishing-gradients" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ReLU Activation: Fixed vanishing gradients
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#weight-initialization-kept-signal-balanced" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Weight Initialization: Kept signal balanced
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#batch-normalization-stabilized-training-entirely" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Batch Normalization: Stabilized training entirely
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-case-study-1-inception" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Case Study 1: Inception
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Case Study 1: Inception">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-big-picture-depth-vs-compute-explosion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Big Picture: Depth vs Compute Explosion
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-innovation-inception-module" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Innovation: Inception Module
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#full-googlenet-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Full GoogLeNet Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-case-study-2-resnet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Case Study 2: ResNet
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Case Study 2: ResNet">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-skip-connections-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Skip Connections Work
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-complete-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Complete Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-resnet-is-organized" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How ResNet Is Organized
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-case-study-3-densenet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Case Study 3: DenseNet
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Case Study 3: DenseNet">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-dense-connections-help" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Dense Connections Help
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-architecture-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Architecture Pattern
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-dense-connections-work-so-well" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Dense Connections Work So Well
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-architecture-decision-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Architecture Decision Matrix
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Architecture Decision Matrix">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#when-to-use-resnet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to use ResNet
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-to-use-densenet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to use DenseNet
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quick-decision-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick decision table
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Key Takeaways
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Key Takeaways">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#evolution-of-connection-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Evolution of connection design
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plain-chains-and-the-rise-of-residual-connections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Plain chains and the rise of residual connections
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#from-residual-to-dense-connectivity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From residual to dense connectivity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-this-evolution-means-in-practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What this evolution means in practice
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../transfer-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transfer Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../object-detection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Detection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Portfolio Project
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Portfolio Project
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../0X-portfolio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📋 Table of Contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-the-problem-why-deep-networks-failed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. The Problem: Why Deep Networks Failed
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. The Problem: Why Deep Networks Failed">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-gradients-flow-back-backpropagation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How gradients flow back (backpropagation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vanishing-gradients-signal-0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vanishing gradients (signal → 0)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exploding-gradients-signal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exploding gradients (signal → ∞)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-foundational-enablers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Foundational Enablers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Foundational Enablers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#relu-activation-fixed-vanishing-gradients" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ReLU Activation: Fixed vanishing gradients
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#weight-initialization-kept-signal-balanced" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Weight Initialization: Kept signal balanced
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#batch-normalization-stabilized-training-entirely" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Batch Normalization: Stabilized training entirely
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-case-study-1-inception" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Case Study 1: Inception
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Case Study 1: Inception">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-big-picture-depth-vs-compute-explosion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Big Picture: Depth vs Compute Explosion
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-innovation-inception-module" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Innovation: Inception Module
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#full-googlenet-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Full GoogLeNet Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-case-study-2-resnet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Case Study 2: ResNet
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Case Study 2: ResNet">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-skip-connections-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Skip Connections Work
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-complete-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Complete Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-resnet-is-organized" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How ResNet Is Organized
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-case-study-3-densenet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Case Study 3: DenseNet
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Case Study 3: DenseNet">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-dense-connections-help" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Dense Connections Help
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-architecture-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Architecture Pattern
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-dense-connections-work-so-well" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Dense Connections Work So Well
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-architecture-decision-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Architecture Decision Matrix
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Architecture Decision Matrix">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#when-to-use-resnet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to use ResNet
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-to-use-densenet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to use DenseNet
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quick-decision-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick decision table
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Key Takeaways
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Key Takeaways">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#evolution-of-connection-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Evolution of connection design
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plain-chains-and-the-rise-of-residual-connections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Plain chains and the rise of residual connections
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#from-residual-to-dense-connectivity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From residual to dense connectivity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-this-evolution-means-in-practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What this evolution means in practice
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Deep Learning Architectures
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="deep-learning-architectures">Deep Learning Architectures</h1>
+<blockquote>
+<p>2014-2017 changed everything. Three papers showed we could build networks 100x deeper:</p>
+</blockquote>
+<ul>
+<li><strong>Inception</strong> (Szegedy et al., Google, 2015): 22 layers, compute-efficient  </li>
+<li><strong>ResNet</strong> (He et al., 2016): 152 layers, skip connections  </li>
+<li><strong>DenseNet</strong> (Huang et al., Cornell, 2017): every layer talks to every layer  </li>
+</ul>
+<p>These papers didn't just win competitions; they showed new ways to connect layers to build deeper, more efficient, and more powerful neural networks. </p>
+<p><strong>This tutorial</strong> breaks down their key ideas + shows the Keras code to use them instantly.</p>
+<h2 id="table-of-contents">📋 Table of Contents</h2>
+<ol>
+<li>
+<p><strong><a href="#the-problem-vanishingexploding-gradients">The Problem</a></strong><br />
+   Why deep networks historically failed</p>
+</li>
+<li>
+<p><strong><a href="#foundational-enablers">Foundational Enablers</a></strong><br />
+   What made deep learning possible (ReLU, BatchNorm, initialization)</p>
+</li>
+<li>
+<p><strong><a href="#case-study-1-inception">Case Study 1: Inception</a></strong><br />
+<em>"Going deeper with convolutions"</em> (Szegedy et al., Google, CVPR 2015)</p>
+</li>
+<li>
+<p><strong><a href="#case-study-2-resnet">Case Study 2: ResNet</a></strong><br />
+<em>"Deep Residual Learning for Image Recognition"</em> (He et al., CVPR 2016)</p>
+</li>
+<li>
+<p><strong><a href="#case-study-3-densenet">Case Study 3: DenseNet</a></strong><br />
+<em>"Densely Connected Convolutional Networks"</em> (Huang et al., Cornell, CVPR 2017)</p>
+</li>
+<li>
+<p><strong><a href="#architecture-decision-matrix">Architecture Decision Matrix</a></strong><br />
+   When to use what + Keras applications</p>
+</li>
+<li>
+<p><strong><a href="#key-takeaways">Key Takeaways</a></strong><br />
+   Evolution of connection design</p>
+</li>
+</ol>
+<h2 id="1-the-problem-why-deep-networks-failed">1. The Problem: Why Deep Networks Failed</h2>
+<p>Deep networks (50+ layers) wouldn't train reliably. <strong>Gradients—the learning signal—disappeared or exploded.</strong></p>
+<p><img alt="Gradient" src="https://i.imgur.com/4mt12pn.jpeg" /></p>
+<h3 id="how-gradients-flow-back-backpropagation">How gradients flow back (backpropagation)</h3>
+<ul>
+<li>Prediction error → loss  </li>
+<li>Loss flows backward through <em>chain rule</em>: each layer's gradient = previous gradient × local derivative. </li>
+<li>50-100 layers means 50-100 multiplications.</li>
+</ul>
+<h3 id="vanishing-gradients-signal-0">Vanishing gradients (signal → 0)</h3>
+<ul>
+<li>Sigmoid/tanh derivatives are ~0.25 or less. </li>
+<li>Multiply 50 times: <span class="arithmatex">\(0.25^{50} \approx 10^{-35}\)</span> (vanished).</li>
+<li><strong>Result</strong>: Early layers don't update. Loss plateaus flat. </li>
+</ul>
+<h3 id="exploding-gradients-signal">Exploding gradients (signal → ∞)</h3>
+<ul>
+<li>Weights &gt; 1 multiply: <span class="arithmatex">\(1.1^{50} \approx 130\)</span>, <span class="arithmatex">\(1.1^{100} \approx 13,780\)</span>. </li>
+<li><strong>Result</strong>: Wild updates → oscillating/NaN loss. </li>
+</ul>
+<blockquote>
+<blockquote>
+<p><strong>Key insight:</strong> Deeper networks <em>should</em> learn better features. But couldn't train reliably before 2015.</p>
+</blockquote>
+</blockquote>
+<h2 id="2-foundational-enablers">2. Foundational Enablers</h2>
+<p><strong>Before 2014, deep networks couldn't train reliably.</strong> Three simple ideas changed that and paved the way for Inception, ResNet, and DenseNet.</p>
+<h3 id="relu-activation-fixed-vanishing-gradients">ReLU Activation: Fixed vanishing gradients</h3>
+<p>ReLU solved the core problem with sigmoid/tanh activations. Instead of derivatives shrinking to near-zero, ReLU's derivative is exactly <strong>1</strong> (when x &gt; 0). </p>
+<ul>
+<li><code>ReLU(x) = max(0, x)</code> — simple and fast</li>
+<li><strong>No saturation</strong>: gradients flow cleanly through layers</li>
+<li>Tradeoff: "Dying ReLUs" (neurons output 0 forever), fixed by variants later</li>
+</ul>
+<h3 id="weight-initialization-kept-signal-balanced">Weight Initialization: Kept signal balanced</h3>
+<p>Random initialization often caused gradients to explode or vanish immediately. Xavier/He initialization scales weights so variance stays roughly constant across layers.</p>
+<ul>
+<li><strong>Xavier</strong>: <code>variance = 2/(fan_in + fan_out)</code> (good for sigmoid/tanh)</li>
+<li><strong>He</strong>: <code>variance = 2/fan_in</code> (perfect for ReLU, accounts for zeroing)</li>
+<li><strong>Result</strong>: Every layer gets reasonable gradients from the start</li>
+</ul>
+<h3 id="batch-normalization-stabilized-training-entirely">Batch Normalization: Stabilized training entirely</h3>
+<p>BatchNorm normalizes each layer's inputs to have mean=0, std=1 (computed over mini-batch). This prevents "internal covariate shift" where layer inputs drift during training.</p>
+<ul>
+<li><strong>How</strong>: <code>BN(x) = γ*(x - μ)/σ + β</code> (learnable scale/shift)</li>
+<li><strong>Why</strong>: Smoother gradients + higher learning rates possible</li>
+<li><strong>Bonus</strong>: Built-in regularization effect (less overfitting)</li>
+<li><strong>Keras</strong>: <code>layers.BatchNormalization()</code> after conv/dense layers</li>
+</ul>
+<blockquote>
+<blockquote>
+<p><strong>Impact</strong>: Suddenly 20-50 layer networks trained reliably. Architecture papers could focus on <em>connections</em> instead of fighting optimization.</p>
+</blockquote>
+</blockquote>
+<h2 id="3-case-study-1-inception">3. Case Study 1: Inception</h2>
+<p><em>"Going deeper with convolutions"</em> (Szegedy et al., Google, CVPR 2015)</p>
+<h3 id="the-big-picture-depth-vs-compute-explosion">The Big Picture: Depth vs Compute Explosion</h3>
+<p><strong>Problem</strong>: More layers means much more computation. A simple 22-layer network uses 100x more processing power than AlexNet.</p>
+<p>Stacking layers naively explodes compute costs. Inception found a smarter way.</p>
+<p><strong>Core insight</strong>: Use <strong>parallel convolutions at different scales</strong>, then <strong>concatenate</strong>. This captures multi-scale features efficiently.</p>
+<p><strong>Result</strong>: GoogLeNet = <strong>22 layers</strong>, <strong>5M parameters</strong> (vs AlexNet's 60M), won ImageNet 2014.</p>
+<h3 id="key-innovation-inception-module">Key Innovation: Inception Module</h3>
+<p><strong>Big idea</strong>: Instead of picking <em>one</em> filter size, Inception runs <strong>all sizes at once</strong> (1×1, 3×3, 5×5, pooling), then combines everything.</p>
+<p><img alt="Inception Module" src="https://s3.eu-west-3.amazonaws.com/hbtn.intranet/uploads/medias/2018/12/4a550a5b5501521f794b.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIA4MYA5JM5DUTZGMZG%2F20260307%2Feu-west-3%2Fs3%2Faws4_request&amp;X-Amz-Date=20260307T092842Z&amp;X-Amz-Expires=345600&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Signature=614eff59db0fa48260eaecab6c03f26af4ae041af29fcdb715851b381130ac31" /></p>
+<p><strong>Why it's brilliant</strong>:</p>
+<ul>
+<li>1×1 filters: fine details (edges, corners)</li>
+<li>3×3 filters: textures and shapes  </li>
+<li>5×5 filters: larger objects/patterns</li>
+<li>Pooling: handles objects at different scales</li>
+</ul>
+<p><strong>The cost-saver</strong>: 1×1 convolutions <strong>shrink channels first</strong>.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>192 channels × 5×5 conv = 4,800 operations/pixel
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>1×1 first (192→16) × 5×5 = 1,280 operations/pixel
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>**74% cheaper!**
+</span></code></pre></div>
+<p><strong>Result</strong>: Much richer features + way less computation.</p>
+<p><strong>Breakdown</strong>:</p>
+<ul>
+<li><strong>1×1 conv</strong>: Dimension reduction (cheap)</li>
+<li><strong>Parallel paths</strong>: 1×1, 3×3, 5×5, pool (multi-scale features)</li>
+<li><strong>Concat</strong>: Richer representation than single conv</li>
+</ul>
+<h3 id="full-googlenet-architecture">Full GoogLeNet Architecture</h3>
+<p><img alt="Google Net" src="https://miro.medium.com/v2/resize:fit:4800/format:webp/0*q5eMDjUHKqEyo7qY.png" /></p>
+<p>Imagine you're designing a network and you want it deep but not expensive. GoogLeNet stacks <strong>9 Inception modules</strong> in a very clever way.</p>
+<p>First, they <strong>replace the giant final layer</strong> that everyone used. Instead of flattening 7×7×1024 features into millions of parameters, they use <strong>global average pooling</strong>. This shrinks the spatial size to 1×1 while keeping all the rich features—zero extra parameters!</p>
+<p>Second, they add <strong>two auxiliary classifiers</strong> in the middle. Think of your network as a tall building. Gradients sometimes struggle to climb back up from the top to the early floors. These middle classifiers give gradients "shortcuts" so early layers keep learning.</p>
+<p>Third, they carefully <strong>downsample between Inception blocks</strong> (224→28→14→7 pixels). Each stage focuses on different scales naturally.</p>
+<p><strong>The numbers speak for themselves:</strong></p>
+<ul>
+<li><strong>22 layers deep</strong> (most before were 8-11)</li>
+<li><strong>5 million parameters</strong> (vs VGG's 138 million)  </li>
+<li><strong>Won ImageNet 2014</strong> with 6.67% top-5 error</li>
+</ul>
+<p>In Keras, you get the evolved version instantly:
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">tensorflow.keras.applications</span><span class="w"> </span><span class="kn">import</span> <span class="n">InceptionV3</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">model</span> <span class="o">=</span> <span class="n">InceptionV3</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="s1">&#39;imagenet&#39;</span><span class="p">)</span>
+</span></code></pre></div></p>
+<p><strong>The genius</strong>: Inception modules gave them depth. Smart design choices made it practical.</p>
+<blockquote>
+<blockquote>
+<p><strong>Lesson</strong>: Parallel multi-scale convolutions + 1×1 dimension reduction = depth without compute explosion.</p>
+</blockquote>
+</blockquote>
+<h2 id="4-case-study-2-resnet">4. Case Study 2: ResNet</h2>
+<p><em>"Deep Residual Learning for Image Recognition"</em> (He et al., CVPR 2016)</p>
+<p>Imagine you're stacking more layers expecting better accuracy. Past 20 layers, accuracy <strong>drops</strong>. The deeper network performs <em>worse</em> than a shallower one. </p>
+<p><strong>The shocking discovery</strong>: This wasn't an optimization problem. Deeper networks were <strong>forgetting</strong> what shallower networks already learned. They degraded.</p>
+<p><strong>The beautiful solution</strong>: Don't make layers learn the complete transformation from input to output. Instead, teach them just the <em>difference</em> (residual): <strong>output = input + layers(input)</strong>.</p>
+<p><img alt="Skip Connections" src="https://s3.eu-west-3.amazonaws.com/hbtn.intranet/uploads/medias/2018/12/058c583d20b067c344c9.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIA4MYA5JM5DUTZGMZG%2F20260307%2Feu-west-3%2Fs3%2Faws4_request&amp;X-Amz-Date=20260307T092842Z&amp;X-Amz-Expires=345600&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Signature=5cbbd170d3d1f830b52005d2b864af3c3e5582f057a013d3ff9d7fce17f0066a" /></p>
+<h3 id="why-skip-connections-work">Why Skip Connections Work</h3>
+<p>Think of gradients flowing backward through 100 layers. Each layer multiplies the gradient by its derivative. Multiply 100 times by numbers &lt; 1 = gradient ≈ 0.</p>
+<p><strong>Skip connections guarantee flow</strong>: <code>gradient = normal_path_gradient + 1</code>. That "+1" from the identity path ensures gradients always reach early layers.</p>
+<p><strong>Two block designs</strong>:</p>
+<ul>
+<li><strong>Basic block</strong>: Two 3×3 convolutions + skip (ResNet-18/34)</li>
+<li><strong>Bottleneck block</strong>: 1×1→3×3→1×1 + skip (ResNet-50/101/152)</li>
+</ul>
+<h3 id="the-complete-architecture">The Complete Architecture</h3>
+<p><img alt="ResNet" src="https://towardsdatascience.com/wp-content/uploads/2022/08/0tH9evuOFqk8F41FG.png" /></p>
+<h2 id="how-resnet-is-organized">How ResNet Is Organized</h2>
+<p>The network starts with a <strong>stem</strong>—a simple 7×7 convolution followed by a pooling step. This first stage takes the raw input image and distills the most basic shapes, edges, and textures, while also shrinking the image size so the later layers can work more efficiently.</p>
+<p>After the stem, the network moves into <strong>four main stages</strong>, each built from many small computational units called residual blocks. Each stage has three characteristics:</p>
+<ol>
+<li>It applies several of these residual blocks in sequence, all working at the same image size.  </li>
+<li>At the start of the stage, the image size is reduced by about half, typically by using a slightly larger step in the computations.  </li>
+<li>At the same time, the number of internal “feature channels” is doubled, so the network becomes richer in detail and more expressive.</li>
+</ol>
+<p>For example:</p>
+<ul>
+<li>In <strong>Stage 1</strong>, three residual blocks process an image that is about 56×56 in size, using 256 internal channels.  </li>
+<li>In <strong>Stage 2</strong>, four blocks work on a 28×28 image with 512 channels.  </li>
+<li>In <strong>Stage 3</strong>, six blocks handle a 14×14 image with 1024 channels.  </li>
+<li>In <strong>Stage 4</strong>, three blocks take the 7×7 image with 2048 channels.</li>
+</ul>
+<p>After these four stages, the network performs a simple averaging step across the remaining small grid, which summarizes all the learned information into a fixed‑length vector. This vector is then mapped to predictions across 1000 different classes.</p>
+<p>The results were astonishing. A plain 20‑layer network without these special connections had about 7.0% error, while the 34‑layer ResNet cut that error to about 3.6%. More dramatically, the 152‑layer version—over four times deeper—achieved roughly the same 3.6% error, proving that the extra depth was not wasted.</p>
+<p>In practice, you can load a pre‑trained ResNet in Keras with just one line:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">tensorflow.keras.applications</span><span class="w"> </span><span class="kn">import</span> <span class="n">ResNet50</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">model</span> <span class="o">=</span> <span class="n">ResNet50</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="s1">&#39;imagenet&#39;</span><span class="p">)</span>
+</span></code></pre></div>
+<p>In short, the key insight of ResNet is that <strong>deeper networks can actually learn better</strong>, as long as the information and gradients can flow smoothly from the beginning of the network all the way to the end.</p>
+<h2 id="5-case-study-3-densenet">5. Case Study 3: DenseNet</h2>
+<p><em>"Densely Connected Convolutional Networks"</em> (Huang et al., CVPR 2017)</p>
+<p>In traditional networks, each layer typically receives information only from the immediately preceding layer. DenseNet changes this pattern fundamentally: every layer receives feature maps from <strong>all previous layers</strong> in the same dense block, and each layer passes its own feature maps forward to <strong>all subsequent layers</strong>.</p>
+<p>This means that the input to layer <span class="arithmatex">\(k\)</span> is a concatenation of the outputs from layers <span class="arithmatex">\(1, 2, \dots, k-1\)</span>, plus its own computations. Instead of forcing each layer to relearn features that earlier layers have already captured, DenseNet lets it directly build on them, encouraging strong feature reuse and smoother gradient flow throughout the network.</p>
+<h3 id="why-dense-connections-help">Why Dense Connections Help</h3>
+<p>As the network processes an image, early layers capture simple patterns such as edges and textures. Middle layers combine these into more complex structures like shapes and object parts. Later layers assemble these structures into full object representations.</p>
+<p>The key idea in DenseNet is that there is no need for each new layer to recompute features that earlier layers have already learned. Instead, each layer can directly reuse the feature maps computed by all previous layers, allowing information to accumulate and be shared efficiently across the network.</p>
+<p><strong>Each layer</strong>:</p>
+<ul>
+<li>Takes a <strong>concatenated stack</strong> of all previous feature maps</li>
+<li>Adds <strong>1×1 convolutions</strong> to keep sizes manageable</li>
+<li>Returns new feature maps back to the stack</li>
+</ul>
+<h3 id="the-architecture-pattern">The Architecture Pattern</h3>
+<p>DenseNet starts with a stem (7×7 conv + pool), then builds the network from <strong>dense blocks</strong> separated by <strong>transition layers</strong>.</p>
+<p><img alt="Dense Block" src="https://s3.eu-west-3.amazonaws.com/hbtn.intranet/uploads/medias/2019/1/553bd4eebc1423fc0b72.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIA4MYA5JM5DUTZGMZG%2F20260307%2Feu-west-3%2Fs3%2Faws4_request&amp;X-Amz-Date=20260307T092843Z&amp;X-Amz-Expires=345600&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Signature=1f64b53a0babbbf8da0a3252cd01f7aa6a30adeb7c878de031d22ade6502ebe5" /></p>
+<p><strong>Each dense block</strong>:</p>
+<ul>
+<li>6–12 layers (depending on depth)</li>
+<li>Each layer has 4×growth_rate channels added</li>
+<li>Typical growth_rate = 32 (doubles channels every 8 layers)</li>
+</ul>
+<p><strong>Transition layers</strong>:</p>
+<ul>
+<li>1×1 conv to reduce channels</li>
+<li>2×2 pool to halve spatial size  </li>
+<li>Remove 50% of previous features</li>
+</ul>
+<h3 id="why-dense-connections-work-so-well">Why Dense Connections Work So Well</h3>
+<p>DenseNet’s dense connectivity pattern brings three main advantages:</p>
+<ol>
+<li>
+<p><strong>Extreme feature reuse</strong>: Each layer receives the feature maps from all earlier layers in the same block, so it can combine information from many different levels of abstraction rather than relying only on the immediately preceding layer. This encourages richer representations and smoother learning.</p>
+</li>
+<li>
+<p><strong>Strong implicit regularization</strong>: The many cross‑layer connections distribute gradients more evenly and make it harder for the network to overfit to any single pathway. In effect, the architecture behaves as if it has built‑in regularization, improving generalization.</p>
+</li>
+<li>
+<p><strong>Compact models</strong>: Because features are reused rather than recomputed, the network can achieve high accuracy with relatively fewer parameters. This leads to smaller model sizes and faster inference while maintaining competitive performance.</p>
+</li>
+</ol>
+<p><strong>Keras</strong> (immediately available):
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">tensorflow.keras.applications</span><span class="w"> </span><span class="kn">import</span> <span class="n">DenseNet121</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">model</span> <span class="o">=</span> <span class="n">DenseNet121</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="s1">&#39;imagenet&#39;</span><span class="p">)</span>
+</span></code></pre></div></p>
+<p><strong>Bottom line</strong>: DenseNet proved that <strong>dense feature reuse</strong> outperforms traditional residual connections for many tasks.</p>
+<h2 id="6-architecture-decision-matrix">6. Architecture Decision Matrix</h2>
+<p>When to use what and how to load them in Keras</p>
+<p>Choosing the right architecture depends on your task, data size, and hardware constraints. Here is a practical guide to decide which backbone to use and how to load it via Keras applications.</p>
+<h3 id="when-to-use-resnet">When to use ResNet</h3>
+<p>Use <strong>ResNet</strong> when:</p>
+<ul>
+<li>You want a <strong>solid, well‑tested baseline</strong> for image classification, object detection, or segmentation.  </li>
+<li>You care about <strong>good performance with moderate depth</strong> and stable training.  </li>
+<li>You are working with <strong>moderate GPU memory</strong> (ResNet‑50, 101, 152 are widely supported).</li>
+</ul>
+<p>In Keras, you can load ready‑made ResNet models with pretrained ImageNet weights like this:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">tensorflow.keras.applications</span><span class="w"> </span><span class="kn">import</span> <span class="n">ResNet50</span><span class="p">,</span> <span class="n">ResNet101</span><span class="p">,</span> <span class="n">ResNet152</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">model_50</span>  <span class="o">=</span> <span class="n">ResNet50</span><span class="p">(</span>  <span class="n">weights</span><span class="o">=</span><span class="s1">&#39;imagenet&#39;</span><span class="p">)</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">model_101</span> <span class="o">=</span> <span class="n">ResNet101</span><span class="p">(</span> <span class="n">weights</span><span class="o">=</span><span class="s1">&#39;imagenet&#39;</span><span class="p">)</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="n">model_152</span> <span class="o">=</span> <span class="n">ResNet152</span><span class="p">(</span> <span class="n">weights</span><span class="o">=</span><span class="s1">&#39;imagenet&#39;</span><span class="p">)</span>
+</span></code></pre></div>
+<h3 id="when-to-use-densenet">When to use DenseNet</h3>
+<p>Use <strong>DenseNet</strong> when:</p>
+<ul>
+<li>You want <strong>strong feature reuse and compact models</strong>.  </li>
+<li>You care about <strong>high accuracy with relatively fewer parameters</strong>.  </li>
+<li>You want an architecture that naturally encourages <strong>regularization and smoother gradient flow</strong>.</li>
+</ul>
+<p>DenseNet is often a good choice when you want a rich representation without needing the largest models.</p>
+<p>Keras applications:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">tensorflow.keras.applications</span><span class="w"> </span><span class="kn">import</span> <span class="n">DenseNet121</span><span class="p">,</span> <span class="n">DenseNet169</span><span class="p">,</span> <span class="n">DenseNet201</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">model_121</span> <span class="o">=</span> <span class="n">DenseNet121</span><span class="p">(</span> <span class="n">weights</span><span class="o">=</span><span class="s1">&#39;imagenet&#39;</span><span class="p">)</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="n">model_169</span> <span class="o">=</span> <span class="n">DenseNet169</span><span class="p">(</span> <span class="n">weights</span><span class="o">=</span><span class="s1">&#39;imagenet&#39;</span><span class="p">)</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="n">model_201</span> <span class="o">=</span> <span class="n">DenseNet201</span><span class="p">(</span> <span class="n">weights</span><span class="o">=</span><span class="s1">&#39;imagenet&#39;</span><span class="p">)</span>
+</span></code></pre></div>
+<h3 id="quick-decision-table">Quick decision table</h3>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Recommended backbone</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>General baseline, stable training</td>
+<td>ResNet‑50</td>
+</tr>
+<tr>
+<td>High accuracy, deeper model</td>
+<td>ResNet‑101 or 152</td>
+</tr>
+<tr>
+<td>Compact model, strong feature reuse</td>
+<td>DenseNet‑121 or 201</td>
+</tr>
+<tr>
+<td>ImageNet‑based transfer learning</td>
+<td>Any of the above</td>
+</tr>
+<tr>
+<td>Limited GPU memory</td>
+<td>ResNet‑50 or DenseNet‑121</td>
+</tr>
+</tbody>
+</table>
+<p>In practice, starting with <strong>ResNet‑50</strong> or <strong>DenseNet‑121</strong> is usually a safe choice. You can then experiment with deeper variants once you know your data size and hardware constraints.</p>
+<h2 id="7-key-takeaways">7. Key Takeaways</h2>
+<h3 id="evolution-of-connection-design">Evolution of connection design</h3>
+<p>Over the past decade, the way we connect layers in deep networks has evolved from simple sequential chains into rich, structured connection patterns. These changes are not just cosmetic; they directly shape how information and gradients flow through the network, and thus how well the model learns.</p>
+<h3 id="plain-chains-and-the-rise-of-residual-connections">Plain chains and the rise of residual connections</h3>
+<p>Early CNNs stacked layers in a strict pipeline: each layer only saw the output of the one before it. We now know that this simple chain limits both depth and stability. The introduction of <strong>ResNet’s skip (residual) connections</strong> changed this: each layer can freely combine its own computation with the signal from earlier layers. This made it possible to train networks that are much deeper while still preserving useful information from the input.</p>
+<h3 id="from-residual-to-dense-connectivity">From residual to dense connectivity</h3>
+<p>DenseNet pushed the idea further. Instead of skipping only one or a few layers, <strong>every layer in a dense block receives feature maps from all previous layers</strong>. This dense pattern encourages strong feature reuse and spreads gradients across many paths, improving both accuracy and generalization. As a result, models can achieve high performance with fewer parameters and more compact storage.</p>
+<h3 id="what-this-evolution-means-in-practice">What this evolution means in practice</h3>
+<ul>
+<li><strong>Connections are not just wiring</strong>; they are part of the model’s inductive bias.  </li>
+<li><strong>Deeper networks only work well</strong> when the architecture makes it easy for information and gradients to propagate.  </li>
+<li><strong>Modern architectures</strong> (ResNet, DenseNet, and their descendants) all share the same core lesson: <strong>design connectivity so that earlier information can reach later layers, and later gradients can reach earlier layers</strong>.</li>
+</ul>
+<p>In short, the evolution of connection design has moved from simple chains to structured, reusable pathways. This shift is one of the main reasons modern deep networks can be both deep and effective.</p>
+<blockquote>
+<p>The art of deep learning is not just in adding more layers, but in designing how they talk to each other.</p>
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.path", "navigation.top", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

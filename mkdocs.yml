@@ -109,3 +109,6 @@ nav:
     - Deep Convolutional Architectures: 06-dl-architectures/deep-cnns.md
     - Transfer Learning: 06-dl-architectures/transfer-learning.md
     - Object Detection: 06-dl-architectures/object-detection.md
+
+  - Portfolio Project:
+    - Overview: OX-portfolio/index.md

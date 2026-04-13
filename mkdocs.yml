@@ -110,5 +110,23 @@ nav:
     - Transfer Learning: 06-dl-architectures/transfer-learning.md
     - Object Detection: 06-dl-architectures/object-detection.md
 
-  - Portfolio Project:
-    - Overview: 0X-portfolio/index.md
+  - Sequential & NLP:
+      - Overview: 07-nlp/index.md
+      - RNNs and LSTMs: 07-nlp/rnns.md
+      - Time Series Forecasting: 07-nlp/time-series.md
+      - Word Embeddings: 07-nlp/embeddings.md
+      - Evaluation Metrics for NLP: 07-nlp/metrics.md
+      - Question Answering Bots: 07-nlp/qa-bots.md
+
+  - Generative AI & LLMs:
+      - Overview: 08-llms/index.md
+      - Generative AI Fundamentals: 08-llms/gen-ai-basics.md
+      - Large Language Models (LLMs): 08-llms/llm-intro.md
+      - Open Source vs Proprietary Models: 08-llms/model-ecosystems.md
+      - Tailoring AI Chatbots: 08-llms/tailoring-chatbots.md
+      - Running Models with WebGPU: 08-llms/web-gpu.md
+      - OpenAI and Hugging Face: 08-llms/api-and-frameworks.md
+
+  - Final Portfolio:
+      - Overview: 09-portfolio/index.md
+      - Project Requirements: 09-portfolio/requirements.md

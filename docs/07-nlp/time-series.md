@@ -181,14 +181,18 @@ Practicioners often get excited seeing a model's prediction line follow the actu
 To make these terms easier to navigate, we can group them into the three main stages of the project: **Data Physics**, **Data Preparation**, and **Model Intelligence**.
 
 ### 1. Data Physics (The Nature of the Signal)
+
 These terms describe the raw data before we touch it.
+
 * **Stationarity:** A property where the "rules" of the data (like average and volatility) stay constant over time. Stationary data is much easier for neural networks to model.
 * **Trend ($T_t$):** The long-term direction of the data (upward or downward growth).
 * **Seasonality ($S_t$):** Predictable "heartbeats" or patterns that repeat at fixed intervals (like weekend dips).
 * **Residual/Noise ($R_t$):** The "chaos" or unpredictable events that don't follow any pattern.
 
 ### 2. Data Preparation (The Factory)
+
 These terms describe how we format and "clean" the data for the model.
+
 * **Normalization (Scaling):** Squashing raw values (like Bitcoin's $70,000 price) into a small range (0 to 1) to keep the model's math stable.
 * **Lookback (Window Size):** The specific number of past steps the model is allowed to "see" to make a prediction.
 * **Horizon:** How far into the future we are predicting (e.g., a "1-day horizon").
@@ -196,7 +200,9 @@ These terms describe how we format and "clean" the data for the model.
 * **Batch Size:** The number of training windows the "Data Factory" feeds the model at one single time.
 
 ### 3. Model Intelligence (The Brain)
+
 These terms describe how the model learns and how we judge its success.
+
 * **Features & Labels:** The "Inputs" (what the model sees) and the "Target" (the answer it is trying to guess).
 * **LSTM & GRU:** Specialized neural network architectures with "internal memory" designed to remember sequences.
 * **Naive Forecast (The Baseline):** A "lazy" prediction that simply guesses tomorrow will be the same as today. Your model must beat this to be useful.

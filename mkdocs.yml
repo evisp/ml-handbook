@@ -110,10 +110,11 @@ nav:
     - Transfer Learning: 06-dl-architectures/transfer-learning.md
     - Object Detection: 06-dl-architectures/object-detection.md
 
-  - Sequential & NLP:
+- Sequential & NLP:
       - Overview: 07-nlp/index.md
       - RNNs and LSTMs: 07-nlp/rnns.md
       - Time Series Forecasting: 07-nlp/time-series.md
+      - Understanding NLP: 07-nlp/nlp-overview.md
       - Word Embeddings: 07-nlp/embeddings.md
       - Evaluation Metrics for NLP: 07-nlp/metrics.md
       - Question Answering Bots: 07-nlp/qa-bots.md

@@ -10,7 +10,7 @@
 
 Standard AI looks at data points in isolation. **Recurrent Neural Networks (RNNs)** use loops to remember what happened just a moment ago, making them ideal for text and sensor data.
 
-**What you’ll learn:**
+**What you'll learn:**
 
 * **Hidden States:** How models pass "memories" from one step to the next.
 * **The Vanishing Gradient:** Why basic models struggle with long sentences.
@@ -22,11 +22,23 @@ Standard AI looks at data points in isolation. **Recurrent Neural Networks (RNNs
 
 Move beyond simple guesses. Use deep learning to analyze patterns in time-stamped data, like energy demand or market shifts, to predict what comes next.
 
-**What you’ll learn:**
+**What you'll learn:**
 
 * **Windowing:** How to slice long histories into bite-sized training pieces.
 * **Seasonality:** Identifying repeating cycles (like holiday shopping surges).
 * **Multi-step Prediction:** Forecasting an entire week ahead instead of just tomorrow.
+
+
+## [Understanding NLP](./nlp-overview.md)
+**See the big picture before writing a single line of code**
+
+Before building NLP systems, you need to understand how they think. Learn how raw human language travels through a pipeline and gets transformed into something a machine can reason about.
+
+**What you'll learn:**
+
+* **The NLP Pipeline:** The full journey from raw text to model output.
+* **Encodings vs. Embeddings:** Why one is a lookup table and the other carries meaning.
+* **The Semantic Gap:** How machines learn that "King - Man + Woman = Queen."
 
 
 ## [Word Embeddings](./embeddings.md)
@@ -34,7 +46,7 @@ Move beyond simple guesses. Use deep learning to analyze patterns in time-stampe
 
 Computers don't read words; they read numbers. Learn how tools like **Word2Vec** turn words into coordinates in a digital map so the computer understands that "King" and "Queen" are related.
 
-**What you’ll learn:**
+**What you'll learn:**
 
 * **Dense Embeddings:** Why points in a mathematical space represent meaning better than simple lists.
 * **Semantic Similarity:** Calculating how "close" two words are in meaning.
@@ -46,7 +58,7 @@ Computers don't read words; they read numbers. Learn how tools like **Word2Vec**
 
 You can't just use "Percent Correct" for language. If a model translates a sentence perfectly but uses a different synonym, is it wrong? Learn the industry standards for grading AI text.
 
-**What you’ll learn:**
+**What you'll learn:**
 
 * **BLEU Score:** The standard for checking translation quality.
 * **ROUGE:** How to measure if a summary captured the main points.
@@ -58,7 +70,7 @@ You can't just use "Percent Correct" for language. If a model translates a sente
 
 Combine memory and word meanings to build bots that can read a 50-page manual and instantly find the specific answer a user is looking for.
 
-**What you’ll learn:**
+**What you'll learn:**
 
 * **Context Windows:** Helping the AI stay focused on the relevant text.
 * **Span Prediction:** Teaching the model to highlight the exact start and end of an answer.

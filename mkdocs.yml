@@ -118,6 +118,8 @@ nav:
       - Word Embeddings: 07-nlp/embeddings.md
       - Evaluation Metrics for NLP: 07-nlp/metrics.md
       - Question Answering Bots: 07-nlp/qa-bots.md
+      - Practice NLP: 07-nlp/practice.md
+
 
   - Generative AI & LLMs:
       - Overview: 08-llms/index.md

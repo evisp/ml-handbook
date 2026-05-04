@@ -1,0 +1,4242 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://evisp.github.io/ml-handbook/07-nlp/embeddings/">
+      
+      
+        <link rel="prev" href="../nlp-overview/">
+      
+      
+        <link rel="next" href="../metrics/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Word Embeddings - Holberton ML Handbook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#word-representations-embeddings-teaching-machines-what-words-mean" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Holberton ML Handbook" class="md-header__button md-logo" aria-label="Holberton ML Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Holberton ML Handbook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Word Embeddings
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="cyan"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/evisp/ml-handbook" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../01-tools/" class="md-tabs__link">
+          
+  
+  
+  Tools
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../02-math/" class="md-tabs__link">
+          
+  
+  
+  Math
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../03-data/" class="md-tabs__link">
+          
+  
+  
+  Data
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../04-core-ml/" class="md-tabs__link">
+          
+  
+  
+  Core ML
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../05-dl-fundamentals/" class="md-tabs__link">
+          
+  
+  
+  Deep Learning Fundamentals
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../06-dl-architectures/" class="md-tabs__link">
+          
+  
+  
+  Deep Learning Architectures
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+  Sequential & NLP
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../08-llms/" class="md-tabs__link">
+          
+  
+  
+  Generative AI & LLMs
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../09-portfolio/" class="md-tabs__link">
+          
+  
+  
+  Final Portfolio
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Holberton ML Handbook" class="md-nav__button md-logo" aria-label="Holberton ML Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Holberton ML Handbook
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/evisp/ml-handbook" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/zero-day/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Zero day
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/git-and-github/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git & GitHub
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/notebook-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jupyter notebook setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/vscode-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/python-warm-up/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python Warm Up
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Math
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Math
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-math/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-math/linear-algebra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linear algebra
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-math/numpy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NumPy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-math/calculus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calculus
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-math/probability-statistics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Probability & statistics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Data
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/data-foundations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/pandas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pandas essentials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/visualization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visualization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/data-processing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Processing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/data-collection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data collection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/sql/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SQL databases
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/mongo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NoSQL (MongoDB)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/mongo-install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NoSQL (MongoDB install)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core ML
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Core ML
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/ml-intro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/ml-categories/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ML Categories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/lifecycle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ML Lifecycle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/regression/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regression
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/supervised/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/supervised-advanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification Advanced
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/unsupervised/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unsupervised Learning Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/clustering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unsupervised Learning Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/dim_reduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unsupervised Learning Dimensionality Reduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Learning Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deep Learning Fundamentals
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-dl-fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-dl-fundamentals/classification-nn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification Using Neural Networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-dl-fundamentals/optimization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-dl-fundamentals/error-analysis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Error Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-dl-fundamentals/regularization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regularization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Learning Architectures
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deep Learning Architectures
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-dl-architectures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-dl-architectures/convolutions-pooling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Convolutions and Pooling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-dl-architectures/cnns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Convolutional Neural Networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-dl-architectures/data-augmentation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Augmentation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-dl-architectures/deep-cnns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Convolutional Architectures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-dl-architectures/transfer-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transfer Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-dl-architectures/object-detection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Detection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sequential & NLP
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Sequential & NLP
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rnns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RNNs and LSTMs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../time-series/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Time Series Forecasting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nlp-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Understanding NLP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Word Embeddings
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Word Embeddings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#not-all-numbers-are-equal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Not All Numbers Are Equal
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-the-spectrum-of-representations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. The Spectrum of Representations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-bag-of-words-the-simplest-possible-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Bag of Words: The Simplest Possible Start
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Bag of Words: The Simplest Possible Start">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#building-the-vocabulary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Building the Vocabulary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#building-the-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Building the Matrix
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-bow-gets-right" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What BoW Gets Right
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-bow-gets-wrong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What BoW Gets Wrong
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-tf-idf-not-all-words-matter-equally" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. TF-IDF: Not All Words Matter Equally
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. TF-IDF: Not All Words Matter Equally">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-two-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Two Components
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#applied-to-our-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Applied to Our Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-tf-idf-gets-right" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What TF-IDF Gets Right
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-tf-idf-gets-wrong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What TF-IDF Gets Wrong
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-n-grams-capturing-local-word-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. N-grams: Capturing Local Word Order
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. N-grams: Capturing Local Word Order">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#from-our-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From Our Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-n-grams-get-right" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What N-grams Get Right
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-n-grams-get-wrong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What N-grams Get Wrong
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-prediction-based-embeddings-cbow-and-skip-gram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Prediction-Based Embeddings: CBOW and Skip-gram
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Prediction-Based Embeddings: CBOW and Skip-gram">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-context-window" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Context Window
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cbow-predicting-the-center-from-the-crowd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CBOW: Predicting the Center from the Crowd
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#skip-gram-predicting-the-crowd-from-the-center" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Skip-gram: Predicting the Crowd from the Center
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-negative-sampling-teaching-by-contrast" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Negative Sampling: Teaching by Contrast
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Negative Sampling: Teaching by Contrast">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#positive-and-negative-pairs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Positive and Negative Pairs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-this-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why This Works
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-the-big-four-word2vec-glove-fasttext-and-elmo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. The Big Four: Word2Vec, GloVe, fastText, and ELMo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. The Big Four: Word2Vec, GloVe, fastText, and ELMo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#word2vec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Word2Vec
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#glove-global-vectors-for-word-representation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GloVe (Global Vectors for Word Representation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fasttext" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        fastText
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#elmo-embeddings-from-language-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ELMo (Embeddings from Language Models)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#side-by-side-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Side-by-Side Comparison
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-reality-check-when-embeddings-fail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Reality Check: When Embeddings Fail
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Reality Check: When Embeddings Fail">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#failure-1-out-of-vocabulary-words-oov" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Failure 1: Out-of-Vocabulary Words (OOV)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failure-2-bias-in-the-training-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Failure 2: Bias in the Training Data
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failure-3-domain-shift" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Failure 3: Domain Shift
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#glossary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Glossary
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Glossary">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-counting-based-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Counting-Based Methods
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-prediction-based-embeddings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Prediction-Based Embeddings
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-embedding-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Embedding Models
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-failure-modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Failure Modes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Evaluation Metrics for NLP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../qa-bots/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Question Answering Bots
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../practice/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Practice NLP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Generative AI & LLMs
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Generative AI & LLMs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-llms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-llms/gen-ai-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Generative AI Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-llms/llm-intro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Large Language Models (LLMs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-llms/model-ecosystems/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Open Source vs Proprietary Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-llms/tailoring-chatbots/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tailoring AI Chatbots
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-llms/web-gpu/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Running Models with WebGPU
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-llms/api-and-frameworks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpenAI and Hugging Face
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Final Portfolio
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Final Portfolio
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-portfolio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-portfolio/requirements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project Requirements
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#not-all-numbers-are-equal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Not All Numbers Are Equal
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-the-spectrum-of-representations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. The Spectrum of Representations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-bag-of-words-the-simplest-possible-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Bag of Words: The Simplest Possible Start
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Bag of Words: The Simplest Possible Start">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#building-the-vocabulary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Building the Vocabulary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#building-the-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Building the Matrix
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-bow-gets-right" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What BoW Gets Right
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-bow-gets-wrong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What BoW Gets Wrong
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-tf-idf-not-all-words-matter-equally" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. TF-IDF: Not All Words Matter Equally
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. TF-IDF: Not All Words Matter Equally">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-two-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Two Components
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#applied-to-our-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Applied to Our Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-tf-idf-gets-right" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What TF-IDF Gets Right
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-tf-idf-gets-wrong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What TF-IDF Gets Wrong
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-n-grams-capturing-local-word-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. N-grams: Capturing Local Word Order
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. N-grams: Capturing Local Word Order">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#from-our-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From Our Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-n-grams-get-right" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What N-grams Get Right
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-n-grams-get-wrong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What N-grams Get Wrong
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-prediction-based-embeddings-cbow-and-skip-gram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Prediction-Based Embeddings: CBOW and Skip-gram
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Prediction-Based Embeddings: CBOW and Skip-gram">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-context-window" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Context Window
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cbow-predicting-the-center-from-the-crowd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CBOW: Predicting the Center from the Crowd
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#skip-gram-predicting-the-crowd-from-the-center" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Skip-gram: Predicting the Crowd from the Center
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-negative-sampling-teaching-by-contrast" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Negative Sampling: Teaching by Contrast
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Negative Sampling: Teaching by Contrast">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#positive-and-negative-pairs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Positive and Negative Pairs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-this-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why This Works
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-the-big-four-word2vec-glove-fasttext-and-elmo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. The Big Four: Word2Vec, GloVe, fastText, and ELMo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. The Big Four: Word2Vec, GloVe, fastText, and ELMo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#word2vec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Word2Vec
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#glove-global-vectors-for-word-representation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GloVe (Global Vectors for Word Representation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fasttext" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        fastText
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#elmo-embeddings-from-language-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ELMo (Embeddings from Language Models)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#side-by-side-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Side-by-Side Comparison
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-reality-check-when-embeddings-fail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Reality Check: When Embeddings Fail
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Reality Check: When Embeddings Fail">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#failure-1-out-of-vocabulary-words-oov" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Failure 1: Out-of-Vocabulary Words (OOV)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failure-2-bias-in-the-training-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Failure 2: Bias in the Training Data
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failure-3-domain-shift" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Failure 3: Domain Shift
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#glossary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Glossary
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Glossary">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-counting-based-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Counting-Based Methods
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-prediction-based-embeddings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Prediction-Based Embeddings
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-embedding-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Embedding Models
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-failure-modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Failure Modes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Sequential & NLP
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="word-representations-embeddings-teaching-machines-what-words-mean">Word Representations &amp; Embeddings: Teaching Machines What Words Mean</h1>
+<p><img alt="Embeddings Motivation" src="https://i.imgur.com/HegwaMh.png" /></p>
+<h3 id="not-all-numbers-are-equal">Not All Numbers Are Equal</h3>
+<p>On the previous page, we established the core problem: computers don't read words, they read numbers. And we saw that the <em>way</em> you convert words into numbers has enormous consequences. A bad representation makes your model blind. A good one makes it intelligent.</p>
+<p>This page walks through the complete journey of word representations — from the simplest possible approach to the most sophisticated — using the same three sentences throughout so you can see exactly what each technique gains, and what it still gets wrong.</p>
+<p><strong>Our running example — three sentences we'll use for every technique:</strong></p>
+<blockquote>
+<p><em>"The cat sat on the mat."</em></p>
+<p><em>"The dog sat on the floor."</em></p>
+<p><em>"Paris is the capital of France."</em></p>
+</blockquote>
+<p>These sentences are simple enough to fit in a diagram, but varied enough to expose every strength and weakness we'll discuss.</p>
+<h2 id="1-the-spectrum-of-representations">1. The Spectrum of Representations</h2>
+<p>Before diving into any single technique, it helps to see all of them on one map. Every method in this page is an answer to the limitations of the one before it.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Simpler ◄──────────────────────────────────────────────────────► More Powerful
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a> Bag of     TF-IDF     N-grams     CBOW /      GloVe     fastText     ELMo
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>  Words                            Skip-gram
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>                                  (Word2Vec)
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a> No order   Weighted   Local       Learned      Global    Handles      Context-
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a> No meaning No meaning order only  meaning      context   rare words   aware
+</span></code></pre></div>
+<p>Each step solves one specific problem while introducing a new one. By the end of this page, you'll understand exactly why each transition happened — and which tool to reach for in practice.</p>
+<p><img alt="Representation Spectrum" src="https://i.imgur.com/fGS3RSS.png" /></p>
+<h2 id="2-bag-of-words-the-simplest-possible-start">2. Bag of Words: The Simplest Possible Start</h2>
+<p><strong>Bag of Words (BoW)</strong> is the most naive way to represent text numerically. The idea is almost embarrassingly simple: ignore word order entirely, count how many times each word appears, and use those counts as your representation.</p>
+<p>The name says it all — you take your sentence, throw all the words into a bag, and shake it. The order is gone. All that remains is <em>which</em> words appeared and <em>how often</em>.</p>
+<h3 id="building-the-vocabulary">Building the Vocabulary</h3>
+<p>The first step is to collect every unique word across all your sentences. This is the <strong>vocabulary</strong> — the complete list of words the model knows.</p>
+<p>From our three sentences, the vocabulary is:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>[&quot;the&quot;, &quot;cat&quot;, &quot;sat&quot;, &quot;on&quot;, &quot;mat&quot;, &quot;dog&quot;, &quot;floor&quot;, &quot;paris&quot;, &quot;is&quot;, &quot;capital&quot;, &quot;of&quot;, &quot;france&quot;]
+</span></code></pre></div>
+<p><em>(12 unique words after lowercasing)</em></p>
+<h3 id="building-the-matrix">Building the Matrix</h3>
+<p>Each sentence becomes a vector — one number per vocabulary word, representing the count of that word in the sentence.</p>
+<table>
+<thead>
+<tr>
+<th>Sentence</th>
+<th>the</th>
+<th>cat</th>
+<th>sat</th>
+<th>on</th>
+<th>mat</th>
+<th>dog</th>
+<th>floor</th>
+<th>paris</th>
+<th>is</th>
+<th>capital</th>
+<th>of</th>
+<th>france</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"The cat sat on the mat"</td>
+<td><strong>2</strong></td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>"The dog sat on the floor"</td>
+<td><strong>2</strong></td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>"Paris is the capital of France"</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<h3 id="what-bow-gets-right">What BoW Gets Right</h3>
+<p>It works. It is fast to compute, easy to understand, and on simple tasks like spam detection, where the <em>presence</em> of words like "prize" and "winner" is enough, it performs surprisingly well.</p>
+<h3 id="what-bow-gets-wrong">What BoW Gets Wrong</h3>
+<p>The moment you look at the matrix, the problem is obvious. The sentences <em>"The cat sat on the mat"</em> and <em>"The mat sat on the cat"</em> would produce <strong>identical vectors</strong>. The order of the words, the thing that carries most of the meaning, is completely invisible.</p>
+<p>Additionally, the word <code>"the"</code> appears in almost every sentence and dominates the counts, drowning out the words that actually matter.</p>
+<blockquote>
+<p><strong>The Professional Logic:</strong> BoW is a useful baseline and nothing more. If a BoW model solves your problem, you're done. If it doesn't, the next technique gives you a smarter way to count.</p>
+</blockquote>
+<p><img alt="Bag of Words Matrix" src="https://i.imgur.com/2SadTWn.png" /></p>
+<h2 id="3-tf-idf-not-all-words-matter-equally">3. TF-IDF: Not All Words Matter Equally</h2>
+<p><strong>TF-IDF (Term Frequency–Inverse Document Frequency)</strong> keeps the core idea of BoW — representing text as word counts — but fixes its biggest flaw: the assumption that all words are equally important.</p>
+<p>The insight is simple: a word that appears in <em>every</em> sentence tells you nothing about what makes any specific sentence unique. The word <code>"the"</code> is useless for distinguishing meaning. The word <code>"Paris"</code>, on the other hand, only appears in one sentence — which means it is highly informative about that sentence specifically.</p>
+<p>TF-IDF rewards words that are <strong>frequent in a specific sentence</strong> but <strong>rare across all sentences</strong>.</p>
+<h3 id="the-two-components">The Two Components</h3>
+<p><strong>Term Frequency (TF)</strong> measures how often a word appears in a specific sentence. It is the same count as BoW, sometimes normalized by sentence length.</p>
+<p><strong>Inverse Document Frequency (IDF)</strong> measures how rare a word is across the entire collection of sentences. Words that appear in every sentence get a low IDF score. Words that appear in only one sentence get a high IDF score.</p>
+<p>The final score for each word in each sentence is:</p>
+<div class="arithmatex">\[\text{TF-IDF}(word, sentence) = TF \times IDF\]</div>
+<h3 id="applied-to-our-example">Applied to Our Example</h3>
+<p>After applying TF-IDF to our three sentences, the weights shift dramatically:</p>
+<table>
+<thead>
+<tr>
+<th>Word</th>
+<th>Sentence 1</th>
+<th>Sentence 2</th>
+<th>Sentence 3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>"the"</code></td>
+<td>Low</td>
+<td>Low</td>
+<td>Low</td>
+</tr>
+<tr>
+<td><code>"sat"</code></td>
+<td>Medium</td>
+<td>Medium</td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>"cat"</code></td>
+<td><strong>High</strong></td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>"paris"</code></td>
+<td>0</td>
+<td>0</td>
+<td><strong>High</strong></td>
+</tr>
+<tr>
+<td><code>"france"</code></td>
+<td>0</td>
+<td>0</td>
+<td><strong>High</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The word <code>"the"</code> is penalized because it appears everywhere. The word <code>"paris"</code> is rewarded because it appears only once and is therefore highly distinctive.</p>
+<h3 id="what-tf-idf-gets-right">What TF-IDF Gets Right</h3>
+<p>It is significantly smarter than BoW. For tasks like <strong>document search</strong> and <strong>keyword extraction</strong>, TF-IDF is still used in production systems today.</p>
+<h3 id="what-tf-idf-gets-wrong">What TF-IDF Gets Wrong</h3>
+<p>It is still a bag. Order is still completely ignored. And critically, <code>"cat"</code> and <code>"dog"</code> still have no mathematical relationship — the model has no idea that both are animals. The meaning of words is still invisible.</p>
+<blockquote>
+<p><strong>Professional Takeaway:</strong> TF-IDF is your go-to when you need a fast, interpretable, no-training-required baseline for text classification or search. It regularly outperforms more complex models when your dataset is small.</p>
+</blockquote>
+<p><img alt="TF-IDF Weight Comparison" src="https://i.imgur.com/k9JsJ66.png" /></p>
+<h2 id="4-n-grams-capturing-local-word-order">4. N-grams: Capturing Local Word Order</h2>
+<p>Both BoW and TF-IDF treat sentences as unordered collections of individual words. <strong>N-grams</strong> introduce the first hint of order by looking at <em>sequences</em> of consecutive words rather than individual ones.</p>
+<p>An <strong>n-gram</strong> is a contiguous sequence of <code>n</code> words. When <code>n=2</code>, we call them <strong>bigrams</strong>. When <code>n=3</code>, <strong>trigrams</strong>.</p>
+<h3 id="from-our-example">From Our Example</h3>
+<p><strong>Unigrams (n=1)</strong> — the standard BoW approach:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>&quot;cat&quot;, &quot;sat&quot;, &quot;on&quot;, &quot;the&quot;, &quot;mat&quot;
+</span></code></pre></div></p>
+<p><strong>Bigrams (n=2)</strong> — pairs of consecutive words:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>&quot;the cat&quot;, &quot;cat sat&quot;, &quot;sat on&quot;, &quot;on the&quot;, &quot;the mat&quot;
+</span></code></pre></div></p>
+<p><strong>Trigrams (n=3)</strong> — triples of consecutive words:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>&quot;the cat sat&quot;, &quot;cat sat on&quot;, &quot;sat on the&quot;, &quot;on the mat&quot;
+</span></code></pre></div></p>
+<p>Notice immediately that bigrams capture something BoW cannot: <code>"cat sat"</code> and <code>"sat cat"</code> are now <em>different features</em>. Word order, at least locally, is preserved.</p>
+<h3 id="what-n-grams-get-right">What N-grams Get Right</h3>
+<p>They are a simple but effective way to capture local context. In tasks like <strong>language detection</strong> and <strong>spam filtering</strong>, character-level n-grams are still state-of-the-art baselines. They require no training and are fast to compute.</p>
+<h3 id="what-n-grams-get-wrong">What N-grams Get Wrong</h3>
+<p>The vocabulary explodes. With 12 unique words in our example, unigrams give us 12 features. Bigrams give us up to 144. Trigrams up to 1,728. In a real corpus of 50,000 words, the feature space becomes completely unmanageable.</p>
+<p>More importantly, n-grams still produce <strong>sparse vectors</strong> — mostly zeros — and still have no understanding of <em>meaning</em>. The bigram <code>"cat sat"</code> and <code>"dog sat"</code> are completely unrelated features, even though they describe essentially the same event with different animals.</p>
+<blockquote>
+<p><strong>The Professional Logic:</strong> N-grams fix the <em>order</em> problem but don't fix the <em>meaning</em> problem. We need a fundamentally different approach — one that learns representations from data rather than constructing them by hand.</p>
+</blockquote>
+<p><img alt="N-gram Extraction Diagram" src="https://i.imgur.com/5rflK91.png" /></p>
+<h2 id="5-prediction-based-embeddings-cbow-and-skip-gram">5. Prediction-Based Embeddings: CBOW and Skip-gram</h2>
+<p>Everything we've built so far has been <strong>hand-crafted</strong>: we count words, we weight them, we chain them together. But what if instead of designing the representation ourselves, we <em>trained a model to learn it</em>?</p>
+<p>This is the core idea behind <strong>Word2Vec</strong> — and its two training strategies: <strong>CBOW</strong> and <strong>Skip-gram</strong>.</p>
+<p>Both are built on the same foundational principle, known as the <strong>Distributional Hypothesis</strong>:</p>
+<blockquote>
+<blockquote>
+<p><em>"A word is known by the company it keeps."</em> Words that consistently appear in the same contexts tend to have similar meanings. <code>"cat"</code> and <code>"dog"</code> both appear near words like <code>"sat"</code>, <code>"the"</code>, and <code>"on"</code> — so the model learns to place them close together in the embedding space.</p>
+</blockquote>
+</blockquote>
+<p><img alt="A word is known by the company it keeps" src="https://i.imgur.com/8al1y2F.png" /></p>
+<p>Neither CBOW nor Skip-gram is trying to solve a language task directly. They are solving a <strong>prediction task</strong> as a pretext — and the embeddings that emerge as a byproduct of that training are what we actually want.</p>
+<h3 id="the-context-window">The Context Window</h3>
+<p>Both approaches use the concept of a <strong>context window</strong> — a fixed number of words to the left and right of a target word that define its "neighborhood."</p>
+<p>Using our sentence <em>"The cat sat on the mat"</em> with a window of size 2:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Context: [&quot;The&quot;, &quot;cat&quot;, &quot;on&quot;, &quot;the&quot;]   →   Target: &quot;sat&quot;
+</span></code></pre></div>
+<p>The four surrounding words are the context. The center word is the target.</p>
+<p><img alt="CBOW vs Skip-gram Diagram" src="https://i.imgur.com/jKcG0qF.png" /></p>
+<h3 id="cbow-predicting-the-center-from-the-crowd">CBOW: Predicting the Center from the Crowd</h3>
+<p><strong>Continuous Bag of Words (CBOW)</strong> asks: <em>"Given the surrounding words, what is the missing center word?"</em></p>
+<p>Think of it as a <strong>fill-in-the-blank</strong> game:</p>
+<blockquote>
+<p><em>"The ___ sat on the mat."</em>
+The model sees <code>["The", "sat", "on", "the"]</code> and must predict <code>"cat"</code>.</p>
+</blockquote>
+<p>The model learns by adjusting the embedding of every word until its predictions improve. Words that are often surrounded by the same context words naturally end up with similar embeddings.</p>
+<p><strong>In our running example:</strong></p>
+<ul>
+<li>Input: <code>["the", "sat", "on", "the"]</code> (context around <code>"cat"</code>)</li>
+<li>Task: Predict → <code>"cat"</code></li>
+<li>Side effect: The model also trains on <code>["the", "sat", "on", "the"]</code> around <code>"dog"</code> in sentence 2</li>
+<li>Result: <code>"cat"</code> and <code>"dog"</code> end up with similar embeddings because they share the same neighborhood</li>
+</ul>
+<p><strong>The Strength:</strong> CBOW is fast and efficient. Because it averages the context, it handles frequent words well. It is ideal for large datasets.</p>
+<h3 id="skip-gram-predicting-the-crowd-from-the-center">Skip-gram: Predicting the Crowd from the Center</h3>
+<p><strong>Skip-gram</strong> flips the task: <em>"Given the center word, predict the surrounding words."</em></p>
+<p>Instead of one prediction per window, it generates <strong>multiple training pairs</strong> — one for each context word:</p>
+<blockquote>
+<p>Center word: <code>"sat"</code>
+Predictions: → <code>"the"</code>, → <code>"cat"</code>, → <code>"on"</code>, → <code>"the"</code></p>
+</blockquote>
+<p><strong>In our running example:</strong></p>
+<ul>
+<li>Input: <code>"sat"</code></li>
+<li>Task: Predict → <code>"the"</code>, <code>"cat"</code>, <code>"on"</code>, <code>"the"</code> (sentence 1) AND <code>"the"</code>, <code>"dog"</code>, <code>"on"</code>, <code>"the"</code> (sentence 2)</li>
+<li>Result: <code>"sat"</code> learns to be associated with animals, prepositions, and articles — a rich, nuanced embedding</li>
+</ul>
+<p><strong>The Strength:</strong> Skip-gram produces higher quality embeddings for rare words. Because it generates more training pairs per sentence, it squeezes more signal from less data. It is the preferred choice for smaller datasets.</p>
+<blockquote>
+<p><strong>Professional Takeaway:</strong> <strong>CBOW is faster, Skip-gram is smarter.</strong> Use CBOW when training speed matters and your dataset is large. Use Skip-gram when your vocabulary has many rare or specialized words and embedding quality matters more than training time.</p>
+</blockquote>
+<h2 id="6-negative-sampling-teaching-by-contrast">6. Negative Sampling: Teaching by Contrast</h2>
+<p>There is a hidden engineering problem inside CBOW and Skip-gram. Every time the model makes a prediction, it computes a score for <em>every word in the vocabulary</em> — which might be 100,000 words. Updating all of those weights for every single training step is computationally brutal.</p>
+<p><strong>Negative Sampling</strong> solves this by changing the question. Instead of asking <em>"which word fits here?"</em> across all vocabulary, it asks a simpler binary question: <em>"does this word-context pair make sense?"</em></p>
+<h3 id="positive-and-negative-pairs">Positive and Negative Pairs</h3>
+<p>From our sentences, we naturally get <strong>positive pairs</strong> — word-context combinations that actually appear together:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Positive: (&quot;sat&quot;, &quot;cat&quot;)  ✓  — these appear near each other in Sentence 1
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>Positive: (&quot;sat&quot;, &quot;dog&quot;)  ✓  — these appear near each other in Sentence 2
+</span></code></pre></div>
+<p><strong>Negative pairs</strong> are randomly sampled word combinations that do <em>not</em> appear together and are almost certainly meaningless:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Negative: (&quot;sat&quot;, &quot;france&quot;)  ✗  — these never appear together
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>Negative: (&quot;sat&quot;, &quot;capital&quot;)  ✗  — these never appear together
+</span></code></pre></div>
+<p>The model trains by learning to <strong>score positive pairs high</strong> and <strong>score negative pairs low</strong>. Instead of updating 100,000 weights per step, it updates only a handful — the positive pair plus a small number of randomly sampled negatives (typically 5–20).</p>
+<h3 id="why-this-works">Why This Works</h3>
+<p>The model learns <em>contrast</em>. It doesn't just learn that <code>"cat"</code> fits near <code>"sat"</code> — it learns that <code>"france"</code> doesn't. This contrastive signal is surprisingly rich and produces excellent embeddings at a fraction of the computational cost.</p>
+<blockquote>
+<p><strong>The Professional Logic:</strong> Negative sampling is what makes Word2Vec trainable on billions of words on a standard machine. Without it, the same training would require a server farm. Good engineering is what turns good theory into practical tools.</p>
+</blockquote>
+<p><img alt="Negative Sampling Diagram" src="https://i.imgur.com/vqZAXkK.png" /></p>
+<h2 id="7-the-big-four-word2vec-glove-fasttext-and-elmo">7. The Big Four: Word2Vec, GloVe, fastText, and ELMo</h2>
+<p>CBOW, Skip-gram, and Negative Sampling are the <em>engine</em>. The following four models are the <em>vehicles</em> built around that engine — each one extending the core idea to fix a specific remaining limitation.</p>
+<p><img alt="The Big Four Models" src="https://i.imgur.com/faT3yqR.png" /></p>
+<h3 id="word2vec">Word2Vec</h3>
+<p><strong>The problem it solved:</strong> BoW, TF-IDF, and n-grams produce no meaningful geometry. <code>"cat"</code> and <code>"dog"</code> are unrelated numbers. Word2Vec was the breakthrough that proved learned embeddings could encode <em>semantic relationships</em> — the famous <code>king - man + woman = queen</code> result.</p>
+<p><strong>How it works:</strong> Trains either CBOW or Skip-gram on a large corpus. The resulting embedding matrix maps every word to a dense vector where similar words cluster together.</p>
+<p><strong>Its remaining limitation:</strong> Each word gets exactly <em>one</em> embedding, regardless of context. The word <code>"bank"</code> gets one fixed vector — even though <code>"river bank"</code> and <code>"savings bank"</code> mean entirely different things.</p>
+<h3 id="glove-global-vectors-for-word-representation">GloVe (Global Vectors for Word Representation)</h3>
+<p><strong>The problem it solved:</strong> Word2Vec learns from local context windows only — it sees words in their immediate neighborhood but misses global statistical patterns across the entire corpus.</p>
+<p><strong>How it works:</strong> Instead of predicting words, GloVe directly factorizes a <strong>co-occurrence matrix</strong> — a table that counts how often every pair of words appears together across the entire dataset. By capturing global co-occurrence statistics, it builds embeddings that reflect corpus-wide patterns, not just local windows.</p>
+<p><strong>In our running example:</strong> GloVe would notice that <code>"cat"</code> and <code>"dog"</code> co-occur with the exact same set of words across the whole corpus — giving them very similar embeddings — while Word2Vec might miss some of this if those patterns are spread across distant sentences.</p>
+<p><strong>Its remaining limitation:</strong> Still one fixed vector per word. The polysemy problem (<code>"bank"</code>) remains unsolved.</p>
+<h3 id="fasttext">fastText</h3>
+<p><strong>The problem it solved:</strong> Both Word2Vec and GloVe are helpless against <strong>out-of-vocabulary (OOV) words</strong> — words they've never seen during training. Typos, rare names, and domain-specific jargon simply get no representation.</p>
+<p><strong>How it works:</strong> Instead of treating each word as an atomic unit, fastText breaks words into <strong>character n-grams</strong> (subword pieces). The word <code>"capital"</code> becomes <code>["cap", "api", "pit", "ita", "tal"]</code>. The final word embedding is the sum of its subword embeddings.</p>
+<p><strong>The power of this:</strong> Even if fastText has never seen the word <code>"Holbertonian"</code>, it can construct a reasonable embedding from pieces like <code>"Holbert"</code>, <code>"bert"</code>, <code>"onian"</code> that it <em>has</em> seen. It handles morphologically rich languages and technical vocabulary far better than its predecessors.</p>
+<p><strong>Its remaining limitation:</strong> Still produces one static embedding per word. Context still doesn't change the meaning.</p>
+<h3 id="elmo-embeddings-from-language-models">ELMo (Embeddings from Language Models)</h3>
+<p><strong>The problem it solved:</strong> Every model so far assigns a single, fixed vector to each word. But meaning is fundamentally contextual. The word <code>"sat"</code> in <em>"The cat sat on the mat"</em> and the name <em>"SAT exam"</em> should have different representations.</p>
+<p><strong>How it works:</strong> ELMo trains a deep bidirectional language model that reads the entire sentence in <em>both directions</em> before producing an embedding. The embedding for each word is not fixed — it is <strong>dynamically computed</strong> based on the full sentence context.</p>
+<p><strong>In our running example:</strong></p>
+<ul>
+<li><code>"sat"</code> in <em>"The cat sat on the mat"</em> → embedding reflects a physical action</li>
+<li><code>"capital"</code> in <em>"Paris is the capital of France"</em> → embedding reflects a political concept</li>
+<li>If <code>"capital"</code> appeared in <em>"I need capital to start a business"</em> → embedding would shift toward finance</li>
+</ul>
+<p><strong>Its remaining limitation:</strong> ELMo is computationally expensive. It was also quickly superseded by <strong>Transformers</strong> (like BERT), which solve the same context problem with greater efficiency and power.</p>
+<h3 id="side-by-side-comparison">Side-by-Side Comparison</h3>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Captures Meaning</th>
+<th>Handles OOV</th>
+<th>Context-Aware</th>
+<th>Speed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Word2Vec</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+<td>Fast</td>
+</tr>
+<tr>
+<td>GloVe</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+<td>Fast</td>
+</tr>
+<tr>
+<td>fastText</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>No</td>
+<td>Fast</td>
+</tr>
+<tr>
+<td>ELMo</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Slow</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Professional Takeaway:</strong> In practice, <strong>fastText</strong> is the best default static embedding — it handles OOV gracefully and trains quickly. Use <strong>ELMo</strong> or a Transformer-based model when context-sensitivity is critical. For most projects, start with fastText and upgrade only if performance demands it.</p>
+</blockquote>
+<h2 id="8-reality-check-when-embeddings-fail">8. Reality Check: When Embeddings Fail</h2>
+<p>Embeddings are powerful, but they are not magic. Before deploying them, you need to understand three concrete ways they can quietly fail.</p>
+<h3 id="failure-1-out-of-vocabulary-words-oov">Failure 1: Out-of-Vocabulary Words (OOV)</h3>
+<p>Word2Vec and GloVe assign no representation to words they've never seen. In production systems this happens constantly — user typos, new product names, emerging slang, technical jargon. A model that silently ignores 10% of its input is a dangerous model.</p>
+<blockquote>
+<p><em>In our example:</em> If a new sentence arrives saying <em>"The kitten sat on the mat"</em>, and <code>"kitten"</code> wasn't in the training vocabulary, Word2Vec simply has no vector for it — even though it's semantically almost identical to <code>"cat"</code>.</p>
+</blockquote>
+<p><strong>The fix:</strong> Use fastText for its subword representations, or a Transformer model with a subword tokenizer.</p>
+<h3 id="failure-2-bias-in-the-training-data">Failure 2: Bias in the Training Data</h3>
+<p>Embeddings learn from human-generated text — and human text is full of bias. Studies have shown that classic embeddings associate certain professions with specific genders, and certain names with positive or negative sentiment, purely because those associations were frequent in the training corpus.</p>
+<blockquote>
+<p><em>A real example:</em> The analogy <code>"man : doctor :: woman : nurse"</code> was produced by Word2Vec trained on news articles — reflecting the gender distribution of those articles, not the reality of medicine.</p>
+</blockquote>
+<p><strong>The fix:</strong> Be aware of it. Audit your embeddings before deployment. Consider debiasing techniques or training on more balanced corpora.</p>
+<h3 id="failure-3-domain-shift">Failure 3: Domain Shift</h3>
+<p>An embedding trained on Wikipedia has no understanding of medical terminology, legal language, or financial jargon. <code>"discharge"</code> in a hospital context means something entirely different from <code>"discharge"</code> in a military or electrical context. A general-purpose embedding will get this wrong.</p>
+<blockquote>
+<p><em>In practice:</em> A customer service bot for a bank trained on general-purpose GloVe embeddings may fail to distinguish <code>"account balance"</code> from <code>"balance beam"</code> in edge cases where context is ambiguous.</p>
+</blockquote>
+<p><strong>The fix:</strong> Fine-tune your embeddings on domain-specific text, or use a domain-specific pre-trained model.</p>
+<blockquote>
+<p><strong>Professional Takeaway:</strong> Always interrogate your embeddings before trusting them. Probe them with analogies, check for OOV rates on your specific dataset, and audit for bias. A fast sanity check before training saves weeks of debugging after deployment.</p>
+</blockquote>
+<h2 id="glossary">Glossary</h2>
+<h3 id="1-counting-based-methods">1. Counting-Based Methods</h3>
+<ul>
+<li><strong>Bag of Words (BoW):</strong> A representation that counts word occurrences in a document, ignoring order entirely.</li>
+<li><strong>TF-IDF:</strong> A weighting scheme that rewards words frequent in one document but rare across all documents.</li>
+<li><strong>Term Frequency (TF):</strong> How often a word appears in a specific document.</li>
+<li><strong>Inverse Document Frequency (IDF):</strong> A penalty applied to words that appear in many documents, reducing the weight of common words.</li>
+<li><strong>N-gram:</strong> A contiguous sequence of <code>n</code> words. Bigrams capture pairs; trigrams capture triples.</li>
+<li><strong>Sparse Vector:</strong> A vector that is mostly zeros. BoW, TF-IDF, and n-gram vectors are sparse.</li>
+</ul>
+<h3 id="2-prediction-based-embeddings">2. Prediction-Based Embeddings</h3>
+<ul>
+<li><strong>Distributional Hypothesis:</strong> The principle that words appearing in similar contexts have similar meanings. The theoretical foundation of all learned embeddings.</li>
+<li><strong>Context Window:</strong> The fixed number of words to the left and right of a target word used to define its neighborhood during training.</li>
+<li><strong>CBOW (Continuous Bag of Words):</strong> Predicts the center word from its surrounding context. Fast and efficient on large datasets.</li>
+<li><strong>Skip-gram:</strong> Predicts surrounding context words from a center word. Better quality embeddings for rare words.</li>
+<li><strong>Negative Sampling:</strong> A training technique that replaces the expensive "predict from all vocabulary" step with a binary "does this pair make sense?" question, using randomly sampled incorrect pairs as contrast.</li>
+<li><strong>Dense Vector:</strong> A vector where most values are non-zero real numbers. Learned embeddings are dense.</li>
+</ul>
+<h3 id="3-embedding-models">3. Embedding Models</h3>
+<ul>
+<li><strong>Word2Vec:</strong> The landmark model that proved learned embeddings encode semantic relationships. Trains via CBOW or Skip-gram.</li>
+<li><strong>GloVe:</strong> Extends Word2Vec by incorporating global co-occurrence statistics across the entire corpus, not just local windows.</li>
+<li><strong>fastText:</strong> Extends GloVe by decomposing words into character n-grams, allowing it to construct embeddings for unseen words.</li>
+<li><strong>ELMo:</strong> Produces context-sensitive embeddings by reading the full sentence bidirectionally. The word <code>"bank"</code> gets a different vector in different sentences.</li>
+<li><strong>Co-occurrence Matrix:</strong> A table counting how often every pair of words appears together across a corpus. The input to GloVe.</li>
+<li><strong>Subword Tokenization:</strong> Breaking words into smaller character-level pieces. Used by fastText and modern Transformers to handle OOV words.</li>
+</ul>
+<h3 id="4-failure-modes">4. Failure Modes</h3>
+<ul>
+<li><strong>Out-of-Vocabulary (OOV):</strong> A word the model has no embedding for, because it was never seen during training.</li>
+<li><strong>Domain Shift:</strong> The drop in performance when a model trained on one type of text is applied to a different domain.</li>
+<li><strong>Embedding Bias:</strong> Learned associations in an embedding space that reflect historical biases present in the training corpus.</li>
+<li><strong>Polysemy:</strong> The property of a word having multiple distinct meanings (e.g., <code>"bank"</code>). Static embeddings fail to handle this; context-aware models like ELMo address it.</li>
+</ul>
+<blockquote>
+<p><strong>What's Next:</strong> You now understand how to represent language as mathematics. The next step is learning how to <em>evaluate</em> whether your NLP model is actually doing its job — because accuracy alone tells you almost nothing about language quality. That's exactly what the Evaluation Metrics page covers.</p>
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.path", "navigation.top", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

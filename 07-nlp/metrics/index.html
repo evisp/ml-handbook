@@ -1,0 +1,4422 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://evisp.github.io/ml-handbook/07-nlp/metrics/">
+      
+      
+        <link rel="prev" href="../embeddings/">
+      
+      
+        <link rel="next" href="../qa-bots/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Evaluation Metrics for NLP - Holberton ML Handbook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#evaluation-metrics-for-nlp-how-do-you-grade-a-sentence" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Holberton ML Handbook" class="md-header__button md-logo" aria-label="Holberton ML Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Holberton ML Handbook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Evaluation Metrics for NLP
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="cyan"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/evisp/ml-handbook" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../01-tools/" class="md-tabs__link">
+          
+  
+  
+  Tools
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../02-math/" class="md-tabs__link">
+          
+  
+  
+  Math
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../03-data/" class="md-tabs__link">
+          
+  
+  
+  Data
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../04-core-ml/" class="md-tabs__link">
+          
+  
+  
+  Core ML
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../05-dl-fundamentals/" class="md-tabs__link">
+          
+  
+  
+  Deep Learning Fundamentals
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../06-dl-architectures/" class="md-tabs__link">
+          
+  
+  
+  Deep Learning Architectures
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+  Sequential & NLP
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../08-llms/" class="md-tabs__link">
+          
+  
+  
+  Generative AI & LLMs
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../09-portfolio/" class="md-tabs__link">
+          
+  
+  
+  Final Portfolio
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Holberton ML Handbook" class="md-nav__button md-logo" aria-label="Holberton ML Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Holberton ML Handbook
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/evisp/ml-handbook" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/zero-day/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Zero day
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/git-and-github/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git & GitHub
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/notebook-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jupyter notebook setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/vscode-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/python-warm-up/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python Warm Up
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Math
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Math
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-math/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-math/linear-algebra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linear algebra
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-math/numpy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NumPy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-math/calculus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calculus
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-math/probability-statistics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Probability & statistics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Data
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/data-foundations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/pandas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pandas essentials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/visualization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visualization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/data-processing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Processing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/data-collection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data collection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/sql/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SQL databases
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/mongo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NoSQL (MongoDB)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-data/mongo-install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NoSQL (MongoDB install)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core ML
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Core ML
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/ml-intro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/ml-categories/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ML Categories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/lifecycle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ML Lifecycle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/regression/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regression
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/supervised/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/supervised-advanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification Advanced
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/unsupervised/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unsupervised Learning Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/clustering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unsupervised Learning Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-core-ml/dim_reduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unsupervised Learning Dimensionality Reduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Learning Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deep Learning Fundamentals
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-dl-fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-dl-fundamentals/classification-nn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification Using Neural Networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-dl-fundamentals/optimization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-dl-fundamentals/error-analysis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Error Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-dl-fundamentals/regularization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regularization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Learning Architectures
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deep Learning Architectures
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-dl-architectures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-dl-architectures/convolutions-pooling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Convolutions and Pooling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-dl-architectures/cnns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Convolutional Neural Networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-dl-architectures/data-augmentation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Augmentation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-dl-architectures/deep-cnns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Convolutional Architectures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-dl-architectures/transfer-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transfer Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-dl-architectures/object-detection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Detection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sequential & NLP
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Sequential & NLP
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rnns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RNNs and LSTMs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../time-series/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Time Series Forecasting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nlp-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Understanding NLP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../embeddings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Word Embeddings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Evaluation Metrics for NLP
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Evaluation Metrics for NLP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#getting-the-right-answer-is-easy-to-measure-getting-the-right-sentence-is-not" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Getting the Right Answer is Easy to Measure. Getting the Right Sentence is Not.
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-why-nlp-needs-its-own-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Why NLP Needs Its Own Metrics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Why NLP Needs Its Own Metrics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-running-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Running Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-applications-and-their-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Applications and Their Metrics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Applications and Their Metrics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#translation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Translation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#summarization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summarization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#language-modeling-text-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Language Modeling &amp; Text Generation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#text-classification-question-answering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Text Classification &amp; Question Answering
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-bleu-score-measuring-translation-quality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. BLEU Score: Measuring Translation Quality
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. BLEU Score: Measuring Translation Quality">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setting-up-the-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setting Up the Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-bleu-works-n-gram-precision" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How BLEU Works: N-gram Precision
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-brevity-penalty" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Brevity Penalty
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-bleu-gets-right" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What BLEU Gets Right
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-bleu-gets-wrong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What BLEU Gets Wrong
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-rouge-score-measuring-summary-quality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. ROUGE Score: Measuring Summary Quality
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. ROUGE Score: Measuring Summary Quality">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setting-up-the-example_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setting Up the Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rouge-1-unigram-recall" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ROUGE-1: Unigram Recall
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rouge-2-bigram-recall" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ROUGE-2: Bigram Recall
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rouge-l-longest-common-subsequence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ROUGE-L: Longest Common Subsequence
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-bleurouge-distinction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The BLEU–ROUGE Distinction
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-perplexity-measuring-model-confidence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Perplexity: Measuring Model Confidence
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Perplexity: Measuring Model Confidence">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-intuition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Intuition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-formula" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Formula
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#applied-to-the-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Applied to the Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-perplexity-measures-and-what-it-doesnt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Perplexity Measures — and What It Doesn't
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-choosing-the-right-metric" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Choosing the Right Metric
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Choosing the Right Metric">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-two-metric-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Two-Metric Rule
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-human-evaluation-is-non-negotiable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When Human Evaluation is Non-Negotiable
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-reality-check-when-metrics-lie" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Reality Check: When Metrics Lie
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Reality Check: When Metrics Lie">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bleu-lies-when-order-doesnt-matter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BLEU Lies When Order Doesn't Matter
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rouge-lies-when-copying-is-easy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ROUGE Lies When Copying Is Easy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#perplexity-lies-when-fluency-and-truth-diverge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Perplexity Lies When Fluency and Truth Diverge
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#glossary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Glossary
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Glossary">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-core-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Core Concepts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-bleu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. BLEU
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-rouge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. ROUGE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-perplexity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Perplexity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-evaluation-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Evaluation Strategy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../qa-bots/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Question Answering Bots
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../practice/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Practice NLP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Generative AI & LLMs
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Generative AI & LLMs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-llms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-llms/gen-ai-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Generative AI Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-llms/llm-intro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Large Language Models (LLMs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-llms/model-ecosystems/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Open Source vs Proprietary Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-llms/tailoring-chatbots/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tailoring AI Chatbots
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-llms/web-gpu/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Running Models with WebGPU
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-llms/api-and-frameworks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpenAI and Hugging Face
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Final Portfolio
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Final Portfolio
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-portfolio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-portfolio/requirements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project Requirements
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#getting-the-right-answer-is-easy-to-measure-getting-the-right-sentence-is-not" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Getting the Right Answer is Easy to Measure. Getting the Right Sentence is Not.
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-why-nlp-needs-its-own-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Why NLP Needs Its Own Metrics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Why NLP Needs Its Own Metrics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-running-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Running Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-applications-and-their-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Applications and Their Metrics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Applications and Their Metrics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#translation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Translation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#summarization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summarization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#language-modeling-text-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Language Modeling &amp; Text Generation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#text-classification-question-answering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Text Classification &amp; Question Answering
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-bleu-score-measuring-translation-quality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. BLEU Score: Measuring Translation Quality
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. BLEU Score: Measuring Translation Quality">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setting-up-the-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setting Up the Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-bleu-works-n-gram-precision" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How BLEU Works: N-gram Precision
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-brevity-penalty" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Brevity Penalty
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-bleu-gets-right" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What BLEU Gets Right
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-bleu-gets-wrong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What BLEU Gets Wrong
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-rouge-score-measuring-summary-quality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. ROUGE Score: Measuring Summary Quality
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. ROUGE Score: Measuring Summary Quality">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setting-up-the-example_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setting Up the Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rouge-1-unigram-recall" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ROUGE-1: Unigram Recall
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rouge-2-bigram-recall" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ROUGE-2: Bigram Recall
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rouge-l-longest-common-subsequence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ROUGE-L: Longest Common Subsequence
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-bleurouge-distinction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The BLEU–ROUGE Distinction
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-perplexity-measuring-model-confidence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Perplexity: Measuring Model Confidence
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Perplexity: Measuring Model Confidence">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-intuition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Intuition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-formula" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Formula
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#applied-to-the-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Applied to the Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-perplexity-measures-and-what-it-doesnt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Perplexity Measures — and What It Doesn't
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-choosing-the-right-metric" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Choosing the Right Metric
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Choosing the Right Metric">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-two-metric-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Two-Metric Rule
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-human-evaluation-is-non-negotiable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When Human Evaluation is Non-Negotiable
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-reality-check-when-metrics-lie" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Reality Check: When Metrics Lie
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Reality Check: When Metrics Lie">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bleu-lies-when-order-doesnt-matter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BLEU Lies When Order Doesn't Matter
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rouge-lies-when-copying-is-easy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ROUGE Lies When Copying Is Easy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#perplexity-lies-when-fluency-and-truth-diverge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Perplexity Lies When Fluency and Truth Diverge
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#glossary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Glossary
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Glossary">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-core-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Core Concepts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-bleu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. BLEU
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-rouge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. ROUGE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-perplexity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Perplexity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-evaluation-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Evaluation Strategy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Sequential & NLP
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="evaluation-metrics-for-nlp-how-do-you-grade-a-sentence">Evaluation Metrics for NLP: How Do You Grade a Sentence?</h1>
+<p><img alt="Evaluation Metrics Motivation" src="https://i.imgur.com/WCjWJfh.png" /></p>
+<h3 id="getting-the-right-answer-is-easy-to-measure-getting-the-right-sentence-is-not">Getting the Right Answer is Easy to Measure. Getting the Right Sentence is Not.</h3>
+<p>In standard machine learning, grading a model is straightforward. It predicted 
+<code>1</code>, the answer was <code>1</code> — correct. It predicted <code>0</code>, the answer was <code>1</code> — wrong. 
+Accuracy, precision, recall. Clean, mathematical, unambiguous.</p>
+<p>Language doesn't work like that.</p>
+<p>Consider a model that translates <em>"Students must submit their work on time"</em> as 
+<em>"Learners are required to hand in assignments punctually."</em> Every word is 
+different. The meaning is identical. A standard accuracy metric would score 
+this as completely wrong.</p>
+<p>This is the central challenge of NLP evaluation: <strong>two sentences can mean the 
+same thing with zero word overlap, and two sentences can share every word while 
+meaning completely different things.</strong> We need metrics that are sensitive to 
+meaning, not just surface form.</p>
+<p>This page introduces the three most important NLP evaluation metrics — BLEU, 
+ROUGE, and Perplexity — and shows exactly when and why to use each one.</p>
+<h2 id="1-why-nlp-needs-its-own-metrics">1. Why NLP Needs Its Own Metrics</h2>
+<p>Before introducing the metrics, we need to understand the three fundamental 
+questions that NLP evaluation must answer — because each metric answers a 
+different one.</p>
+<blockquote>
+<p><em>"Is this translation faithful to the original?"</em> → <strong>BLEU</strong></p>
+<p><em>"Does this summary capture the key points?"</em> → <strong>ROUGE</strong></p>
+<p><em>"How confident is this model about the language it generates?"</em> → <strong>Perplexity</strong></p>
+</blockquote>
+<p><img alt="Metrics" src="https://i.imgur.com/wdrclRY.png" /></p>
+<p>The most important professional insight on this page is this: <strong>there is no 
+universal NLP metric.</strong> The task always comes first. Using BLEU to evaluate 
+a summarizer, or ROUGE to evaluate a language model, produces meaningless 
+numbers. The metric must match the task.</p>
+<h3 id="the-running-example">The Running Example</h3>
+<p>We will use a single source sentence to illustrate these evaluation metrics.</p>
+<blockquote>
+<blockquote>
+<p><strong>Source sentence:</strong>
+<em>"Students who miss more than three consecutive days without notifying 
+staff may be subject to academic review."</em></p>
+</blockquote>
+</blockquote>
+<p>From this one sentence, we will derive three tasks:</p>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>What We Produce</th>
+<th>Metric</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Translation</strong></td>
+<td>A French translation of the source</td>
+<td>BLEU</td>
+</tr>
+<tr>
+<td><strong>Summarization</strong></td>
+<td>A one-sentence summary of the source</td>
+<td>ROUGE</td>
+</tr>
+<tr>
+<td><strong>Generation</strong></td>
+<td>A language model completes a related sentence</td>
+<td>Perplexity</td>
+</tr>
+</tbody>
+</table>
+<p>The same source. Three tasks. Three metrics. Each one motivated by the 
+specific challenge of evaluating that task.</p>
+<h2 id="2-applications-and-their-metrics">2. Applications and Their Metrics</h2>
+<p>Different NLP tasks require different evaluation strategies. Here is the 
+landscape before we go deep on any single metric.</p>
+<h3 id="translation">Translation</h3>
+<p><strong>Task:</strong> Convert text from one language to another while preserving meaning.</p>
+<p><strong>Metric:</strong> BLEU — measures how closely the machine translation matches one 
+or more human reference translations at the n-gram level.</p>
+<p><strong>Example systems:</strong> Google Translate, DeepL, multilingual customer support bots.</p>
+<h3 id="summarization">Summarization</h3>
+<p><strong>Task:</strong> Compress a long document into a shorter one that retains the key information.</p>
+<p><strong>Metric:</strong> ROUGE — measures how much of the human-written reference summary 
+appears in the machine-generated summary.</p>
+<p><strong>Example systems:</strong> News summarizers, document abstractors, meeting note generators.</p>
+<h3 id="language-modeling-text-generation">Language Modeling &amp; Text Generation</h3>
+<p><strong>Task:</strong> Generate fluent, coherent text — completions, responses, continuations.</p>
+<p><strong>Metric:</strong> Perplexity — measures how confidently and accurately a model 
+predicts the next word in a sequence.</p>
+<p><strong>Example systems:</strong> Autocomplete, chatbots, code generation tools.</p>
+<h3 id="text-classification-question-answering">Text Classification &amp; Question Answering</h3>
+<p><strong>Task:</strong> Assign labels to text, or extract specific answers from a passage.</p>
+<p><strong>Metric:</strong> Standard metrics apply here — <strong>Accuracy</strong>, <strong>F1 Score</strong>, 
+<strong>Exact Match (EM)</strong>. These tasks have clear correct answers, so standard 
+classification metrics are appropriate.</p>
+<blockquote>
+<p><strong>The Professional Logic:</strong> Always ask <em>"what does success look like for 
+this task?"</em> before choosing a metric. A metric that doesn't reflect your 
+definition of success will mislead you — even if the numbers look impressive.</p>
+</blockquote>
+<p><img alt="NLP Tasks and Metrics Map" src="https://i.imgur.com/JJNbzg3.png" /></p>
+<h2 id="3-bleu-score-measuring-translation-quality">3. BLEU Score: Measuring Translation Quality</h2>
+<p><strong>BLEU (Bilingual Evaluation Understudy)</strong> is the standard metric for 
+evaluating machine translation. It answers the question:</p>
+<blockquote>
+<blockquote>
+<p><em>"How much of the machine-generated output matches a human reference translation?"</em></p>
+</blockquote>
+</blockquote>
+<p>The core idea is <strong>precision of n-grams</strong>: how many of the word sequences 
+in the machine output also appear in the human reference?</p>
+<h3 id="setting-up-the-example">Setting Up the Example</h3>
+<p><strong>Source (English):</strong></p>
+<blockquote>
+<p><em>"Students who miss more than three consecutive days without notifying 
+staff may be subject to academic review."</em></p>
+</blockquote>
+<p><strong>Human Reference Translation (French):</strong></p>
+<blockquote>
+<p><em>"Les étudiants qui manquent plus de trois jours consécutifs sans 
+notifier le personnel peuvent faire l'objet d'une révision académique."</em></p>
+</blockquote>
+<p><strong>Machine Translation A (Good):</strong></p>
+<blockquote>
+<p><em>"Les étudiants qui manquent plus de trois jours consécutifs sans 
+informer le personnel peuvent être soumis à une révision académique."</em></p>
+</blockquote>
+<p><strong>Machine Translation B (Bad):</strong></p>
+<blockquote>
+<p><em>"Les étudiants académique jours personnel consécutifs révision 
+manquent notifier."</em></p>
+</blockquote>
+<p>Translation B contains all the right words; but in a random, meaningless order.
+A good metric must reward A and penalize B.</p>
+<h3 id="how-bleu-works-n-gram-precision">How BLEU Works: N-gram Precision</h3>
+<p>BLEU computes <strong>precision at multiple n-gram levels</strong> and combines them.</p>
+<p><strong>Unigram precision (n=1):</strong> What fraction of words in the output appear 
+in the reference?</p>
+<p>For Translation A, nearly every word matches the reference. For Translation B, 
+the words match but the order is completely wrong — which unigram precision 
+alone cannot detect.</p>
+<p><strong>Bigram precision (n=2):</strong> What fraction of consecutive word pairs in the 
+output appear in the reference?</p>
+<p>Here Translation B collapses. Word pairs like <code>"étudiants académique"</code> never 
+appear in the reference. Bigrams begin to capture order.</p>
+<p><strong>The BLEU formula combines precision across n-gram levels:</strong></p>
+<div class="arithmatex">\[\text{BLEU} = BP \times \exp\left(\sum_{n=1}^{N} w_n \log p_n\right)\]</div>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(p_n\)</span> is the <strong>modified precision</strong> for n-grams of size <span class="arithmatex">\(n\)</span></li>
+<li><span class="arithmatex">\(w_n\)</span> is the weight for each n-gram level, typically <span class="arithmatex">\(w_n = \frac{1}{N}\)</span></li>
+<li><span class="arithmatex">\(N\)</span> is the maximum n-gram order, typically <span class="arithmatex">\(N = 4\)</span></li>
+<li><span class="arithmatex">\(BP\)</span> is the <strong>Brevity Penalty</strong> (explained below)</li>
+</ul>
+<p>The modified precision for n-grams of order <span class="arithmatex">\(n\)</span> is:</p>
+<div class="arithmatex">\[p_n = \frac{\sum_{\text{n-gram} \in \hat{y}} \min\left(\text{count}(\text{n-gram}, \hat{y}),\ \text{count}(\text{n-gram}, y)\right)}{\sum_{\text{n-gram} \in \hat{y}} \text{count}(\text{n-gram}, \hat{y})}\]</div>
+<p>Where <span class="arithmatex">\(\hat{y}\)</span> is the machine output and <span class="arithmatex">\(y\)</span> is the human reference. The 
+<span class="arithmatex">\(\min\)</span> prevents the model from cheating by repeating a single correct word 
+many times.</p>
+<h3 id="the-brevity-penalty">The Brevity Penalty</h3>
+<p>Without a length penalty, a model could achieve perfect precision by outputting 
+a single word — if that word appears in the reference, the precision is 1.0. 
+BLEU prevents this with the <strong>Brevity Penalty (BP)</strong>:</p>
+<div class="arithmatex">\[BP = \begin{cases} 1 &amp; \text{if } c &gt; r \\ e^{1 - r/c} &amp; \text{if } c \leq r \end{cases}\]</div>
+<p>Where <span class="arithmatex">\(c\)</span> is the length of the candidate output and <span class="arithmatex">\(r\)</span> is the length of 
+the reference. If the output is shorter than the reference, the score is 
+penalized exponentially.</p>
+<p><strong>BLEU scores range from 0 to 1.</strong> In practice, a BLEU score above 0.4 
+is considered good for machine translation. Human translations against 
+each other typically score around 0.6–0.7 — because even humans rarely 
+translate identically.</p>
+<h3 id="what-bleu-gets-right">What BLEU Gets Right</h3>
+<p>It is fast, reproducible, and language-independent. It correlates well 
+with human judgment on translation quality at the corpus level. For this 
+reason it has been the standard benchmark for translation systems for over 
+two decades.</p>
+<h3 id="what-bleu-gets-wrong">What BLEU Gets Wrong</h3>
+<p>BLEU is precision-focused — it measures whether the output is faithful 
+to the reference. It does not measure whether the output is <strong>complete</strong>. 
+A translation that captures only half the sentence but does so perfectly 
+can score deceptively high.</p>
+<p>It also has no concept of synonyms. Our good translation used <code>"informer"</code> 
+where the reference used <code>"notifier"</code> — both are correct French translations 
+of <code>"notifying"</code>. BLEU counts this as a mismatch.</p>
+<blockquote>
+<p><strong>Professional Takeaway:</strong> BLEU is a useful proxy, not a truth. Always 
+report BLEU at multiple n-gram levels and always combine it with human 
+evaluation on a sample of outputs before trusting the number.</p>
+</blockquote>
+<p><img alt="BLEU N-gram Matching Diagram" src="https://i.imgur.com/bmrQ5TS.png" /></p>
+<h2 id="4-rouge-score-measuring-summary-quality">4. ROUGE Score: Measuring Summary Quality</h2>
+<p><strong>ROUGE (Recall-Oriented Understudy for Gisting Evaluation)</strong> is the standard 
+metric for evaluating text summarization. It answers a fundamentally different 
+question from BLEU:</p>
+<blockquote>
+<blockquote>
+<p><em>"How much of the human reference summary appears in the machine-generated summary?"</em></p>
+</blockquote>
+</blockquote>
+<p>Where BLEU asks <em>"is the output precise?"</em>, ROUGE asks <em>"is the output complete?"</em> 
+This is the difference between <strong>precision</strong> (what you said was right) and 
+<strong>recall</strong> (did you say everything important).</p>
+<h3 id="setting-up-the-example_1">Setting Up the Example</h3>
+<p><strong>Source (full sentence):</strong></p>
+<blockquote>
+<p><em>"Students who miss more than three consecutive days without notifying 
+staff may be subject to academic review."</em></p>
+</blockquote>
+<p><strong>Human Reference Summary:</strong></p>
+<blockquote>
+<p><em>"Missing three or more days without notifying staff risks academic review."</em></p>
+</blockquote>
+<p><strong>Machine Summary A (Good — abstractive):</strong></p>
+<blockquote>
+<p><em>"Unexcused absences of three or more consecutive days may trigger an 
+academic review process."</em></p>
+</blockquote>
+<p><strong>Machine Summary B (Bad — incomplete):</strong></p>
+<blockquote>
+<p><em>"Students may miss days."</em></p>
+</blockquote>
+<p><strong>Machine Summary C (Lazy — extractive copy):</strong></p>
+<blockquote>
+<p><em>"Students who miss more than three consecutive days without notifying 
+staff may be subject to academic review."</em></p>
+</blockquote>
+<p>Summary C is the full original sentence. It scores perfectly by any n-gram 
+metric — but it is not a summary. A good metric should reward A and penalize 
+both B and C.</p>
+<h3 id="rouge-1-unigram-recall">ROUGE-1: Unigram Recall</h3>
+<p><strong>ROUGE-1</strong> measures the overlap of individual words between the machine 
+summary and the human reference.</p>
+<div class="arithmatex">\[\text{ROUGE-1} = \frac{\text{Number of overlapping unigrams}}{\text{Total unigrams in reference}}\]</div>
+<p>For Summary A, words like <code>"days"</code>, <code>"staff"</code>, <code>"academic"</code>, <code>"review"</code> all 
+appear in the reference. The recall is high even though the exact phrasing differs.</p>
+<p>For Summary B, only <code>"students"</code> and <code>"days"</code> match — very low recall.</p>
+<h3 id="rouge-2-bigram-recall">ROUGE-2: Bigram Recall</h3>
+<p><strong>ROUGE-2</strong> raises the bar by requiring consecutive word pairs to match. 
+This penalizes summaries that get the right words but in the wrong order 
+or context.</p>
+<div class="arithmatex">\[\text{ROUGE-2} = \frac{\text{Number of overlapping bigrams}}{\text{Total bigrams in reference}}\]</div>
+<p>Summary A scores lower on ROUGE-2 than ROUGE-1 because it paraphrases — 
+the bigrams are different even though the meaning is the same. This is 
+a known weakness of ROUGE: it penalizes good abstractive summaries.</p>
+<h3 id="rouge-l-longest-common-subsequence">ROUGE-L: Longest Common Subsequence</h3>
+<p><strong>ROUGE-L</strong> is more flexible. Instead of requiring exact n-gram matches, 
+it finds the <strong>Longest Common Subsequence (LCS)</strong> — the longest sequence 
+of words that appears in both the reference and the output, in the same 
+order but not necessarily consecutively.</p>
+<div class="arithmatex">\[\text{ROUGE-L} = \frac{|\text{LCS}(\hat{y},\ y)|}{|y|}\]</div>
+<p>Where <span class="arithmatex">\(|\text{LCS}(\hat{y}, y)|\)</span> is the length of the longest common 
+subsequence and <span class="arithmatex">\(|y|\)</span> is the length of the reference.</p>
+<p>ROUGE-L handles paraphrasing better than ROUGE-2 because it allows gaps 
+between matching words. Summary A scores well on ROUGE-L even though its 
+exact phrasing differs from the reference.</p>
+<h3 id="the-bleurouge-distinction">The BLEU–ROUGE Distinction</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>BLEU</th>
+<th>ROUGE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Primary focus</strong></td>
+<td>Precision</td>
+<td>Recall</td>
+</tr>
+<tr>
+<td><strong>Question asked</strong></td>
+<td>Is the output faithful?</td>
+<td>Is the output complete?</td>
+</tr>
+<tr>
+<td><strong>Penalizes</strong></td>
+<td>Hallucination (saying wrong things)</td>
+<td>Omission (missing key points)</td>
+</tr>
+<tr>
+<td><strong>Best for</strong></td>
+<td>Translation</td>
+<td>Summarization</td>
+</tr>
+</tbody>
+</table>
+<p>In practice, a good summarization system should score well on <strong>both</strong> 
+ROUGE (recall — it covers the key points) and a modified BLEU (precision — 
+it doesn't add hallucinated content). Using only one misleads you.</p>
+<blockquote>
+<p><strong>Professional Takeaway:</strong> ROUGE rewards summaries that cover the reference 
+content. But a summary that copies the source verbatim scores perfectly on 
+ROUGE while being completely useless. Always inspect high-scoring outputs 
+manually — the number alone is not enough.</p>
+</blockquote>
+<p><img alt="ROUGE Recall vs BLEU Precision Diagram" src="https://i.imgur.com/HKJGLix.png" /></p>
+<h2 id="5-perplexity-measuring-model-confidence">5. Perplexity: Measuring Model Confidence</h2>
+<p><strong>Perplexity</strong> is a completely different kind of metric. BLEU and ROUGE 
+compare a machine output to a human reference. Perplexity has no reference. 
+Instead, it measures something internal to the model itself:</p>
+<blockquote>
+<blockquote>
+<p><em>"How surprised is this model by the text it sees?"</em></p>
+</blockquote>
+</blockquote>
+<p>A language model assigns a probability to every possible next word. A model 
+that has learned the patterns of English well should assign high probability 
+to natural, grammatical continuations — and low probability to random or 
+incoherent ones. Perplexity quantifies this confidence.</p>
+<h3 id="the-intuition">The Intuition</h3>
+<p>Imagine a language model is asked to predict the next word in:</p>
+<blockquote>
+<p><em>"Students who miss more than three consecutive days without notifying 
+staff may be subject to academic ___."</em></p>
+</blockquote>
+<p>A well-trained model knows that <code>"review"</code> is a highly probable next word 
+in this context. It assigns a high probability to <code>"review"</code> and low 
+probabilities to random words like <code>"banana"</code> or <code>"seventeen"</code>.</p>
+<p>Now imagine the model is asked to predict the next word in:</p>
+<blockquote>
+<p><em>"Academic notifying staff three students days miss consecutive ___."</em></p>
+</blockquote>
+<p>This is the same words in a random order. A good model should be very 
+uncertain — no word is obviously the right continuation. Its probability 
+distribution is flat and confused.</p>
+<p><strong>Perplexity measures this confusion.</strong> Low perplexity = confident = the 
+text follows patterns the model understands. High perplexity = confused = 
+the text is unexpected or incoherent.</p>
+<h3 id="the-formula">The Formula</h3>
+<p>Given a sequence of <span class="arithmatex">\(N\)</span> words <span class="arithmatex">\(w_1, w_2, \ldots, w_N\)</span>, perplexity is 
+defined as:</p>
+<div class="arithmatex">\[\text{PP}(W) = P(w_1, w_2, \ldots, w_N)^{-\frac{1}{N}}\]</div>
+<p>Which can be written using the chain rule as:</p>
+<div class="arithmatex">\[\text{PP}(W) = \left(\prod_{i=1}^{N} \frac{1}{P(w_i \mid w_1, \ldots, w_{i-1})}\right)^{\frac{1}{N}}\]</div>
+<p>The intuition behind the formula: perplexity is the <strong>geometric mean of the 
+inverse probabilities</strong> of each word in the sequence. If the model assigns 
+high probability to every word, the inverse probabilities are small, and 
+perplexity is low. If the model is consistently surprised, probabilities are 
+low, inverse probabilities are large, and perplexity is high.</p>
+<h3 id="applied-to-the-example">Applied to the Example</h3>
+<table>
+<thead>
+<tr>
+<th>Text</th>
+<th>Model Confidence</th>
+<th>Perplexity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>"Students who miss three consecutive days may face academic review"</em></td>
+<td>High — natural and expected</td>
+<td>Low (~20–50)</td>
+</tr>
+<tr>
+<td><em>"Students who miss three consecutive days may face academic banana"</em></td>
+<td>Medium — natural until the last word</td>
+<td>Medium (~200–500)</td>
+</tr>
+<tr>
+<td><em>"Academic notifying staff three students days miss consecutive"</em></td>
+<td>Low — no natural pattern</td>
+<td>High (~1000+)</td>
+</tr>
+</tbody>
+</table>
+<p>A language model trained on institutional text would assign very high 
+probability to the first sentence — it matches patterns seen many times 
+during training. The nonsense reordering breaks every pattern the model 
+learned, producing high perplexity.</p>
+<h3 id="what-perplexity-measures-and-what-it-doesnt">What Perplexity Measures — and What It Doesn't</h3>
+<p>Perplexity measures <strong>fluency</strong>, not <strong>correctness</strong>. A model can generate 
+a perfectly grammatical, stylistically natural sentence that is factually 
+wrong — and it will score low perplexity. The sentence <em>"Students who pass 
+all their projects are subject to immediate expulsion"</em> is fluent, 
+institutional-sounding, and completely false. A language model may assign 
+it low perplexity regardless.</p>
+<p>This is why perplexity is used to evaluate <strong>language models</strong> during 
+training — it tells you whether the model is learning the statistical 
+patterns of the language — but not to evaluate factual accuracy or 
+task-specific quality.</p>
+<blockquote>
+<p><strong>Professional Takeaway:</strong> Use perplexity to compare two versions of 
+the same model (lower is better) or to monitor training progress. 
+Never use it as the sole metric for a production system — a fluent 
+liar scores just as well as a fluent truth-teller.</p>
+</blockquote>
+<p><img alt="Perplexity Confidence Scale" src="https://i.imgur.com/i9PUbSC.png" /></p>
+<h2 id="6-choosing-the-right-metric">6. Choosing the Right Metric</h2>
+<p>With three metrics in hand, the practical question is: which one do you 
+reach for, and when?</p>
+<p>The answer always starts with the task. Here is the decision map:</p>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Primary Metric</th>
+<th>Secondary Metric</th>
+<th>What to Watch For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Machine Translation</td>
+<td>BLEU</td>
+<td>Human evaluation</td>
+<td>Synonym mismatches, fluency</td>
+</tr>
+<tr>
+<td>Summarization</td>
+<td>ROUGE-L</td>
+<td>ROUGE-1, ROUGE-2</td>
+<td>Verbatim copying, omission</td>
+</tr>
+<tr>
+<td>Language Modeling</td>
+<td>Perplexity</td>
+<td>Human evaluation</td>
+<td>Fluent nonsense</td>
+</tr>
+<tr>
+<td>Text Classification</td>
+<td>F1 Score</td>
+<td>Accuracy</td>
+<td>Class imbalance</td>
+</tr>
+<tr>
+<td>Question Answering</td>
+<td>Exact Match</td>
+<td>F1 Score</td>
+<td>Partial answers</td>
+</tr>
+<tr>
+<td>Dialogue / Chat</td>
+<td>Human evaluation</td>
+<td>Perplexity</td>
+<td>Coherence, relevance</td>
+</tr>
+</tbody>
+</table>
+<h3 id="the-two-metric-rule">The Two-Metric Rule</h3>
+<p>A consistent professional practice is to always use <strong>at least two metrics</strong> 
+for any NLP system:</p>
+<ul>
+<li>One metric that rewards <strong>precision</strong> (did you say the right things?)</li>
+<li>One metric that rewards <strong>recall</strong> (did you say everything important?)</li>
+</ul>
+<p>For translation: BLEU (precision) + a recall-aware metric or human evaluation.</p>
+<p>For summarization: ROUGE (recall) + a precision check to catch hallucinations.</p>
+<p>For generation: Perplexity (fluency) + human evaluation for factual accuracy.</p>
+<p>No single metric captures everything. The combination is what gives you 
+an honest picture of your system's behavior.</p>
+<h3 id="when-human-evaluation-is-non-negotiable">When Human Evaluation is Non-Negotiable</h3>
+<p>All three metrics share a fundamental limitation: they measure surface form, 
+not meaning. There are specific situations where automatic metrics will 
+mislead you and human evaluation is the only honest option:</p>
+<ul>
+<li><strong>Creative or open-ended generation</strong> — where many valid outputs exist 
+  and none of them match the reference</li>
+<li><strong>Cross-lingual evaluation</strong> — where the reference translation reflects 
+  one valid style and the system uses another equally valid one</li>
+<li><strong>High-stakes applications</strong> — medical, legal, or safety-critical text 
+  where a fluent wrong answer is worse than no answer</li>
+</ul>
+<blockquote>
+<p><strong>Professional Takeaway:</strong> Automatic metrics are fast, cheap, and 
+reproducible — use them always. Human evaluation is slow, expensive, 
+and irreplaceable — use it before shipping anything to production.</p>
+</blockquote>
+<h2 id="7-reality-check-when-metrics-lie">7. Reality Check: When Metrics Lie</h2>
+<p>Every metric in this page has a known failure mode. Knowing them is what 
+separates a practitioner from someone who just runs the numbers.</p>
+<h3 id="bleu-lies-when-order-doesnt-matter">BLEU Lies When Order Doesn't Matter</h3>
+<p>BLEU gives a high score to an output that uses exactly the right words 
+in a slightly wrong order. In many language pairs, word order varies 
+legitimately. A German-to-English translator that produces a grammatically 
+correct but differently ordered sentence gets penalized unfairly.</p>
+<blockquote>
+<p><em>In our example:</em> A model that translates the source as <em>"Academic 
+review may follow for students missing three or more consecutive days 
+without staff notification"</em> is correct and natural — but scores low 
+BLEU against a reference with a different structure.</p>
+</blockquote>
+<h3 id="rouge-lies-when-copying-is-easy">ROUGE Lies When Copying Is Easy</h3>
+<p>A system that returns the full original source document as its summary 
+achieves a perfect ROUGE score. Verbatim extraction is trivially rewarded. 
+This is why good summarization evaluation always checks for the <strong>compression 
+ratio</strong> alongside ROUGE — a system that compresses nothing has learned nothing.</p>
+<blockquote>
+<p><em>In our example:</em> Summary C — the full original sentence — would score 
+near-perfect on all ROUGE variants despite being completely useless as a summary.</p>
+</blockquote>
+<h3 id="perplexity-lies-when-fluency-and-truth-diverge">Perplexity Lies When Fluency and Truth Diverge</h3>
+<p>A language model fine-tuned on formal institutional text will assign low 
+perplexity to any institutional-sounding sentence — regardless of whether 
+it is true. The sentence <em>"Students are required to submit three projects 
+per day"</em> is grammatically natural and contextually plausible. It would 
+score low perplexity even though it is factually wrong.</p>
+<blockquote>
+<p><em>The deeper problem:</em> As language models become more fluent, perplexity 
+scores improve while factual reliability does not necessarily follow. 
+Perplexity tracks fluency. Truth requires a different kind of evaluation 
+entirely — one the field is still actively developing.</p>
+<p><strong>Professional Takeaway:</strong> Never trust a single metric in isolation. 
+Report multiple metrics, inspect your outputs manually, and be honest 
+about what your evaluation setup can and cannot detect. A number is a 
+proxy for quality — it is never a guarantee of it.</p>
+</blockquote>
+<h2 id="glossary">Glossary</h2>
+<h3 id="1-core-concepts">1. Core Concepts</h3>
+<ul>
+<li><strong>Evaluation Metric:</strong> A quantitative measure used to assess the quality 
+  of a model's output relative to a reference or standard.</li>
+<li><strong>Reference:</strong> A human-generated output used as the gold standard for 
+  comparison. Most NLP metrics compare machine output to one or more references.</li>
+<li><strong>Precision:</strong> The fraction of the model's output that is correct. 
+  Answers the question: <em>"Of what the model said, how much was right?"</em></li>
+<li><strong>Recall:</strong> The fraction of the reference content that appears in the 
+  model's output. Answers the question: <em>"Of what should have been said, 
+  how much was covered?"</em></li>
+<li><strong>F1 Score:</strong> The harmonic mean of precision and recall. Balances both 
+  concerns into a single number.</li>
+</ul>
+<h3 id="2-bleu">2. BLEU</h3>
+<ul>
+<li><strong>BLEU (Bilingual Evaluation Understudy):</strong> A precision-focused metric 
+  that measures n-gram overlap between machine output and human reference. 
+  Standard for translation evaluation.</li>
+<li><strong>Modified Precision:</strong> A version of n-gram precision that clips counts 
+  to prevent a model from cheating by repeating a single correct word.</li>
+<li><strong>Brevity Penalty (BP):</strong> A multiplicative penalty applied when the 
+  machine output is shorter than the reference, preventing artificially 
+  high precision from very short outputs.</li>
+<li><strong>N-gram Overlap:</strong> The number of n-word sequences shared between 
+  two texts. Higher overlap suggests greater similarity.</li>
+</ul>
+<h3 id="3-rouge">3. ROUGE</h3>
+<ul>
+<li><strong>ROUGE (Recall-Oriented Understudy for Gisting Evaluation):</strong> A 
+  recall-focused metric that measures how much of the reference appears 
+  in the machine output. Standard for summarization evaluation.</li>
+<li><strong>ROUGE-1:</strong> Measures unigram (single word) recall between output and reference.</li>
+<li><strong>ROUGE-2:</strong> Measures bigram (two-word sequence) recall between output and reference.</li>
+<li><strong>ROUGE-L:</strong> Measures recall based on the Longest Common Subsequence — 
+  more flexible than bigram matching, handles paraphrasing better.</li>
+<li><strong>Longest Common Subsequence (LCS):</strong> The longest sequence of words 
+  appearing in the same order in both texts, not necessarily consecutively.</li>
+<li><strong>Compression Ratio:</strong> The ratio of summary length to source length. 
+  Used alongside ROUGE to detect extractive copying.</li>
+</ul>
+<h3 id="4-perplexity">4. Perplexity</h3>
+<ul>
+<li><strong>Perplexity:</strong> A measure of how surprised a language model is by a 
+  given text. Low perplexity means the text matches patterns the model 
+  learned; high perplexity means the text is unexpected or incoherent.</li>
+<li><strong>Language Model:</strong> A model that assigns probabilities to sequences 
+  of words. Used for text generation, autocomplete, and speech recognition.</li>
+<li><strong>Fluency:</strong> The property of text that sounds natural and grammatically 
+  correct to a native speaker. Perplexity measures fluency, not correctness.</li>
+<li><strong>Chain Rule of Probability:</strong> The decomposition of the probability of 
+  a sequence into a product of conditional probabilities: 
+  <span class="arithmatex">\(P(w_1, \ldots, w_N) = \prod_{i=1}^{N} P(w_i \mid w_1, \ldots, w_{i-1})\)</span></li>
+</ul>
+<h3 id="5-evaluation-strategy">5. Evaluation Strategy</h3>
+<ul>
+<li><strong>Automatic Evaluation:</strong> Using a mathematical metric to assess quality 
+  without human involvement. Fast and reproducible but limited to surface form.</li>
+<li><strong>Human Evaluation:</strong> Having human annotators assess quality directly. 
+  Slow and expensive but the only reliable method for open-ended tasks.</li>
+<li><strong>Exact Match (EM):</strong> A strict metric that awards a score only when the 
+  model output exactly matches the reference. Used in question answering.</li>
+<li><strong>Hallucination:</strong> Content generated by a model that is fluent and 
+  confident but factually wrong. Not detected by BLEU, ROUGE, or Perplexity.</li>
+</ul>
+<blockquote>
+<p><strong>What's Next:</strong> You now know how to measure whether an NLP system is 
+doing its job. The final step is building one. The next page shows how 
+to combine everything from this module — embeddings, similarity search, 
+and evaluation — into a working Question Answering bot that can read 
+the Holberton knowledge base and answer real student questions.</p>
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.path", "navigation.top", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

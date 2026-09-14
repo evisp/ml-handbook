@@ -1,135 +1,268 @@
+# ==============================================================================
+# Holberton ML Handbook
+#
+# Two things to know before editing:
+#
+#   1. `nav` controls what is LINKED. `exclude_docs` controls what is BUILT.
+#      A page removed from nav but not excluded is still published and still
+#      turns up in search. To release a module you must edit BOTH.
+#
+#   2. Release ritual (takes 30 seconds):
+#        - delete the module's line from `exclude_docs`
+#        - uncomment its block in `nav`
+#        - commit, push, deploy
+# ==============================================================================
+
 site_name: Holberton ML Handbook
+site_description: >-
+  A practical, project-based machine learning curriculum for Holberton School
+  Albania. Real projects, real skills, real careers.
 site_url: https://evisp.github.io/ml-handbook/
+site_author: Evis Plaku
+
 repo_url: https://github.com/evisp/ml-handbook
+repo_name: evisp/ml-handbook
 edit_uri: edit/main/docs/
+
+copyright: Holberton School Albania
+
+# ------------------------------------------------------------------------------
+# Theme
+# ------------------------------------------------------------------------------
 
 theme:
   name: material
+  language: en
+
+  # Uncomment once you have dropped the brand assets into docs/assets/.
+  # Referencing a file that does not exist gives you a broken image in the header.
+  # logo: assets/logo.svg
+  # favicon: assets/favicon.png
+
+  font:
+    text: Host Grotesk     # brand primary typeface, available on Google Fonts
+    code: JetBrains Mono
+
   palette:
-    # Palette toggle for light mode
-    - scheme: default
-      primary: blue
-      accent: blue
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: custom      # values come from docs/stylesheets/brand.css
+      accent: custom
       toggle:
-        icon: material/brightness-7 
+        icon: material/weather-night
         name: Switch to dark mode
-    # Palette toggle for dark mode
-    - scheme: slate
-      primary: teal          
-      accent: cyan           
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: custom
+      accent: custom
       toggle:
-        icon: material/brightness-4
+        icon: material/weather-sunny
         name: Switch to light mode
+
   features:
     - navigation.tabs
     - navigation.sections
-    - navigation.expand
+    - navigation.indexes      # section landing pages use the section's index.md
     - navigation.path
     - navigation.top
+    - navigation.tracking
+    - navigation.footer
+    - toc.follow
     - search.highlight
     - search.share
+    - search.suggest
     - content.code.copy
     - content.code.annotate
     - content.tabs.link
+    - content.action.edit
+
   icon:
     repo: fontawesome/brands/github
+    edit: material/pencil
 
+# ------------------------------------------------------------------------------
+# Assets
+# ------------------------------------------------------------------------------
+
+extra_css:
+  - stylesheets/brand.css
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+  # polyfill.io was removed on purpose: that domain was sold and began serving
+  # malicious redirects. MathJax 3 does not need it.
+
+extra:
+  generator: false
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/evisp
+      name: GitHub
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/school/holbertonschool/
+      name: Holberton School
+
+# ------------------------------------------------------------------------------
+# Markdown
+# ------------------------------------------------------------------------------
 
 markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list           # required for badges, buttons and card classes
+  - md_in_html          # required for grid cards and the hero block
+  - footnotes
+  - tables
+  - toc:
+      permalink: true
+      permalink_title: Link to this section
+      toc_depth: 3
   - pymdownx.arithmatex:
       generic: true
+  - pymdownx.betterem
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.highlight:
       anchor_linenums: true
       line_spans: __span
       pygments_lang_class: true
   - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.mark
   - pymdownx.snippets
   - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true     # this was missing; content.tabs.link did nothing
+  - pymdownx.tilde
 
+# ------------------------------------------------------------------------------
+# Plugins
+#
+# Only `search` is enabled, so the site builds with mkdocs-material alone.
+# The rest are worth adding later — each needs a pip install first.
+# ------------------------------------------------------------------------------
 
-extra_javascript:
-  - javascripts/mathjax.js
-  - https://polyfill.io/v3/polyfill.min.js?features=es6
-  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+plugins:
+  - search
+  # - glightbox                      # pip install mkdocs-glightbox — zoomable images
+  # - social                         # needs cairosvg + pillow — branded link previews
+  # - git-revision-date-localized:   # pip install mkdocs-git-revision-date-localized-plugin
+  #     enable_creation_date: false
+
+# ------------------------------------------------------------------------------
+# Link checking — warn, never fail the build
+# ------------------------------------------------------------------------------
+
+validation:
+  omitted_files: warn
+  absolute_links: warn
+  unrecognized_links: warn
+  anchors: warn
+
+# ------------------------------------------------------------------------------
+# THE VAULT
+#
+# Everything listed here stays on your laptop and in git, but is not built,
+# not published, and not searchable. Delete a line to release that module.
+# ------------------------------------------------------------------------------
+
+exclude_docs: |
+  02-math/
+  03-data/
+  04-core-ml/
+  05-dl-fundamentals/
+  06-dl-architectures/
+  07-nlp/
+  08-llms/
+  09-portfolio/
+
+# ------------------------------------------------------------------------------
+# Navigation — Trimester 1, week 1: Tools only
+# ------------------------------------------------------------------------------
 
 nav:
   - Home: index.md
 
   - Tools:
-    - Overview: 01-tools/index.md
-    - Zero day: 01-tools/zero-day.md
-    - Git & GitHub: 01-tools/git-and-github.md
-    - Jupyter notebook setup: 01-tools/notebook-setup.md
-    - VS Code setup: 01-tools/vscode-setup.md
-    - Python Warm Up: 01-tools/python-warm-up.md 
+      - 01-tools/index.md
+      - Zero day: 01-tools/zero-day.md
+      - Git & GitHub: 01-tools/git-and-github.md
+      - Jupyter notebook setup: 01-tools/notebook-setup.md
+      - VS Code setup: 01-tools/vscode-setup.md
+      - Python warm up: 01-tools/python-warm-up.md
 
-  - Math:
-    - Overview: 02-math/index.md
-    - Linear algebra: 02-math/linear-algebra.md
-    - NumPy: 02-math/numpy.md
-    - Calculus: 02-math/calculus.md
-    - Probability & statistics: 02-math/probability-statistics.md
+  # ---- Released later. Uncomment the block AND delete the matching line
+  # ---- from `exclude_docs` above.
 
-  - Data:
-    - Overview: 03-data/index.md
-    - Data Foundations: 03-data/data-foundations.md
-    - Pandas essentials: 03-data/pandas.md
-    - Visualization: 03-data/visualization.md
-    - Data Processing: 03-data/data-processing.md
-    - Data collection: 03-data/data-collection.md
-    - SQL databases: 03-data/sql.md
-    - NoSQL (MongoDB): 03-data/mongo.md
-    - NoSQL (MongoDB install): 03-data/mongo-install.md
+  # - Math:
+  #     - 02-math/index.md
+  #     - Linear algebra: 02-math/linear-algebra.md
+  #     - NumPy: 02-math/numpy.md
+  #     - Calculus: 02-math/calculus.md
+  #     - Probability & statistics: 02-math/probability-statistics.md
 
+  # - Data:
+  #     - 03-data/index.md
+  #     - Data foundations: 03-data/data-foundations.md
+  #     - Pandas essentials: 03-data/pandas.md
+  #     - Visualization: 03-data/visualization.md
+  #     - Data processing: 03-data/data-processing.md
+  #     - Data collection: 03-data/data-collection.md
+  #     - SQL databases: 03-data/sql.md
+  #     - NoSQL (MongoDB): 03-data/mongo.md
+  #     - NoSQL (MongoDB install): 03-data/mongo-install.md
 
-  - Core ML:
-    - Overview: 04-core-ml/index.md
-    - Introduction: 04-core-ml/ml-intro.md
-    - ML Categories: 04-core-ml/ml-categories.md
-    - ML Lifecycle: 04-core-ml/lifecycle.md
-    - Regression: 04-core-ml/regression.md
-    - Classification: 04-core-ml/supervised.md
-    - Classification Advanced: 04-core-ml/supervised-advanced.md
-    - Unsupervised Learning Overview: 04-core-ml/unsupervised.md
-    - Unsupervised Learning Clustering: 04-core-ml/clustering.md
-    - Unsupervised Learning Dimensionality Reduction: 04-core-ml/dim_reduction.md
+  # - Core ML:
+  #     - 04-core-ml/index.md
+  #     - Introduction: 04-core-ml/ml-intro.md
+  #     - ML categories: 04-core-ml/ml-categories.md
+  #     - ML lifecycle: 04-core-ml/lifecycle.md
+  #     - Regression: 04-core-ml/regression.md
+  #     - Classification: 04-core-ml/supervised.md
+  #     - Classification advanced: 04-core-ml/supervised-advanced.md
+  #     - Unsupervised learning overview: 04-core-ml/unsupervised.md
+  #     - Clustering: 04-core-ml/clustering.md
+  #     - Dimensionality reduction: 04-core-ml/dim_reduction.md
 
-  - Deep Learning Fundamentals:
-    - Overview: 05-dl-fundamentals/index.md
-    - Classification Using Neural Networks: 05-dl-fundamentals/classification-nn.md
-    - Optimization: 05-dl-fundamentals/optimization.md
-    - Error Analysis: 05-dl-fundamentals/error-analysis.md
-    - Regularization: 05-dl-fundamentals/regularization.md
+  # - Deep Learning Fundamentals:
+  #     - 05-dl-fundamentals/index.md
+  #     - Classification using neural networks: 05-dl-fundamentals/classification-nn.md
+  #     - Optimization: 05-dl-fundamentals/optimization.md
+  #     - Error analysis: 05-dl-fundamentals/error-analysis.md
+  #     - Regularization: 05-dl-fundamentals/regularization.md
 
-  - Deep Learning Architectures:
-    - Overview: 06-dl-architectures/index.md
-    - Convolutions and Pooling: 06-dl-architectures/convolutions-pooling.md
-    - Convolutional Neural Networks: 06-dl-architectures/cnns.md
-    - Data Augmentation: 06-dl-architectures/data-augmentation.md
-    - Deep Convolutional Architectures: 06-dl-architectures/deep-cnns.md
-    - Transfer Learning: 06-dl-architectures/transfer-learning.md
-    - Object Detection: 06-dl-architectures/object-detection.md
+  # - Deep Learning Architectures:
+  #     - 06-dl-architectures/index.md
+  #     - Convolutions and pooling: 06-dl-architectures/convolutions-pooling.md
+  #     - Convolutional neural networks: 06-dl-architectures/cnns.md
+  #     - Data augmentation: 06-dl-architectures/data-augmentation.md
+  #     - Deep convolutional architectures: 06-dl-architectures/deep-cnns.md
+  #     - Transfer learning: 06-dl-architectures/transfer-learning.md
+  #     - Object detection: 06-dl-architectures/object-detection.md
 
-  - Sequential & NLP:
-      - Overview: 07-nlp/index.md
-      - RNNs and LSTMs: 07-nlp/rnns.md
-      - Time Series Forecasting: 07-nlp/time-series.md
-      - Understanding NLP: 07-nlp/nlp-overview.md
-      - Word Embeddings: 07-nlp/embeddings.md
-      - Evaluation Metrics for NLP: 07-nlp/metrics.md
-      - Question Answering Bots: 07-nlp/qa-bots.md
-      - Practice NLP: 07-nlp/practice.md
+  # - Sequential & NLP:
+  #     - 07-nlp/index.md
+  #     - RNNs and LSTMs: 07-nlp/rnns.md
+  #     - Time series forecasting: 07-nlp/time-series.md
+  #     - Understanding NLP: 07-nlp/nlp-overview.md
+  #     - Word embeddings: 07-nlp/embeddings.md
+  #     - Evaluation metrics for NLP: 07-nlp/metrics.md
+  #     - Question answering bots: 07-nlp/qa-bots.md
+  #     - Practice NLP: 07-nlp/practice.md
 
+  # - Generative AI & LLMs:
+  #     - 08-llms/index.md
+  #     - Generative AI fundamentals: 08-llms/gen-ai-basics.md
+  #     - Large language models: 08-llms/llm-intro.md
+  #     - Open source vs proprietary models: 08-llms/model-ecosystems.md
+  #     - Tailoring AI chatbots: 08-llms/tailoring-chatbots.md
+  #     - Running models with WebGPU: 08-llms/web-gpu.md
+  #     - OpenAI and Hugging Face: 08-llms/api-and-frameworks.md
 
-  - Generative AI & LLMs:
-      - Overview: 08-llms/index.md
-      - Generative AI Fundamentals: 08-llms/gen-ai-basics.md
-      - Large Language Models (LLMs): 08-llms/llm-intro.md
-      - Open Source vs Proprietary Models: 08-llms/model-ecosystems.md
-      - Tailoring AI Chatbots: 08-llms/tailoring-chatbots.md
-      - Running Models with WebGPU: 08-llms/web-gpu.md
-      - OpenAI and Hugging Face: 08-llms/api-and-frameworks.md
-
-  - Final Portfolio:
-      - Overview: 09-portfolio/index.md
-      - Project Requirements: 09-portfolio/requirements.md
+  # - Final Portfolio:
+  #     - 09-portfolio/index.md
+  #     - Project requirements: 09-portfolio/requirements.md

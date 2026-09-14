@@ -499,6 +499,22 @@
   }
 }
 
+/* Upcoming modules: a whole grid of not-yet-released cards. */
+.md-typeset .grid.cards.locked > ul > li {
+  background: var(--h-surface);
+  border-style: dashed;
+  color: var(--md-default-fg-color--lighter);
+}
+.md-typeset .grid.cards.locked > ul > li:hover {
+  border-color: var(--h-surface-line);
+}
+.md-typeset .grid.cards.locked > ul > li strong {
+  color: var(--md-default-fg-color--light);
+}
+.md-typeset .grid.cards.locked > ul > li svg {
+  color: var(--h-space);
+}
+
 /* ==========================================================================
    USAGE
 

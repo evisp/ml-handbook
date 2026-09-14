@@ -14,9 +14,9 @@ in that order, because each one rests on the last.
 
 ## What you'll become
 
-The programme is built around three roles the industry actually hires for. You
-work through them in sequence, and each one leaves you with skills that stand
-on their own.
+Three roles the industry hires for, plus the habits that get you hired. You
+work through the roles in sequence, and each one leaves you with skills that
+stand on their own.
 
 <div class="grid cards" markdown>
 
@@ -25,21 +25,30 @@ on their own.
     ---
 
     Get data out of messy sources and make it say something useful. Python,
-    pandas, SQL, visualisation, and the statistics behind an honest conclusion.
+    pandas, SQL, visualisation, statistics, and the classic models that still
+    solve most business problems.
 
 -   :material-chart-timeline-variant: **Machine Learning Engineer**
 
     ---
 
-    Move from describing data to predicting from it. Core algorithms, the full
-    training lifecycle, neural networks, and computer vision.
+    Go deeper than the classic models. Neural networks, computer vision, and
+    the work of training something well and getting it running in production.
 
 -   :material-robot-outline: **AI Engineer**
 
     ---
 
-    Build with language models rather than around them. NLP, LLMs, generative
-    AI, and getting a working system in front of real users.
+    Build products on top of language models. NLP, retrieval augmented
+    generation, agents, and the tooling that connects models to real systems.
+
+-   :material-account-voice: **Ready for the room**
+
+    ---
+
+    Explain your work to people who do not code. Handle a technical interview
+    and a whiteboard. Pick up an unfamiliar tool quickly, because the one you
+    learn today will be replaced.
 
 </div>
 
@@ -47,26 +56,26 @@ on their own.
 
 <svg viewBox="0 0 680 435" role="img" aria-labelledby="path-title path-desc" style="width:100%;height:auto;margin:1.4rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
 <title id="path-title">The nine-month path</title>
-<desc id="path-desc">Three stages over nine months. First, Data Analyst: Python, pandas, SQL, visualisation and statistics. Second, Machine Learning Engineer: core algorithms, model training, neural networks and computer vision. Third, AI Engineer: natural language processing, large language models, generative AI and deployment. The programme ends with a portfolio project.</desc>
+<desc id="path-desc">Three stages over nine months. First, Data Analyst: Python, pandas, SQL, visualisation, statistics and classic machine learning models. Second, Machine Learning Engineer: deep learning, computer vision, training and deployment. Third, AI Engineer: natural language processing, retrieval augmented generation, agents and shipping products built on models. The programme ends with a portfolio project.</desc>
 <line x1="40" y1="78" x2="40" y2="310" stroke="var(--h-steel)" stroke-width="2"/>
 <rect x="74" y="30" width="586" height="96" rx="12" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
 <circle cx="40" cy="78" r="13" fill="var(--h-cherry)"/>
 <text x="40" y="78" dy="0.36em" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">1</text>
 <text x="94" y="66" font-size="17" font-weight="700" fill="var(--md-default-fg-color)">Data Analyst</text>
 <text x="642" y="66" text-anchor="end" font-size="12" fill="var(--h-space)">Months 1&#8211;3</text>
-<text x="94" y="94" font-size="13" fill="var(--h-graphite)">Python, pandas, SQL, visualisation, statistics</text>
+<text x="94" y="94" font-size="13" fill="var(--h-graphite)">Python, pandas, SQL, visualisation, statistics, classic ML models</text>
 <rect x="74" y="146" width="586" height="96" rx="12" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
 <circle cx="40" cy="194" r="13" fill="var(--h-cherry)"/>
 <text x="40" y="194" dy="0.36em" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">2</text>
 <text x="94" y="182" font-size="17" font-weight="700" fill="var(--md-default-fg-color)">Machine Learning Engineer</text>
 <text x="642" y="182" text-anchor="end" font-size="12" fill="var(--h-space)">Months 4&#8211;6</text>
-<text x="94" y="210" font-size="13" fill="var(--h-graphite)">Core algorithms, model training, neural networks, computer vision</text>
+<text x="94" y="210" font-size="13" fill="var(--h-graphite)">Deep learning, computer vision, training at scale, deployment</text>
 <rect x="74" y="262" width="586" height="96" rx="12" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
 <circle cx="40" cy="310" r="13" fill="var(--h-cherry)"/>
 <text x="40" y="310" dy="0.36em" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">3</text>
 <text x="94" y="298" font-size="17" font-weight="700" fill="var(--md-default-fg-color)">AI Engineer</text>
 <text x="642" y="298" text-anchor="end" font-size="12" fill="var(--h-space)">Months 7&#8211;9</text>
-<text x="94" y="326" font-size="13" fill="var(--h-graphite)">NLP, large language models, generative AI, deployment</text>
+<text x="94" y="326" font-size="13" fill="var(--h-graphite)">NLP, RAG, agents, MCP, shipping products built on models</text>
 <rect x="74" y="382" width="586" height="44" rx="22" fill="var(--h-cherry)"/>
 <text x="367" y="404" dy="0.36em" text-anchor="middle" font-size="14" font-weight="600" fill="#ffffff">A portfolio project, and the interview that follows</text>
 </svg>

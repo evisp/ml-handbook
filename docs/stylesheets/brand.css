@@ -515,6 +515,63 @@
   color: var(--h-space);
 }
 
+/* --------------------------------------------------------------------------
+   Hero, second pass. Appended after the original rules so it wins.
+   Adds depth to the Midnight panel, a Cherry edge, and a larger type scale.
+   -------------------------------------------------------------------------- */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(90% 130% at 88% 8%, rgba(227, 28, 63, 0.30) 0%, rgba(227, 28, 63, 0) 62%),
+    linear-gradient(160deg, #332F31 0%, var(--h-midnight) 48%, #171617 100%);
+  padding: 3.8rem 2.6rem 3rem;
+}
+
+/* Cherry edge down the left, the brand's own framing device */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 5px;
+  background: var(--h-cherry);
+}
+
+.hero h1 {
+  font-size: 2.9rem;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+  max-width: 16ch;
+}
+
+.hero p {
+  color: #C8CBD4;
+  font-size: 0.95rem;
+  max-width: 50ch;
+}
+
+.hero .h-rule {
+  width: 2.6rem;
+  height: 3px;
+  opacity: 0.9;
+}
+
+.md-typeset .hero .h-button {
+  padding: 0.72rem 1.7rem;
+  font-size: 0.8rem;
+}
+
+@media screen and (max-width: 44.9375em) {
+  .hero {
+    padding: 2.4rem 1.5rem 2rem;
+  }
+  .hero h1 {
+    font-size: 2rem;
+    max-width: none;
+  }
+}
+
 /* ==========================================================================
    USAGE
 

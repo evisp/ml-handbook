@@ -195,8 +195,10 @@ nav:
       - VS Code setup: 01-tools/vscode-setup.md
       - Python warm up: 01-tools/python-warm-up.md
 
-  # ---- Released later. Uncomment the block AND delete the matching line
-  # ---- from `exclude_docs` above.
+  - Fundamentals:
+      - 02-fundamentals/index.md
+      - What AI is: 02-fundamentals/what-is-ai.md
+      - How machines learn: 02-fundamentals/what-is-ml.md
 
   # - Math:
   #     - 02-math/index.md

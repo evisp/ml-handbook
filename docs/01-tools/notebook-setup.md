@@ -1,206 +1,207 @@
-# Jupyter Notebook Setup with Anaconda
+# Jupyter notebooks
 
-This tutorial shows you how to install and launch Jupyter Notebooks using Anaconda, the industry-standard platform for data science that comes pre-configured with essential ML libraries. You'll learn to navigate the Jupyter interface and master core notebook workflows for machine learning development.
+<span class="badge badge--time">25 min</span>
+<span class="badge badge--level">Foundations</span>
+<span class="badge">Needs: a computer you can install software on</span>
 
-**Estimated time:** 25 minutes
+A notebook lets you run code one piece at a time and see the result right
+underneath it. You will spend more hours in notebooks than in any other tool
+this year.
 
-## Why This Matters
+## Why this matters
 
-**Problem statement:** Machine learning development requires experimenting with code interactively, visualizing results immediately, and documenting analysis workflows - tasks that become overwhelming without proper tooling.
+Machine learning is guesswork with evidence. You load some data, look at it,
+try something, look again. Running a whole script every time you want to check
+one number is slow and it hides what went wrong.
 
-**Practical benefits:** Jupyter Notebooks provide an interactive environment where you can write code, visualize results immediately, document your thought process, and share reproducible analyses with teammates. Anaconda eliminates setup complexity by pre-installing essential ML libraries including NumPy, Pandas, Matplotlib, and Scikit-learn.
+Notebooks fix that. Each piece of code stays on screen next to its output, so
+your experiment and your record of the experiment are the same document.
 
-**Professional context:** Jupyter Notebooks are the standard for ML experimentation, data exploration, and collaborative research across all major tech companies and research institutions. Mastering this workflow is essential for any ML role involving data analysis, model prototyping, or research.
+## What a notebook is made of
 
-![Jyputer notebook](https://i.imgur.com/Bg9OMHO.png)
+<svg viewBox="0 0 680 286" role="img" aria-labelledby="nb-title nb-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="nb-title">The parts of a notebook</title>
+<desc id="nb-desc">A notebook holds markdown cells for notes and code cells. Running a code cell sends it to the kernel, which is the Python process that remembers your variables, and the result appears as output below the cell.</desc>
+<rect x="3" y="10" width="440" height="266" rx="12" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="24" y="38" font-size="12" font-weight="700" fill="var(--h-space)">notebook.ipynb</text>
+<rect x="24" y="52" width="398" height="46" rx="8" fill="var(--md-default-bg-color)" stroke="var(--h-surface-line)"/>
+<text x="42" y="72" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)">Markdown cell</text>
+<text x="42" y="90" font-size="11.5" fill="var(--h-graphite)">what you tried and why</text>
+<rect x="24" y="110" width="398" height="46" rx="8" fill="var(--md-default-bg-color)" stroke="var(--h-cherry)"/>
+<text x="42" y="130" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)">Code cell</text>
+<text x="42" y="148" font-size="11.5" fill="var(--h-graphite)">df.head()</text>
+<rect x="24" y="168" width="398" height="46" rx="8" fill="var(--md-default-bg-color)" stroke="var(--h-surface-line)" stroke-dasharray="4 4"/>
+<text x="42" y="188" font-size="12.5" font-weight="700" fill="var(--h-graphite)">Output</text>
+<text x="42" y="206" font-size="11.5" fill="var(--h-graphite)">the table, the plot, the error</text>
+<rect x="24" y="226" width="398" height="34" rx="8" fill="var(--md-default-bg-color)" stroke="var(--h-surface-line)"/>
+<text x="42" y="248" font-size="12.5" fill="var(--h-graphite)">the next cell, still empty</text>
+<rect x="487" y="94" width="190" height="88" rx="12" fill="var(--h-cherry)"/>
+<text x="582" y="130" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">Kernel</text>
+<text x="582" y="152" text-anchor="middle" font-size="11.5" fill="#ffffff" opacity="0.88">the Python that remembers</text>
+<text x="582" y="168" text-anchor="middle" font-size="11.5" fill="#ffffff" opacity="0.88">your variables</text>
+<line x1="447" y1="126" x2="481" y2="126" stroke="var(--h-steel)" stroke-width="2"/>
+<line x1="481" y1="150" x2="447" y2="150" stroke="var(--h-steel)" stroke-width="2" stroke-dasharray="4 4"/>
+<text x="464" y="114" text-anchor="middle" font-size="11" font-weight="600" fill="var(--h-cherry)">run</text>
+<text x="464" y="172" text-anchor="middle" font-size="11" font-weight="600" fill="var(--h-graphite)">result</text>
+</svg>
 
-## Prerequisites & Learning Objectives
+The kernel is the part people forget, and it causes most notebook confusion.
+It is a Python process running in the background. It remembers every variable
+you have created, in the order you ran the cells, not the order they appear on
+screen.
 
-**Required knowledge:**
-- Basic familiarity with Python syntax
-- Understanding of command line navigation (helpful but not required)
-- Concept of file systems and directories
+## Step 1: Install Anaconda
 
-**Learning outcomes:**
-- Install Anaconda with pre-configured ML libraries
-- Launch Jupyter Notebook through multiple methods
-- Create, execute, and manage notebook cells and kernels
-- Apply best practices for notebook organization and reproducibility
-- Navigate the Jupyter interface efficiently for ML workflows
+Anaconda is Python plus about 250 packages, including everything you need for
+the next few months. Installing it is easier than installing the pieces one by
+one.
 
-**High-level approach:** You'll install Anaconda (which includes Jupyter and ML packages), learn multiple ways to launch Jupyter, and practice core notebook workflows including cell execution, markdown documentation, and kernel management.
+Download the installer for your system from the
+[Anaconda download page](https://www.anaconda.com/download) and run it.
 
-## Step-by-Step Instructions
+=== "Windows"
 
-### Step 1: Download and Install Anaconda
+    Double click the `.exe` file and follow the installer.
 
-**Download the installer:**
-- Visit the [official Anaconda Distribution page](https://www.anaconda.com/products/distribution)
-- Select your operating system (Windows, macOS, or Linux)
-- Download the latest Python 3.x graphical installer (64-bit recommended)
+    Choose **Just Me**, keep the default folder, and leave **Add Anaconda to
+    PATH** unchecked. Do allow it to register as your default Python.
 
+    Leaving it off PATH looks wrong but is correct. It stops Anaconda's Python
+    from shadowing the system Python and breaking other software. You launch it
+    from the Anaconda Prompt instead.
 
+=== "macOS"
 
-**Run the installation:**
-```bash
-# For Windows: Double-click the .exe file
-# For macOS: Double-click the .pkg file
-# For Linux: bash Anaconda3-2025.09-Linux-x86_64.sh
-```
+    Double click the `.pkg` file and follow the installer. The defaults are
+    fine.
 
-**Installation settings:**
-- Accept the license agreement
-- Choose "Just Me" installation type (recommended)
-- Use the default installation directory
-- **Important:** Do NOT add Anaconda to PATH when prompted (prevents conflicts)
-- Allow Anaconda to become your default Python
+=== "Linux or WSL"
 
-**Why these settings matter:** Keeping Anaconda separate from system Python prevents version conflicts while giving you access to 250+ pre-installed packages including all essential ML libraries.
+    ```bash
+    bash ~/Downloads/Anaconda3-2025.06-Linux-x86_64.sh
+    ```
 
-**Expected outcome:** Anaconda Navigator appears in your applications menu, and essential packages like NumPy, Pandas, Matplotlib, and Scikit-learn are ready to use immediately.
+    Adjust the filename to match what you downloaded. Accept the license, keep
+    the default location, and answer yes when it offers to run `conda init`.
+    Then close and reopen your terminal.
 
-### Step 2: Launch Jupyter Notebook
+You are done when Anaconda Navigator opens from your applications menu.
 
-**Method 1 - Anaconda Navigator (Recommended for beginners):**
-- Open Anaconda Navigator from your applications menu
-- Click **Launch** under Jupyter Notebook in the main interface
+## Step 2: Launch Jupyter
 
-**Method 2 - Windows Command Line:**
-```bash
-# Open Command Prompt or PowerShell
-jupyter notebook
+=== "Anaconda Navigator"
 
-# Alternative if above doesn't work:
-python -m notebook
-```
+    Open Anaconda Navigator and click **Launch** under Jupyter Notebook. This
+    is the simplest way and the one to use if anything else fails.
 
-**Method 3 - Anaconda Prompt (Windows):**
-```bash
-# Search for "Anaconda Prompt" in start menu
-jupyter notebook
-```
-**Expected behavior:** Your default web browser opens showing the Jupyter dashboard at `http://localhost:8888`, displaying your file system.
+=== "Terminal"
 
-**Understanding the interface:** The dashboard shows your files and folders, allowing you to navigate, create notebooks, and manage running sessions.
+    ```bash
+    jupyter notebook
+    ```
 
-### Step 3: Create and Navigate Your First Notebook
+    On Windows, run this in the Anaconda Prompt rather than the normal Command
+    Prompt.
 
-**Create your first notebook:**
-- In the Jupyter dashboard, click **New → Python 3**
-- The notebook opens in a new tab with an empty code cell
+Your browser opens at `http://localhost:8888` showing your files. That page is
+the dashboard, not a notebook yet.
 
-**Test pre-installed ML libraries:**
+!!! tip "Start Jupyter from the folder you want to work in"
+
+    Jupyter can only see the folder it was started in and anything below it. Use
+    `cd` to get to your project folder first, then run `jupyter notebook`. It
+    saves a lot of hunting.
+
+## Step 3: Run your first cells
+
+Click **New**, then **Python 3**. An empty cell appears.
+
+Type this into it and press ++shift+enter++.
+
 ```python
-# Run this cell with Shift + Enter
-import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
+import pandas as pd
 from sklearn.datasets import load_iris
 
-print("All essential ML libraries loaded successfully!")
-print(f"NumPy version: {np.__version__}")
-print(f"Pandas version: {pd.__version__}")
-
-# Quick data visualization test
 data = load_iris()
 df = pd.DataFrame(data.data, columns=data.feature_names)
 df.head()
 ```
 
-**Essential cell operations and shortcuts:**
-- **Execute cells:** `Shift + Enter` (runs cell and moves to next)
-- **Insert cells:** `A` (above current) or `B` (below current)
-- **Change cell type:** `M` (Markdown) or `Y` (Code)
-- **Delete cells:** `D + D` (press D twice)
-- **Save notebook:** `Ctrl + S` (Windows/Linux) or `Cmd + S` (Mac)
+You should see a small table of flower measurements. If you do, every library
+you need for the next few months is installed and working.
 
-### Step 4: Master Essential Notebook Workflows
+Notice the last line has no `print()`. A notebook shows the value of the final
+line in a cell automatically, and for a table it renders it properly instead of
+dumping text.
 
-**Notebook structure for ML projects:**
-```markdown
-# Project Title: [Your ML Experiment Name]
+Now add a second cell and run it:
 
-## 1. Environment Setup and Data Loading
-## 2. Exploratory Data Analysis  
-## 3. Data Preprocessing and Feature Engineering
-## 4. Model Training and Hyperparameter Tuning
-## 5. Model Evaluation and Validation
-## 6. Results Analysis and Conclusions
+```python
+df["sepal length (cm)"].mean()
 ```
 
-**Kernel management essentials:**
-```bash
-# Access through menu: Kernel → Restart
-# Keyboard shortcut: 0 + 0 (press 0 twice)
-Kernel → Restart & Clear Output    # Fresh start
-Kernel → Restart & Run All         # Reproduce full analysis
-```
+It works because the kernel still remembers `df` from the first cell. That is
+the whole idea.
 
-**Why kernel management matters:** Restarting kernels ensures reproducible execution order, clears memory usage, and helps debug variable conflicts - essential for reliable ML experiments.[10][11]
+### The shortcuts worth learning
 
-**Markdown documentation best practices:**
-```markdown
-## Data Analysis Summary
+| Keys | What it does |
+|---|---|
+| ++shift+enter++ | Run the cell and move to the next one |
+| ++ctrl+enter++ | Run the cell and stay where you are |
+| ++b++ | New cell below (press ++esc++ first) |
+| ++a++ | New cell above |
+| ++m++ | Turn this cell into notes (markdown) |
+| ++y++ | Turn it back into code |
+| ++d++ ++d++ | Delete the cell |
 
-**Findings:**
-- Dataset contains 150 samples with 4 features
-- No missing values detected
-- Clear separation between species classes
+Press ++esc++ before the single letter shortcuts. Otherwise you just type the
+letter into your code.
 
-**Next Steps:**
-- Apply feature scaling for SVM models
-- Test multiple classification algorithms
-- Perform cross-validation analysis
-```
+## Step 4: Keep your notebooks trustworthy
 
-### Step 5: Save, Export, and Manage Notebooks
+Cells remember their results, so a notebook can look like it works when it does
+not. You edited a cell, ran a later one, went back, and now the numbers on
+screen came from code that no longer exists.
 
-**Save and backup options:**
-```bash
-# Auto-save is enabled, but manual save is recommended
-Ctrl + S  # Save current notebook
+There is one habit that prevents this. Before you trust a result or show it to
+anyone, use **Kernel**, then **Restart and Run All**. That wipes the kernel's
+memory and runs every cell from the top in order. If it still works, it really
+works.
 
-# Export to different formats
-File → Download as → HTML          # For sharing results
-File → Download as → Python (.py)  # Convert to script
-File → Download as → PDF via LaTeX # Professional reports
-```
+!!! warning "Clear your outputs before committing to Git"
 
-**Organize your ML workspace:**
-```bash
-# Recommended folder structure:
-ml-projects/
-├── data/           # Raw datasets
-├── notebooks/      # Jupyter notebooks
-├── scripts/        # Python modules
-├── models/         # Saved models
-└── results/        # Output files and plots
-```
+    A notebook stores its outputs inside the file, including every plot as
+    encoded image data. Commit it as is and your repository fills with noise
+    that nobody can read in a diff. Use **Kernel**, then **Restart and Clear
+    Output**, before you `git add` the notebook.
 
-**Stop Jupyter safely:**
-- Save all notebooks first (`Ctrl + S`)
-- Close browser tabs
-- Return to terminal/command prompt where Jupyter is running
-- Press `Ctrl + C` twice to shut down the server cleanly[1]
+A few more things that will save you later:
 
-**Best practices for professional ML development:**
-- **Document your methodology** with markdown cells explaining approach and findings
-- **Clear outputs before version control** to keep repositories clean
-- **Use descriptive notebook names** like `01-data-exploration.ipynb`, `02-model-training.ipynb`
-- **Restart and run all cells** periodically to ensure reproducible results
+- Name notebooks so the order is obvious: `01-explore-data.ipynb`, then
+  `02-train-model.ipynb`.
+- Write a markdown cell above each section saying what you are about to try.
+  Your future self reads those, and so does your instructor.
+- When a notebook gets long and the code is settled, move it into a `.py` file.
+  Notebooks are for figuring things out, not for keeping things.
 
-## Summary & Next Steps
+## Check yourself
 
-**Key accomplishments:** You've installed Anaconda with pre-configured ML libraries, mastered multiple methods to launch Jupyter Notebook, learned essential cell operations and shortcuts, and established professional workflow practices for reproducible ML development.
+1. Create a notebook called `01-first-look.ipynb`.
+2. Load the iris data and show the first five rows.
+3. Add a markdown cell above it saying what the dataset contains.
+4. Add a cell that prints the average of each column.
+5. Run **Restart and Run All** and confirm everything still works from a clean
+   start.
 
-**Best practices for ML development:**
-- **Use markdown extensively** to document methodology, findings, and next steps
-- **Restart kernels regularly** to ensure reproducible execution and catch hidden dependencies
-- **Organize notebooks systematically** with clear naming conventions and logical project structure
-- **Test essential imports** at the beginning of each session to verify environment integrity
+## Next
 
-**External resources for deeper learning:**
-- [Jupyter Notebook Official Documentation](https://jupyter-notebook.readthedocs.io/) - comprehensive reference guide
-- [Anaconda Package List](https://docs.anaconda.com/anaconda/packages/pkg-docs/) - explore 250+ included packages
-- [Jupyter Notebook Best Practices](https://cloud.google.com/blog/products/ai-machine-learning/best-practices-that-can-improve-the-life-of-any-developer-using-jupyter-notebooks) - Google's professional workflow guide
+You can now experiment quickly. Next you set up the editor for writing real
+programs, the ones with more than a few cells in them.
+
+[VS Code setup](vscode-setup.md){ .h-button }
+
+More depth when you want it: the
+[Jupyter documentation](https://jupyter-notebook.readthedocs.io/) is the
+official reference.

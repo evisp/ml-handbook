@@ -1,214 +1,211 @@
-# Visual Studio Code Setup with WSL for Machine Learning
+# VS Code and WSL
 
-This tutorial shows you how to install and configure Visual Studio Code with Windows Subsystem for Linux (WSL) to create a professional ML development environment. You'll learn to combine Windows usability with Linux power for seamless machine learning workflows.
+<span class="badge badge--time">35 min</span>
+<span class="badge badge--level">Foundations</span>
+<span class="badge">Needs: Windows 10 or 11, admin rights</span>
 
-**Estimated time:** 35 minutes
+Notebooks are for experiments. Once your code grows past a few cells you want a
+real editor. This tutorial sets up VS Code on Windows with Linux running
+underneath it.
 
-## Why This Matters
+## Why this matters
 
-**Problem statement:** Machine learning development often requires Linux tools and libraries, but many developers use Windows machines. Traditional solutions like dual-boot or virtual machines create workflow friction and performance overhead.
+Almost every machine learning system in production runs on Linux. If you learn
+on Windows paths and Windows commands, you relearn everything the first time
+you deploy something.
 
-**Practical benefits:** VS Code with WSL provides the best of both worlds - Windows productivity tools with native Linux performance for ML development. You get access to Linux package managers, Python environments, and ML frameworks while maintaining familiar Windows workflows and file system integration.
+WSL solves this. It gives you a real Ubuntu inside Windows. You keep the
+Windows you are used to, your code runs on Linux, and the two share files.
 
-**Professional context:** Most ML production environments run on Linux, making WSL essential for developing code that matches deployment targets. VS Code with remote development is the industry standard for teams working across different operating systems and cloud environments.
+!!! note "On a Mac or Linux already?"
 
-![VS Code](https://i.imgur.com/p0HjIIW.png)
+    You do not need WSL. Install VS Code, skip to Step 4, and use your normal
+    terminal wherever this page says WSL terminal.
 
-## Prerequisites & Learning Objectives
+## How the pieces fit
 
-**Required knowledge:**
-- Basic Windows navigation and file management
-- Understanding of command line concepts
-- Familiarity with text editors or IDEs
+<svg viewBox="0 0 680 216" role="img" aria-labelledby="wsl-title wsl-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="wsl-title">VS Code on Windows connected to Ubuntu in WSL</title>
+<desc id="wsl-desc">VS Code runs on Windows and shows the interface. The WSL extension connects it to Ubuntu, where your code, Python and packages actually run. Windows files are reachable from Ubuntu under slash mnt slash c.</desc>
+<rect x="3" y="14" width="300" height="188" rx="12" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="24" y="44" font-size="12" font-weight="700" fill="var(--h-space)">WINDOWS</text>
+<rect x="24" y="60" width="258" height="58" rx="8" fill="var(--md-default-bg-color)" stroke="var(--h-surface-line)"/>
+<text x="44" y="84" font-size="14" font-weight="700" fill="var(--md-default-fg-color)">VS Code</text>
+<text x="44" y="104" font-size="11.5" fill="var(--h-graphite)">what you look at and type in</text>
+<rect x="24" y="130" width="258" height="52" rx="8" fill="var(--md-default-bg-color)" stroke="var(--h-surface-line)"/>
+<text x="44" y="152" font-size="13" font-weight="600" fill="var(--md-default-fg-color)">Your Windows files</text>
+<text x="44" y="170" font-size="11.5" fill="var(--h-graphite)">C:\Users\you\Documents</text>
+<rect x="377" y="14" width="300" height="188" rx="12" fill="var(--h-cherry)"/>
+<text x="398" y="44" font-size="12" font-weight="700" fill="#ffffff" opacity="0.8">UBUNTU, INSIDE WSL</text>
+<rect x="398" y="60" width="258" height="58" rx="8" fill="rgba(255,255,255,0.14)"/>
+<text x="418" y="84" font-size="14" font-weight="700" fill="#ffffff">Python and your packages</text>
+<text x="418" y="104" font-size="11.5" fill="#ffffff" opacity="0.88">where the code actually runs</text>
+<rect x="398" y="130" width="258" height="52" rx="8" fill="rgba(255,255,255,0.14)"/>
+<text x="418" y="152" font-size="13" font-weight="600" fill="#ffffff">Your project files</text>
+<text x="418" y="170" font-size="11.5" fill="#ffffff" opacity="0.88">~/ml-projects</text>
+<line x1="307" y1="88" x2="371" y2="88" stroke="var(--h-steel)" stroke-width="2"/>
+<text x="339" y="76" text-anchor="middle" font-size="11" font-weight="600" fill="var(--h-cherry)">WSL extension</text>
+<line x1="371" y1="156" x2="307" y2="156" stroke="var(--h-steel)" stroke-width="2" stroke-dasharray="4 4"/>
+<text x="339" y="176" text-anchor="middle" font-size="11" font-weight="600" fill="var(--h-graphite)">/mnt/c</text>
+</svg>
 
-**Learning outcomes:**
-- Install and configure VS Code with essential ML extensions
-- Set up WSL with Ubuntu for Linux development environment
-- Connect VS Code to WSL for seamless remote development
-- Navigate between Windows and Linux file systems efficiently
-- Configure Python environments and run ML code in integrated terminals
+One thing to hold on to: the window is Windows, the code is Linux.
 
-**High-level approach:** You'll install VS Code first, then enable WSL with Ubuntu, install the Remote-WSL extension, and establish an integrated development workflow that combines Windows interface with Linux backend.
+## Step 1: Install VS Code
 
-## Step-by-Step Instructions
+Download it from [code.visualstudio.com](https://code.visualstudio.com/) and
+run the installer. Tick these three boxes when offered:
 
-### Step 1: Install Visual Studio Code
+- Add "Open with Code" to the file context menu
+- Add "Open with Code" to the directory context menu
+- Add to PATH
 
-**Download and install VS Code:**
-- Visit [https://code.visualstudio.com/](https://code.visualstudio.com/)
-- Download the Windows installer (64-bit recommended)
-- Run the installer with these important settings:
-  - **Add "Open with Code" action to Windows Explorer file context menu**
-  - **Add "Open with Code" action to Windows Explorer directory context menu**
-  - **Add to PATH** (enables command line access)
+The last one lets you type `code .` in any terminal to open the current folder.
+You will use it constantly.
 
-**Why these settings matter:** Adding to PATH allows you to open VS Code from any terminal, while context menu integration provides quick access to editing files and folders directly from Windows Explorer.
+## Step 2: Install WSL
 
-**Expected outcome:** VS Code launches successfully and you can access it from Start menu, desktop shortcut, or by typing `code` in any command prompt.
+Right click the Start button and choose **Terminal (Admin)**, then run:
 
-### Step 2: Enable and Install WSL with Ubuntu
-
-**Install WSL using PowerShell:**
 ```powershell
-# Open PowerShell as Administrator
-# Right-click Start button → "Terminal (Admin)" or "PowerShell (Admin)"
 wsl --install
 ```
 
-**What this command accomplishes:**
-- Enables WSL and Virtual Machine Platform features
-- Downloads and installs the Linux kernel
-- Sets WSL 2 as default (better performance)
-- Installs Ubuntu Linux distribution automatically[2]
+This turns on the Windows features WSL needs, downloads the Linux kernel, and
+installs Ubuntu. Restart when it asks.
 
-**Complete the installation:**
-- Restart your computer when prompted
-- After restart, Ubuntu setup will launch automatically
-- Create a Linux username and password (can be different from Windows)
-- **Important:** Remember this password - you'll need it for `sudo` commands
+After the restart, Ubuntu opens and asks for a username and password. They do
+not have to match your Windows ones. Write the password down somewhere, because
+you need it every time you run `sudo` and Linux does not show any characters
+while you type it.
 
-**Verify WSL installation:**
-```bash
-# In any command prompt or PowerShell
+Check it worked:
+
+```powershell
 wsl --list --verbose
 ```
 
-**Expected output:**
+You want to see Ubuntu with VERSION 2:
+
 ```
   NAME      STATE           VERSION
 * Ubuntu    Running         2
 ```
 
-### Step 3: Install WSL Extension and Connect VS Code
+??? note "`wsl --install` fails or WSL version says 1"
 
-**Install the Remote-WSL extension:**
-- Open VS Code
-- Press `Ctrl + Shift + X` to open Extensions
-- Search for "Remote - WSL" by Microsoft
-- Click **Install**
+    Virtualisation is probably turned off in your BIOS. Restart, enter BIOS
+    setup, and enable Intel VT-x or AMD-V. If WSL installed but shows version
+    1, run `wsl --set-version Ubuntu 2` and wait. It can take a few minutes.
 
-**Connect to WSL:**
-- Press `Ctrl + Shift + P` to open Command Palette
-- Type and select **"Remote-WSL: New WSL Window"**
-- Choose **Ubuntu** from the distribution list
-- A new VS Code window opens connected to your Linux environment
+## Step 3: Connect VS Code to Ubuntu
 
-**Verify the connection:**
-- Look for **"WSL: Ubuntu"** in the bottom-left corner of VS Code
-- Open integrated terminal with `Ctrl + ` (backtick)
-- The terminal should show your Linux username and prompt
+1. Open VS Code and press ++ctrl+shift+x++ for Extensions.
+2. Search for **WSL** by Microsoft and install it.
+3. Press ++ctrl+shift+p++ and run **WSL: Connect to WSL**.
 
-**Expected terminal prompt:**
+A new window opens. Look at the bottom left corner. It should say **WSL:
+Ubuntu**. That label is how you know which side you are on, and you should check
+it whenever something behaves oddly.
+
+Open the terminal inside VS Code with ++ctrl+j++, or with Ctrl and the backtick
+key. The prompt now looks like this:
+
 ```bash
-username@DESKTOP-NAME:~$
+yourname@YOUR-PC:~$
 ```
 
-### Step 4: Configure Your Linux Development Environment
+That is Linux. Everything you type there runs on Ubuntu.
 
-**Update Ubuntu packages:**
+## Step 4: Set up Python on the Linux side
+
+Update the system first:
+
 ```bash
-# Run in the WSL-connected VS Code terminal
 sudo apt update && sudo apt upgrade -y
 ```
 
-**Install essential development tools:**
-```bash
-# Python and development essentials (if not already installed)
-sudo apt install python3 python3-pip python3-venv git curl wget -y
+Then install the basics:
 
-# Verify installations
+```bash
+sudo apt install python3 python3-pip python3-venv git curl -y
 python3 --version
-pip3 --version
-git --version
 ```
 
-**Install Python ML libraries:**
+Now make a virtual environment. A virtual environment is a private folder of
+packages for one project. Without it, two projects that need different versions
+of the same library fight each other, and the loser is whichever one you open
+second.
+
 ```bash
-# Create a virtual environment for ML projects
 python3 -m venv ~/ml-env
 source ~/ml-env/bin/activate
-
-# Install essential ML packages
-pip install numpy pandas matplotlib seaborn scikit-learn jupyter notebook
+pip install numpy pandas matplotlib scikit-learn jupyter
 ```
 
-**Why virtual environments are essential:** Virtual environments isolate project dependencies, preventing conflicts between different ML projects and ensuring reproducible development across team members.
+Your prompt now starts with `(ml-env)`. That tells you the environment is
+active. It deactivates when you close the terminal, so run the `source` line
+again each session.
 
-**Expected outcome:** You can run Python ML code natively in Linux while editing comfortably in VS Code.
+!!! note "You installed Anaconda already. Is this a duplicate?"
 
-### Step 5: Master the Integrated Workflow
+    No. Anaconda is on the Windows side, WSL is a separate machine, and neither
+    can see the other's packages. Use Anaconda and its notebooks for
+    exploration on Windows, and this environment for the code you run in
+    Linux. If you prefer one place for everything, install Anaconda inside WSL
+    instead and use it for both.
 
-**File system navigation:**
+## Step 5: Work in the right folder
+
+This is the one WSL rule worth memorising.
+
+**Keep your projects in the Linux home folder.** Files there live on the Linux
+filesystem and are fast. Files under `/mnt/c` live on the Windows filesystem
+and every read crosses a bridge, which makes Git and Python noticeably slow on
+a large project.
+
 ```bash
-# Access Windows files from WSL
-cd /mnt/c/Users/YourUsername/Documents
-
-# Create ML project in Linux home (recommended for performance)
-cd ~
-mkdir ml-projects
-cd ml-projects
-```
-
-**Open projects efficiently:**
-```bash
-# From WSL terminal, open current directory in VS Code
+mkdir -p ~/ml-projects
+cd ~/ml-projects
 code .
-
-# Create and edit files directly
-code my_ml_script.py
 ```
 
-**Essential VS Code shortcuts for remote development:**
-- `Ctrl + Shift + P`: Command Palette (most important!)
-- `Ctrl + `: Toggle integrated terminal
-- `Ctrl + Shift + E`: File Explorer
-- `Ctrl + B`: Toggle sidebar
-- `F1`: Alternative Command Palette access
+That last command opens the folder in VS Code, still connected to Ubuntu. When
+you do need something from Windows, it is under `/mnt/c/Users/YourName/`.
 
-**Python development workflow:**
-```bash
-# Activate your ML environment
-source ~/ml-env/bin/activate
+Finally, install two extensions in this WSL window: **Python** and **Jupyter**,
+both from Microsoft. Extensions install per side, so having them on Windows is
+not enough.
 
-# Run Python scripts
-python my_ml_script.py
-```
+### Shortcuts worth knowing
 
-### Step 6: Install Essential VS Code Extensions for ML
+| Keys | What it does |
+|---|---|
+| ++ctrl+shift+p++ | Command palette. Everything VS Code can do is in here |
+| ++ctrl+j++ | Show or hide the terminal |
+| ++ctrl+shift+e++ | File explorer |
+| ++ctrl+b++ | Show or hide the sidebar |
+| ++ctrl+p++ | Jump to a file by typing part of its name |
 
-**Install Python development extensions:**
-- Press `Ctrl + Shift + X` in your WSL-connected window
-- Install these essential extensions:
-  - **Python** (Microsoft) - Python language support
-  - **Jupyter** (Microsoft) - Notebook support in VS Code
+## Check yourself
 
-**File system best practices:**
-- Store Linux-specific projects in `~/` (Linux home) for best performance
-- Access Windows files when needed via `/mnt/c/Users/YourUsername/`
-- Use WSL for running code, Windows for file management when convenient
+1. Open VS Code and confirm the bottom left corner says WSL: Ubuntu.
+2. In the terminal, run `pwd`. You should see `/home/yourname/ml-projects`, not
+   a `C:` path.
+3. Create `hello.py` with `print("Linux is running my code")` and run it with
+   `python3 hello.py`.
+4. Activate `ml-env` and run `python3 -c "import pandas; print(pandas.__version__)"`.
+5. Run `git --version` to confirm Git is available on this side too.
 
-## Summary & Next Steps
+If step 2 shows a `/mnt/c` path, you opened a Windows folder. Close the window
+and start again from `~/ml-projects`.
 
-**Key accomplishments:** You've installed VS Code with WSL integration, created a Linux development environment with Python ML libraries, mastered file system navigation between Windows and Linux, and established a professional workflow for ML development.
+## Next
 
-**Best practices for ML development:**
-- **Store ML projects in Linux home** (`~/ml-projects/`) for optimal performance and native tool access
-- **Use virtual environments** for each project to maintain clean dependency management
-- **Leverage integrated terminal** to avoid switching between VS Code and separate command windows
-- **Keep sensitive data in WSL** to benefit from Linux security and permissions model
+You have an editor, a Linux environment, and somewhere to run code. Time to
+write some.
 
-**For non-Windows users:**
-- **macOS/Linux users**: Install VS Code directly and use local Python development - no WSL needed
-- **All platforms**: Consider Remote-SSH extension for connecting to remote servers or cloud instances
+[Python warm up](python-warm-up.md){ .h-button }
 
-
-**External resources for deeper learning:**
-- [VS Code WSL Tutorial](https://code.visualstudio.com/docs/remote/wsl-tutorial) - official comprehensive guide[4]
-- [WSL Best Practices](https://docs.microsoft.com/windows/wsl/setup/environment) - Microsoft's development environment guide[5]
-- [Remote Development Extension Pack](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) - additional remote development capabilities[1]
-
-**Practice exercises:**
-- Create a sample ML project using scikit-learn in your WSL environment
-- Practice navigating between Windows and Linux file systems
-- Set up a Git repository and commit code from VS Code with WSL
-
+Official guide if you want more:
+[VS Code with WSL](https://code.visualstudio.com/docs/remote/wsl-tutorial).

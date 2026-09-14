@@ -1,106 +1,138 @@
-# Zero Day: Essential Setup for Machine Learning Training
+# Zero day
 
-This tutorial guides you through setting up all accounts and tools required for your Machine Learning training at Holberton. You'll configure your learning platform access, communication channels, version control, and development environment to ensure you're ready for day one of training.
+<span class="badge badge--time">20 min</span>
+<span class="badge badge--level">Foundations</span>
+<span class="badge">Needs: the email Holberton sent you</span>
 
-**Estimated time:** 20 minutes
+Four accounts run your training. This tutorial gets all four working. Do it
+before your first day, not during it.
 
-## Why This Matters
+## Why this matters
 
-Starting ML training without proper account setup and tool configuration leads to lost time troubleshooting access issues, missed communications, and inability to submit assignments when you should be focusing on learning.
+Every hour you spend chasing a login is an hour you are not learning. These
+four platforms are also how your work gets seen and graded, so a broken account
+in week one turns into a missing submission in week two.
 
-![Zero day](https://i.imgur.com/4VGN8Y2.png)
+## The four platforms
 
+<svg viewBox="0 0 680 236" role="img" aria-labelledby="platforms-title platforms-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="platforms-title">The four platforms you need</title>
+<desc id="platforms-desc">Intranet for course materials, Slack for communication, GitHub for your code, and Containers on Demand for your development machine. The intranet, Slack and Containers on Demand share one login. GitHub is a separate account.</desc>
+<rect x="3" y="14" width="330" height="96" rx="12" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="26" y="48" font-size="15" font-weight="700" fill="var(--md-default-fg-color)">Intranet</text>
+<text x="26" y="70" font-size="12.5" fill="var(--h-graphite)">Projects, deadlines, your grades</text>
+<text x="26" y="90" font-size="11.5" font-weight="600" fill="var(--h-cherry)">intranet.hbtn.io</text>
+<rect x="347" y="14" width="330" height="96" rx="12" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="370" y="48" font-size="15" font-weight="700" fill="var(--md-default-fg-color)">Slack</text>
+<text x="370" y="70" font-size="12.5" fill="var(--h-graphite)">Questions, announcements, your cohort</text>
+<text x="370" y="90" font-size="11.5" font-weight="600" fill="var(--h-cherry)">same login as intranet</text>
+<rect x="3" y="126" width="330" height="96" rx="12" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="26" y="160" font-size="15" font-weight="700" fill="var(--md-default-fg-color)">GitHub</text>
+<text x="26" y="182" font-size="12.5" fill="var(--h-graphite)">Your code, and your public portfolio</text>
+<text x="26" y="202" font-size="11.5" font-weight="600" fill="var(--h-cherry)">your own separate account</text>
+<rect x="347" y="126" width="330" height="96" rx="12" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="370" y="160" font-size="15" font-weight="700" fill="var(--md-default-fg-color)">Containers on Demand</text>
+<text x="370" y="182" font-size="12.5" fill="var(--h-graphite)">A Linux machine in the browser</text>
+<text x="370" y="202" font-size="11.5" font-weight="600" fill="var(--h-cherry)">cod.hbtn.io</text>
+</svg>
 
-## Step-by-Step Instructions
+Three of them use one password. GitHub is the exception, and it is the one that
+follows you after graduation.
 
-### Step 1: Access and Configure Your Holberton Intranet
+## Step 1: Set up the intranet
 
-The intranet serves as your central hub for all course materials, project specifications, and progress tracking.
+Go to [intranet.hbtn.io](https://intranet.hbtn.io/) and log in with the
+credentials from your welcome email. Bookmark the page. You will open it every
+day.
 
-**Access the platform:**
-- Navigate to [https://intranet.hbtn.io/](https://intranet.hbtn.io/). Then **log in with the credentials provided to you by email**. You may bookmark this page for easy daily access. 
+Then finish your profile:
 
-**Why this matters:** The intranet contains all project requirements, learning resources, and submission deadlines. It's your single source of truth throughout the program.
+1. Click your profile icon in the bottom left corner.
+2. Fill in every field marked with an asterisk.
+3. Add a photo. A plain head and shoulders shot is fine. This is the photo your
+   instructors and future employers will see.
+4. Save.
 
-**Complete your profile:**
-- Click on your profile icon (bottom left corner)
-- **Critical step:** Fill in all mandatory fields marked with asterisks (\*)
-- Add a (professional) profile photo
-- Save your changes
-- **At this phase, do not yet change the password**.
+!!! warning "Do not change your password yet"
 
+    Slack and Containers on Demand read your account from the intranet. Change
+    the password now and you may lock yourself out of the other two before they
+    have synced. Wait until all four platforms work.
 
+## Step 2: Join Slack
 
+Open the intranet and find the Slack link in the left navigation panel. Log in
+with the same credentials.
 
-### Step 2: Connect to Slack for Team Communication
+You are added to your cohort channel automatically. Download the desktop or
+phone app as well, because the browser version is easy to forget and that is
+where schedule changes get announced.
 
-Slack serves as your real-time communication channel with instructors, mentors, and fellow students throughout the program.
+## Step 3: Create your GitHub account
 
-**Access Slack:**
-Locate the Slack icon or link within the intranet (left side panel on the navigation menu). Click to **launch Slack**. 
+Already have one you use professionally? Use it and skip to Step 4.
 
-**Important:** Use the **same credentials** as your intranet login. Alternatively, download the Slack desktop app for better notifications. You'll automatically be added to your cohort's group channel. 
+Otherwise go to [github.com/signup](https://github.com/signup). Two choices
+matter here:
 
-### Step 3: Create Your GitHub Account
+**The email.** Use one you will still read in five years. Not a school address
+that gets shut off when you graduate.
 
-GitHub hosts your code repositories and integrates with the platform's automated grading system.
+**The username.** This becomes part of your professional identity. It appears
+in every project link you ever send to an employer. Something close to your
+real name works well. Something you thought was funny at nineteen does not.
 
-> If you already have a GitHub account you may use it. 
+When you have it, go back to your intranet profile and add the username there.
+The automated grading system uses it to find your work, so a typo means your
+projects do not get marked.
 
-Alternatively,
+## Step 4: Start your development machine
 
-**Create your account:**
-- Navigate to [https://github.com/signup](https://github.com/signup). Enter your email address (use a professional email you'll access long-term) and create a strong password. 
+Containers on Demand gives everyone the same Linux machine with Python and the
+ML libraries already installed. Nobody has to debug somebody else's laptop.
 
-> Choose a professional username (avoid numbers or special characters if possible)
+1. Go to [cod.hbtn.io](https://cod.hbtn.io/sign_in) and log in with your
+   intranet credentials.
+2. Set the **Region** dropdown at the top of the page to **Europe**. This
+   affects how fast the connection feels from Tirana.
+3. Find **ml_ubuntu_2204** in the container list and click **Spin Up
+   Container**. Give it up to a minute.
+4. Click **Actions**, then **VS Code**. A full editor and a Linux terminal open
+   in your browser.
 
-**Why username matters:** Your GitHub username becomes part of your professional identity. Choose something you'd be comfortable sharing with future employers, as your ML projects will remain visible in your portfolio.
+!!! warning "Containers stop after four hours"
 
-> **Next action:** Remember to add this exact username to your intranet profile as described in Step 1.
+    Your container shuts down four hours after you start it, and anything you
+    have not pushed to GitHub is gone. You can add more time while you work,
+    from the same Actions menu. Two habits protect you: commit often, and never
+    leave your only copy of something inside a container.
 
+## Check yourself
 
-### Step 4: Access Your Cloud Development Environment
+Five minutes, and it proves all four accounts work.
 
-Containers on Demand (COD) provides pre-configured Linux machines with all necessary ML libraries installed, eliminating local setup complexity.
+1. Log in to the intranet and confirm your profile shows your photo and your
+   GitHub username.
+2. Post a short hello in your cohort channel on Slack.
+3. Open your GitHub profile page and check the username reads the way you want
+   an employer to read it.
+4. Spin up a container, open the terminal, and run `python3 --version`. You
+   should see Python 3.10 or higher.
 
-**Access the platform:**
-- Navigate to [https://cod.hbtn.io/sign_in](https://cod.hbtn.io/sign_in). Once there, log in with your **same intranet credentials** and *wait* for the dashboard to load
+If any of the four fails, ask in Slack now. This is exactly what the channel is
+for.
 
-**Why cloud environments matter:** COD ensures everyone works in identical environments with consistent library versions, eliminating "it works on my machine" problems common in ML development.
+## Quick reference
 
-**Configure your container settings:**
+| Platform | Where | What it is for | Login |
+|---|---|---|---|
+| Intranet | intranet.hbtn.io | Projects, deadlines, grades | The one from your email |
+| Slack | Link inside the intranet | Questions and announcements | Same as intranet |
+| GitHub | github.com | Your code and portfolio | Your own account |
+| Containers on Demand | cod.hbtn.io | Linux machine for coding | Same as intranet |
 
-**Step 4.1: Select your region**
-- Locate the "Region" dropdown at the top of the page 
-- **Important:** Select **Europe** for optimal performance and compliance
-- This choice affects connection speed and data residency
+## Next
 
-**Step 4.2: Choose your container**
-- Scroll through the container list
-- Find and select **ml_ubuntu_2204**
-- Click `Spin Up Container`
-- Wait 30-60 seconds for the container to initialize
+Your accounts work. Now set up the tool that saves your work.
 
-
-**Step 4.3: Access your development environment**
-- Click "`Actions` and select `VS Code` to launch the web-based VS Code interface
-- The interface loads with a Linux terminal and file explorer
-
-**Why this container:** `ml_ubuntu_2204` comes pre-installed with Python, NumPy, pandas, scikit-learn, TensorFlow, PyTorch, and other essential ML libraries on Ubuntu 22.04 LTS.
-
-> Important info: the container on demand expands after 4 hours. You need to repeat this process any time you work witht the platform. You can add *more time* as you are working.
-
-### Quick Reference for Daily Workflow
-
-| Platform | URL | Purpose | Credentials |
-|----------|-----|---------|-------------|
-| Intranet | intranet.hbtn.io | Course materials, projects, progress | Primary account |
-| Slack | Via intranet link | Communication, support | Same as intranet |
-| GitHub | github.com | Code hosting, version control | Separate account |
-| COD | cod.hbtn.io | Development environment | Same as intranet |
-
-## Summary & Next Steps
-
-**Key accomplishments:** You've configured your Holberton intranet profile with GitHub integration, connected to Slack for team communication, created a professional GitHub account, and launched your pre-configured ML development environment with VS Code customization.
-
-**Next tutorial:** Complete the [Git and GitHub](./git-and-github.md) tutorial to finish setting up version control and learn the essential workflow for submitting projects.
+[Git and GitHub](git-and-github.md){ .h-button }

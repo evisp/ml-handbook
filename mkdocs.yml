@@ -200,6 +200,10 @@ nav:
       - What AI is: 02-fundamentals/what-is-ai.md
       - How machines learn: 02-fundamentals/what-is-ml.md
 
+  - Projects:
+      - projects/index.md
+      - Rock, paper, scissors: projects/rock-paper-scissors.md
+
   # - Math:
   #     - 02-math/index.md
   #     - Linear algebra: 02-math/linear-algebra.md

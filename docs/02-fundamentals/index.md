@@ -1,9 +1,9 @@
 # Fundamentals
 
-Fundamentals capture the core ideas behind the whole year. Every later module is one of these
+Six short pages that carry the whole year. Every later module is one of these
 ideas done with more rigour.
 
-Read these pages after the opening session, not before. The words land better
+Read them alongside the first project, not before it. The words land better
 once you have seen a model work and then break.
 
 <div class="grid cards" markdown>
@@ -31,12 +31,34 @@ once you have seen a model work and then break.
 
     [Read](what-is-ml.md)
 
+-   :material-clipboard-list-outline: **Framing a problem**
+
+    ---
+
+    Turning "can we use AI for this" into something buildable. Five questions,
+    the learning families, and one example where the right answer is no.
+
+    <span class="badge badge--time">25 min</span>
+
+    [Read](framing-ml-problems.md)
+
+-   :material-database-outline: **Working with data**
+
+    ---
+
+    Splits, variety, sources, and what to check before you build anything. Read
+    this before you collect a single image.
+
+    <span class="badge badge--time">25 min</span>
+
+    [Read](working-with-data.md)
+
 -   :material-scale-balance: **Ethics and responsibility**
 
     ---
 
     Consent, bias, and accountability treated as engineering decisions, because
-    that is what they are. Read this before the second project.
+    that is what they are.
 
     <span class="badge badge--time">25 min</span>
 

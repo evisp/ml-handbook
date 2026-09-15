@@ -141,15 +141,16 @@ The grey line always falls. Give a model enough time and it can memorise its
 training data completely, which is why the grey line on its own tells you
 nothing.
 
-The red line is the one that matters. It is the error on data held back from
-training, called a **validation set**. While both lines fall, the model is
-learning something general. When the red line turns upward, the model has
+The red line is the one that matters. It is the error on the validation set,
+the held back data you met earlier in this module. While both lines fall, the
+model is learning something general. When the red line turns upward, the model has
 started memorising particulars that do not transfer. Everything after that
 point makes it worse at the only job it has.
 
 Stopping at the turn is called early stopping, and it is the most common cure
-for overfitting. You also now know why you hold data back at all. Without the
-red line you cannot see the turn, and you will train confidently past it.
+for overfitting. This is also the answer to why you hold data back at all.
+Without the red line you cannot see the turn, and you will train confidently
+past it.
 
 This is the same thing you saw in the first project. Your model was excellent
 on your own photographs and much worse on another group's. That gap is the two

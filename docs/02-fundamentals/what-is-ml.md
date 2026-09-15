@@ -50,6 +50,18 @@ Read the second row again. The answers are an input. This is why data work is
 most of the job, and why a model is only ever as good as the examples it was
 shown.
 
+### The formal version
+
+Tom Mitchell put this precisely in 1997, and his definition is still the one
+textbooks use. A program learns if its performance at some task improves with
+experience, where three things have to be named: the **task**, the
+**experience** it learns from, and the **performance measure** that says whether
+it is getting better.
+
+Name all three and you have a machine learning problem. Miss one and you have an
+intention. There is a whole page on using this as a checklist later in this
+module.
+
 ## The words you need
 
 Every term below is something you will physically do in the first project. Keep
@@ -66,6 +78,7 @@ this section open while you work.
 | **Prediction** | The model's answer on something new | "Scissors" |
 | **Confidence** | How sure the model is, from 0 to 100 | The bar under each class |
 | **Training set** | The examples used to build the model | Your collected photos |
+| **Validation set** | Held back examples used to tune your choices | Not used in project one |
 | **Test set** | Held back examples, never used in training | The 20 photos you test with |
 | **Generalisation** | Working on data it has never seen | The whole point |
 | **Overfitting** | Memorising the training set instead of learning the pattern | 100 percent in the room, 50 percent elsewhere |
@@ -157,6 +170,9 @@ Almost everything you will meet falls into one of three setups.
     Go without being shown how a human plays.
 
 </div>
+
+Each of these has flavours that change what data you need, and the next page
+goes through them properly.
 
 ## Knowing whether it works
 
@@ -261,14 +277,7 @@ Bring answers to the project review.
 
 ## Next
 
-You now have the vocabulary. Two things follow from it.
+You have the vocabulary. Now the method for turning a vague request into
+something you can actually build.
 
-Before the second project, read the page on the parts of this that are not
-technical, because every failure above lands on somebody.
-
-[Ethics and responsibility](ethics-and-responsibility.md){ .h-button }
-
-And when the maths module opens, the page on what training actually does will
-turn "adjust the model until it fits" into something you can picture.
-
-[What training actually does](how-training-works.md)
+[Framing a machine learning problem](framing-ml-problems.md){ .h-button }

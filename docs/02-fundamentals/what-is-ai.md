@@ -235,6 +235,52 @@ Bring your answers to the next session. There is no key at the back of the book.
 5. What is a task you would refuse to let an AI system do, no matter how
    accurate it became? Try to say why in one sentence.
 
+## How the words fit together
+
+You will hear artificial intelligence, machine learning, deep learning and
+generative AI used as if they were interchangeable. They are not. Each one sits
+inside the one before it.
+
+<svg viewBox="0 0 680 384" role="img" aria-labelledby="nest-title nest-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="nest-title">How AI, machine learning, deep learning and generative AI relate</title>
+<desc id="nest-desc">Four nested circles. Artificial intelligence is the largest and includes search, planning and rule based systems. Machine learning sits inside it and learns from examples. Deep learning sits inside machine learning and uses neural networks. Generative AI is the innermost circle.</desc>
+<circle cx="340" cy="185" r="165" fill="rgba(227,28,63,0.06)" stroke="var(--h-surface-line)"/>
+<text x="340" y="48" text-anchor="middle" font-size="15" font-weight="700" fill="var(--md-default-fg-color)">Artificial intelligence</text>
+<text x="340" y="66" text-anchor="middle" font-size="10.5" fill="var(--h-graphite)">search, planning, rule systems</text>
+<circle cx="340" cy="185" r="125" fill="rgba(227,28,63,0.12)" stroke="var(--h-cherry-line)"/>
+<text x="340" y="88" text-anchor="middle" font-size="14" font-weight="700" fill="var(--md-default-fg-color)">Machine learning</text>
+<text x="340" y="105" text-anchor="middle" font-size="10.5" fill="var(--h-graphite)">learns rules from examples</text>
+<circle cx="340" cy="185" r="85" fill="rgba(227,28,63,0.22)" stroke="var(--h-cherry-line)"/>
+<text x="340" y="128" text-anchor="middle" font-size="13" font-weight="700" fill="var(--md-default-fg-color)">Deep learning</text>
+<text x="340" y="145" text-anchor="middle" font-size="10.5" fill="var(--h-graphite)">neural networks</text>
+<circle cx="340" cy="192" r="48" fill="var(--h-cherry)"/>
+<text x="340" y="188" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">Generative</text>
+<text x="340" y="204" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">AI</text>
+<text x="340" y="374" text-anchor="middle" font-size="12" fill="var(--h-graphite)">every chatbot is AI, but most AI is not a chatbot</text>
+</svg>
+
+Read it from the outside in.
+
+**Artificial intelligence** is the whole ambition, and most of it has nothing to
+do with learning. A chess engine that searches millions of positions, a route
+planner, a system of handwritten medical rules. All AI, none of it learning
+anything.
+
+**Machine learning** is the part where the system works out the rules from
+examples instead of being given them. This is what your programme is mostly
+about.
+
+**Deep learning** is machine learning done with neural networks of many layers.
+It is what made images, speech and language start working around 2012.
+
+**Generative AI** is the newest and smallest circle. Models that produce new
+text, images, audio or code rather than sorting things into categories. Large
+language models live here.
+
+So ChatGPT is generative AI, which is deep learning, which is machine learning,
+which is AI. Four true statements about one system. When somebody says they
+work in AI, this diagram is the question you are really asking.
+
 ## Next
 
 Now the part you will use every day: how a machine learns anything at all.

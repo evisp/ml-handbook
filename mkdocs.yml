@@ -199,6 +199,8 @@ nav:
       - 02-fundamentals/index.md
       - What AI is: 02-fundamentals/what-is-ai.md
       - How machines learn: 02-fundamentals/what-is-ml.md
+      - Ethics and responsibility: 02-fundamentals/ethics-and-responsibility.md
+      - What training actually does: 02-fundamentals/how-training-works.md
 
   - Projects:
       - projects/index.md

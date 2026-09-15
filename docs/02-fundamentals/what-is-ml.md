@@ -261,7 +261,14 @@ Bring answers to the project review.
 
 ## Next
 
-You now have the vocabulary. Time to build something and watch it break.
+You now have the vocabulary. Two things follow from it.
 
-Your first project uses Teachable Machine to build a rock, paper, scissors
-classifier. Details come in the session.
+Before the second project, read the page on the parts of this that are not
+technical, because every failure above lands on somebody.
+
+[Ethics and responsibility](ethics-and-responsibility.md){ .h-button }
+
+And when the maths module opens, the page on what training actually does will
+turn "adjust the model until it fits" into something you can picture.
+
+[What training actually does](how-training-works.md)

@@ -1,0 +1,1759 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A practical, project-based machine learning curriculum for Holberton School Albania. Real projects, real skills, real careers.">
+      
+      
+        <meta name="author" content="Evis Plaku">
+      
+      
+        <link rel="canonical" href="https://evisp.github.io/ml-handbook/02-fundamentals/what-is-ml/">
+      
+      
+        <link rel="prev" href="../what-is-ai/">
+      
+      
+        <link rel="next" href="../framing-ml-problems/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>How machines learn - Holberton ML Handbook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Host+Grotesk:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Host Grotesk";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/brand.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#how-machines-learn" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Holberton ML Handbook" class="md-header__button md-logo" aria-label="Holberton ML Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Holberton ML Handbook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              How machines learn
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/evisp/ml-handbook" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    evisp/ml-handbook
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../01-tools/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Tools
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Fundamentals
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../projects/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Projects
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Holberton ML Handbook" class="md-nav__button md-logo" aria-label="Holberton ML Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Holberton ML Handbook
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/evisp/ml-handbook" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    evisp/ml-handbook
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../01-tools/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/zero-day/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Zero day
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/git-and-github/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git & GitHub
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/notebook-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jupyter notebook setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/vscode-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/python-warm-up/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python warm up
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Fundamentals
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../what-is-ai/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    What AI is
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How machines learn
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How machines learn
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-switch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The switch
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The switch">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-formal-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The formal version
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-words-you-need" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The words you need
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The loop
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#three-ways-to-learn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Three ways to learn
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#knowing-whether-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Knowing whether it works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-goes-wrong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What goes wrong
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#questions-to-sit-with" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Questions to sit with
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../framing-ml-problems/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Framing a problem
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../working-with-data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Working with data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ethics-and-responsibility/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ethics and responsibility
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-training-works/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    What training actually does
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../projects/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Projects
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Projects
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../projects/rock-paper-scissors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rock, paper, scissors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-switch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The switch
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The switch">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-formal-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The formal version
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-words-you-need" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The words you need
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The loop
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#three-ways-to-learn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Three ways to learn
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#knowing-whether-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Knowing whether it works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-goes-wrong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What goes wrong
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#questions-to-sit-with" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Questions to sit with
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Fundamentals
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/evisp/ml-handbook/edit/main/docs/02-fundamentals/what-is-ml.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="how-machines-learn">How machines learn<a class="headerlink" href="#how-machines-learn" title="Link to this section">&para;</a></h1>
+<p><span class="badge badge--time">30 min</span>
+<span class="badge badge--level">Concepts</span>
+<span class="badge">Read before the project review</span></p>
+<p>Machine learning is one idea. Instead of writing the rules, you show the
+machine examples and let it work the rules out. Everything else on this page is
+detail.</p>
+<h2 id="the-switch">The switch<a class="headerlink" href="#the-switch" title="Link to this section">&para;</a></h2>
+<p>For fifty years, getting a computer to do something meant writing down how.
+Rules in, data in, answers out. This works beautifully when you can state the
+rule. Payroll, tax, sorting a list.</p>
+<p>Now try to write the rule for telling a photo of rock from a photo of paper.
+Not the idea of it, the actual rule, in terms of pixel values. You cannot. You
+know the answer instantly and you cannot say how you know.</p>
+<p>That is the gap machine learning fills. You supply the examples and the
+answers, and the machine produces the rule.</p>
+<p><svg viewBox="0 0 680 240" role="img" aria-labelledby="prog-title prog-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="prog-title">Traditional programming compared with machine learning</title>
+<desc id="prog-desc">In traditional programming, rules and data go in and answers come out. In machine learning, data and answers go in and the rules, called a model, come out.</desc>
+<defs><marker id="pr-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--h-steel)"/></marker></defs>
+<text x="8" y="26" font-size="13" font-weight="700" fill="var(--h-graphite)">Traditional programming</text>
+<rect x="8" y="40" width="130" height="52" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="73" y="72" text-anchor="middle" font-size="13.5" font-weight="600" fill="var(--md-default-fg-color)">Rules</text>
+<text x="158" y="72" text-anchor="middle" font-size="18" fill="var(--h-space)">+</text>
+<rect x="178" y="40" width="130" height="52" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="243" y="72" text-anchor="middle" font-size="13.5" font-weight="600" fill="var(--md-default-fg-color)">Data</text>
+<line x1="316" y1="66" x2="386" y2="66" stroke="var(--h-steel)" stroke-width="2" marker-end="url(#pr-arrow)"/>
+<rect x="394" y="40" width="150" height="52" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="469" y="72" text-anchor="middle" font-size="13.5" font-weight="600" fill="var(--md-default-fg-color)">Answers</text>
+<text x="8" y="148" font-size="13" font-weight="700" fill="var(--h-cherry)">Machine learning</text>
+<rect x="8" y="162" width="130" height="52" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="73" y="194" text-anchor="middle" font-size="13.5" font-weight="600" fill="var(--md-default-fg-color)">Data</text>
+<text x="158" y="194" text-anchor="middle" font-size="18" fill="var(--h-space)">+</text>
+<rect x="178" y="162" width="130" height="52" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="243" y="194" text-anchor="middle" font-size="13.5" font-weight="600" fill="var(--md-default-fg-color)">Answers</text>
+<line x1="316" y1="188" x2="386" y2="188" stroke="var(--h-steel)" stroke-width="2" marker-end="url(#pr-arrow)"/>
+<rect x="394" y="162" width="150" height="52" rx="10" fill="var(--h-cherry)"/>
+<text x="469" y="188" text-anchor="middle" font-size="13.5" font-weight="700" fill="#ffffff">Rules</text>
+<text x="469" y="205" text-anchor="middle" font-size="11" fill="#ffffff" opacity="0.9">we call this a model</text>
+</svg></p>
+<p>Read the second row again. The answers are an input. This is why data work is
+most of the job, and why a model is only ever as good as the examples it was
+shown.</p>
+<h3 id="the-formal-version">The formal version<a class="headerlink" href="#the-formal-version" title="Link to this section">&para;</a></h3>
+<p>Tom Mitchell put this precisely in 1997, and his definition is still the one
+textbooks use. A program learns if its performance at some task improves with
+experience, where three things have to be named: the <strong>task</strong>, the
+<strong>experience</strong> it learns from, and the <strong>performance measure</strong> that says whether
+it is getting better.</p>
+<p>Name all three and you have a machine learning problem. Miss one and you have an
+intention. There is a whole page on using this as a checklist later in this
+module.</p>
+<h2 id="the-words-you-need">The words you need<a class="headerlink" href="#the-words-you-need" title="Link to this section">&para;</a></h2>
+<p>Every term below is something you will physically do in the first project. Keep
+this section open while you work.</p>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>What it means</th>
+<th>In the project</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Class</strong></td>
+<td>One of the categories you are sorting into</td>
+<td>Rock, paper, scissors</td>
+</tr>
+<tr>
+<td><strong>Example</strong></td>
+<td>One item of data</td>
+<td>One photo of a hand</td>
+</tr>
+<tr>
+<td><strong>Label</strong></td>
+<td>The correct answer for that example</td>
+<td>"This one is paper"</td>
+</tr>
+<tr>
+<td><strong>Feature</strong></td>
+<td>Something measurable about an example</td>
+<td>Shape, edges, colour</td>
+</tr>
+<tr>
+<td><strong>Training</strong></td>
+<td>Adjusting the model until it fits the examples</td>
+<td>Clicking Train Model</td>
+</tr>
+<tr>
+<td><strong>Model</strong></td>
+<td>The rules the machine ended up with</td>
+<td>The file you export</td>
+</tr>
+<tr>
+<td><strong>Prediction</strong></td>
+<td>The model's answer on something new</td>
+<td>"Scissors"</td>
+</tr>
+<tr>
+<td><strong>Confidence</strong></td>
+<td>How sure the model is, from 0 to 100</td>
+<td>The bar under each class</td>
+</tr>
+<tr>
+<td><strong>Training set</strong></td>
+<td>The examples used to build the model</td>
+<td>Your collected photos</td>
+</tr>
+<tr>
+<td><strong>Validation set</strong></td>
+<td>Held back examples used to tune your choices</td>
+<td>Not used in project one</td>
+</tr>
+<tr>
+<td><strong>Test set</strong></td>
+<td>Held back examples, never used in training</td>
+<td>The 20 photos you test with</td>
+</tr>
+<tr>
+<td><strong>Generalisation</strong></td>
+<td>Working on data it has never seen</td>
+<td>The whole point</td>
+</tr>
+<tr>
+<td><strong>Overfitting</strong></td>
+<td>Memorising the training set instead of learning the pattern</td>
+<td>100 percent in the room, 50 percent elsewhere</td>
+</tr>
+</tbody>
+</table>
+<p>Two of those deserve more than a table row.</p>
+<p><strong>Confidence is not correctness.</strong> A model gives you a number for how well the
+input matches what it learned. It has no way to say "I have never seen anything
+like this". Show a rock, paper, scissors model a photograph of a dog and it
+will confidently tell you it is paper. This trips up people building real
+systems, not just students.</p>
+<p><strong>Generalisation is the only thing that matters.</strong> A model that is perfect on
+its training data and useless on anything else has learned nothing. It is a
+lookup table. The whole discipline exists to close the gap between those two
+numbers.</p>
+<h2 id="the-loop">The loop<a class="headerlink" href="#the-loop" title="Link to this section">&para;</a></h2>
+<p>This is the diagram you will see for the rest of the year. Every module we do
+is a deeper pass at one of these five stages.</p>
+<p><svg viewBox="0 0 680 230" role="img" aria-labelledby="loop-title loop-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="loop-title">The machine learning lifecycle</title>
+<desc id="loop-desc">Collect data, prepare it, train a model, evaluate it, then deploy it. What you learn from evaluation and from use sends you back to the start.</desc>
+<defs><marker id="lp-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--h-steel)"/></marker></defs>
+<rect x="5" y="56" width="118" height="72" rx="10" fill="var(--h-cherry)"/>
+<text x="64" y="86" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">Collect</text>
+<text x="64" y="106" text-anchor="middle" font-size="10.5" fill="#ffffff" opacity="0.9">get examples</text>
+<rect x="143" y="56" width="118" height="72" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="202" y="86" text-anchor="middle" font-size="13" font-weight="700" fill="var(--md-default-fg-color)">Prepare</text>
+<text x="202" y="106" text-anchor="middle" font-size="10.5" fill="var(--h-graphite)">clean and label</text>
+<rect x="281" y="56" width="118" height="72" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="340" y="86" text-anchor="middle" font-size="13" font-weight="700" fill="var(--md-default-fg-color)">Train</text>
+<text x="340" y="106" text-anchor="middle" font-size="10.5" fill="var(--h-graphite)">fit the model</text>
+<rect x="419" y="56" width="118" height="72" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="478" y="86" text-anchor="middle" font-size="13" font-weight="700" fill="var(--md-default-fg-color)">Evaluate</text>
+<text x="478" y="106" text-anchor="middle" font-size="10.5" fill="var(--h-graphite)">test on new data</text>
+<rect x="557" y="56" width="118" height="72" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="616" y="86" text-anchor="middle" font-size="13" font-weight="700" fill="var(--md-default-fg-color)">Deploy</text>
+<text x="616" y="106" text-anchor="middle" font-size="10.5" fill="var(--h-graphite)">let people use it</text>
+<line x1="127" y1="92" x2="139" y2="92" stroke="var(--h-steel)" stroke-width="2" marker-end="url(#lp-arrow)"/>
+<line x1="265" y1="92" x2="277" y2="92" stroke="var(--h-steel)" stroke-width="2" marker-end="url(#lp-arrow)"/>
+<line x1="403" y1="92" x2="415" y2="92" stroke="var(--h-steel)" stroke-width="2" marker-end="url(#lp-arrow)"/>
+<line x1="541" y1="92" x2="553" y2="92" stroke="var(--h-steel)" stroke-width="2" marker-end="url(#lp-arrow)"/>
+<polyline points="616,134 616,176 64,176 64,136" fill="none" stroke="var(--h-steel)" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#lp-arrow)"/>
+<text x="340" y="200" text-anchor="middle" font-size="12" font-weight="600" fill="var(--h-graphite)">what you learn sends you back to the data</text>
+<text x="340" y="30" text-anchor="middle" font-size="12" fill="var(--h-space)">most of the work happens in the first two boxes</text>
+</svg></p>
+<p>Beginners expect the interesting work to be in Train. In practice that is the
+step that takes the least of your time and the least of your judgement. Collect
+and Prepare decide whether the project succeeds.</p>
+<h2 id="three-ways-to-learn">Three ways to learn<a class="headerlink" href="#three-ways-to-learn" title="Link to this section">&para;</a></h2>
+<p>Almost everything you will meet falls into one of three setups.</p>
+<div class="grid cards">
+<ul>
+<li>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 10C7.3 10 8 9.3 8 8.5S7.3 7 6.5 7 5 7.7 5 8.5 5.7 10 6.5 10M9 6l7 7-5 5-7-7V6zm0-2H4c-1.1 0-2 .9-2 2v5c0 .6.2 1.1.6 1.4l7 7c.3.4.8.6 1.4.6s1.1-.2 1.4-.6l5-5c.4-.4.6-.9.6-1.4 0-.6-.2-1.1-.6-1.4l-7-7C10.1 4.2 9.6 4 9 4m4.5 1.7 1-1 6.9 6.9c.4.4.6.9.6 1.4s-.2 1.1-.6 1.4L16 19.8l-1-1 5.7-5.8z"/></svg></span> <strong>Supervised</strong></p>
+<hr />
+<p>You give examples and the right answers. The model learns the mapping.
+Spam or not spam, price of a flat, rock or paper or scissors.</p>
+<p>This is most of what you will do this year, and it is what the first
+project uses.</p>
+</li>
+<li>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11 13.5v8H3v-8zm-2 2H5v4h4zM12 2l5.5 9h-11zm0 3.86L10.08 9h3.84zM17.5 13c2.5 0 4.5 2 4.5 4.5S20 22 17.5 22 13 20 13 17.5s2-4.5 4.5-4.5m0 2a2.5 2.5 0 0 0-2.5 2.5 2.5 2.5 0 0 0 2.5 2.5 2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-2.5-2.5"/></svg></span> <strong>Unsupervised</strong></p>
+<hr />
+<p>You give examples and no answers. The model finds structure on its own,
+usually groups.</p>
+<p>Customer segments, topics in a pile of documents, spotting the transaction
+that looks unlike the rest.</p>
+</li>
+<li>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 2c-.9 0-2 1-2 2H8c0-1-1.1-2-2-2H2v9c0 1 1 2 2 2h2.2c.4 2 1.7 3.7 4.8 4v2.08C8 19.54 8 22 8 22h8s0-2.46-3-2.92V17c3.1-.3 4.4-2 4.8-4H20c1 0 2-1 2-2V2zM6 11H4V4h2zm10 .5c0 1.93-.58 3.5-4 3.5-3.41 0-4-1.57-4-3.5V6h8zm4-.5h-2V4h2z"/></svg></span> <strong>Reinforcement</strong></p>
+<hr />
+<p>No examples. The model tries things, gets a reward or a penalty, and
+adjusts.</p>
+<p>Game playing, robot control. This is how a system learns to beat humans at
+Go without being shown how a human plays.</p>
+</li>
+</ul>
+</div>
+<p>Each of these has flavours that change what data you need, and the next page
+goes through them properly.</p>
+<h2 id="knowing-whether-it-works">Knowing whether it works<a class="headerlink" href="#knowing-whether-it-works" title="Link to this section">&para;</a></h2>
+<p>Accuracy is the number everyone quotes and the number that hides the most.</p>
+<p>Say your model is right on 27 of 30 test images. That is 90 percent. Now ask a
+better question: what were the three mistakes? A grid of actual against
+predicted answers it, and it takes two minutes to fill in by hand.</p>
+<p><svg viewBox="0 0 680 320" role="img" aria-labelledby="cm-title cm-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="cm-title">A results grid for a rock paper scissors model</title>
+<desc id="cm-desc">Rows are the true class and columns are what the model predicted. The diagonal holds correct answers. Everything off the diagonal is a mistake. In this example, paper is confused with rock twice and scissors is called paper three times.</desc>
+<text x="365" y="34" text-anchor="middle" font-size="13" font-weight="700" fill="var(--h-graphite)">what the model said</text>
+<text x="255" y="72" text-anchor="middle" font-size="12.5" font-weight="600" fill="var(--md-default-fg-color)">rock</text>
+<text x="365" y="72" text-anchor="middle" font-size="12.5" font-weight="600" fill="var(--md-default-fg-color)">paper</text>
+<text x="475" y="72" text-anchor="middle" font-size="12.5" font-weight="600" fill="var(--md-default-fg-color)">scissors</text>
+<text x="188" y="52" text-anchor="end" font-size="13" font-weight="700" fill="var(--h-graphite)">truth</text>
+<text x="188" y="126" text-anchor="end" font-size="12.5" font-weight="600" fill="var(--md-default-fg-color)">rock</text>
+<text x="188" y="186" text-anchor="end" font-size="12.5" font-weight="600" fill="var(--md-default-fg-color)">paper</text>
+<text x="188" y="246" text-anchor="end" font-size="12.5" font-weight="600" fill="var(--md-default-fg-color)">scissors</text>
+<rect x="200" y="90" width="110" height="60" rx="6" fill="var(--h-cherry-wash)" stroke="var(--h-cherry-line)"/>
+<text x="255" y="126" text-anchor="middle" font-size="17" font-weight="700" fill="var(--h-cherry)">9</text>
+<rect x="312" y="90" width="110" height="60" rx="6" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="367" y="126" text-anchor="middle" font-size="17" fill="var(--h-graphite)">1</text>
+<rect x="424" y="90" width="110" height="60" rx="6" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="479" y="126" text-anchor="middle" font-size="17" fill="var(--h-graphite)">0</text>
+<rect x="200" y="152" width="110" height="60" rx="6" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="255" y="188" text-anchor="middle" font-size="17" fill="var(--h-graphite)">2</text>
+<rect x="312" y="152" width="110" height="60" rx="6" fill="var(--h-cherry-wash)" stroke="var(--h-cherry-line)"/>
+<text x="367" y="188" text-anchor="middle" font-size="17" font-weight="700" fill="var(--h-cherry)">7</text>
+<rect x="424" y="152" width="110" height="60" rx="6" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="479" y="188" text-anchor="middle" font-size="17" fill="var(--h-graphite)">1</text>
+<rect x="200" y="214" width="110" height="60" rx="6" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="255" y="250" text-anchor="middle" font-size="17" fill="var(--h-graphite)">0</text>
+<rect x="312" y="214" width="110" height="60" rx="6" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="367" y="250" text-anchor="middle" font-size="17" font-weight="700" fill="var(--h-cherry)">3</text>
+<rect x="424" y="214" width="110" height="60" rx="6" fill="var(--h-cherry-wash)" stroke="var(--h-cherry-line)"/>
+<text x="479" y="250" text-anchor="middle" font-size="17" font-weight="700" fill="var(--h-cherry)">7</text>
+<text x="558" y="126" font-size="11.5" fill="var(--h-space)">10 rocks</text>
+<text x="558" y="188" font-size="11.5" fill="var(--h-space)">10 papers</text>
+<text x="558" y="250" font-size="11.5" fill="var(--h-space)">10 scissors</text>
+<text x="365" y="302" text-anchor="middle" font-size="12.5" font-weight="600" fill="var(--h-graphite)">the diagonal is what it got right, everything else is a story worth telling</text>
+</svg></p>
+<p>This model is 77 percent accurate overall. The average hides the interesting
+part: scissors gets called paper three times out of ten, and nothing else is
+badly broken. Now you have a specific problem to fix rather than a vague wish
+for a better number.</p>
+<p>Ask yourself why that confusion exists. Probably because a hand showing
+scissors and a hand showing paper share most of their outline, and because
+scissors was photographed at an angle where two fingers looked like four. That
+sentence is machine learning. Not the training, the explaining.</p>
+<div class="admonition warning">
+<p class="admonition-title">Accuracy also lies when your classes are uneven</p>
+<p>Suppose one in a hundred transactions is fraud. A model that says "not
+fraud" every single time scores 99 percent accuracy and catches nothing.
+Whenever someone quotes an accuracy figure, ask what the split of the data
+was.</p>
+</div>
+<h2 id="what-goes-wrong">What goes wrong<a class="headerlink" href="#what-goes-wrong" title="Link to this section">&para;</a></h2>
+<p>Three failures cause most of the trouble, and you will probably produce at
+least two of them this week.</p>
+<p><strong>Overfitting.</strong> The model learns your specific examples rather than the
+pattern. Signs: near perfect on training data, much worse on anything new. If
+every photo was taken in the same room, the model may have learned the room.</p>
+<p><strong>Biased data.</strong> The model learns exactly what you showed it, including what
+you did not intend. If every hand in your training photos belongs to one
+person, the model has partly learned that hand. Hiring tools trained on past
+hires repeat the past. A model cannot want to be fair. It can only reflect the
+examples.</p>
+<p><strong>Distribution shift.</strong> The world stops matching the training data. Lighting
+changes, cameras change, people change. A model that worked in March quietly
+stops working in September, and nobody notices because it still returns
+confident answers.</p>
+<p>Notice what all three have in common. None of them is a problem with the
+algorithm. They are all problems with data.</p>
+<h2 id="questions-to-sit-with">Questions to sit with<a class="headerlink" href="#questions-to-sit-with" title="Link to this section">&para;</a></h2>
+<p>Bring answers to the project review.</p>
+<ol>
+<li>Your model is 95 percent accurate on your own photos and 60 percent on
+   another group's. Nothing changed but the photographer. What did it actually
+   learn?</li>
+<li>Would you rather deploy a model that is 95 percent accurate and impossible
+   to explain, or 80 percent accurate and fully explainable? Does your answer
+   change if it is sorting photos, approving loans, or reading X-rays?</li>
+<li>Your model is confidently wrong on one image. Confidence 92 percent, answer
+   incorrect. What does that tell you about what confidence measures?</li>
+<li>The examples you collected encode a set of choices: who was in frame, what
+   the light was, what counted as a valid gesture. Who made those choices, and
+   who was left out by them?</li>
+<li>If a model trained on the past predicts the future, what happens when the
+   past contains something we want to change?</li>
+</ol>
+<h2 id="next">Next<a class="headerlink" href="#next" title="Link to this section">&para;</a></h2>
+<p>You have the vocabulary. Now the method for turning a vague request into
+something you can actually build.</p>
+<p><a class="h-button" href="../framing-ml-problems/">Framing a machine learning problem</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../what-is-ai/" class="md-footer__link md-footer__link--prev" aria-label="Previous: What AI is">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                What AI is
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../framing-ml-problems/" class="md-footer__link md-footer__link--next" aria-label="Next: Framing a problem">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Framing a problem
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Holberton School Albania
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://github.com/evisp" target="_blank" rel="noopener" title="GitHub" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://www.linkedin.com/school/holbertonschool/" target="_blank" rel="noopener" title="Holberton School" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.indexes", "navigation.path", "navigation.top", "navigation.tracking", "navigation.footer", "toc.follow", "search.highlight", "search.share", "search.suggest", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.action.edit"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

@@ -202,10 +202,11 @@ What you can say with confidence is narrower and more useful:
 
 ## Definitions are decisions
 
-Here is the idea worth taking away from this page, and it comes from Amarda
-Shehu, whose framing this section follows.
+Here is the idea worth taking away from this page. 
 
-A definition is never neutral. It is an act of boundary drawing. When we decide
+> A definition is never neutral. It is an act of boundary drawing.
+
+When we decide
 what counts as AI, we are not only describing the world, we are deciding what
 gets built, what gets funded, what gets taught, and what gets regulated.
 
@@ -241,22 +242,22 @@ You will hear artificial intelligence, machine learning, deep learning and
 generative AI used as if they were interchangeable. They are not. Each one sits
 inside the one before it.
 
-<svg viewBox="0 0 680 384" role="img" aria-labelledby="nest-title nest-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<svg viewBox="0 0 680 500" role="img" aria-labelledby="nest-title nest-desc" style="width:100%;height:auto;margin:1.4rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
 <title id="nest-title">How AI, machine learning, deep learning and generative AI relate</title>
-<desc id="nest-desc">Four nested circles. Artificial intelligence is the largest and includes search, planning and rule based systems. Machine learning sits inside it and learns from examples. Deep learning sits inside machine learning and uses neural networks. Generative AI is the innermost circle.</desc>
-<circle cx="340" cy="185" r="165" fill="rgba(227,28,63,0.06)" stroke="var(--h-surface-line)"/>
-<text x="340" y="48" text-anchor="middle" font-size="15" font-weight="700" fill="var(--md-default-fg-color)">Artificial intelligence</text>
-<text x="340" y="66" text-anchor="middle" font-size="10.5" fill="var(--h-graphite)">search, planning, rule systems</text>
-<circle cx="340" cy="185" r="125" fill="rgba(227,28,63,0.12)" stroke="var(--h-cherry-line)"/>
-<text x="340" y="88" text-anchor="middle" font-size="14" font-weight="700" fill="var(--md-default-fg-color)">Machine learning</text>
-<text x="340" y="105" text-anchor="middle" font-size="10.5" fill="var(--h-graphite)">learns rules from examples</text>
-<circle cx="340" cy="185" r="85" fill="rgba(227,28,63,0.22)" stroke="var(--h-cherry-line)"/>
-<text x="340" y="128" text-anchor="middle" font-size="13" font-weight="700" fill="var(--md-default-fg-color)">Deep learning</text>
-<text x="340" y="145" text-anchor="middle" font-size="10.5" fill="var(--h-graphite)">neural networks</text>
-<circle cx="340" cy="192" r="48" fill="var(--h-cherry)"/>
-<text x="340" y="188" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">Generative</text>
-<text x="340" y="204" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">AI</text>
-<text x="340" y="374" text-anchor="middle" font-size="12" fill="var(--h-graphite)">every chatbot is AI, but most AI is not a chatbot</text>
+<desc id="nest-desc">Four nested circles. Artificial intelligence is the largest and includes search, planning and rule based systems. Machine learning sits inside it and learns rules from examples. Deep learning sits inside machine learning and uses neural networks. Generative AI is the innermost circle.</desc>
+<circle cx="340" cy="250" r="220" fill="rgba(227,28,63,0.06)" stroke="var(--h-surface-line)"/>
+<text x="340" y="54" text-anchor="middle" font-size="14" font-weight="700" fill="var(--md-default-fg-color)">Artificial intelligence</text>
+<text x="340" y="72" text-anchor="middle" font-size="11" fill="var(--h-graphite)">search, planning, rule systems</text>
+<circle cx="340" cy="250" r="172" fill="rgba(227,28,63,0.12)" stroke="var(--h-cherry-line)"/>
+<text x="340" y="102" text-anchor="middle" font-size="14" font-weight="700" fill="var(--md-default-fg-color)">Machine learning</text>
+<text x="340" y="120" text-anchor="middle" font-size="11" fill="var(--h-graphite)">learns rules from examples</text>
+<circle cx="340" cy="250" r="120" fill="rgba(227,28,63,0.22)" stroke="var(--h-cherry-line)"/>
+<text x="340" y="154" text-anchor="middle" font-size="13" font-weight="700" fill="var(--md-default-fg-color)">Deep learning</text>
+<text x="340" y="172" text-anchor="middle" font-size="11" fill="var(--h-graphite)">neural networks</text>
+<circle cx="340" cy="250" r="66" fill="var(--h-cherry)"/>
+<text x="340" y="246" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">Generative AI</text>
+<text x="340" y="264" text-anchor="middle" font-size="10.5" fill="#ffffff" opacity="0.9">new text and images</text>
+<text x="340" y="492" text-anchor="middle" font-size="12" fill="var(--h-graphite)">every chatbot is AI, but most AI is not a chatbot</text>
 </svg>
 
 Read it from the outside in.

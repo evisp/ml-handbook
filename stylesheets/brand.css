@@ -1,0 +1,671 @@
+/* ==========================================================================
+   Holberton ML Handbook — brand layer
+   Place at: docs/stylesheets/brand.css
+   Loaded via `extra_css` in mkdocs.yml.
+
+   Everything here follows the 2026 Holberton Brand Guidelines:
+   Cherry #E31C3F is an accent for links, actions and active state.
+   Midnight #292728 carries structure. Host Grotesk carries the type.
+
+   Components this file provides (usage examples at the bottom):
+     .hero            page-top banner for the homepage
+     .grid.cards      module / tutorial cards (Material built-in, restyled)
+     .card-locked     greyed-out card for a module not yet released
+     .badge           inline meta pill (time, level, prerequisite)
+     !!! ml           "ML connection" callout
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Brand tokens
+   -------------------------------------------------------------------------- */
+
+:root {
+  /* Primary */
+  --h-ice:        #ffffff;
+  --h-cherry:     #e31c3f;
+  --h-midnight:   #292728;
+  --h-light-grey: #f9f9f9;
+
+  /* Cherry working values */
+  --h-cherry-deep: #b71533;
+  --h-cherry-wash: rgba(227, 28, 63, 0.09);
+  --h-cherry-line: rgba(227, 28, 63, 0.35);
+
+  /* Grayscale */
+  --h-cloud:    #edeff7;
+  --h-smoke:    #d3d6e0;
+  --h-steel:    #bcbfcc;
+  --h-space:    #9da2b3;
+  --h-graphite: #6e7180;
+  --h-arsenic:  #40424d;
+  --h-phantom:  #1e1e24;
+  --h-black:    #000000;
+
+  /* Secondary accents — use each with its light pair, never with a third tone */
+  --h-cyan:         #2e52ff;
+  --h-cyan-light:   #e0e5ff;
+  --h-yellow:       #ffd632;
+  --h-yellow-light: #fff9e0;
+  --h-orange:       #ff6009;
+  --h-orange-light: #ffe7da;
+  --h-green:        #02cb3b;
+  --h-green-light:  #d9f7e2;
+
+  /* Geometry */
+  --h-radius:    10px;
+  --h-radius-lg: 16px;
+}
+
+/* --------------------------------------------------------------------------
+   2. Map brand tokens onto Material
+   -------------------------------------------------------------------------- */
+
+/* Header / nav surface. Midnight, not Cherry — red stays an accent so that
+   calls to action keep their weight. */
+[data-md-color-primary="custom"] {
+  --md-primary-fg-color:        var(--h-midnight);
+  --md-primary-fg-color--light: var(--h-arsenic);
+  --md-primary-fg-color--dark:  var(--h-black);
+  --md-primary-bg-color:        var(--h-ice);
+  --md-primary-bg-color--light: rgba(255, 255, 255, 0.72);
+}
+
+/* Interactive accent: links on hover, active nav, search highlight. */
+[data-md-color-accent="custom"] {
+  --md-accent-fg-color:         var(--h-cherry);
+  --md-accent-fg-color--transparent: var(--h-cherry-wash);
+  --md-accent-bg-color:         var(--h-ice);
+  --md-accent-bg-color--light:  rgba(255, 255, 255, 0.72);
+}
+
+/* Light scheme */
+[data-md-color-scheme="default"] {
+  --md-default-bg-color:        var(--h-ice);
+  --md-default-fg-color:        var(--h-midnight);
+  --md-default-fg-color--light: var(--h-graphite);
+  --md-default-fg-color--lighter: var(--h-space);
+  --md-default-fg-color--lightest: var(--h-smoke);
+  --md-typeset-color:           var(--h-midnight);
+  --md-typeset-a-color:         var(--h-cherry);
+  --md-code-bg-color:           var(--h-light-grey);
+  --md-code-fg-color:           var(--h-arsenic);
+  --md-footer-bg-color:         var(--h-midnight);
+  --md-footer-bg-color--dark:   var(--h-black);
+
+  --h-surface:      var(--h-light-grey);
+  --h-surface-line: var(--h-smoke);
+}
+
+/* Dark scheme */
+[data-md-color-scheme="slate"] {
+  --md-default-bg-color:        var(--h-phantom);
+  --md-default-fg-color:        #eceef2;
+  --md-default-fg-color--light: var(--h-steel);
+  --md-default-fg-color--lighter: var(--h-space);
+  --md-default-fg-color--lightest: var(--h-graphite);
+  --md-typeset-color:           #eceef2;
+  --md-typeset-a-color:         #ff5570;      /* lifted for contrast on dark */
+  --md-code-bg-color:           #17171c;
+  --md-code-fg-color:           var(--h-cloud);
+  --md-footer-bg-color:         var(--h-black);
+  --md-footer-bg-color--dark:   var(--h-black);
+
+  --h-surface:      #26262e;
+  --h-surface-line: var(--h-arsenic);
+}
+
+/* --------------------------------------------------------------------------
+   3. Typography
+   -------------------------------------------------------------------------- */
+
+.md-typeset {
+  font-size: 0.78rem;
+  line-height: 1.68;
+}
+
+.md-typeset h1 {
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--md-default-fg-color);
+  margin-bottom: 0.6em;
+}
+
+.md-typeset h2 {
+  font-weight: 700;
+  font-size: 1.35rem;
+  letter-spacing: -0.015em;
+  margin-top: 2.2em;
+  padding-top: 1.2em;
+  border-top: 1px solid var(--h-surface-line);
+}
+
+.md-typeset h3 {
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+  margin-top: 1.8em;
+}
+
+.md-typeset h4 {
+  font-weight: 600;
+  color: var(--md-default-fg-color--light);
+}
+
+/* The lede: first paragraph after the page title reads as a standfirst. */
+.md-typeset h1 + p {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--md-default-fg-color--light);
+  max-width: 62ch;
+}
+
+.md-typeset p,
+.md-typeset li {
+  max-width: 78ch;
+}
+
+.md-typeset a {
+  text-decoration-color: var(--h-cherry-line);
+  text-underline-offset: 3px;
+}
+
+.md-typeset a:hover {
+  text-decoration-color: currentColor;
+}
+
+/* Header wordmark */
+.md-header__title {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.md-header {
+  box-shadow: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* --------------------------------------------------------------------------
+   4. Navigation
+   -------------------------------------------------------------------------- */
+
+.md-tabs {
+  border-bottom: 3px solid var(--h-cherry);
+}
+
+.md-tabs__link {
+  opacity: 0.72;
+  font-weight: 500;
+}
+
+.md-tabs__link--active,
+.md-tabs__link:hover {
+  opacity: 1;
+}
+
+/* Active page in the sidebar: a Cherry rule, no fill. */
+.md-nav__link--active,
+.md-nav__item .md-nav__link--active {
+  font-weight: 600;
+  color: var(--md-typeset-a-color);
+}
+
+.md-nav--secondary .md-nav__link--active {
+  border-left: 2px solid var(--h-cherry);
+  padding-left: 0.4rem;
+  margin-left: -0.6rem;
+}
+
+.md-nav__title {
+  font-weight: 600;
+}
+
+/* Search */
+.md-search__form {
+  border-radius: var(--h-radius);
+}
+
+/* --------------------------------------------------------------------------
+   5. Hero (homepage)
+   -------------------------------------------------------------------------- */
+
+.hero {
+  background: var(--h-midnight);
+  color: var(--h-ice);
+  border-radius: var(--h-radius-lg);
+  padding: 3.2rem 2.2rem 2.6rem;
+  margin: 0 0 2.4rem;
+}
+
+.hero h1 {
+  color: var(--h-ice) !important;
+  font-size: 2.4rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin: 0 0 0.6rem;
+}
+
+.hero p {
+  color: var(--h-steel);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  max-width: 54ch;
+  margin: 0 0 1.6rem;
+}
+
+.hero .h-rule {
+  width: 3.4rem;
+  height: 4px;
+  background: var(--h-cherry);
+  border: 0;
+  margin: 0 0 1.4rem;
+}
+
+/* Primary action button */
+.md-typeset .h-button {
+  display: inline-block;
+  background: var(--h-cherry);
+  color: var(--h-ice);
+  font-weight: 600;
+  font-size: 0.78rem;
+  padding: 0.62rem 1.4rem;
+  border-radius: 100px;
+  text-decoration: none;
+  transition: background 120ms ease;
+}
+
+.md-typeset .h-button:hover,
+.md-typeset .h-button:focus-visible {
+  background: var(--h-cherry-deep);
+  color: var(--h-ice);
+}
+
+.md-typeset .h-button--ghost {
+  background: transparent;
+  color: var(--h-ice);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+  margin-left: 0.4rem;
+}
+
+.md-typeset .h-button--ghost:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* --------------------------------------------------------------------------
+   6. Cards
+   -------------------------------------------------------------------------- */
+
+.md-typeset .grid.cards > ul > li {
+  border: 1px solid var(--h-surface-line);
+  border-radius: var(--h-radius);
+  padding: 1.1rem 1.1rem 0.9rem;
+  box-shadow: none;
+  transition: border-color 120ms ease;
+}
+
+.md-typeset .grid.cards > ul > li:hover {
+  border-color: var(--h-cherry);
+  box-shadow: none;
+}
+
+.md-typeset .grid.cards > ul > li > hr {
+  margin: 0.7rem 0;
+  border-color: var(--h-surface-line);
+}
+
+.md-typeset .grid.cards .twemoji,
+.md-typeset .grid.cards .lucide,
+.md-typeset .grid.cards svg {
+  color: var(--h-cherry);
+}
+
+/* A module that has not been released yet. */
+.md-typeset .grid.cards > ul > li.card-locked {
+  background: var(--h-surface);
+  border-style: dashed;
+  color: var(--md-default-fg-color--lighter);
+}
+
+.md-typeset .grid.cards > ul > li.card-locked:hover {
+  border-color: var(--h-surface-line);
+}
+
+.md-typeset .grid.cards > ul > li.card-locked strong {
+  color: var(--md-default-fg-color--light);
+}
+
+/* --------------------------------------------------------------------------
+   7. Badges — page meta (time, level, prerequisite)
+   -------------------------------------------------------------------------- */
+
+.md-typeset .badge {
+  display: inline-block;
+  font-size: 0.62rem;
+  font-weight: 600;
+  line-height: 1.4;
+  padding: 0.16rem 0.6rem;
+  margin: 0 0.25rem 0.3rem 0;
+  border-radius: 100px;
+  background: var(--h-surface);
+  color: var(--md-default-fg-color--light);
+  box-shadow: inset 0 0 0 1px var(--h-surface-line);
+}
+
+.md-typeset .badge--time {
+  background: var(--h-cherry-wash);
+  color: var(--h-cherry);
+  box-shadow: inset 0 0 0 1px var(--h-cherry-line);
+}
+
+.md-typeset .badge--level {
+  background: var(--h-cyan-light);
+  color: var(--h-cyan);
+  box-shadow: none;
+}
+
+[data-md-color-scheme="slate"] .md-typeset .badge--level {
+  background: rgba(46, 82, 255, 0.18);
+  color: #9fb0ff;
+}
+
+/* --------------------------------------------------------------------------
+   8. "ML connection" callout  —  !!! ml "ML connection"
+   -------------------------------------------------------------------------- */
+
+:root {
+  --md-admonition-icon--ml: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2 4 6v6c0 5 3.4 9.4 8 10 4.6-.6 8-5 8-10V6l-8-4Zm0 5a2 2 0 1 1 0 4 2 2 0 0 1 0-4Zm0 5.5c1.9 0 3.5 1 3.5 2.2v.8h-7v-.8c0-1.2 1.6-2.2 3.5-2.2Z"/></svg>');
+}
+
+.md-typeset .admonition.ml,
+.md-typeset details.ml {
+  border-color: var(--h-cherry);
+  border-left-width: 3px;
+  border-radius: var(--h-radius);
+  box-shadow: none;
+  font-size: 0.74rem;
+}
+
+.md-typeset .ml > .admonition-title,
+.md-typeset .ml > summary {
+  background: var(--h-cherry-wash);
+  font-weight: 600;
+}
+
+.md-typeset .ml > .admonition-title::before,
+.md-typeset .ml > summary::before {
+  background-color: var(--h-cherry);
+  -webkit-mask-image: var(--md-admonition-icon--ml);
+          mask-image: var(--md-admonition-icon--ml);
+}
+
+/* Quieten the stock admonitions so the ML one stands out */
+.md-typeset .admonition,
+.md-typeset details {
+  border-radius: var(--h-radius);
+  box-shadow: none;
+  border-width: 1px;
+  border-left-width: 3px;
+}
+
+/* --------------------------------------------------------------------------
+   9. Code, tables, quotes, images
+   -------------------------------------------------------------------------- */
+
+.md-typeset pre > code {
+  border-radius: var(--h-radius);
+}
+
+.md-typeset code {
+  border-radius: 4px;
+  font-size: 0.88em;
+}
+
+.md-typeset .highlight .filename,
+.md-typeset .highlighttable .linenos {
+  border-radius: 0;
+}
+
+.md-typeset table:not([class]) {
+  border: 1px solid var(--h-surface-line);
+  border-radius: var(--h-radius);
+  font-size: 0.7rem;
+  overflow: hidden;
+}
+
+.md-typeset table:not([class]) th {
+  background: var(--h-surface);
+  font-weight: 600;
+  color: var(--md-default-fg-color);
+}
+
+.md-typeset blockquote {
+  border-left: 3px solid var(--h-cherry);
+  color: var(--md-default-fg-color--light);
+  font-style: normal;
+}
+
+.md-typeset img {
+  border-radius: var(--h-radius);
+  max-width: 100%;
+}
+
+/* MathJax: keep display equations from overflowing on phones */
+.md-typeset mjx-container[display="true"] {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.2rem 0;
+}
+
+/* --------------------------------------------------------------------------
+   10. Footer
+   -------------------------------------------------------------------------- */
+
+.md-footer-meta {
+  background: var(--h-black);
+}
+
+.md-footer__link:hover {
+  opacity: 1;
+}
+
+/* --------------------------------------------------------------------------
+   11. Accessibility floor
+   -------------------------------------------------------------------------- */
+
+:focus-visible {
+  outline: 2px solid var(--h-cherry);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+@media screen and (max-width: 44.9375em) {
+  .hero {
+    padding: 2.2rem 1.4rem 1.8rem;
+    border-radius: var(--h-radius);
+  }
+  .hero h1 {
+    font-size: 1.75rem;
+  }
+  .md-typeset h1 {
+    font-size: 1.6rem;
+  }
+}
+
+/* Upcoming modules: a whole grid of not-yet-released cards. */
+.md-typeset .grid.cards.locked > ul > li {
+  background: var(--h-surface);
+  border-style: dashed;
+  color: var(--md-default-fg-color--lighter);
+}
+.md-typeset .grid.cards.locked > ul > li:hover {
+  border-color: var(--h-surface-line);
+}
+.md-typeset .grid.cards.locked > ul > li strong {
+  color: var(--md-default-fg-color--light);
+}
+.md-typeset .grid.cards.locked > ul > li svg {
+  color: var(--h-space);
+}
+
+/* --------------------------------------------------------------------------
+   Hero, second pass. Appended after the original rules so it wins.
+   Adds depth to the Midnight panel, a Cherry edge, and a larger type scale.
+   -------------------------------------------------------------------------- */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(90% 130% at 88% 8%, rgba(227, 28, 63, 0.30) 0%, rgba(227, 28, 63, 0) 62%),
+    linear-gradient(160deg, #332F31 0%, var(--h-midnight) 48%, #171617 100%);
+  padding: 3.8rem 2.6rem 3rem;
+}
+
+/* Cherry edge down the left, the brand's own framing device */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 5px;
+  background: var(--h-cherry);
+}
+
+.hero h1 {
+  font-size: 2.9rem;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+  max-width: 16ch;
+}
+
+.hero p {
+  color: #C8CBD4;
+  font-size: 0.95rem;
+  max-width: 50ch;
+}
+
+.hero .h-rule {
+  width: 2.6rem;
+  height: 3px;
+  opacity: 0.9;
+}
+
+.md-typeset .hero .h-button {
+  padding: 0.72rem 1.7rem;
+  font-size: 0.8rem;
+}
+
+@media screen and (max-width: 44.9375em) {
+  .hero {
+    padding: 2.4rem 1.5rem 2rem;
+  }
+  .hero h1 {
+    font-size: 2rem;
+    max-width: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Trimester band header, used on the roadmap page.
+   -------------------------------------------------------------------------- */
+
+.md-typeset .tri-band {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  background: var(--h-surface);
+  border-left: 4px solid var(--h-cherry);
+  border-radius: 0 var(--h-radius) var(--h-radius) 0;
+  padding: 0.85rem 1.1rem;
+  margin: 2rem 0 1.2rem;
+}
+
+.md-typeset .tri-band__num {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 100px;
+  background: var(--h-cherry);
+  color: var(--h-ice);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.md-typeset .tri-band__role {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--md-default-fg-color);
+}
+
+.md-typeset .tri-band__when {
+  margin-left: auto;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--md-default-fg-color--light);
+}
+
+@media screen and (max-width: 44.9375em) {
+  .md-typeset .tri-band__when {
+    margin-left: 0;
+    flex-basis: 100%;
+  }
+}
+
+/* ==========================================================================
+   USAGE
+
+   Hero — in docs/index.md, above everything else:
+
+     <div class="hero" markdown>
+     # Don't learn tech. Build it.
+     <hr class="h-rule">
+     Nine months, three trimesters, one portfolio. Start with the tools,
+     then build your way through machine learning.
+     [Start with Tools](01-tools/index.md){ .h-button }
+     </div>
+
+   Cards — needs `attr_list` and `md_in_html`:
+
+     <div class="grid cards" markdown>
+
+     -   **Git and GitHub**
+
+         ---
+
+         Track every change and collaborate without conflicts.
+
+         [Open tutorial](git-and-github.md)
+
+     -   :material-lock: **Linear algebra** { .card-locked }
+
+         ---
+
+         Unlocks in week 3.
+
+     </div>
+
+   Badges — put them directly under the page title:
+
+     <span class="badge badge--time">70 min</span>
+     <span class="badge badge--level">Foundations</span>
+     <span class="badge">Requires: Linear algebra</span>
+
+   ML connection callout:
+
+     !!! ml "ML connection"
+
+         Mean squared error is a summation: it adds the squared error
+         across all $n$ data points.
+   ========================================================================== */

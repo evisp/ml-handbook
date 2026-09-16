@@ -572,6 +572,57 @@
   }
 }
 
+/* --------------------------------------------------------------------------
+   Trimester band header, used on the roadmap page.
+   -------------------------------------------------------------------------- */
+
+.md-typeset .tri-band {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  background: var(--h-surface);
+  border-left: 4px solid var(--h-cherry);
+  border-radius: 0 var(--h-radius) var(--h-radius) 0;
+  padding: 0.85rem 1.1rem;
+  margin: 2rem 0 1.2rem;
+}
+
+.md-typeset .tri-band__num {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 100px;
+  background: var(--h-cherry);
+  color: var(--h-ice);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.md-typeset .tri-band__role {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--md-default-fg-color);
+}
+
+.md-typeset .tri-band__when {
+  margin-left: auto;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--md-default-fg-color--light);
+}
+
+@media screen and (max-width: 44.9375em) {
+  .md-typeset .tri-band__when {
+    margin-left: 0;
+    flex-basis: 100%;
+  }
+}
+
 /* ==========================================================================
    USAGE
 

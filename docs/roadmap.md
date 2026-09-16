@@ -4,45 +4,45 @@ Nine months, three trimesters, fifteen milestones. This page is the whole
 programme in one place: not the syllabus, but what you will be able to do at
 each point, and what you will have to show for it.
 
-<svg viewBox="0 0 680 196" role="img" aria-labelledby="ov-title ov-desc" style="width:100%;height:auto;margin:1.4rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<svg viewBox="0 0 680 190" role="img" aria-labelledby="ov-title ov-desc" style="width:100%;height:auto;margin:1.4rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
 <title id="ov-title">The nine-month roadmap</title>
-<desc id="ov-desc">Three trimesters with five milestones each. Trimester one, Data Analyst, months one to three. Trimester two, Machine Learning Engineer, months four to six. Trimester three, AI Engineer, months seven to nine.</desc>
-<text x="123" y="26" text-anchor="middle" font-size="11" fill="var(--h-space)">Trimester 1</text>
-<text x="123" y="46" text-anchor="middle" font-size="14.5" font-weight="700" fill="var(--md-default-fg-color)">Data Analyst</text>
-<rect x="20" y="62" width="206" height="56" rx="12" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
-<line x1="43" y1="90" x2="203" y2="90" stroke="var(--h-steel)" stroke-width="2"/>
-<text x="123" y="136" text-anchor="middle" font-size="11" fill="var(--h-space)">Months 1 to 3</text>
-<text x="340" y="26" text-anchor="middle" font-size="11" fill="var(--h-space)">Trimester 2</text>
-<text x="340" y="46" text-anchor="middle" font-size="14.5" font-weight="700" fill="var(--md-default-fg-color)">Machine Learning Engineer</text>
-<rect x="237" y="62" width="206" height="56" rx="12" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
-<line x1="260" y1="90" x2="420" y2="90" stroke="var(--h-steel)" stroke-width="2"/>
-<text x="340" y="136" text-anchor="middle" font-size="11" fill="var(--h-space)">Months 4 to 6</text>
-<text x="557" y="26" text-anchor="middle" font-size="11" fill="var(--h-space)">Trimester 3</text>
-<text x="557" y="46" text-anchor="middle" font-size="14.5" font-weight="700" fill="var(--md-default-fg-color)">AI Engineer</text>
-<rect x="454" y="62" width="206" height="56" rx="12" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
-<line x1="477" y1="90" x2="637" y2="90" stroke="var(--h-steel)" stroke-width="2"/>
-<text x="557" y="136" text-anchor="middle" font-size="11" fill="var(--h-space)">Months 7 to 9</text>
-<line x1="226" y1="90" x2="237" y2="90" stroke="var(--h-steel)" stroke-width="2" stroke-dasharray="3 3"/>
-<line x1="443" y1="90" x2="454" y2="90" stroke="var(--h-steel)" stroke-width="2" stroke-dasharray="3 3"/>
-<!-- YOU ARE HERE: fill the dots you have reached with var(--h-cherry), leave the rest with fill="var(--md-default-bg-color)" stroke="var(--h-steel)". Then move the marker below to that dot's x value. -->
-<circle cx="43" cy="90" r="8" fill="var(--h-cherry)"/>
-<circle cx="83" cy="90" r="8" fill="var(--md-default-bg-color)" stroke="var(--h-steel)" stroke-width="2"/>
-<circle cx="123" cy="90" r="8" fill="var(--md-default-bg-color)" stroke="var(--h-steel)" stroke-width="2"/>
-<circle cx="163" cy="90" r="8" fill="var(--md-default-bg-color)" stroke="var(--h-steel)" stroke-width="2"/>
-<circle cx="203" cy="90" r="8" fill="var(--md-default-bg-color)" stroke="var(--h-steel)" stroke-width="2"/>
-<circle cx="260" cy="90" r="8" fill="var(--md-default-bg-color)" stroke="var(--h-steel)" stroke-width="2"/>
-<circle cx="300" cy="90" r="8" fill="var(--md-default-bg-color)" stroke="var(--h-steel)" stroke-width="2"/>
-<circle cx="340" cy="90" r="8" fill="var(--md-default-bg-color)" stroke="var(--h-steel)" stroke-width="2"/>
-<circle cx="380" cy="90" r="8" fill="var(--md-default-bg-color)" stroke="var(--h-steel)" stroke-width="2"/>
-<circle cx="420" cy="90" r="8" fill="var(--md-default-bg-color)" stroke="var(--h-steel)" stroke-width="2"/>
-<circle cx="477" cy="90" r="8" fill="var(--md-default-bg-color)" stroke="var(--h-steel)" stroke-width="2"/>
-<circle cx="517" cy="90" r="8" fill="var(--md-default-bg-color)" stroke="var(--h-steel)" stroke-width="2"/>
-<circle cx="557" cy="90" r="8" fill="var(--md-default-bg-color)" stroke="var(--h-steel)" stroke-width="2"/>
-<circle cx="597" cy="90" r="8" fill="var(--md-default-bg-color)" stroke="var(--h-steel)" stroke-width="2"/>
-<circle cx="637" cy="90" r="8" fill="var(--md-default-bg-color)" stroke="var(--h-steel)" stroke-width="2"/>
-<!-- MARKER: change both x values below to the current dot's x. -->
-<polygon points="43,150 36,162 50,162" fill="var(--h-cherry)"/>
-<text x="43" y="180" text-anchor="middle" font-size="12" font-weight="700" fill="var(--h-cherry)">you are here</text>
+<desc id="ov-desc">Three trimesters with five milestones each. Trimester one, Data Analyst, months one to three. Trimester two, Machine Learning Engineer, months four to six. Trimester three, AI Engineer, months seven to nine. A marker shows the current position in the programme.</desc>
+<text x="123" y="22" text-anchor="middle" font-size="11" fill="var(--h-space)">Trimester 1</text>
+<text x="123" y="42" text-anchor="middle" font-size="14.5" font-weight="700" fill="var(--md-default-fg-color)">Data Analyst</text>
+<text x="123" y="60" text-anchor="middle" font-size="11" fill="var(--h-space)">Months 1 to 3</text>
+<rect x="20" y="74" width="206" height="52" rx="12" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<line x1="43" y1="100" x2="203" y2="100" stroke="var(--h-steel)" stroke-width="2"/>
+<text x="340" y="22" text-anchor="middle" font-size="11" fill="var(--h-space)">Trimester 2</text>
+<text x="340" y="42" text-anchor="middle" font-size="14.5" font-weight="700" fill="var(--md-default-fg-color)">Machine Learning Engineer</text>
+<text x="340" y="60" text-anchor="middle" font-size="11" fill="var(--h-space)">Months 4 to 6</text>
+<rect x="237" y="74" width="206" height="52" rx="12" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<line x1="260" y1="100" x2="420" y2="100" stroke="var(--h-steel)" stroke-width="2"/>
+<text x="557" y="22" text-anchor="middle" font-size="11" fill="var(--h-space)">Trimester 3</text>
+<text x="557" y="42" text-anchor="middle" font-size="14.5" font-weight="700" fill="var(--md-default-fg-color)">AI Engineer</text>
+<text x="557" y="60" text-anchor="middle" font-size="11" fill="var(--h-space)">Months 7 to 9</text>
+<rect x="454" y="74" width="206" height="52" rx="12" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<line x1="477" y1="100" x2="637" y2="100" stroke="var(--h-steel)" stroke-width="2"/>
+<line x1="226" y1="100" x2="237" y2="100" stroke="var(--h-steel)" stroke-width="2" stroke-dasharray="3 3"/>
+<line x1="443" y1="100" x2="454" y2="100" stroke="var(--h-steel)" stroke-width="2" stroke-dasharray="3 3"/>
+<circle cx="43" cy="100" r="13" fill="none" stroke="var(--h-cherry)" stroke-width="2" opacity="0.45"/>
+<circle cx="43" cy="100" r="8" fill="var(--h-cherry)"/>
+<circle cx="83" cy="100" r="8" fill="var(--md-default-bg-color)" stroke="var(--h-steel)" stroke-width="2"/>
+<circle cx="123" cy="100" r="8" fill="var(--md-default-bg-color)" stroke="var(--h-steel)" stroke-width="2"/>
+<circle cx="163" cy="100" r="8" fill="var(--md-default-bg-color)" stroke="var(--h-steel)" stroke-width="2"/>
+<circle cx="203" cy="100" r="8" fill="var(--md-default-bg-color)" stroke="var(--h-steel)" stroke-width="2"/>
+<circle cx="260" cy="100" r="8" fill="var(--md-default-bg-color)" stroke="var(--h-steel)" stroke-width="2"/>
+<circle cx="300" cy="100" r="8" fill="var(--md-default-bg-color)" stroke="var(--h-steel)" stroke-width="2"/>
+<circle cx="340" cy="100" r="8" fill="var(--md-default-bg-color)" stroke="var(--h-steel)" stroke-width="2"/>
+<circle cx="380" cy="100" r="8" fill="var(--md-default-bg-color)" stroke="var(--h-steel)" stroke-width="2"/>
+<circle cx="420" cy="100" r="8" fill="var(--md-default-bg-color)" stroke="var(--h-steel)" stroke-width="2"/>
+<circle cx="477" cy="100" r="8" fill="var(--md-default-bg-color)" stroke="var(--h-steel)" stroke-width="2"/>
+<circle cx="517" cy="100" r="8" fill="var(--md-default-bg-color)" stroke="var(--h-steel)" stroke-width="2"/>
+<circle cx="557" cy="100" r="8" fill="var(--md-default-bg-color)" stroke="var(--h-steel)" stroke-width="2"/>
+<circle cx="597" cy="100" r="8" fill="var(--md-default-bg-color)" stroke="var(--h-steel)" stroke-width="2"/>
+<circle cx="637" cy="100" r="8" fill="var(--md-default-bg-color)" stroke="var(--h-steel)" stroke-width="2"/>
+<polygon points="43,132 36,144 50,144" fill="var(--h-cherry)"/>
+<line x1="43" y1="144" x2="43" y2="158" stroke="var(--h-cherry)" stroke-width="2"/>
+<text x="43" y="176" text-anchor="middle" font-size="12" font-weight="700" fill="var(--h-cherry)">you are here</text>
 </svg>
 
 ---

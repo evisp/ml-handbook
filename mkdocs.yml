@@ -187,6 +187,8 @@ exclude_docs: |
 nav:
   - Home: index.md
 
+  - Roadmap: roadmap.md
+
   - Tools:
       - 01-tools/index.md
       - Zero day: 01-tools/zero-day.md

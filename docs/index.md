@@ -83,6 +83,8 @@ stand on their own.
 Each stage assumes the one above it. Skipping ahead usually costs more time
 than it saves.
 
+[See the full roadmap](roadmap.md){ .h-button .h-button--ghost }
+
 ## How to work through it
 
 !!! tip "Read less, build more"

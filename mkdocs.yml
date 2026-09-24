@@ -171,6 +171,9 @@ validation:
 # ------------------------------------------------------------------------------
 
 exclude_docs: |
+  t1-real-data/
+  t1-models/
+  0X-portfolio/
   02-math/
   03-data/
   04-core-ml/
@@ -181,12 +184,11 @@ exclude_docs: |
   09-portfolio/
 
 # ------------------------------------------------------------------------------
-# Navigation — Trimester 1, week 1: Tools only
+# Navigation — Trimester 1
 # ------------------------------------------------------------------------------
 
 nav:
   - Home: index.md
-
   - Roadmap: roadmap.md
 
   - Tools:
@@ -206,75 +208,31 @@ nav:
       - Ethics and responsibility: 02-fundamentals/ethics-and-responsibility.md
       - What training actually does: 02-fundamentals/how-training-works.md
 
+  - Data Analyst:
+      - Maths and tools:
+          - t1-maths-tools/index.md
+          - Linear Algebra: t1-maths-tools/linear-algebra.md
+          - Pandas: t1-maths-tools/pandas.md
+          - Plotting: t1-maths-tools/plotting.md
+          - Probability: t1-maths-tools/probability.md
+
+      # ---- Opens 16 October. Delete t1-real-data/ from exclude_docs too.
+      # - Real data:
+      #     - t1-real-data/index.md
+      #     - Web Scraping: t1-real-data/web-scraping.md
+      #     - APIs: t1-real-data/apis.md
+      #     - Data Preparation: t1-real-data/data-preparation.md
+      #     - Data Preprocessing: t1-real-data/data-preprocessing.md
+
+      # ---- Opens 16 November. Delete t1-models/ from exclude_docs too.
+      # - Classic models:
+      #     - t1-models/index.md
+      #     - Classification: t1-models/classification.md
+      #     - Linear Models: t1-models/linear-models.md
+      #     - Tree-Based Models: t1-models/tree-models.md
+      #     - Unsupervised Learning: t1-models/unsupervised-learning.md
+      #     - Clustering: t1-models/clustering.md
+
   - Projects:
       - projects/index.md
       - Rock, paper, scissors: projects/rock-paper-scissors.md
-
-  # - Math:
-  #     - 02-math/index.md
-  #     - Linear algebra: 02-math/linear-algebra.md
-  #     - NumPy: 02-math/numpy.md
-  #     - Calculus: 02-math/calculus.md
-  #     - Probability & statistics: 02-math/probability-statistics.md
-
-  # - Data:
-  #     - 03-data/index.md
-  #     - Data foundations: 03-data/data-foundations.md
-  #     - Pandas essentials: 03-data/pandas.md
-  #     - Visualization: 03-data/visualization.md
-  #     - Data processing: 03-data/data-processing.md
-  #     - Data collection: 03-data/data-collection.md
-  #     - SQL databases: 03-data/sql.md
-  #     - NoSQL (MongoDB): 03-data/mongo.md
-  #     - NoSQL (MongoDB install): 03-data/mongo-install.md
-
-  # - Core ML:
-  #     - 04-core-ml/index.md
-  #     - Introduction: 04-core-ml/ml-intro.md
-  #     - ML categories: 04-core-ml/ml-categories.md
-  #     - ML lifecycle: 04-core-ml/lifecycle.md
-  #     - Regression: 04-core-ml/regression.md
-  #     - Classification: 04-core-ml/supervised.md
-  #     - Classification advanced: 04-core-ml/supervised-advanced.md
-  #     - Unsupervised learning overview: 04-core-ml/unsupervised.md
-  #     - Clustering: 04-core-ml/clustering.md
-  #     - Dimensionality reduction: 04-core-ml/dim_reduction.md
-
-  # - Deep Learning Fundamentals:
-  #     - 05-dl-fundamentals/index.md
-  #     - Classification using neural networks: 05-dl-fundamentals/classification-nn.md
-  #     - Optimization: 05-dl-fundamentals/optimization.md
-  #     - Error analysis: 05-dl-fundamentals/error-analysis.md
-  #     - Regularization: 05-dl-fundamentals/regularization.md
-
-  # - Deep Learning Architectures:
-  #     - 06-dl-architectures/index.md
-  #     - Convolutions and pooling: 06-dl-architectures/convolutions-pooling.md
-  #     - Convolutional neural networks: 06-dl-architectures/cnns.md
-  #     - Data augmentation: 06-dl-architectures/data-augmentation.md
-  #     - Deep convolutional architectures: 06-dl-architectures/deep-cnns.md
-  #     - Transfer learning: 06-dl-architectures/transfer-learning.md
-  #     - Object detection: 06-dl-architectures/object-detection.md
-
-  # - Sequential & NLP:
-  #     - 07-nlp/index.md
-  #     - RNNs and LSTMs: 07-nlp/rnns.md
-  #     - Time series forecasting: 07-nlp/time-series.md
-  #     - Understanding NLP: 07-nlp/nlp-overview.md
-  #     - Word embeddings: 07-nlp/embeddings.md
-  #     - Evaluation metrics for NLP: 07-nlp/metrics.md
-  #     - Question answering bots: 07-nlp/qa-bots.md
-  #     - Practice NLP: 07-nlp/practice.md
-
-  # - Generative AI & LLMs:
-  #     - 08-llms/index.md
-  #     - Generative AI fundamentals: 08-llms/gen-ai-basics.md
-  #     - Large language models: 08-llms/llm-intro.md
-  #     - Open source vs proprietary models: 08-llms/model-ecosystems.md
-  #     - Tailoring AI chatbots: 08-llms/tailoring-chatbots.md
-  #     - Running models with WebGPU: 08-llms/web-gpu.md
-  #     - OpenAI and Hugging Face: 08-llms/api-and-frameworks.md
-
-  # - Final Portfolio:
-  #     - 09-portfolio/index.md
-  #     - Project requirements: 09-portfolio/requirements.md

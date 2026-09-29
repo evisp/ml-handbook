@@ -23,6 +23,19 @@ know from day one what you will be asked.
 
     [Open the brief](rock-paper-scissors.md)
 
+-   :material-file-document-outline: **Project 2: One page, one finding**
+
+    ---
+
+    Answer a real question about a real dataset, then fit the entire answer onto
+    a single page.
+
+    <span class="badge badge--time">Three weeks</span>
+    <span class="badge">Groups of 3 or 4</span>
+    <span class="badge">19 October</span>
+
+    [Open the brief](one-page-finding.md)
+
 </div>
 
 More projects appear here as each block of modules finishes.
@@ -32,3 +45,6 @@ More projects appear here as each block of modules finishes.
     Not by accuracy. A group with a model that scores 60 percent and can
     explain exactly why will score higher than a group at 100 percent with
     nothing to say. The number is evidence. The explanation is the work.
+
+    The same applies to analysis. A clear finding you can defend beats a
+    beautiful chart of something nobody asked about.

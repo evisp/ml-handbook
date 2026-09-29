@@ -171,8 +171,6 @@ validation:
 # ------------------------------------------------------------------------------
 
 exclude_docs: |
-  t1-real-data/
-  t1-models/
   0X-portfolio/
   02-math/
   03-data/
@@ -217,22 +215,24 @@ nav:
           - Probability: t1-maths-tools/probability.md
 
       # ---- Opens 16 October. Delete t1-real-data/ from exclude_docs too.
-      # - Real data:
-      #     - t1-real-data/index.md
-      #     - Web Scraping: t1-real-data/web-scraping.md
-      #     - APIs: t1-real-data/apis.md
-      #     - Data Preparation: t1-real-data/data-preparation.md
-      #     - Data Preprocessing: t1-real-data/data-preprocessing.md
+      - Real data:
+          - t1-real-data/index.md
+          - Web Scraping: t1-real-data/web-scraping.md
+          - APIs: t1-real-data/apis.md
+          - Data Preparation: t1-real-data/data-preparation.md
+          - Data Preprocessing: t1-real-data/data-preprocessing.md
 
       # ---- Opens 16 November. Delete t1-models/ from exclude_docs too.
-      # - Classic models:
-      #     - t1-models/index.md
-      #     - Classification: t1-models/classification.md
-      #     - Linear Models: t1-models/linear-models.md
-      #     - Tree-Based Models: t1-models/tree-models.md
-      #     - Unsupervised Learning: t1-models/unsupervised-learning.md
-      #     - Clustering: t1-models/clustering.md
+      - Classic models:
+          - t1-models/index.md
+          - Classification: t1-models/classification.md
+          - Linear Models: t1-models/linear-models.md
+          - Tree-Based Models: t1-models/tree-models.md
+          - Bias, variance and tuning: t1-models/bias-variance.md
+          - Unsupervised Learning: t1-models/unsupervised-learning.md
+          - Clustering: t1-models/clustering.md
 
   - Projects:
       - projects/index.md
       - Rock, paper, scissors: projects/rock-paper-scissors.md
+      - One page, one finding: projects/one-page-finding.md

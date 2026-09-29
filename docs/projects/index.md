@@ -18,7 +18,7 @@ know from day one what you will be asked.
     Build an image classifier with no code, break it on purpose, and explain
     what it actually learned.
 
-    <span class="badge badge--time">Two sessions</span>
+    <span class="badge badge--time">ML warm-up</span>
     <span class="badge">Groups of 3</span>
 
     [Open the brief](rock-paper-scissors.md)

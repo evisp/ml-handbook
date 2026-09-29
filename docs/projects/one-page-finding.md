@@ -1,6 +1,6 @@
 # Project 2: One page, one finding
 
-<span class="badge badge--time">Three weeks</span>
+<span class="badge badge--time">Storytelling</span>
 <span class="badge badge--level">No models</span>
 <span class="badge">Groups of 3 or 4</span>
 <span class="badge">Presented 19 October</span>
@@ -41,7 +41,7 @@ If you find yourself importing scikit-learn you have misread the brief.
 <text x="510" y="136" text-anchor="middle" font-size="11.5" fill="#ffffff" opacity="0.92">one page, no scrolling, no excuses</text>
 <text x="510" y="184" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">rewards being ruthless</text>
 <text x="340" y="238" text-anchor="middle" font-size="12" fill="var(--h-graphite)">Most people are naturally good at one of these. The project exists to force you into the other one.</text>
-<text x="340" y="258" text-anchor="middle" font-size="12" fill="var(--h-graphite)">Deciding what to leave out is the harder skill, and the one nobody teaches.</text>
+<text x="340" y="258" text-anchor="middle" font-size="12" fill="var(--h-graphite)">Deciding what to leave out is the harder skill.</text>
 </svg>
 
 ## Your group and your question
@@ -258,20 +258,6 @@ poster.
 A suggestion on the order of work, from groups who have done this before: spend
 week one on the data and resist the urge to plot anything pretty. The good
 charts come from understanding, and understanding comes from cleaning.
-
-## The review session, 19 October
-
-A gallery walk rather than presentations.
-
-1. Posters go on the wall.
-2. Fifteen minutes, everyone circulates and reads all four.
-3. **Every group writes one question on a sticky note for every other poster.**
-4. Each group then answers the three questions they received, in front of
-   everybody.
-5. Ten minutes at the end on what the four datasets had in common.
-
-The peer questions are usually sharper than mine, because the other groups have
-spent three weeks hitting the same walls and know where to press.
 
 ## Before you present, check
 

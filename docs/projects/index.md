@@ -30,9 +30,8 @@ know from day one what you will be asked.
     Answer a real question about a real dataset, then fit the entire answer onto
     a single page.
 
-    <span class="badge badge--time">Three weeks</span>
+    <span class="badge badge--time">Storytelling</span>
     <span class="badge">Groups of 3 or 4</span>
-    <span class="badge">19 October</span>
 
     [Open the brief](one-page-finding.md)
 

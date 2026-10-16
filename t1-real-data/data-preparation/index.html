@@ -1,0 +1,3456 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A practical, project-based machine learning curriculum for Holberton School Albania. Real projects, real skills, real careers.">
+      
+      
+        <meta name="author" content="Evis Plaku">
+      
+      
+        <link rel="canonical" href="https://evisp.github.io/ml-handbook/t1-real-data/data-preparation/">
+      
+      
+        <link rel="prev" href="../apis/">
+      
+      
+        <link rel="next" href="../data-preprocessing/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Data Preparation - Holberton ML Handbook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Host+Grotesk:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Host Grotesk";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/brand.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#data-preparation-and-visualization" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Holberton ML Handbook" class="md-header__button md-logo" aria-label="Holberton ML Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Holberton ML Handbook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Data Preparation
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/evisp/ml-handbook" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    evisp/ml-handbook
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../roadmap/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Roadmap
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../01-tools/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Tools
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../02-fundamentals/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Fundamentals
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../t1-maths-tools/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Data Analyst
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../projects/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Projects
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Holberton ML Handbook" class="md-nav__button md-logo" aria-label="Holberton ML Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Holberton ML Handbook
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/evisp/ml-handbook" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    evisp/ml-handbook
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../01-tools/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/zero-day/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Zero day
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/git-and-github/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git & GitHub
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/notebook-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jupyter notebook setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/vscode-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/python-warm-up/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python warm up
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../02-fundamentals/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Fundamentals
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-fundamentals/what-is-ai/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    What AI is
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-fundamentals/what-is-ml/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How machines learn
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-fundamentals/framing-ml-problems/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Framing a problem
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-fundamentals/working-with-data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Working with data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-fundamentals/ethics-and-responsibility/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ethics and responsibility
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-fundamentals/how-training-works/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    What training actually does
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Analyst
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Data Analyst
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../t1-maths-tools/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Maths and tools
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5_1" id="__nav_5_1_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Maths and tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-maths-tools/linear-algebra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linear Algebra
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-maths-tools/pandas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pandas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-maths-tools/plotting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plotting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-maths-tools/probability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Probability
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Real data
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5_2" id="__nav_5_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Real data
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../web-scraping/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Scraping
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../apis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    APIs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Preparation
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Preparation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this matters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exploratory-data-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exploratory data analysis
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-data-and-what-it-means" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Missing data, and what it means
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Types
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#duplicates-and-columns-to-drop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Duplicates and columns to drop
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#look-at-the-target-first" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Look at the target first
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#distributions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Distributions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#relationships-with-the-target" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Relationships with the target
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#is-the-pattern-real" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Is the pattern real?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Is the pattern real?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#chi-square-for-two-categorical-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chi-square, for two categorical variables
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#welchs-t-test-for-a-numeric-variable-across-two-groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Welch's t-test, for a numeric variable across two groups
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#making-better-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Making better features
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Making better features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#binning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Binning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-columns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        New columns
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#encoding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Encoding
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scaling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scaling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#splitting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Splitting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-whole-thing-in-one-screen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The whole thing in one screen
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-it-goes-wrong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When it goes wrong
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#questions-to-sit-with" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Questions to sit with
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-preprocessing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Preprocessing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../t1-models/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classic models
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5_3" id="__nav_5_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Classic models
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-models/classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-models/linear-models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linear Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-models/tree-models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tree-Based Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-models/bias-variance.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bias, variance and tuning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-models/unsupervised-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unsupervised Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-models/clustering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../projects/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Projects
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Projects
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../projects/rock-paper-scissors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rock, paper, scissors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../projects/one-page-finding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    One page, one finding
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this matters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exploratory-data-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exploratory data analysis
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-data-and-what-it-means" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Missing data, and what it means
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Types
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#duplicates-and-columns-to-drop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Duplicates and columns to drop
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#look-at-the-target-first" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Look at the target first
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#distributions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Distributions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#relationships-with-the-target" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Relationships with the target
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#is-the-pattern-real" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Is the pattern real?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Is the pattern real?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#chi-square-for-two-categorical-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chi-square, for two categorical variables
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#welchs-t-test-for-a-numeric-variable-across-two-groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Welch's t-test, for a numeric variable across two groups
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#making-better-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Making better features
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Making better features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#binning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Binning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-columns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        New columns
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#encoding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Encoding
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scaling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scaling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#splitting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Splitting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-whole-thing-in-one-screen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The whole thing in one screen
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-it-goes-wrong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When it goes wrong
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#questions-to-sit-with" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Questions to sit with
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../../t1-maths-tools/" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Data Analyst
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Real data
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/evisp/ml-handbook/edit/main/docs/t1-real-data/data-preparation.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="data-preparation-and-visualization">Data Preparation and Visualization<a class="headerlink" href="#data-preparation-and-visualization" title="Link to this section">&para;</a></h1>
+<p><span class="badge badge--time">85 min</span>
+<span class="badge badge--level">Real data</span>
+<span class="badge">Needs: Pandas, Plotting, Probability</span></p>
+<p>You have a file of 7043 telephone customers and a column saying which of them
+left. This page is what you do between opening that file and handing a table to
+a model.</p>
+<h2 id="why-this-matters">Why this matters<a class="headerlink" href="#why-this-matters" title="Link to this section">&para;</a></h2>
+<p>You already know the commands. <code>dropna</code>, <code>astype</code>, <code>groupby</code>, <code>histplot</code>. What
+you have not done is decide <strong>which ones to run, in what order, and why</strong>, on a
+dataset nobody has cleaned for you.</p>
+<p>That decision sequence is the job. Two analysts given the same file will produce
+different tables, and the difference is judgment rather than syntax. This page
+is about the judgment, and the churn data is here to make it concrete.</p>
+<h2 id="exploratory-data-analysis">Exploratory data analysis<a class="headerlink" href="#exploratory-data-analysis" title="Link to this section">&para;</a></h2>
+<p>EDA is a name for the loop you run when you meet a dataset.</p>
+<p><svg viewBox="0 0 680 236" role="img" aria-labelledby="e1-title e1-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="e1-title">The exploratory loop</title>
+<desc id="e1-desc">Look at the data, ask what could be wrong with it, check that suspicion, then fix it or write it down. Each answer produces the next question.</desc>
+<defs><marker id="e1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--h-steel)"/></marker></defs>
+<rect x="5" y="44" width="152" height="70" rx="10" fill="var(--h-cherry)" stroke="var(--h-cherry)"/>
+<text x="81" y="74" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">look</text>
+<text x="81" y="94" text-anchor="middle" font-size="10.5" fill="#ffffff" opacity="0.9">head, info, describe</text>
+<line x1="163" y1="79" x2="175" y2="79" stroke="var(--h-steel)" stroke-width="2" marker-end="url(#e1)"/>
+<rect x="175" y="44" width="152" height="70" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="251" y="74" text-anchor="middle" font-size="13" font-weight="700" fill="var(--md-default-fg-color)">ask</text>
+<text x="251" y="94" text-anchor="middle" font-size="10.5" fill="var(--h-graphite)" opacity="0.9">what would break this?</text>
+<line x1="333" y1="79" x2="345" y2="79" stroke="var(--h-steel)" stroke-width="2" marker-end="url(#e1)"/>
+<rect x="345" y="44" width="152" height="70" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="421" y="74" text-anchor="middle" font-size="13" font-weight="700" fill="var(--md-default-fg-color)">check</text>
+<text x="421" y="94" text-anchor="middle" font-size="10.5" fill="var(--h-graphite)" opacity="0.9">plot it, count it, test it</text>
+<line x1="503" y1="79" x2="515" y2="79" stroke="var(--h-steel)" stroke-width="2" marker-end="url(#e1)"/>
+<rect x="515" y="44" width="152" height="70" rx="10" fill="var(--h-cherry)" stroke="var(--h-cherry)"/>
+<text x="591" y="74" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">fix or record</text>
+<text x="591" y="94" text-anchor="middle" font-size="10.5" fill="#ffffff" opacity="0.9">and write down why</text>
+<polyline points="601,118 601,156 81,156 81,120" fill="none" stroke="var(--h-steel)" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#e1)"/>
+<text x="340" y="176" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--h-graphite)">every answer produces the next question</text>
+<text x="340" y="206" text-anchor="middle" font-size="12" fill="var(--h-graphite)">EDA is not a phase you complete before modelling. It is what you keep doing whenever a result surprises you.</text>
+</svg></p>
+<p>It is not a checklist you complete. Every answer raises the next question: the
+target is imbalanced, so which metric will you use; total charges is text, so
+why; eleven values are missing, so what do those eleven rows have in common.</p>
+<p>Start with the three commands you already know.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;Telco-Customer-Churn.csv&quot;</span><span class="p">)</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="s2">&quot;object&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<p><code>describe</code> on its own only reports numeric columns, which on this file is three
+of twenty-one. Pass <code>include="object"</code> and you get counts, unique values and the
+most frequent value for the rest. Two commands, and you already know the shape
+of the problem.</p>
+<h2 id="missing-data-and-what-it-means">Missing data, and what it means<a class="headerlink" href="#missing-data-and-what-it-means" title="Link to this section">&para;</a></h2>
+<p>Finding missing values is a line of code. Deciding what they mean is the work,
+and this dataset has a perfect example.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>0
+</span></code></pre></div>
+<p>Zero missing values. Except <code>TotalCharges</code> has dtype <code>object</code>, which for a
+column of money is suspicious. Eleven of its entries are a single space
+character, which pandas read as text rather than as missing.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">df</span><span class="p">[</span><span class="s2">&quot;TotalCharges&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;TotalCharges&quot;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;coerce&quot;</span><span class="p">)</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;TotalCharges&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>11
+</span></code></pre></div>
+<p>Now look at what those eleven rows have in common.</p>
+<p><svg viewBox="0 0 680 296" role="img" aria-labelledby="e2-title e2-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="e2-title">Missing values that are not missing at random</title>
+<desc id="e2-desc">Every row with a blank total charge has a tenure of zero. These are brand new customers who have not been billed yet, so the blank means zero rather than unknown.</desc>
+<text x="20" y="26" font-size="12" font-weight="700" fill="var(--h-graphite)">a few rows from the churn file</text>
+<rect x="20" y="36" width="170" height="30" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="105" y="55" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--md-default-fg-color)">customerID</text>
+<rect x="190" y="36" width="90" height="30" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="235" y="55" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--md-default-fg-color)">tenure</text>
+<rect x="280" y="36" width="150" height="30" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="355" y="55" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--md-default-fg-color)">MonthlyCharges</text>
+<rect x="430" y="36" width="150" height="30" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="505" y="55" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--md-default-fg-color)">TotalCharges</text>
+<rect x="20" y="66" width="170" height="28" fill="var(--md-default-bg-color)" stroke="var(--h-surface-line)"/>
+<text x="105" y="80" dy="0.36em" text-anchor="middle" font-size="11" font-weight="400" fill="var(--h-graphite)">7590-VHVEG</text>
+<rect x="190" y="66" width="90" height="28" fill="var(--md-default-bg-color)" stroke="var(--h-surface-line)"/>
+<text x="235" y="80" dy="0.36em" text-anchor="middle" font-size="11" font-weight="400" fill="var(--h-graphite)">1</text>
+<rect x="280" y="66" width="150" height="28" fill="var(--md-default-bg-color)" stroke="var(--h-surface-line)"/>
+<text x="355" y="80" dy="0.36em" text-anchor="middle" font-size="11" font-weight="400" fill="var(--h-graphite)">29.85</text>
+<rect x="430" y="66" width="150" height="28" fill="var(--md-default-bg-color)" stroke="var(--h-surface-line)"/>
+<text x="505" y="80" dy="0.36em" text-anchor="middle" font-size="11" font-weight="400" fill="var(--h-graphite)">29.85</text>
+<rect x="20" y="94" width="170" height="28" fill="var(--md-default-bg-color)" stroke="var(--h-surface-line)"/>
+<text x="105" y="108" dy="0.36em" text-anchor="middle" font-size="11" font-weight="400" fill="var(--h-graphite)">5575-GNVDE</text>
+<rect x="190" y="94" width="90" height="28" fill="var(--md-default-bg-color)" stroke="var(--h-surface-line)"/>
+<text x="235" y="108" dy="0.36em" text-anchor="middle" font-size="11" font-weight="400" fill="var(--h-graphite)">34</text>
+<rect x="280" y="94" width="150" height="28" fill="var(--md-default-bg-color)" stroke="var(--h-surface-line)"/>
+<text x="355" y="108" dy="0.36em" text-anchor="middle" font-size="11" font-weight="400" fill="var(--h-graphite)">56.95</text>
+<rect x="430" y="94" width="150" height="28" fill="var(--md-default-bg-color)" stroke="var(--h-surface-line)"/>
+<text x="505" y="108" dy="0.36em" text-anchor="middle" font-size="11" font-weight="400" fill="var(--h-graphite)">1889.5</text>
+<rect x="20" y="122" width="170" height="28" fill="var(--h-cherry-wash)" stroke="var(--h-cherry-line)"/>
+<text x="105" y="136" dy="0.36em" text-anchor="middle" font-size="11" font-weight="400" fill="var(--h-graphite)">4472-LVYGI</text>
+<rect x="190" y="122" width="90" height="28" fill="var(--h-cherry-wash)" stroke="var(--h-cherry-line)"/>
+<text x="235" y="136" dy="0.36em" text-anchor="middle" font-size="11" font-weight="700" fill="var(--h-cherry)">0</text>
+<rect x="280" y="122" width="150" height="28" fill="var(--h-cherry-wash)" stroke="var(--h-cherry-line)"/>
+<text x="355" y="136" dy="0.36em" text-anchor="middle" font-size="11" font-weight="400" fill="var(--h-graphite)">52.55</text>
+<rect x="430" y="122" width="150" height="28" fill="var(--h-cherry-wash)" stroke="var(--h-cherry-line)"/>
+<text x="505" y="136" dy="0.36em" text-anchor="middle" font-size="11" font-weight="700" fill="var(--h-cherry)">blank</text>
+<rect x="20" y="150" width="170" height="28" fill="var(--h-cherry-wash)" stroke="var(--h-cherry-line)"/>
+<text x="105" y="164" dy="0.36em" text-anchor="middle" font-size="11" font-weight="400" fill="var(--h-graphite)">3115-CZMFE</text>
+<rect x="190" y="150" width="90" height="28" fill="var(--h-cherry-wash)" stroke="var(--h-cherry-line)"/>
+<text x="235" y="164" dy="0.36em" text-anchor="middle" font-size="11" font-weight="700" fill="var(--h-cherry)">0</text>
+<rect x="280" y="150" width="150" height="28" fill="var(--h-cherry-wash)" stroke="var(--h-cherry-line)"/>
+<text x="355" y="164" dy="0.36em" text-anchor="middle" font-size="11" font-weight="400" fill="var(--h-graphite)">20.25</text>
+<rect x="430" y="150" width="150" height="28" fill="var(--h-cherry-wash)" stroke="var(--h-cherry-line)"/>
+<text x="505" y="164" dy="0.36em" text-anchor="middle" font-size="11" font-weight="700" fill="var(--h-cherry)">blank</text>
+<rect x="20" y="178" width="170" height="28" fill="var(--md-default-bg-color)" stroke="var(--h-surface-line)"/>
+<text x="105" y="192" dy="0.36em" text-anchor="middle" font-size="11" font-weight="400" fill="var(--h-graphite)">9237-HQITU</text>
+<rect x="190" y="178" width="90" height="28" fill="var(--md-default-bg-color)" stroke="var(--h-surface-line)"/>
+<text x="235" y="192" dy="0.36em" text-anchor="middle" font-size="11" font-weight="400" fill="var(--h-graphite)">2</text>
+<rect x="280" y="178" width="150" height="28" fill="var(--md-default-bg-color)" stroke="var(--h-surface-line)"/>
+<text x="355" y="192" dy="0.36em" text-anchor="middle" font-size="11" font-weight="400" fill="var(--h-graphite)">70.70</text>
+<rect x="430" y="178" width="150" height="28" fill="var(--md-default-bg-color)" stroke="var(--h-surface-line)"/>
+<text x="505" y="192" dy="0.36em" text-anchor="middle" font-size="11" font-weight="400" fill="var(--h-graphite)">151.65</text>
+<rect x="20" y="206" width="170" height="28" fill="var(--h-cherry-wash)" stroke="var(--h-cherry-line)"/>
+<text x="105" y="220" dy="0.36em" text-anchor="middle" font-size="11" font-weight="400" fill="var(--h-graphite)">5709-LVOEQ</text>
+<rect x="190" y="206" width="90" height="28" fill="var(--h-cherry-wash)" stroke="var(--h-cherry-line)"/>
+<text x="235" y="220" dy="0.36em" text-anchor="middle" font-size="11" font-weight="700" fill="var(--h-cherry)">0</text>
+<rect x="280" y="206" width="150" height="28" fill="var(--h-cherry-wash)" stroke="var(--h-cherry-line)"/>
+<text x="355" y="220" dy="0.36em" text-anchor="middle" font-size="11" font-weight="400" fill="var(--h-graphite)">80.85</text>
+<rect x="430" y="206" width="150" height="28" fill="var(--h-cherry-wash)" stroke="var(--h-cherry-line)"/>
+<text x="505" y="220" dy="0.36em" text-anchor="middle" font-size="11" font-weight="700" fill="var(--h-cherry)">blank</text>
+<text x="596" y="120" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--h-cherry)">every blank</text>
+<text x="596" y="136" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--h-cherry)">has tenure 0</text>
+<text x="340" y="262" text-anchor="middle" font-size="12" fill="var(--h-graphite)">All 11 blanks belong to customers who joined this month and have not been billed yet.</text>
+<text x="340" y="282" text-anchor="middle" font-size="12" fill="var(--h-graphite)">The value is not unknown. It is zero. Filling it with the median would invent a billing history.</text>
+</svg></p>
+<p>Every one of them has <code>tenure</code> equal to zero. These are customers who signed up
+this month and have not been billed yet. The value is not unknown, it is zero.</p>
+<div class="admonition warning">
+<p class="admonition-title">Always ask why before you ask how</p>
+<p>Fill those eleven with the column median, around 1400 euro, and you have
+invented two years of billing history for customers who joined last week.
+Every model you build afterwards learns from that invention.</p>
+<p>The three options are drop, replace and impute, and they are not
+interchangeable:</p>
+<p><strong>Drop</strong> the rows when they are few and you cannot justify a value. Eleven
+out of 7043 is nothing, so this is defensible here.</p>
+<p><strong>Replace</strong> with a value you can justify from the meaning of the data.
+Filling these with 0 is correct, because zero is what a customer with no
+billing cycle has been charged.</p>
+<p><strong>Impute</strong> with a statistic, or with a model, when the value genuinely
+exists but was not recorded. Median for skewed columns, mean for symmetric
+ones, and a flag column either way.</p>
+</div>
+<p>Here, replacing with 0 is right and imputing is wrong, and no amount of looking
+at the <code>isna</code> count would have told you that.</p>
+<h2 id="types">Types<a class="headerlink" href="#types" title="Link to this section">&para;</a></h2>
+<p><code>TotalCharges</code> was text because of eleven spaces. That is the common case: one
+bad value drags a whole column to <code>object</code> and every numeric operation you try
+afterwards either fails or silently does something strange.</p>
+<p><code>SeniorCitizen</code> has the opposite problem. It is stored as 0 and 1, so pandas
+reports it as an integer and <code>describe</code> cheerfully tells you the mean senior
+citizen is 0.16. It is a category wearing a number's clothes.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">df</span><span class="p">[</span><span class="s2">&quot;SeniorCitizen&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;SeniorCitizen&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;category&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<p>The test is not what the values look like. It is whether arithmetic on the
+column means anything.</p>
+<h2 id="duplicates-and-columns-to-drop">Duplicates and columns to drop<a class="headerlink" href="#duplicates-and-columns-to-drop" title="Link to this section">&para;</a></h2>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">duplicated</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;customerID&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">duplicated</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+</span></code></pre></div>
+<p>Two different questions. The first asks whether an entire row repeats. The
+second asks whether the identifier repeats, which would mean the same customer
+appears twice with different details, and that is a data collection problem
+rather than a copy and paste one.</p>
+<p>Then drop what cannot help.</p>
+<p><strong>Identifiers.</strong> <code>customerID</code> is unique for every row. A model given it can
+memorise the training set perfectly and learn nothing that transfers. Drop it.</p>
+<p><strong>Constant columns.</strong> If every row has the same value, the column carries no
+information.</p>
+<p><strong>Columns that leak the answer.</strong> Anything recorded at the same time as the
+outcome, or after it. There is no such column in this file, but in a real churn
+dataset a field like <code>cancellation_reason</code> would be one, and it would give you a
+model with 99 percent accuracy and no use whatsoever.</p>
+<h2 id="look-at-the-target-first">Look at the target first<a class="headerlink" href="#look-at-the-target-first" title="Link to this section">&para;</a></h2>
+<p>Before any feature, plot the thing you are predicting.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Churn&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Churn&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>No     0.735
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>Yes    0.265
+</span></code></pre></div>
+<p>About one customer in four left. That single number changes several later
+decisions:</p>
+<ul>
+<li>A model that predicts "No" for everybody scores 73.5 percent accuracy. That is
+  your baseline, and anything you build must beat it before it is interesting.</li>
+<li>Accuracy is the wrong headline metric here, for the reason you saw on the
+  Probability page.</li>
+<li>Your splits need to be stratified, which is the last section of this page.</li>
+</ul>
+<div class="admonition ml">
+<p class="admonition-title">ML connection</p>
+<p>You met this as class imbalance in Working with Data and as base rates in
+Probability. This is the same idea for the third time, now with a number
+attached to a real dataset. If a later page quotes you an accuracy for this
+problem, 73.5 percent is the number to compare it against.</p>
+</div>
+<h2 id="distributions">Distributions<a class="headerlink" href="#distributions" title="Link to this section">&para;</a></h2>
+<p>Categorical features first, because two thirds of this file is categorical.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">categorical</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;object&quot;</span><span class="p">,</span> <span class="s2">&quot;category&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">columns</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">14</span><span class="p">))</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">categorical</span><span class="p">):</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>    <span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">col</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>    <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</span></code></pre></div>
+<p>What you are looking for: categories with almost no members, which will be
+unreliable no matter what the model does, and values that should be the same
+category but are spelled differently.</p>
+<p>This dataset has a nice example. Several service columns contain <code>No internet
+service</code> as well as <code>No</code>. Those are two different statements and it is your
+choice whether they stay separate.</p>
+<p>Then the continuous ones. There are only three: <code>tenure</code>, <code>MonthlyCharges</code>,
+<code>TotalCharges</code>.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;tenure&quot;</span><span class="p">,</span> <span class="s2">&quot;MonthlyCharges&quot;</span><span class="p">,</span> <span class="s2">&quot;TotalCharges&quot;</span><span class="p">]):</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>    <span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">col</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+</span></code></pre></div>
+<p><code>tenure</code> is U-shaped: many customers are brand new, many have been there for
+years, fewer in between. That shape is a finding, not noise, and it is the
+argument for the binning section later.</p>
+<h2 id="relationships-with-the-target">Relationships with the target<a class="headerlink" href="#relationships-with-the-target" title="Link to this section">&para;</a></h2>
+<p>A distribution tells you what a column looks like. What you need is whether it
+relates to churn.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">corr</span><span class="p">(</span><span class="n">numeric_only</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;coolwarm&quot;</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span></code></pre></div>
+<p>With three numeric columns this is a small heatmap, and it says one useful thing:
+<code>tenure</code> and <code>TotalCharges</code> are strongly correlated, because total charges is
+roughly tenure times monthly charges. Two columns carrying the same information
+is worth knowing before you feed both to a model.</p>
+<p>For categorical features against churn, proportions beat counts.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Contract&quot;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Churn&quot;</span><span class="p">],</span> <span class="n">normalize</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>Churn                 No       Yes
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>Contract
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>Month-to-month     0.573     0.427
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>One year           0.887     0.113
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>Two year           0.972     0.028
+</span></code></pre></div>
+<p><code>normalize="index"</code> is what makes this readable. Raw counts would mostly tell
+you that month-to-month is the largest group. Percentages tell you that its churn
+rate is fifteen times the two year rate, which is the actual finding.</p>
+<p>For numeric features, compare the distributions across the two groups.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Churn&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;tenure&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<p>Churners have visibly shorter tenure. You can see it. The next section is about
+whether you can defend it.</p>
+<h2 id="is-the-pattern-real">Is the pattern real?<a class="headerlink" href="#is-the-pattern-real" title="Link to this section">&para;</a></h2>
+<p>Your eyes will find patterns in noise. A statistical test asks whether the
+pattern you are looking at could plausibly have arisen by chance.</p>
+<p><svg viewBox="0 0 680 262" role="img" aria-labelledby="e3-title e3-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="e3-title">Choosing a test for whether a feature relates to churn</title>
+<desc id="e3-desc">For a categorical feature against a categorical target use a chi-square test of independence. For a numeric feature compared across two groups use Welch t-test.</desc>
+<defs><marker id="e3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--h-steel)"/></marker></defs>
+<rect x="200" y="8" width="280" height="44" rx="10" fill="var(--h-cherry)"/>
+<text x="340" y="30" dy="0.36em" text-anchor="middle" font-size="13.5" font-weight="700" fill="#ffffff">does this feature relate to churn?</text>
+<polyline points="340,52 340,72 180,72 180,96" fill="none" stroke="var(--h-steel)" stroke-width="1.5" marker-end="url(#e3)"/>
+<polyline points="340,52 340,72 500,72 500,96" fill="none" stroke="var(--h-steel)" stroke-width="1.5" marker-end="url(#e3)"/>
+<text x="180" y="66" text-anchor="middle" font-size="11" font-weight="700" fill="var(--h-graphite)">the feature is categorical</text>
+<text x="500" y="66" text-anchor="middle" font-size="11" font-weight="700" fill="var(--h-graphite)">the feature is numeric</text>
+<rect x="50" y="100" width="260" height="96" rx="10" fill="var(--h-surface)" stroke="var(--h-cherry-line)"/>
+<text x="180" y="128" text-anchor="middle" font-size="14" font-weight="700" fill="var(--md-default-fg-color)">Chi-square</text>
+<text x="180" y="150" text-anchor="middle" font-size="11" fill="var(--h-graphite)">build a contingency table of</text>
+<text x="180" y="166" text-anchor="middle" font-size="11" fill="var(--h-graphite)">counts, compare it with what</text>
+<text x="180" y="182" text-anchor="middle" font-size="11" fill="var(--h-graphite)">independence would predict</text>
+<rect x="370" y="100" width="260" height="96" rx="10" fill="var(--h-surface)" stroke="var(--h-cherry-line)"/>
+<text x="500" y="128" text-anchor="middle" font-size="14" font-weight="700" fill="var(--md-default-fg-color)">Welch t-test</text>
+<text x="500" y="150" text-anchor="middle" font-size="11" fill="var(--h-graphite)">compare the mean for churners</text>
+<text x="500" y="166" text-anchor="middle" font-size="11" fill="var(--h-graphite)">with the mean for the rest,</text>
+<text x="500" y="182" text-anchor="middle" font-size="11" fill="var(--h-graphite)">without assuming equal spread</text>
+<text x="340" y="228" text-anchor="middle" font-size="12" fill="var(--h-graphite)">Both answer the same question: could this pattern plausibly have appeared by chance alone?</text>
+<text x="340" y="248" text-anchor="middle" font-size="12" fill="var(--h-graphite)">Neither tells you the effect is large enough to care about. With 7043 rows, tiny differences come back significant.</text>
+</svg></p>
+<h3 id="chi-square-for-two-categorical-variables">Chi-square, for two categorical variables<a class="headerlink" href="#chi-square-for-two-categorical-variables" title="Link to this section">&para;</a></h3>
+<p>Build a table of counts and compare it with the counts you would expect if the
+two variables were unrelated.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">chi2_contingency</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="n">table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Contract&quot;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Churn&quot;</span><span class="p">])</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="n">chi2</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">dof</span><span class="p">,</span> <span class="n">expected</span> <span class="o">=</span> <span class="n">chi2_contingency</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="nb">print</span><span class="p">(</span><span class="n">chi2</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+</span></code></pre></div>
+<p>A small p-value means the observed counts would be unlikely if contract type and
+churn were independent.</p>
+<h3 id="welchs-t-test-for-a-numeric-variable-across-two-groups">Welch's t-test, for a numeric variable across two groups<a class="headerlink" href="#welchs-t-test-for-a-numeric-variable-across-two-groups" title="Link to this section">&para;</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">ttest_ind</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="n">churned</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Churn&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Yes&quot;</span><span class="p">,</span> <span class="s2">&quot;tenure&quot;</span><span class="p">]</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="n">stayed</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Churn&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;No&quot;</span><span class="p">,</span> <span class="s2">&quot;tenure&quot;</span><span class="p">]</span>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="n">stat</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">ttest_ind</span><span class="p">(</span><span class="n">churned</span><span class="p">,</span> <span class="n">stayed</span><span class="p">,</span> <span class="n">equal_var</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="nb">print</span><span class="p">(</span><span class="n">stat</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+</span></code></pre></div>
+<p><code>equal_var=False</code> is what makes it Welch's version rather than the standard one.
+The standard test assumes both groups have the same spread, which here they do
+not: there are far more stayers than churners and their tenure is spread
+differently. Welch's does not assume it, costs nothing, and is the safer default
+in almost every real comparison.</p>
+<div class="admonition warning">
+<p class="admonition-title">Significant does not mean important</p>
+<p>With 7043 rows almost everything comes back significant, because a large
+sample can detect a tiny difference reliably. A p-value answers "is this
+difference real". It does not answer "is this difference big enough to care
+about".</p>
+<p>Always look at the effect alongside the p-value. A two month difference in
+average tenure with a p-value of 0.001 is real and probably useful. A
+difference of 0.3 months with the same p-value is real and useless.</p>
+</div>
+<h2 id="making-better-features">Making better features<a class="headerlink" href="#making-better-features" title="Link to this section">&para;</a></h2>
+<p>Two moves, and both are about helping a model express something it otherwise
+could not.</p>
+<h3 id="binning">Binning<a class="headerlink" href="#binning" title="Link to this section">&para;</a></h3>
+<p><svg viewBox="0 0 680 246" role="img" aria-labelledby="e7-title e7-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="e7-title">Binning a continuous feature</title>
+<desc id="e7-desc">Tenure in months is cut into four bands, new, growing, established and loyal, so the model can express a jump between groups rather than a straight line.</desc>
+<line x1="50" y1="160" x2="640" y2="160" stroke="var(--h-steel)" stroke-width="1.5"/>
+<rect x="52" y="82" width="26" height="78" fill="var(--h-cherry)" opacity="0.55"/>
+<rect x="81" y="108" width="26" height="52" fill="var(--h-cherry)" opacity="0.55"/>
+<rect x="110" y="120" width="26" height="40" fill="var(--h-cherry)" opacity="0.55"/>
+<rect x="139" y="126" width="26" height="34" fill="var(--h-cherry)" opacity="0.55"/>
+<rect x="168" y="130" width="26" height="30" fill="var(--h-cherry)" opacity="0.55"/>
+<rect x="197" y="132" width="26" height="28" fill="var(--h-cherry)" opacity="0.55"/>
+<rect x="226" y="134" width="26" height="26" fill="var(--h-cherry)" opacity="0.55"/>
+<rect x="255" y="135" width="26" height="25" fill="var(--h-cherry)" opacity="0.55"/>
+<rect x="284" y="136" width="26" height="24" fill="var(--h-cherry)" opacity="0.55"/>
+<rect x="313" y="136" width="26" height="24" fill="var(--h-cherry)" opacity="0.55"/>
+<rect x="342" y="135" width="26" height="25" fill="var(--h-cherry)" opacity="0.55"/>
+<rect x="371" y="134" width="26" height="26" fill="var(--h-cherry)" opacity="0.55"/>
+<rect x="400" y="132" width="26" height="28" fill="var(--h-cherry)" opacity="0.55"/>
+<rect x="429" y="130" width="26" height="30" fill="var(--h-cherry)" opacity="0.55"/>
+<rect x="458" y="127" width="26" height="33" fill="var(--h-cherry)" opacity="0.55"/>
+<rect x="487" y="123" width="26" height="37" fill="var(--h-cherry)" opacity="0.55"/>
+<rect x="516" y="118" width="26" height="42" fill="var(--h-cherry)" opacity="0.55"/>
+<rect x="545" y="110" width="26" height="50" fill="var(--h-cherry)" opacity="0.55"/>
+<rect x="574" y="100" width="26" height="60" fill="var(--h-cherry)" opacity="0.55"/>
+<rect x="603" y="86" width="26" height="74" fill="var(--h-cherry)" opacity="0.55"/>
+<line x1="196" y1="40" x2="196" y2="168" stroke="var(--md-default-fg-color)" stroke-width="2" stroke-dasharray="5 4"/>
+<line x1="340" y1="40" x2="340" y2="168" stroke="var(--md-default-fg-color)" stroke-width="2" stroke-dasharray="5 4"/>
+<line x1="484" y1="40" x2="484" y2="168" stroke="var(--md-default-fg-color)" stroke-width="2" stroke-dasharray="5 4"/>
+<text x="124" y="188" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--h-cherry)">new</text>
+<text x="124" y="204" text-anchor="middle" font-size="10" fill="var(--h-space)">0 to 12 months</text>
+<text x="268" y="188" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--h-cherry)">growing</text>
+<text x="268" y="204" text-anchor="middle" font-size="10" fill="var(--h-space)">13 to 24 months</text>
+<text x="412" y="188" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--h-cherry)">established</text>
+<text x="412" y="204" text-anchor="middle" font-size="10" fill="var(--h-space)">25 to 48 months</text>
+<text x="562" y="188" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--h-cherry)">loyal</text>
+<text x="562" y="204" text-anchor="middle" font-size="10" fill="var(--h-space)">49 plus months</text>
+<text x="345" y="32" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--h-graphite)">tenure in months</text>
+<text x="340" y="232" text-anchor="middle" font-size="12" fill="var(--h-graphite)">Binning throws away detail on purpose. Do it when the effect is a jump between groups, not a steady slope.</text>
+</svg></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="n">df</span><span class="p">[</span><span class="s2">&quot;tenure_band&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;tenure&quot;</span><span class="p">],</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>    <span class="n">bins</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">100</span><span class="p">],</span>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>    <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;new&quot;</span><span class="p">,</span> <span class="s2">&quot;growing&quot;</span><span class="p">,</span> <span class="s2">&quot;established&quot;</span><span class="p">,</span> <span class="s2">&quot;loyal&quot;</span><span class="p">],</span>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="p">)</span>
+</span></code></pre></div>
+<p>Binning throws away information deliberately. That is worth it when the effect
+is a step rather than a slope: the difference between month 2 and month 14 is
+enormous here, while the difference between month 50 and month 62 is small. A
+linear model cannot say that about a raw tenure column, and it can about bands.</p>
+<p>Use <code>pd.cut</code> for boundaries you choose and <code>pd.qcut</code> for equal sized groups.
+Choosing your own is usually better, because the boundaries then mean something
+to the business.</p>
+<h3 id="new-columns">New columns<a class="headerlink" href="#new-columns" title="Link to this section">&para;</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="n">df</span><span class="p">[</span><span class="s2">&quot;avg_monthly&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;TotalCharges&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;tenure&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="n">df</span><span class="p">[</span><span class="s2">&quot;services&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">service_cols</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Yes&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span></code></pre></div>
+<p>The second one is the interesting kind. Counting how many services a customer
+has turns sixteen separate columns into one number with an obvious meaning, and
+a model can use it directly.</p>
+<p>Every feature you create should have a sentence attached explaining what it
+means. If you cannot write the sentence, you are generating columns rather than
+engineering features.</p>
+<h2 id="encoding">Encoding<a class="headerlink" href="#encoding" title="Link to this section">&para;</a></h2>
+<p>Models take numbers. Most of this dataset is text.</p>
+<p><svg viewBox="0 0 680 300" role="img" aria-labelledby="e4-title e4-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="e4-title">Three ways to turn a category into numbers</title>
+<desc id="e4-desc">Label encoding assigns 0, 1 and 2, which invents an order. Ordinal encoding does the same but is correct when the categories really are ordered. One-hot encoding creates one column per category and invents nothing.</desc>
+<text x="76" y="26" text-anchor="middle" font-size="12" font-weight="700" fill="var(--h-graphite)">InternetService</text>
+<rect x="16" y="40" width="120" height="30" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="76" y="55" dy="0.36em" text-anchor="middle" font-size="11.5" fill="var(--md-default-fg-color)">DSL</text>
+<rect x="16" y="72" width="120" height="30" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="76" y="87" dy="0.36em" text-anchor="middle" font-size="11.5" fill="var(--md-default-fg-color)">Fiber</text>
+<rect x="16" y="104" width="120" height="30" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="76" y="119" dy="0.36em" text-anchor="middle" font-size="11.5" fill="var(--md-default-fg-color)">None</text>
+<text x="228" y="26" text-anchor="middle" font-size="12" font-weight="700" fill="var(--h-cherry)">label</text>
+<rect x="178" y="40" width="100" height="30" fill="var(--h-cherry-wash)" stroke="var(--h-cherry-line)"/>
+<text x="228" y="55" dy="0.36em" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--h-cherry)">0</text>
+<rect x="178" y="72" width="100" height="30" fill="var(--h-cherry-wash)" stroke="var(--h-cherry-line)"/>
+<text x="228" y="87" dy="0.36em" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--h-cherry)">1</text>
+<rect x="178" y="104" width="100" height="30" fill="var(--h-cherry-wash)" stroke="var(--h-cherry-line)"/>
+<text x="228" y="119" dy="0.36em" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--h-cherry)">2</text>
+<text x="228" y="152" text-anchor="middle" font-size="10.5" fill="var(--h-cherry)">says None is twice Fiber</text>
+<text x="228" y="168" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--h-cherry)">wrong here</text>
+<text x="470" y="26" text-anchor="middle" font-size="12" font-weight="700" fill="var(--md-default-fg-color)">one-hot</text>
+<rect x="330" y="36" width="96" height="0" fill="none"/>
+<text x="378" y="34" text-anchor="middle" font-size="10" fill="var(--h-space)">DSL</text>
+<rect x="430" y="36" width="96" height="0" fill="none"/>
+<text x="478" y="34" text-anchor="middle" font-size="10" fill="var(--h-space)">Fiber</text>
+<rect x="530" y="36" width="96" height="0" fill="none"/>
+<text x="578" y="34" text-anchor="middle" font-size="10" fill="var(--h-space)">None</text>
+<rect x="330" y="40" width="96" height="30" fill="var(--h-cherry)" stroke="var(--h-cherry-line)"/>
+<text x="378" y="55" dy="0.36em" text-anchor="middle" font-size="11.5" font-weight="700" fill="#ffffff">1</text>
+<rect x="430" y="40" width="96" height="30" fill="var(--md-default-bg-color)" stroke="var(--h-surface-line)"/>
+<text x="478" y="55" dy="0.36em" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--h-space)">0</text>
+<rect x="530" y="40" width="96" height="30" fill="var(--md-default-bg-color)" stroke="var(--h-surface-line)"/>
+<text x="578" y="55" dy="0.36em" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--h-space)">0</text>
+<rect x="330" y="72" width="96" height="30" fill="var(--md-default-bg-color)" stroke="var(--h-surface-line)"/>
+<text x="378" y="87" dy="0.36em" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--h-space)">0</text>
+<rect x="430" y="72" width="96" height="30" fill="var(--h-cherry)" stroke="var(--h-cherry-line)"/>
+<text x="478" y="87" dy="0.36em" text-anchor="middle" font-size="11.5" font-weight="700" fill="#ffffff">1</text>
+<rect x="530" y="72" width="96" height="30" fill="var(--md-default-bg-color)" stroke="var(--h-surface-line)"/>
+<text x="578" y="87" dy="0.36em" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--h-space)">0</text>
+<rect x="330" y="104" width="96" height="30" fill="var(--md-default-bg-color)" stroke="var(--h-surface-line)"/>
+<text x="378" y="119" dy="0.36em" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--h-space)">0</text>
+<rect x="430" y="104" width="96" height="30" fill="var(--md-default-bg-color)" stroke="var(--h-surface-line)"/>
+<text x="478" y="119" dy="0.36em" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--h-space)">0</text>
+<rect x="530" y="104" width="96" height="30" fill="var(--h-cherry)" stroke="var(--h-cherry-line)"/>
+<text x="578" y="119" dy="0.36em" text-anchor="middle" font-size="11.5" font-weight="700" fill="#ffffff">1</text>
+<text x="470" y="152" text-anchor="middle" font-size="10.5" fill="var(--h-graphite)">no order implied, one column each</text>
+<text x="470" y="168" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--h-cherry)">correct here</text>
+<text x="340" y="212" text-anchor="middle" font-size="12" fill="var(--h-graphite)">Label encoding is only safe when the categories genuinely have an order, such as low, medium, high.</text>
+<text x="340" y="232" text-anchor="middle" font-size="12" fill="var(--h-graphite)">Used on unordered categories it tells a linear model that the gap from DSL to None is twice the gap from DSL to Fiber.</text>
+<text x="340" y="252" text-anchor="middle" font-size="12" fill="var(--h-graphite)">Tree models survive it. Linear models and anything distance based do not.</text>
+</svg></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;InternetService&quot;</span><span class="p">,</span> <span class="s2">&quot;Contract&quot;</span><span class="p">,</span> <span class="s2">&quot;PaymentMethod&quot;</span><span class="p">],</span> <span class="n">drop_first</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Churn&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Churn&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Yes&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+</span></code></pre></div>
+<p>For binary columns like <code>Partner</code>, a simple 0 and 1 is fine and there is no
+ordering to invent. For unordered categories with more than two values, one-hot
+is the default. For genuinely ordered categories, such as your <code>tenure_band</code>,
+ordinal encoding preserves information that one-hot throws away.</p>
+<p><code>drop_first=True</code> removes one column per feature. The information is still there,
+because "not DSL and not Fiber" means None, and it avoids a redundancy that
+upsets linear models.</p>
+<h2 id="scaling">Scaling<a class="headerlink" href="#scaling" title="Link to this section">&para;</a></h2>
+<p><svg viewBox="0 0 680 266" role="img" aria-labelledby="e5-title e5-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="e5-title">Two features before and after scaling</title>
+<desc id="e5-desc">Before scaling, total charges run to thousands while tenure runs to seventy, so any distance calculation is dominated by total charges. After scaling both features sit on the same range.</desc>
+<text x="170" y="26" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--h-graphite)">before</text>
+<text x="510" y="26" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--h-cherry)">after standardising</text>
+<line x1="60" y1="186" x2="300" y2="186" stroke="var(--h-steel)" stroke-width="1.5"/>
+<line x1="60" y1="186" x2="60" y2="46" stroke="var(--h-steel)" stroke-width="1.5"/>
+<line x1="400" y1="186" x2="640" y2="186" stroke="var(--h-steel)" stroke-width="1.5"/>
+<line x1="400" y1="186" x2="400" y2="46" stroke="var(--h-steel)" stroke-width="1.5"/>
+<circle cx="168.6" cy="143.3" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="194.3" cy="135.6" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="281.8" cy="55.7" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="171.8" cy="115.7" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="181.9" cy="101.7" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="201.0" cy="150.2" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="104.3" cy="155.6" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="182.9" cy="101.7" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="211.2" cy="141.1" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="250.3" cy="73.5" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="82.6" cy="178.2" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="132.8" cy="134.4" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="81.8" cy="178.5" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="254.3" cy="129.1" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="226.4" cy="86.5" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="70.1" cy="179.2" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="295.7" cy="105.1" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="291.5" cy="112.8" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="216.9" cy="137.4" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="207.7" cy="134.6" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="97.8" cy="157.4" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="63.6" cy="181.0" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="186.8" cy="141.4" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="74.3" cy="174.5" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="105.6" cy="168.6" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="118.1" cy="165.2" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="67.2" cy="180.4" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="171.3" cy="143.8" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="165.7" cy="153.3" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="262.2" cy="112.1" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="184.6" cy="133.2" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="213.7" cy="82.0" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="179.9" cy="122.8" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="219.0" cy="133.4" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="169.8" cy="112.2" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="126.8" cy="161.4" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="299.4" cy="46.0" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="299.0" cy="102.5" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="261.7" cy="56.4" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="229.9" cy="112.4" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="512.0" cy="131.2" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="526.7" cy="122.5" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="576.8" cy="33.0" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="513.8" cy="100.2" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="519.6" cy="84.5" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="530.5" cy="138.9" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="475.2" cy="145.0" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="520.1" cy="84.5" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="536.3" cy="128.8" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="558.7" cy="52.9" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="462.8" cy="170.3" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="491.5" cy="121.2" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="462.3" cy="170.6" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="561.0" cy="115.3" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="545.1" cy="67.5" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="455.6" cy="171.5" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="584.7" cy="88.3" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="582.3" cy="97.0" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="539.6" cy="124.6" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="534.4" cy="121.5" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="471.5" cy="147.0" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="451.9" cy="173.4" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="522.4" cy="129.0" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="458.0" cy="166.2" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="476.0" cy="159.6" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="483.1" cy="155.7" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="454.0" cy="172.8" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="513.6" cy="131.8" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="510.3" cy="142.4" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="565.5" cy="96.2" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="521.1" cy="119.8" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="537.8" cy="62.5" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="518.5" cy="108.2" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="540.8" cy="120.1" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="512.7" cy="96.3" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="488.0" cy="151.5" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="586.8" cy="22.1" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="586.6" cy="85.4" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="565.2" cy="33.8" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<circle cx="547.0" cy="96.6" r="3.2" fill="var(--h-cherry)" opacity="0.7"/>
+<text x="180" y="206" text-anchor="middle" font-size="10.5" fill="var(--h-space)">tenure, 0 to 72</text>
+<text x="50" y="40" text-anchor="middle" font-size="10.5" fill="var(--h-space)">8000</text>
+<text x="520" y="206" text-anchor="middle" font-size="10.5" fill="var(--h-space)">tenure, about -2 to 2</text>
+<text x="388" y="40" text-anchor="middle" font-size="10.5" fill="var(--h-space)">2</text>
+<text x="340" y="238" text-anchor="middle" font-size="12" fill="var(--h-graphite)">Distance based models treat one unit of tenure as one unit of euros. Scaling makes that comparison meaningful.</text>
+<text x="340" y="258" text-anchor="middle" font-size="12" fill="var(--h-graphite)">Tree models do not care at all, because they only ever ask whether a value is above a threshold.</text>
+</svg></p>
+<p><code>tenure</code> runs to 72 and <code>TotalCharges</code> runs past 8000. Any model that measures
+distance, or that uses gradient descent, treats those numbers as if they were on
+the same scale. They are not.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="n">X_train_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="n">X_test_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</span></code></pre></div>
+<p><strong>Standardisation</strong> subtracts the mean and divides by the standard deviation,
+giving a column centred on zero. <strong>Min-max</strong> squeezes into a 0 to 1 range, which
+preserves shape but is more affected by outliers.</p>
+<p>Which models care:</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Needs scaling?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Linear and logistic regression</td>
+<td>Yes, especially with regularisation</td>
+</tr>
+<tr>
+<td>Anything distance based, such as k-nearest neighbours</td>
+<td>Yes, critically</td>
+</tr>
+<tr>
+<td>Neural networks</td>
+<td>Yes, training is much slower without it</td>
+</tr>
+<tr>
+<td>Decision trees and random forests</td>
+<td>No, thresholds are unaffected</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">Fit on the training data only</p>
+<p>Look at the two lines above. <code>fit_transform</code> on the training set,
+<code>transform</code> on the test set. The scaler learns the mean and standard
+deviation from training data alone.</p>
+<p>Call <code>fit</code> on the whole dataset and the test set's statistics have leaked
+into your training. Your score comes out better than it should, and the
+model performs worse than promised on anything new. This is the single most
+common way a beginner produces a result that is not real, and the next page
+is largely about it.</p>
+</div>
+<h2 id="splitting">Splitting<a class="headerlink" href="#splitting" title="Link to this section">&para;</a></h2>
+<p><svg viewBox="0 0 680 286" role="img" aria-labelledby="e6-title e6-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="e6-title">A stratified split keeps the class balance</title>
+<desc id="e6-desc">The full dataset is about 73 percent stayed and 27 percent churned. A stratified split keeps that ratio in the training, validation and test sets. A plain random split can distort it, especially in the smallest set.</desc>
+<text x="20" y="26" font-size="12" font-weight="700" fill="var(--h-graphite)">the whole dataset, 7043 customers</text>
+<rect x="20" y="36" width="640" height="34" rx="6" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<rect x="20" y="36" width="467" height="34" rx="6" fill="var(--h-steel)" opacity="0.4"/>
+<text x="253" y="53" dy="0.36em" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--h-graphite)">stayed, 73 percent</text>
+<rect x="487" y="36" width="173" height="34" rx="6" fill="var(--h-cherry)"/>
+<text x="573" y="53" dy="0.36em" text-anchor="middle" font-size="11.5" font-weight="700" fill="#ffffff">churned, 27 percent</text>
+<text x="20" y="108" font-size="12" font-weight="700" fill="var(--h-cherry)">stratified: every part keeps 73 to 27</text>
+<rect x="20" y="118" width="374" height="34" rx="6" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<rect x="20" y="118" width="273" height="34" rx="6" fill="var(--h-steel)" opacity="0.4"/>
+<rect x="293" y="118" width="101" height="34" rx="6" fill="var(--h-cherry)"/>
+<text x="207" y="166" text-anchor="middle" font-size="10.5" fill="var(--h-graphite)">train, 60%</text>
+<rect x="404" y="118" width="118" height="34" rx="6" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<rect x="404" y="118" width="86" height="34" rx="6" fill="var(--h-steel)" opacity="0.4"/>
+<rect x="490" y="118" width="32" height="34" rx="6" fill="var(--h-cherry)"/>
+<text x="463" y="166" text-anchor="middle" font-size="10.5" fill="var(--h-graphite)">validation, 20%</text>
+<rect x="532" y="118" width="118" height="34" rx="6" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<rect x="532" y="118" width="86" height="34" rx="6" fill="var(--h-steel)" opacity="0.4"/>
+<rect x="618" y="118" width="32" height="34" rx="6" fill="var(--h-cherry)"/>
+<text x="591" y="166" text-anchor="middle" font-size="10.5" fill="var(--h-graphite)">test, 20%</text>
+<text x="20" y="206" font-size="12" font-weight="700" fill="var(--h-graphite)">unstratified: the smallest set drifts</text>
+<rect x="20" y="216" width="374" height="34" rx="6" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<rect x="20" y="216" width="280" height="34" rx="6" fill="var(--h-steel)" opacity="0.4"/>
+<rect x="300" y="216" width="94" height="34" rx="6" fill="var(--h-cherry)" opacity="0.75"/>
+<text x="207" y="264" text-anchor="middle" font-size="10.5" fill="var(--h-graphite)">25 percent churned</text>
+<rect x="404" y="216" width="118" height="34" rx="6" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<rect x="404" y="216" width="84" height="34" rx="6" fill="var(--h-steel)" opacity="0.4"/>
+<rect x="488" y="216" width="34" height="34" rx="6" fill="var(--h-cherry)" opacity="0.75"/>
+<text x="463" y="264" text-anchor="middle" font-size="10.5" fill="var(--h-graphite)">29 percent churned</text>
+<rect x="532" y="216" width="118" height="34" rx="6" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<rect x="532" y="216" width="76" height="34" rx="6" fill="var(--h-steel)" opacity="0.4"/>
+<rect x="608" y="216" width="42" height="34" rx="6" fill="var(--h-cherry)" opacity="0.75"/>
+<text x="591" y="264" text-anchor="middle" font-size="10.5" fill="var(--h-graphite)">36 percent churned</text>
+<text x="340" y="282" text-anchor="middle" font-size="11.5" fill="var(--h-graphite)">If your test set has a different balance from reality, its score answers a question nobody asked.</text>
+</svg></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Churn&quot;</span><span class="p">])</span>
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Churn&quot;</span><span class="p">]</span>
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="p">)</span>
+</span><span id="__span-21-8"><a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a><span class="nb">print</span><span class="p">(</span><span class="n">y_train</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">y_test</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+</span></code></pre></div>
+<p><code>stratify=y</code> keeps the 73 to 27 balance in both halves. Without it the split is
+random, and with a minority class the smaller set can drift several percentage
+points, which makes your test score measure a slightly different problem from
+the one you trained on.</p>
+<p><code>random_state</code> makes the split reproducible, so that a change in your score
+comes from a change you made rather than from a different shuffle.</p>
+<p>Split <strong>before</strong> you scale, before you impute, and before anything else that
+learns from the data.</p>
+<h2 id="the-whole-thing-in-one-screen">The whole thing in one screen<a class="headerlink" href="#the-whole-thing-in-one-screen" title="Link to this section">&para;</a></h2>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;Telco-Customer-Churn.csv&quot;</span><span class="p">)</span>
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="n">df</span><span class="p">[</span><span class="s2">&quot;TotalCharges&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;TotalCharges&quot;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;coerce&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="n">df</span><span class="p">[</span><span class="s2">&quot;SeniorCitizen&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;SeniorCitizen&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;category&quot;</span><span class="p">)</span>
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;customerID&quot;</span><span class="p">])</span>
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a><span class="n">df</span><span class="p">[</span><span class="s2">&quot;tenure_band&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;tenure&quot;</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">100</span><span class="p">],</span> <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;new&quot;</span><span class="p">,</span> <span class="s2">&quot;growing&quot;</span><span class="p">,</span> <span class="s2">&quot;established&quot;</span><span class="p">,</span> <span class="s2">&quot;loyal&quot;</span><span class="p">])</span>
+</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Churn&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Churn&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Yes&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+</span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a><span class="n">X</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Churn&quot;</span><span class="p">]),</span> <span class="n">drop_first</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-22-8"><a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a><span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Churn&quot;</span><span class="p">]</span>
+</span><span id="__span-22-9"><a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</span><span id="__span-22-10"><a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a><span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+</span><span id="__span-22-11"><a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">),</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</span></code></pre></div>
+<p>Eleven lines. Every one of them is a decision somebody could disagree with, which
+is why the last step of preparation is writing them down.</p>
+<div class="admonition tip">
+<p class="admonition-title">Keep a decisions file</p>
+<p>One short note per choice: what you did, and why. Filled <code>TotalCharges</code>
+blanks with 0 because all eleven have tenure 0. Dropped <code>customerID</code> as an
+identifier. Binned tenure at 12, 24 and 48 months because those are contract
+boundaries.</p>
+<p>In three months you will not remember, and neither will the person reviewing
+your work. This is the same habit as the data statement from your first
+project.</p>
+</div>
+<h2 id="when-it-goes-wrong">When it goes wrong<a class="headerlink" href="#when-it-goes-wrong" title="Link to this section">&para;</a></h2>
+<details class="note">
+<summary><code>describe()</code> shows only three columns</summary>
+<p>It reports numeric columns by default. Use <code>df.describe(include="object")</code>
+or <code>include="all"</code> for the rest.</p>
+</details>
+<details class="note">
+<summary>A money column has dtype object</summary>
+<p>Something in it is not a number. <code>pd.to_numeric(col, errors="coerce")</code> then
+<code>isna()</code> shows you exactly which rows, and those rows usually explain
+themselves.</p>
+</details>
+<details class="note">
+<summary><code>isna().sum()</code> says zero but values are clearly missing</summary>
+<p>Empty strings, single spaces and the words unknown or n/a are not missing
+values as far as pandas is concerned. Pass <code>na_values</code> to <code>read_csv</code> or
+convert afterwards.</p>
+</details>
+<details class="note">
+<summary>My test accuracy is suspiciously high</summary>
+<p>Check for an identifier column, for a feature recorded after the outcome,
+and for a scaler fitted before the split. All three produce excellent scores
+that mean nothing.</p>
+</details>
+<details class="note">
+<summary>Every feature is statistically significant</summary>
+<p>With 7043 rows that is expected. Look at the size of the difference, not
+only the p-value.</p>
+</details>
+<details class="note">
+<summary><code>get_dummies</code> produced hundreds of columns</summary>
+<p>One of your categorical columns has very many distinct values, often an
+identifier that should have been dropped. Check <code>df[col].nunique()</code> before
+encoding.</p>
+</details>
+<h2 id="check-yourself">Check yourself<a class="headerlink" href="#check-yourself" title="Link to this section">&para;</a></h2>
+<p>Use the churn file for all of these.</p>
+<ol>
+<li>Report the shape, the dtype of every column, and which columns are
+   categorical wearing numeric clothes.</li>
+<li>Convert <code>TotalCharges</code> properly, show that exactly eleven values become
+   missing, and demonstrate what those rows have in common.</li>
+<li>Justify in one sentence why 0 is the right fill for those rows and the median
+   is not.</li>
+<li>Produce the churn rate by <code>Contract</code> as proportions, and state the baseline
+   accuracy any model must beat.</li>
+<li>Run a chi-square test for two categorical features and a Welch's t-test for
+   <code>MonthlyCharges</code>. Report both the p-value and the size of the difference.</li>
+<li>Bin tenure into four bands of your own choosing and defend the boundaries.</li>
+<li>Encode, scale and split, in the correct order, and prove the class balance is
+   preserved in both halves.</li>
+<li>Write your decisions file. Aim for one line per decision.</li>
+</ol>
+<h2 id="quick-reference">Quick reference<a class="headerlink" href="#quick-reference" title="Link to this section">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Full summary</td>
+<td><code>df.describe(include="all")</code></td>
+</tr>
+<tr>
+<td>Force numeric</td>
+<td><code>pd.to_numeric(col, errors="coerce")</code></td>
+</tr>
+<tr>
+<td>Category from number</td>
+<td><code>df["SeniorCitizen"].astype("category")</code></td>
+</tr>
+<tr>
+<td>Missing map</td>
+<td><code>sns.heatmap(df.isna(), cbar=False)</code></td>
+</tr>
+<tr>
+<td>Duplicate rows, duplicate ids</td>
+<td><code>df.duplicated().sum()</code>, <code>df["id"].duplicated().sum()</code></td>
+</tr>
+<tr>
+<td>Target balance</td>
+<td><code>df["Churn"].value_counts(normalize=True)</code></td>
+</tr>
+<tr>
+<td>Rates by category</td>
+<td><code>pd.crosstab(df["a"], df["b"], normalize="index")</code></td>
+</tr>
+<tr>
+<td>Chi-square</td>
+<td><code>chi2_contingency(pd.crosstab(a, b))</code></td>
+</tr>
+<tr>
+<td>Welch t-test</td>
+<td><code>ttest_ind(g1, g2, equal_var=False)</code></td>
+</tr>
+<tr>
+<td>Bin by boundaries</td>
+<td><code>pd.cut(col, bins=[...], labels=[...])</code></td>
+</tr>
+<tr>
+<td>Bin by quantiles</td>
+<td><code>pd.qcut(col, q=4)</code></td>
+</tr>
+<tr>
+<td>One-hot</td>
+<td><code>pd.get_dummies(df, columns=[...], drop_first=True)</code></td>
+</tr>
+<tr>
+<td>Scale</td>
+<td><code>StandardScaler().fit(X_train)</code> then <code>.transform(X_test)</code></td>
+</tr>
+<tr>
+<td>Stratified split</td>
+<td><code>train_test_split(X, y, stratify=y, random_state=42)</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="questions-to-sit-with">Questions to sit with<a class="headerlink" href="#questions-to-sit-with" title="Link to this section">&para;</a></h2>
+<ol>
+<li>Eleven rows had a blank total charge and you decided it meant zero. What
+   evidence supported that, and what would have changed your mind?</li>
+<li>A model that predicts nobody churns is 73.5 percent accurate. Is that model
+   useless, and does your answer depend on what the company does with the
+   prediction?</li>
+<li>Binning tenure throws away information on purpose. What exactly did you give
+   up, and what did you buy with it?</li>
+<li>Every choice on this page could have gone differently. If two analysts
+   produce different churn rates from the same file, is one of them wrong?</li>
+<li>Scaling must be fitted on training data only. Why is fitting on everything so
+   tempting, and what does that tell you about how leakage usually happens?</li>
+</ol>
+<h2 id="next">Next<a class="headerlink" href="#next" title="Link to this section">&para;</a></h2>
+<p>You have a clean, encoded, scaled, split dataset. The next page is about the
+ways that process quietly goes wrong, and how to build it so it cannot.</p>
+<p><a class="h-button" href="../data-preprocessing/">Data Preprocessing</a></p>
+<p>Worth your time: the
+<a href="https://scikit-learn.org/stable/modules/preprocessing.html">scikit-learn preprocessing guide</a>
+is the reference for the last three sections, and the
+<a href="https://www.kaggle.com/datasets/blastchar/telco-customer-churn">Telco churn dataset page</a>
+has community notebooks worth reading after you have formed your own view.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../apis/" class="md-footer__link md-footer__link--prev" aria-label="Previous: APIs">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                APIs
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../data-preprocessing/" class="md-footer__link md-footer__link--next" aria-label="Next: Data Preprocessing">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Data Preprocessing
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Holberton School Albania
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://github.com/evisp" target="_blank" rel="noopener" title="GitHub" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://www.linkedin.com/school/holbertonschool/" target="_blank" rel="noopener" title="Holberton School" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.indexes", "navigation.path", "navigation.top", "navigation.tracking", "navigation.footer", "toc.follow", "search.highlight", "search.share", "search.suggest", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.action.edit"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

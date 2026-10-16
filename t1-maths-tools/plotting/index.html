@@ -1,0 +1,3419 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A practical, project-based machine learning curriculum for Holberton School Albania. Real projects, real skills, real careers.">
+      
+      
+        <meta name="author" content="Evis Plaku">
+      
+      
+        <link rel="canonical" href="https://evisp.github.io/ml-handbook/t1-maths-tools/plotting/">
+      
+      
+        <link rel="prev" href="../pandas/">
+      
+      
+        <link rel="next" href="../probability/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Plotting - Holberton ML Handbook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Host+Grotesk:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Host Grotesk";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/brand.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#plotting" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Holberton ML Handbook" class="md-header__button md-logo" aria-label="Holberton ML Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Holberton ML Handbook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Plotting
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/evisp/ml-handbook" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    evisp/ml-handbook
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../roadmap/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Roadmap
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../01-tools/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Tools
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../02-fundamentals/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Fundamentals
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Data Analyst
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../projects/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Projects
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Holberton ML Handbook" class="md-nav__button md-logo" aria-label="Holberton ML Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Holberton ML Handbook
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/evisp/ml-handbook" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    evisp/ml-handbook
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../01-tools/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/zero-day/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Zero day
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/git-and-github/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git & GitHub
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/notebook-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jupyter notebook setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/vscode-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/python-warm-up/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python warm up
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../02-fundamentals/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Fundamentals
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-fundamentals/what-is-ai/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    What AI is
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-fundamentals/what-is-ml/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How machines learn
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-fundamentals/framing-ml-problems/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Framing a problem
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-fundamentals/working-with-data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Working with data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-fundamentals/ethics-and-responsibility/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ethics and responsibility
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-fundamentals/how-training-works/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    What training actually does
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Analyst
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Data Analyst
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_1" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Maths and tools
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5_1" id="__nav_5_1_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Maths and tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../linear-algebra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linear Algebra
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pandas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pandas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plotting
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plotting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this matters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-people-read-a-chart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How people read a chart
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#choosing-a-chart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Choosing a chart
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-six-charts-you-actually-need" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The six charts you actually need
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#charts-that-lie" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Charts that lie
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-there-is-too-much-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When there is too much data
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-two-drawing-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part two: drawing it
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part two: drawing it">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#figure-and-axes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Figure and axes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#seaborn-one-line-each" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Seaborn, one line each
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#finishing-a-chart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Finishing a chart
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-charts-you-will-make-in-every-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The charts you will make in every project
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-it-goes-wrong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When it goes wrong
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#questions-to-sit-with" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Questions to sit with
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../probability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Probability
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../t1-real-data/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Real data
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5_2" id="__nav_5_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Real data
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-real-data/web-scraping/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Scraping
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-real-data/apis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    APIs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-real-data/data-preparation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Preparation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-real-data/data-preprocessing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Preprocessing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../t1-models/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classic models
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5_3" id="__nav_5_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Classic models
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-models/classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-models/linear-models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linear Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-models/tree-models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tree-Based Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-models/bias-variance.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bias, variance and tuning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-models/unsupervised-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unsupervised Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-models/clustering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../projects/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Projects
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Projects
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../projects/rock-paper-scissors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rock, paper, scissors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../projects/one-page-finding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    One page, one finding
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this matters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-people-read-a-chart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How people read a chart
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#choosing-a-chart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Choosing a chart
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-six-charts-you-actually-need" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The six charts you actually need
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#charts-that-lie" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Charts that lie
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-there-is-too-much-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When there is too much data
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-two-drawing-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part two: drawing it
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part two: drawing it">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#figure-and-axes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Figure and axes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#seaborn-one-line-each" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Seaborn, one line each
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#finishing-a-chart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Finishing a chart
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-charts-you-will-make-in-every-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The charts you will make in every project
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-it-goes-wrong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When it goes wrong
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#questions-to-sit-with" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Questions to sit with
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Data Analyst
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Maths and tools
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/evisp/ml-handbook/edit/main/docs/t1-maths-tools/plotting.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="plotting">Plotting<a class="headerlink" href="#plotting" title="Link to this section">&para;</a></h1>
+<p><span class="badge badge--time">70 min</span>
+<span class="badge badge--level">Foundations</span>
+<span class="badge">Needs: Pandas</span></p>
+<p>A chart is how you find the problems that <code>info()</code> and <code>describe()</code> cannot show
+you. This page is about choosing the right one and reading it honestly, and then
+about the two libraries you will draw it with.</p>
+<h2 id="why-this-matters">Why this matters<a class="headerlink" href="#why-this-matters" title="Link to this section">&para;</a></h2>
+<p>Summary statistics hide shape. Two columns can share a mean, a standard
+deviation and a correlation and still look nothing alike when you plot them.
+This is the point of Anscombe's quartet: four datasets with nearly identical
+statistics, one a clean line, one a curve, one a line dragged by a single
+outlier. Nothing in the numbers tells you which you have.</p>
+<p>There is a second reason, which arrives later and matters more. Somebody will
+eventually decide something because of a chart you made. Making that chart
+accurate is a technical skill. Making it honest is a separate one, and this page
+covers both.</p>
+<h2 id="how-people-read-a-chart">How people read a chart<a class="headerlink" href="#how-people-read-a-chart" title="Link to this section">&para;</a></h2>
+<p>Not all visual channels are read equally well. Human beings judge position
+almost perfectly, length nearly as well, and everything after that badly.</p>
+<p><svg viewBox="0 0 680 236" role="img" aria-labelledby="enc-title enc-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="enc-title">How accurately people read each visual encoding</title>
+<desc id="enc-desc">The same pair of values shown as position, length, angle, area and colour. Position and length are read most accurately. Angle, area and colour are read least accurately.</desc>
+<rect x="2" y="38" width="124" height="130" rx="10" fill="var(--h-cherry-wash)" stroke="var(--h-cherry-line)"/>
+<text x="64" y="30" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)">position</text>
+<rect x="140" y="38" width="124" height="130" rx="10" fill="var(--h-cherry-wash)" stroke="var(--h-cherry-line)"/>
+<text x="202" y="30" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)">length</text>
+<rect x="278" y="38" width="124" height="130" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="340" y="30" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)">angle</text>
+<rect x="416" y="38" width="124" height="130" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="478" y="30" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)">area</text>
+<rect x="554" y="38" width="124" height="130" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="616" y="30" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)">colour</text>
+<line x1="24" y1="156" x2="104" y2="156" stroke="var(--h-steel)" stroke-width="1.5"/>
+<line x1="24" y1="156" x2="24" y2="54" stroke="var(--h-steel)" stroke-width="1.5"/>
+<circle cx="50" cy="120" r="6" fill="var(--h-cherry)"/>
+<circle cx="86" cy="82" r="6" fill="var(--h-cherry)"/>
+<line x1="160" y1="156" x2="244" y2="156" stroke="var(--h-steel)" stroke-width="1.5"/>
+<rect x="172" y="106" width="24" height="50" fill="var(--h-cherry)"/>
+<rect x="210" y="76" width="24" height="80" fill="var(--h-cherry)"/>
+<circle cx="312" cy="108" r="24" fill="none" stroke="var(--h-steel)" stroke-width="1.5"/>
+<path d="M 312,108 L 312,84 A 24,24 0 0 1 335.6,112.2 Z" fill="var(--h-cherry)"/>
+<circle cx="368" cy="108" r="24" fill="none" stroke="var(--h-steel)" stroke-width="1.5"/>
+<path d="M 368,108 L 368,84 A 24,24 0 0 1 380.0,128.8 Z" fill="var(--h-cherry)"/>
+<circle cx="452" cy="112" r="15" fill="var(--h-cherry)"/>
+<circle cx="504" cy="112" r="24" fill="var(--h-cherry)"/>
+<rect x="570" y="88" width="42" height="42" rx="6" fill="var(--h-cherry)" opacity="0.35"/>
+<rect x="622" y="88" width="42" height="42" rx="6" fill="var(--h-cherry)" opacity="0.9"/>
+<line x1="20" y1="192" x2="660" y2="192" stroke="var(--h-surface-line)" stroke-width="2"/>
+<text x="24" y="212" font-size="12" font-weight="700" fill="var(--h-cherry)">read most accurately</text>
+<text x="656" y="212" text-anchor="end" font-size="12" font-weight="700" fill="var(--h-space)">read least accurately</text>
+</svg></p>
+<p>This one ranking explains a surprising number of chart rules. It is why a bar
+chart beats a pie chart, because comparing bar heights is comparing lengths
+while comparing pie slices is comparing angles. It is why bubble sizes mislead,
+because area is read poorly and doubling a radius quadruples the area. And it is
+why colour belongs to categories or to a rough sense of high and low, never to a
+value somebody needs to read off precisely.</p>
+<p>The rule that follows: <strong>put what matters most on a position or length channel.</strong>
+Push the rest to colour and shape.</p>
+<h2 id="choosing-a-chart">Choosing a chart<a class="headerlink" href="#choosing-a-chart" title="Link to this section">&para;</a></h2>
+<p>Start from what you have and what you are asking, never from which chart looks
+impressive.</p>
+<p><svg viewBox="0 0 680 236" role="img" aria-labelledby="ch-title ch-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="ch-title">Choosing a chart from what you have</title>
+<desc id="ch-desc">One numeric column gives a histogram or box plot. One categorical column gives a bar chart. Two numeric columns give a scatter plot. A numeric column split by a category gives a box plot or grouped bars. Many numeric columns give a correlation heatmap.</desc>
+<rect x="230" y="8" width="220" height="40" rx="10" fill="var(--h-cherry)"/>
+<text x="340" y="28" dy="0.36em" text-anchor="middle" font-size="13.5" font-weight="700" fill="#ffffff">what do you have?</text>
+<polyline points="340,48 340,68 68,68 68,92" fill="none" stroke="var(--h-steel)" stroke-width="1.5"/>
+<polyline points="340,48 340,68 204,68 204,92" fill="none" stroke="var(--h-steel)" stroke-width="1.5"/>
+<polyline points="340,48 340,92" fill="none" stroke="var(--h-steel)" stroke-width="1.5"/>
+<polyline points="340,48 340,68 476,68 476,92" fill="none" stroke="var(--h-steel)" stroke-width="1.5"/>
+<polyline points="340,48 340,68 612,68 612,92" fill="none" stroke="var(--h-steel)" stroke-width="1.5"/>
+<rect x="5" y="92" width="126" height="90" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="68" y="112" text-anchor="middle" font-size="11" fill="var(--h-graphite)">one numeric</text>
+<text x="68" y="126" text-anchor="middle" font-size="11" fill="var(--h-graphite)">column</text>
+<text x="68" y="150" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)">Histogram</text>
+<text x="68" y="168" text-anchor="middle" font-size="10" fill="var(--h-space)">or box plot</text>
+<rect x="141" y="92" width="126" height="90" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="204" y="112" text-anchor="middle" font-size="11" fill="var(--h-graphite)">one category</text>
+<text x="204" y="126" text-anchor="middle" font-size="11" fill="var(--h-graphite)">column</text>
+<text x="204" y="150" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)">Bar chart</text>
+<text x="204" y="168" text-anchor="middle" font-size="10" fill="var(--h-space)">counts per group</text>
+<rect x="277" y="92" width="126" height="90" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="340" y="112" text-anchor="middle" font-size="11" fill="var(--h-graphite)">two numeric</text>
+<text x="340" y="126" text-anchor="middle" font-size="11" fill="var(--h-graphite)">columns</text>
+<text x="340" y="150" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)">Scatter</text>
+<text x="340" y="168" text-anchor="middle" font-size="10" fill="var(--h-space)">line if ordered in time</text>
+<rect x="413" y="92" width="126" height="90" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="476" y="112" text-anchor="middle" font-size="11" fill="var(--h-graphite)">numeric split</text>
+<text x="476" y="126" text-anchor="middle" font-size="11" fill="var(--h-graphite)">by category</text>
+<text x="476" y="150" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)">Box plot</text>
+<text x="476" y="168" text-anchor="middle" font-size="10" fill="var(--h-space)">or grouped bars</text>
+<rect x="549" y="92" width="126" height="90" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="612" y="112" text-anchor="middle" font-size="11" fill="var(--h-graphite)">many numeric</text>
+<text x="612" y="126" text-anchor="middle" font-size="11" fill="var(--h-graphite)">columns</text>
+<text x="612" y="150" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)">Heatmap</text>
+<text x="612" y="168" text-anchor="middle" font-size="10" fill="var(--h-space)">of correlations</text>
+<text x="340" y="214" text-anchor="middle" font-size="12" fill="var(--h-graphite)">Start from the data you hold and the question you are asking. Never from the chart that looks impressive.</text>
+</svg></p>
+<h2 id="the-six-charts-you-actually-need">The six charts you actually need<a class="headerlink" href="#the-six-charts-you-actually-need" title="Link to this section">&para;</a></h2>
+<p>Almost all exploratory work uses these. Learn them properly and the exotic ones
+can wait until you need them.</p>
+<p><svg viewBox="0 0 680 430" role="img" aria-labelledby="gal-title gal-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="gal-title">Six chart types and the question each answers</title>
+<desc id="gal-desc">Histogram for the shape of one numeric variable. Bar chart for comparing categories. Scatter for the relationship between two numeric variables. Line for change over time. Box plot for comparing distributions across groups. Heatmap for many pairs at once.</desc>
+<rect x="5" y="14" width="214" height="192" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="112" y="40" text-anchor="middle" font-size="13" font-weight="700" fill="var(--md-default-fg-color)">Histogram</text>
+<text x="112" y="174" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--h-cherry)">what shape is this</text>
+<text x="112" y="191" text-anchor="middle" font-size="10.5" fill="var(--h-space)">one numeric column</text>
+<rect x="233" y="14" width="214" height="192" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="340" y="40" text-anchor="middle" font-size="13" font-weight="700" fill="var(--md-default-fg-color)">Bar chart</text>
+<text x="340" y="174" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--h-cherry)">which category is bigger</text>
+<text x="340" y="191" text-anchor="middle" font-size="10.5" fill="var(--h-space)">counts or totals</text>
+<rect x="461" y="14" width="214" height="192" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="568" y="40" text-anchor="middle" font-size="13" font-weight="700" fill="var(--md-default-fg-color)">Scatter</text>
+<text x="568" y="174" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--h-cherry)">do these two move together</text>
+<text x="568" y="191" text-anchor="middle" font-size="10.5" fill="var(--h-space)">two numeric columns</text>
+<rect x="5" y="224" width="214" height="192" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="112" y="250" text-anchor="middle" font-size="13" font-weight="700" fill="var(--md-default-fg-color)">Line</text>
+<text x="112" y="384" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--h-cherry)">how did it change over time</text>
+<text x="112" y="401" text-anchor="middle" font-size="10.5" fill="var(--h-space)">a value in order</text>
+<rect x="233" y="224" width="214" height="192" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="340" y="250" text-anchor="middle" font-size="13" font-weight="700" fill="var(--md-default-fg-color)">Box plot</text>
+<text x="340" y="384" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--h-cherry)">how do groups compare</text>
+<text x="340" y="401" text-anchor="middle" font-size="10.5" fill="var(--h-space)">numeric split by category</text>
+<rect x="461" y="224" width="214" height="192" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="568" y="250" text-anchor="middle" font-size="13" font-weight="700" fill="var(--md-default-fg-color)">Heatmap</text>
+<text x="568" y="384" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--h-cherry)">which pairs relate</text>
+<text x="568" y="401" text-anchor="middle" font-size="10.5" fill="var(--h-space)">many numeric columns</text>
+<line x1="35" y1="144" x2="195" y2="144" stroke="var(--h-steel)" stroke-width="1.5"/>
+<line x1="35" y1="144" x2="35" y2="60" stroke="var(--h-steel)" stroke-width="1.5"/>
+<rect x="39" y="130" width="19" height="14" fill="var(--h-cherry)" opacity="0.85"/>
+<rect x="61" y="114" width="19" height="30" fill="var(--h-cherry)" opacity="0.85"/>
+<rect x="83" y="92" width="19" height="52" fill="var(--h-cherry)" opacity="0.85"/>
+<rect x="105" y="72" width="19" height="72" fill="var(--h-cherry)" opacity="0.85"/>
+<rect x="127" y="84" width="19" height="60" fill="var(--h-cherry)" opacity="0.85"/>
+<rect x="149" y="110" width="19" height="34" fill="var(--h-cherry)" opacity="0.85"/>
+<rect x="171" y="126" width="19" height="18" fill="var(--h-cherry)" opacity="0.85"/>
+<line x1="263" y1="144" x2="423" y2="144" stroke="var(--h-steel)" stroke-width="1.5"/>
+<line x1="263" y1="144" x2="263" y2="60" stroke="var(--h-steel)" stroke-width="1.5"/>
+<rect x="275" y="78" width="26" height="66" fill="var(--h-cherry)" opacity="0.85"/>
+<rect x="313" y="104" width="26" height="40" fill="var(--h-cherry)" opacity="0.85"/>
+<rect x="351" y="66" width="26" height="78" fill="var(--h-cherry)" opacity="0.85"/>
+<rect x="389" y="118" width="26" height="26" fill="var(--h-cherry)" opacity="0.85"/>
+<line x1="491" y1="144" x2="651" y2="144" stroke="var(--h-steel)" stroke-width="1.5"/>
+<line x1="491" y1="144" x2="491" y2="60" stroke="var(--h-steel)" stroke-width="1.5"/>
+<circle cx="525.8" cy="117.9" r="3.2" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="581.7" cy="93.8" r="3.2" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="503.7" cy="129.2" r="3.2" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="539.7" cy="120.3" r="3.2" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="606.2" cy="82.7" r="3.2" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="510.8" cy="112.5" r="3.2" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="571.7" cy="88.1" r="3.2" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="508.4" cy="119.8" r="3.2" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="554.9" cy="119.6" r="3.2" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="562.4" cy="86.7" r="3.2" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="605.2" cy="84.6" r="3.2" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="595.7" cy="90.3" r="3.2" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="625.1" cy="80.8" r="3.2" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="536.7" cy="119.6" r="3.2" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="584.1" cy="104.8" r="3.2" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="547.5" cy="120.2" r="3.2" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="589.5" cy="89.7" r="3.2" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="642.4" cy="64.0" r="3.2" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="600.2" cy="107.0" r="3.2" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="641.6" cy="65.8" r="3.2" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="602.1" cy="105.4" r="3.2" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="578.7" cy="101.3" r="3.2" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="621.6" cy="79.4" r="3.2" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="607.7" cy="85.9" r="3.2" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="541.8" cy="98.5" r="3.2" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="503.6" cy="131.3" r="3.2" fill="var(--h-cherry)" opacity="0.75"/>
+<line x1="35" y1="354" x2="195" y2="354" stroke="var(--h-steel)" stroke-width="1.5"/>
+<line x1="35" y1="354" x2="35" y2="270" stroke="var(--h-steel)" stroke-width="1.5"/>
+<polyline points="41,336 62,328 83,332 104,314 125,302 146,308 167,290 188,280" fill="none" stroke="var(--h-cherry)" stroke-width="2.5"/>
+<line x1="263" y1="354" x2="423" y2="354" stroke="var(--h-steel)" stroke-width="1.5"/>
+<line x1="263" y1="354" x2="263" y2="270" stroke="var(--h-steel)" stroke-width="1.5"/>
+<line x1="294" y1="344" x2="294" y2="280" stroke="var(--h-steel)" stroke-width="1.5"/>
+<rect x="281" y="298" width="26" height="30" fill="var(--h-cherry)" opacity="0.35" stroke="var(--h-cherry)"/>
+<line x1="281" y1="314" x2="307" y2="314" stroke="var(--h-cherry)" stroke-width="2.5"/>
+<line x1="340" y1="348" x2="340" y2="296" stroke="var(--h-steel)" stroke-width="1.5"/>
+<rect x="327" y="312" width="26" height="24" fill="var(--h-cherry)" opacity="0.35" stroke="var(--h-cherry)"/>
+<line x1="327" y1="326" x2="353" y2="326" stroke="var(--h-cherry)" stroke-width="2.5"/>
+<line x1="386" y1="338" x2="386" y2="276" stroke="var(--h-steel)" stroke-width="1.5"/>
+<rect x="373" y="294" width="26" height="26" fill="var(--h-cherry)" opacity="0.35" stroke="var(--h-cherry)"/>
+<line x1="373" y1="306" x2="399" y2="306" stroke="var(--h-cherry)" stroke-width="2.5"/>
+<rect x="501" y="272" width="32" height="20" fill="var(--h-cherry)" opacity="1.00"/>
+<rect x="535" y="272" width="32" height="20" fill="var(--h-cherry)" opacity="0.62"/>
+<rect x="569" y="272" width="32" height="20" fill="var(--h-cherry)" opacity="0.18"/>
+<rect x="603" y="272" width="32" height="20" fill="var(--h-cherry)" opacity="0.05"/>
+<rect x="501" y="294" width="32" height="20" fill="var(--h-cherry)" opacity="0.62"/>
+<rect x="535" y="294" width="32" height="20" fill="var(--h-cherry)" opacity="1.00"/>
+<rect x="569" y="294" width="32" height="20" fill="var(--h-cherry)" opacity="0.44"/>
+<rect x="603" y="294" width="32" height="20" fill="var(--h-cherry)" opacity="0.12"/>
+<rect x="501" y="316" width="32" height="20" fill="var(--h-cherry)" opacity="0.18"/>
+<rect x="535" y="316" width="32" height="20" fill="var(--h-cherry)" opacity="0.44"/>
+<rect x="569" y="316" width="32" height="20" fill="var(--h-cherry)" opacity="1.00"/>
+<rect x="603" y="316" width="32" height="20" fill="var(--h-cherry)" opacity="0.70"/>
+<rect x="501" y="338" width="32" height="20" fill="var(--h-cherry)" opacity="0.05"/>
+<rect x="535" y="338" width="32" height="20" fill="var(--h-cherry)" opacity="0.12"/>
+<rect x="569" y="338" width="32" height="20" fill="var(--h-cherry)" opacity="0.70"/>
+<rect x="603" y="338" width="32" height="20" fill="var(--h-cherry)" opacity="1.00"/>
+</svg></p>
+<p>A few notes that save time later.</p>
+<p><strong>Histogram</strong> answers "what shape is this column". Change the number of bins and
+look again. Too few bins hide structure, too many turn the chart into noise, and
+the default is a guess rather than an answer.</p>
+<p><strong>Bar chart</strong> compares categories. Start the axis at zero, always, for the reason
+in the next section. Sort the bars by value unless the categories have a natural
+order, because a sorted bar chart answers "which is biggest" instantly.</p>
+<p><strong>Scatter</strong> is the workhorse for two numeric columns, and the first thing to
+reach for when you want to know whether a feature has any relationship with your
+target.</p>
+<p><strong>Line</strong> is for a value in order, usually time. If your x axis is a category
+rather than a sequence, you want bars. A line between unordered categories
+implies a trend that does not exist.</p>
+<p><strong>Box plot</strong> compares distributions across groups, and shows the median,
+quartiles and outliers at once. It is the fastest way to see whether a category
+actually separates your data.</p>
+<p><strong>Heatmap</strong> shows many pairs at once, most often correlations between every pair
+of numeric columns. Use a diverging colour scale centred at zero, so that
+positive and negative are visually opposite.</p>
+<p>And the one to avoid: <strong>pie charts</strong>. They ask you to compare angles, which is
+near the bottom of the ladder. Two or three slices is survivable. More than that
+and a sorted bar chart is better in every way.</p>
+<h2 id="charts-that-lie">Charts that lie<a class="headerlink" href="#charts-that-lie" title="Link to this section">&para;</a></h2>
+<p>Most misleading charts are not fraud. They are somebody reaching for a default
+without thinking about it.</p>
+<p><svg viewBox="0 0 680 268" role="img" aria-labelledby="lie-title lie-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="lie-title">The same numbers on two different axes</title>
+<desc id="lie-desc">Four values, 98, 99, 100 and 102, drawn with the vertical axis starting at zero and again with it starting at 95. The second chart makes a two percent difference look enormous.</desc>
+<text x="170" y="26" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--h-cherry)">axis starts at 0</text>
+<line x1="60" y1="200" x2="300" y2="200" stroke="var(--h-steel)" stroke-width="1.5"/>
+<line x1="60" y1="200" x2="60" y2="50" stroke="var(--h-steel)" stroke-width="1.5"/>
+<text x="52" y="204" text-anchor="end" font-size="10" fill="var(--h-space)">0</text>
+<text x="52" y="56" text-anchor="end" font-size="10" fill="var(--h-space)">110</text>
+<rect x="74" y="66.4" width="38" height="133.6" fill="var(--h-cherry)" opacity="0.85"/>
+<text x="93" y="216" text-anchor="middle" font-size="10" fill="var(--h-space)">98</text>
+<rect x="128" y="65.0" width="38" height="135.0" fill="var(--h-cherry)" opacity="0.85"/>
+<text x="147" y="216" text-anchor="middle" font-size="10" fill="var(--h-space)">99</text>
+<rect x="182" y="63.6" width="38" height="136.4" fill="var(--h-cherry)" opacity="0.85"/>
+<text x="201" y="216" text-anchor="middle" font-size="10" fill="var(--h-space)">100</text>
+<rect x="236" y="60.9" width="38" height="139.1" fill="var(--h-cherry)" opacity="0.85"/>
+<text x="255" y="216" text-anchor="middle" font-size="10" fill="var(--h-space)">102</text>
+<text x="510" y="26" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--h-cherry)">axis starts at 95</text>
+<line x1="400" y1="200" x2="640" y2="200" stroke="var(--h-steel)" stroke-width="1.5"/>
+<line x1="400" y1="200" x2="400" y2="50" stroke="var(--h-steel)" stroke-width="1.5"/>
+<text x="392" y="204" text-anchor="end" font-size="10" fill="var(--h-space)">95</text>
+<text x="392" y="56" text-anchor="end" font-size="10" fill="var(--h-space)">103</text>
+<rect x="414" y="143.8" width="38" height="56.2" fill="var(--h-cherry)" opacity="0.85"/>
+<text x="433" y="216" text-anchor="middle" font-size="10" fill="var(--h-space)">98</text>
+<rect x="468" y="125.0" width="38" height="75.0" fill="var(--h-cherry)" opacity="0.85"/>
+<text x="487" y="216" text-anchor="middle" font-size="10" fill="var(--h-space)">99</text>
+<rect x="522" y="106.2" width="38" height="93.8" fill="var(--h-cherry)" opacity="0.85"/>
+<text x="541" y="216" text-anchor="middle" font-size="10" fill="var(--h-space)">100</text>
+<rect x="576" y="68.8" width="38" height="131.2" fill="var(--h-cherry)" opacity="0.85"/>
+<text x="595" y="216" text-anchor="middle" font-size="10" fill="var(--h-space)">102</text>
+<text x="340" y="248" text-anchor="middle" font-size="12" fill="var(--h-graphite)">Same four numbers. The chart on the right is not a chart, it is an argument.</text>
+</svg></p>
+<p><strong>The truncated axis.</strong> Bar charts encode value as length, so cutting the axis
+breaks the encoding: a bar twice as tall no longer means twice as much. Start
+bar charts at zero. Line charts are different, because they encode change rather
+than magnitude, so a truncated axis there is often the honest choice. Label it
+clearly either way.</p>
+<p><strong>Dual axes.</strong> Two lines with two different y scales can be made to cross,
+diverge or agree simply by choosing the scales. If you need two units on one
+chart, stack two charts instead.</p>
+<p><strong>Cherry-picked ranges.</strong> The same series over five years and over five months
+can tell opposite stories. Show the range that answers the question, and say
+what range you chose.</p>
+<p><strong>Colour that carries meaning it should not.</strong> Red for one group and green for
+another implies bad and good. Around one man in twelve cannot reliably tell
+those two apart anyway. Use a colourblind-safe palette and keep semantic colours
+for things that really are semantic.</p>
+<div class="admonition ml">
+<p class="admonition-title">ML connection</p>
+<p>You will present model results to people who cannot read your code and will
+trust the picture. An accuracy of 94 percent on a chart with no baseline
+looks excellent until somebody notices that always guessing the majority
+class gives 93. Whether that baseline appears on the chart is a choice you
+make, and it is the same choice as where the axis starts.</p>
+</div>
+<h2 id="when-there-is-too-much-data">When there is too much data<a class="headerlink" href="#when-there-is-too-much-data" title="Link to this section">&para;</a></h2>
+<p><svg viewBox="0 0 680 246" role="img" aria-labelledby="op-title op-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="op-title">Overplotting and the fix</title>
+<desc id="op-desc">The same scatter plot drawn twice. With large opaque points the data is a solid blob. With small semi transparent points the shape of the relationship and the density become visible.</desc>
+<text x="155" y="26" text-anchor="middle" font-size="12" font-weight="700" fill="var(--h-graphite)">large opaque points</text>
+<rect x="20" y="34" width="270" height="164" rx="8" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<circle cx="126.3" cy="163.2" r="5" fill="var(--h-cherry)"/>
+<circle cx="43.6" cy="168.6" r="5" fill="var(--h-cherry)"/>
+<circle cx="49.5" cy="173.4" r="5" fill="var(--h-cherry)"/>
+<circle cx="145.3" cy="135.3" r="5" fill="var(--h-cherry)"/>
+<circle cx="141.0" cy="126.0" r="5" fill="var(--h-cherry)"/>
+<circle cx="67.7" cy="127.5" r="5" fill="var(--h-cherry)"/>
+<circle cx="142.2" cy="143.0" r="5" fill="var(--h-cherry)"/>
+<circle cx="58.0" cy="164.6" r="5" fill="var(--h-cherry)"/>
+<circle cx="82.1" cy="173.4" r="5" fill="var(--h-cherry)"/>
+<circle cx="235.5" cy="109.4" r="5" fill="var(--h-cherry)"/>
+<circle cx="174.7" cy="124.2" r="5" fill="var(--h-cherry)"/>
+<circle cx="63.3" cy="177.1" r="5" fill="var(--h-cherry)"/>
+<circle cx="185.6" cy="111.3" r="5" fill="var(--h-cherry)"/>
+<circle cx="163.4" cy="119.5" r="5" fill="var(--h-cherry)"/>
+<circle cx="219.4" cy="81.3" r="5" fill="var(--h-cherry)"/>
+<circle cx="143.9" cy="111.7" r="5" fill="var(--h-cherry)"/>
+<circle cx="198.5" cy="143.3" r="5" fill="var(--h-cherry)"/>
+<circle cx="46.6" cy="180.3" r="5" fill="var(--h-cherry)"/>
+<circle cx="71.0" cy="163.6" r="5" fill="var(--h-cherry)"/>
+<circle cx="195.4" cy="85.7" r="5" fill="var(--h-cherry)"/>
+<circle cx="232.9" cy="106.4" r="5" fill="var(--h-cherry)"/>
+<circle cx="163.2" cy="106.1" r="5" fill="var(--h-cherry)"/>
+<circle cx="248.1" cy="81.4" r="5" fill="var(--h-cherry)"/>
+<circle cx="213.0" cy="116.2" r="5" fill="var(--h-cherry)"/>
+<circle cx="214.8" cy="107.5" r="5" fill="var(--h-cherry)"/>
+<circle cx="89.8" cy="164.3" r="5" fill="var(--h-cherry)"/>
+<circle cx="36.9" cy="179.8" r="5" fill="var(--h-cherry)"/>
+<circle cx="89.2" cy="177.0" r="5" fill="var(--h-cherry)"/>
+<circle cx="70.0" cy="181.7" r="5" fill="var(--h-cherry)"/>
+<circle cx="253.8" cy="92.6" r="5" fill="var(--h-cherry)"/>
+<circle cx="185.6" cy="99.8" r="5" fill="var(--h-cherry)"/>
+<circle cx="236.1" cy="101.3" r="5" fill="var(--h-cherry)"/>
+<circle cx="148.8" cy="113.8" r="5" fill="var(--h-cherry)"/>
+<circle cx="79.3" cy="173.8" r="5" fill="var(--h-cherry)"/>
+<circle cx="75.1" cy="156.3" r="5" fill="var(--h-cherry)"/>
+<circle cx="115.0" cy="151.5" r="5" fill="var(--h-cherry)"/>
+<circle cx="93.3" cy="123.4" r="5" fill="var(--h-cherry)"/>
+<circle cx="179.5" cy="101.9" r="5" fill="var(--h-cherry)"/>
+<circle cx="223.8" cy="117.0" r="5" fill="var(--h-cherry)"/>
+<circle cx="237.0" cy="73.9" r="5" fill="var(--h-cherry)"/>
+<circle cx="125.0" cy="141.3" r="5" fill="var(--h-cherry)"/>
+<circle cx="190.7" cy="112.5" r="5" fill="var(--h-cherry)"/>
+<circle cx="94.7" cy="169.5" r="5" fill="var(--h-cherry)"/>
+<circle cx="60.1" cy="174.2" r="5" fill="var(--h-cherry)"/>
+<circle cx="61.3" cy="171.6" r="5" fill="var(--h-cherry)"/>
+<circle cx="235.1" cy="77.9" r="5" fill="var(--h-cherry)"/>
+<circle cx="90.4" cy="164.7" r="5" fill="var(--h-cherry)"/>
+<circle cx="94.0" cy="125.5" r="5" fill="var(--h-cherry)"/>
+<circle cx="141.3" cy="129.4" r="5" fill="var(--h-cherry)"/>
+<circle cx="57.5" cy="179.2" r="5" fill="var(--h-cherry)"/>
+<circle cx="232.2" cy="91.8" r="5" fill="var(--h-cherry)"/>
+<circle cx="251.0" cy="73.8" r="5" fill="var(--h-cherry)"/>
+<circle cx="181.8" cy="123.6" r="5" fill="var(--h-cherry)"/>
+<circle cx="278" cy="53.7" r="5" fill="var(--h-cherry)"/>
+<circle cx="94.4" cy="158.5" r="5" fill="var(--h-cherry)"/>
+<circle cx="193.7" cy="89.4" r="5" fill="var(--h-cherry)"/>
+<circle cx="120.1" cy="172.5" r="5" fill="var(--h-cherry)"/>
+<circle cx="278" cy="48.5" r="5" fill="var(--h-cherry)"/>
+<circle cx="227.6" cy="78.5" r="5" fill="var(--h-cherry)"/>
+<circle cx="157.0" cy="126.1" r="5" fill="var(--h-cherry)"/>
+<circle cx="44.4" cy="189.1" r="5" fill="var(--h-cherry)"/>
+<circle cx="214.0" cy="99.1" r="5" fill="var(--h-cherry)"/>
+<circle cx="278" cy="73.9" r="5" fill="var(--h-cherry)"/>
+<circle cx="125.7" cy="151.2" r="5" fill="var(--h-cherry)"/>
+<circle cx="90.8" cy="179.8" r="5" fill="var(--h-cherry)"/>
+<circle cx="255.7" cy="65.6" r="5" fill="var(--h-cherry)"/>
+<circle cx="192.0" cy="101.8" r="5" fill="var(--h-cherry)"/>
+<circle cx="212.6" cy="92.3" r="5" fill="var(--h-cherry)"/>
+<circle cx="203.8" cy="98.9" r="5" fill="var(--h-cherry)"/>
+<circle cx="209.0" cy="118.2" r="5" fill="var(--h-cherry)"/>
+<circle cx="252.2" cy="83.0" r="5" fill="var(--h-cherry)"/>
+<circle cx="256.4" cy="66.2" r="5" fill="var(--h-cherry)"/>
+<circle cx="86.9" cy="190" r="5" fill="var(--h-cherry)"/>
+<circle cx="241.4" cy="115.1" r="5" fill="var(--h-cherry)"/>
+<circle cx="258.3" cy="59.8" r="5" fill="var(--h-cherry)"/>
+<circle cx="167.8" cy="121.6" r="5" fill="var(--h-cherry)"/>
+<circle cx="253.2" cy="57.4" r="5" fill="var(--h-cherry)"/>
+<circle cx="228.8" cy="90.4" r="5" fill="var(--h-cherry)"/>
+<circle cx="232.6" cy="100.9" r="5" fill="var(--h-cherry)"/>
+<circle cx="108.5" cy="169.0" r="5" fill="var(--h-cherry)"/>
+<circle cx="93.2" cy="155.6" r="5" fill="var(--h-cherry)"/>
+<circle cx="239.9" cy="94.0" r="5" fill="var(--h-cherry)"/>
+<circle cx="186.2" cy="106.4" r="5" fill="var(--h-cherry)"/>
+<circle cx="233.8" cy="78.8" r="5" fill="var(--h-cherry)"/>
+<circle cx="175.4" cy="124.4" r="5" fill="var(--h-cherry)"/>
+<circle cx="107.2" cy="160.6" r="5" fill="var(--h-cherry)"/>
+<circle cx="57.4" cy="165.3" r="5" fill="var(--h-cherry)"/>
+<circle cx="160.2" cy="136.0" r="5" fill="var(--h-cherry)"/>
+<circle cx="169.2" cy="111.5" r="5" fill="var(--h-cherry)"/>
+<circle cx="169.0" cy="131.3" r="5" fill="var(--h-cherry)"/>
+<circle cx="199.7" cy="94.1" r="5" fill="var(--h-cherry)"/>
+<circle cx="227.7" cy="87.4" r="5" fill="var(--h-cherry)"/>
+<circle cx="164.1" cy="112.0" r="5" fill="var(--h-cherry)"/>
+<circle cx="182.8" cy="109.6" r="5" fill="var(--h-cherry)"/>
+<circle cx="170.2" cy="118.5" r="5" fill="var(--h-cherry)"/>
+<circle cx="251.7" cy="79.2" r="5" fill="var(--h-cherry)"/>
+<circle cx="193.8" cy="107.8" r="5" fill="var(--h-cherry)"/>
+<circle cx="82.5" cy="176.9" r="5" fill="var(--h-cherry)"/>
+<circle cx="57.0" cy="178.2" r="5" fill="var(--h-cherry)"/>
+<circle cx="200.3" cy="73.0" r="5" fill="var(--h-cherry)"/>
+<circle cx="71.2" cy="140.0" r="5" fill="var(--h-cherry)"/>
+<circle cx="100.0" cy="136.1" r="5" fill="var(--h-cherry)"/>
+<circle cx="104.0" cy="151.1" r="5" fill="var(--h-cherry)"/>
+<circle cx="178.5" cy="124.5" r="5" fill="var(--h-cherry)"/>
+<circle cx="61.8" cy="170.3" r="5" fill="var(--h-cherry)"/>
+<circle cx="122.1" cy="155.9" r="5" fill="var(--h-cherry)"/>
+<circle cx="223.8" cy="103.0" r="5" fill="var(--h-cherry)"/>
+<circle cx="153.8" cy="133.2" r="5" fill="var(--h-cherry)"/>
+<circle cx="178.4" cy="110.9" r="5" fill="var(--h-cherry)"/>
+<circle cx="275.5" cy="42" r="5" fill="var(--h-cherry)"/>
+<circle cx="63.7" cy="173.0" r="5" fill="var(--h-cherry)"/>
+<circle cx="218.2" cy="102.7" r="5" fill="var(--h-cherry)"/>
+<circle cx="159.1" cy="117.9" r="5" fill="var(--h-cherry)"/>
+<circle cx="118.0" cy="180.5" r="5" fill="var(--h-cherry)"/>
+<circle cx="169.4" cy="110.6" r="5" fill="var(--h-cherry)"/>
+<circle cx="47.7" cy="158.1" r="5" fill="var(--h-cherry)"/>
+<circle cx="75.0" cy="163.5" r="5" fill="var(--h-cherry)"/>
+<circle cx="248.2" cy="107.6" r="5" fill="var(--h-cherry)"/>
+<circle cx="65.3" cy="159.3" r="5" fill="var(--h-cherry)"/>
+<circle cx="87.8" cy="130.7" r="5" fill="var(--h-cherry)"/>
+<circle cx="113.4" cy="164.7" r="5" fill="var(--h-cherry)"/>
+<circle cx="101.3" cy="159.8" r="5" fill="var(--h-cherry)"/>
+<circle cx="55.2" cy="187.7" r="5" fill="var(--h-cherry)"/>
+<circle cx="110.8" cy="133.2" r="5" fill="var(--h-cherry)"/>
+<circle cx="160.7" cy="138.3" r="5" fill="var(--h-cherry)"/>
+<circle cx="44.2" cy="180.8" r="5" fill="var(--h-cherry)"/>
+<circle cx="200.0" cy="96.1" r="5" fill="var(--h-cherry)"/>
+<circle cx="155.3" cy="124.7" r="5" fill="var(--h-cherry)"/>
+<circle cx="213.5" cy="97.6" r="5" fill="var(--h-cherry)"/>
+<circle cx="218.9" cy="100.0" r="5" fill="var(--h-cherry)"/>
+<circle cx="210.9" cy="102.7" r="5" fill="var(--h-cherry)"/>
+<circle cx="226.1" cy="66.5" r="5" fill="var(--h-cherry)"/>
+<circle cx="130.4" cy="139.9" r="5" fill="var(--h-cherry)"/>
+<circle cx="90.6" cy="177.0" r="5" fill="var(--h-cherry)"/>
+<circle cx="101.8" cy="157.6" r="5" fill="var(--h-cherry)"/>
+<circle cx="247.8" cy="70.1" r="5" fill="var(--h-cherry)"/>
+<circle cx="105.4" cy="162.3" r="5" fill="var(--h-cherry)"/>
+<circle cx="154.0" cy="144.0" r="5" fill="var(--h-cherry)"/>
+<circle cx="137.0" cy="140.8" r="5" fill="var(--h-cherry)"/>
+<circle cx="167.1" cy="161.3" r="5" fill="var(--h-cherry)"/>
+<circle cx="110.8" cy="146.5" r="5" fill="var(--h-cherry)"/>
+<circle cx="111.4" cy="141.0" r="5" fill="var(--h-cherry)"/>
+<circle cx="84.8" cy="157.8" r="5" fill="var(--h-cherry)"/>
+<circle cx="112.7" cy="159.6" r="5" fill="var(--h-cherry)"/>
+<circle cx="61.4" cy="177.3" r="5" fill="var(--h-cherry)"/>
+<circle cx="78.8" cy="144.3" r="5" fill="var(--h-cherry)"/>
+<circle cx="200.4" cy="76.2" r="5" fill="var(--h-cherry)"/>
+<circle cx="232.6" cy="92.4" r="5" fill="var(--h-cherry)"/>
+<circle cx="278" cy="92.4" r="5" fill="var(--h-cherry)"/>
+<circle cx="213.5" cy="117.5" r="5" fill="var(--h-cherry)"/>
+<circle cx="229.3" cy="63.2" r="5" fill="var(--h-cherry)"/>
+<circle cx="237.7" cy="105.6" r="5" fill="var(--h-cherry)"/>
+<circle cx="168.9" cy="99.6" r="5" fill="var(--h-cherry)"/>
+<circle cx="204.5" cy="72.1" r="5" fill="var(--h-cherry)"/>
+<circle cx="193.5" cy="94.0" r="5" fill="var(--h-cherry)"/>
+<circle cx="56.0" cy="187.8" r="5" fill="var(--h-cherry)"/>
+<circle cx="73.3" cy="150.9" r="5" fill="var(--h-cherry)"/>
+<circle cx="169.5" cy="93.7" r="5" fill="var(--h-cherry)"/>
+<circle cx="177.6" cy="126.8" r="5" fill="var(--h-cherry)"/>
+<circle cx="194.8" cy="97.3" r="5" fill="var(--h-cherry)"/>
+<circle cx="212.6" cy="118.0" r="5" fill="var(--h-cherry)"/>
+<circle cx="107.8" cy="157.9" r="5" fill="var(--h-cherry)"/>
+<circle cx="214.1" cy="125.0" r="5" fill="var(--h-cherry)"/>
+<circle cx="250.7" cy="73.3" r="5" fill="var(--h-cherry)"/>
+<circle cx="140.5" cy="102.3" r="5" fill="var(--h-cherry)"/>
+<circle cx="178.4" cy="107.1" r="5" fill="var(--h-cherry)"/>
+<circle cx="73.3" cy="190" r="5" fill="var(--h-cherry)"/>
+<circle cx="108.0" cy="145.5" r="5" fill="var(--h-cherry)"/>
+<circle cx="51.5" cy="190" r="5" fill="var(--h-cherry)"/>
+<circle cx="194.0" cy="92.0" r="5" fill="var(--h-cherry)"/>
+<circle cx="143.5" cy="127.1" r="5" fill="var(--h-cherry)"/>
+<circle cx="74.6" cy="160.4" r="5" fill="var(--h-cherry)"/>
+<circle cx="267.4" cy="71.2" r="5" fill="var(--h-cherry)"/>
+<circle cx="161.2" cy="91.5" r="5" fill="var(--h-cherry)"/>
+<circle cx="142.2" cy="141.5" r="5" fill="var(--h-cherry)"/>
+<circle cx="262.0" cy="96.5" r="5" fill="var(--h-cherry)"/>
+<circle cx="38.4" cy="158.5" r="5" fill="var(--h-cherry)"/>
+<circle cx="77.6" cy="148.2" r="5" fill="var(--h-cherry)"/>
+<circle cx="241.0" cy="71.3" r="5" fill="var(--h-cherry)"/>
+<circle cx="243.3" cy="81.6" r="5" fill="var(--h-cherry)"/>
+<text x="510" y="26" text-anchor="middle" font-size="12" font-weight="700" fill="var(--h-cherry)">small, semi transparent</text>
+<rect x="375" y="34" width="270" height="164" rx="8" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<circle cx="481.3" cy="163.2" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="398.6" cy="168.6" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="404.5" cy="173.4" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="500.3" cy="135.3" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="496.0" cy="126.0" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="422.7" cy="127.5" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="497.2" cy="143.0" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="413.0" cy="164.6" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="437.1" cy="173.4" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="590.5" cy="109.4" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="529.7" cy="124.2" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="418.3" cy="177.1" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="540.6" cy="111.3" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="518.4" cy="119.5" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="574.4" cy="81.3" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="498.9" cy="111.7" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="553.5" cy="143.3" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="401.6" cy="180.3" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="426.0" cy="163.6" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="550.4" cy="85.7" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="587.9" cy="106.4" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="518.2" cy="106.1" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="603.1" cy="81.4" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="568.0" cy="116.2" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="569.8" cy="107.5" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="444.8" cy="164.3" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="391.9" cy="179.8" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="444.2" cy="177.0" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="425.0" cy="181.7" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="608.8" cy="92.6" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="540.6" cy="99.8" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="591.1" cy="101.3" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="503.8" cy="113.8" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="434.3" cy="173.8" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="430.1" cy="156.3" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="470.0" cy="151.5" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="448.3" cy="123.4" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="534.5" cy="101.9" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="578.8" cy="117.0" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="592.0" cy="73.9" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="480.0" cy="141.3" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="545.7" cy="112.5" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="449.7" cy="169.5" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="415.1" cy="174.2" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="416.3" cy="171.6" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="590.1" cy="77.9" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="445.4" cy="164.7" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="449.0" cy="125.5" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="496.3" cy="129.4" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="412.5" cy="179.2" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="587.2" cy="91.8" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="606.0" cy="73.8" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="536.8" cy="123.6" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="633" cy="53.7" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="449.4" cy="158.5" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="548.7" cy="89.4" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="475.1" cy="172.5" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="633" cy="48.5" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="582.6" cy="78.5" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="512.0" cy="126.1" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="399.4" cy="189.1" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="569.0" cy="99.1" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="633" cy="73.9" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="480.7" cy="151.2" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="445.8" cy="179.8" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="610.7" cy="65.6" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="547.0" cy="101.8" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="567.6" cy="92.3" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="558.8" cy="98.9" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="564.0" cy="118.2" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="607.2" cy="83.0" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="611.4" cy="66.2" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="441.9" cy="190" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="596.4" cy="115.1" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="613.3" cy="59.8" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="522.8" cy="121.6" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="608.2" cy="57.4" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="583.8" cy="90.4" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="587.6" cy="100.9" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="463.5" cy="169.0" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="448.2" cy="155.6" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="594.9" cy="94.0" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="541.2" cy="106.4" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="588.8" cy="78.8" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="530.4" cy="124.4" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="462.2" cy="160.6" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="412.4" cy="165.3" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="515.2" cy="136.0" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="524.2" cy="111.5" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="524.0" cy="131.3" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="554.7" cy="94.1" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="582.7" cy="87.4" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="519.1" cy="112.0" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="537.8" cy="109.6" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="525.2" cy="118.5" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="606.7" cy="79.2" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="548.8" cy="107.8" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="437.5" cy="176.9" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="412.0" cy="178.2" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="555.3" cy="73.0" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="426.2" cy="140.0" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="455.0" cy="136.1" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="459.0" cy="151.1" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="533.5" cy="124.5" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="416.8" cy="170.3" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="477.1" cy="155.9" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="578.8" cy="103.0" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="508.8" cy="133.2" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="533.4" cy="110.9" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="630.5" cy="42" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="418.7" cy="173.0" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="573.2" cy="102.7" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="514.1" cy="117.9" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="473.0" cy="180.5" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="524.4" cy="110.6" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="402.7" cy="158.1" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="430.0" cy="163.5" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="603.2" cy="107.6" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="420.3" cy="159.3" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="442.8" cy="130.7" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="468.4" cy="164.7" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="456.3" cy="159.8" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="410.2" cy="187.7" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="465.8" cy="133.2" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="515.7" cy="138.3" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="399.2" cy="180.8" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="555.0" cy="96.1" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="510.3" cy="124.7" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="568.5" cy="97.6" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="573.9" cy="100.0" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="565.9" cy="102.7" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="581.1" cy="66.5" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="485.4" cy="139.9" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="445.6" cy="177.0" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="456.8" cy="157.6" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="602.8" cy="70.1" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="460.4" cy="162.3" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="509.0" cy="144.0" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="492.0" cy="140.8" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="522.1" cy="161.3" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="465.8" cy="146.5" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="466.4" cy="141.0" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="439.8" cy="157.8" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="467.7" cy="159.6" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="416.4" cy="177.3" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="433.8" cy="144.3" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="555.4" cy="76.2" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="587.6" cy="92.4" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="633" cy="92.4" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="568.5" cy="117.5" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="584.3" cy="63.2" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="592.7" cy="105.6" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="523.9" cy="99.6" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="559.5" cy="72.1" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="548.5" cy="94.0" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="411.0" cy="187.8" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="428.3" cy="150.9" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="524.5" cy="93.7" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="532.6" cy="126.8" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="549.8" cy="97.3" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="567.6" cy="118.0" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="462.8" cy="157.9" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="569.1" cy="125.0" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="605.7" cy="73.3" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="495.5" cy="102.3" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="533.4" cy="107.1" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="428.3" cy="190" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="463.0" cy="145.5" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="406.5" cy="190" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="549.0" cy="92.0" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="498.5" cy="127.1" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="429.6" cy="160.4" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="622.4" cy="71.2" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="516.2" cy="91.5" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="497.2" cy="141.5" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="617.0" cy="96.5" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="393.4" cy="158.5" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="432.6" cy="148.2" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="596.0" cy="71.3" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<circle cx="598.3" cy="81.6" r="2.6" fill="var(--h-cherry)" opacity="0.32"/>
+<text x="340" y="228" text-anchor="middle" font-size="12" fill="var(--h-graphite)">same data, same chart type. Only the point size and alpha changed.</text>
+</svg></p>
+<p>With enough points a scatter plot becomes a solid shape and stops carrying
+information. Three fixes, in order of how often they work:</p>
+<ul>
+<li>Make points smaller and semi transparent, so density shows as darkness.</li>
+<li>Sample a few thousand rows. You are looking for shape, not for every record.</li>
+<li>Switch to a chart that bins for you, such as a hexbin or a 2D histogram.</li>
+</ul>
+<h2 id="part-two-drawing-it">Part two: drawing it<a class="headerlink" href="#part-two-drawing-it" title="Link to this section">&para;</a></h2>
+<p>Two libraries, and they are not rivals. <strong>Matplotlib</strong> is the engine and gives
+you control over every element. <strong>Seaborn</strong> sits on top of it, produces
+statistical charts in one line and has much better defaults.</p>
+<p>The practical division: explore with seaborn, finish with matplotlib. Seaborn
+returns matplotlib objects, so you can always drop down a level.</p>
+<h3 id="figure-and-axes">Figure and axes<a class="headerlink" href="#figure-and-axes" title="Link to this section">&para;</a></h3>
+<p>This is the concept that confuses every matplotlib beginner, and it takes one
+picture.</p>
+<p><svg viewBox="0 0 680 250" role="img" aria-labelledby="fa-title fa-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="fa-title">A matplotlib figure containing two axes</title>
+<desc id="fa-desc">The figure is the whole canvas. Each axes is one plot inside it, with its own x and y axis, title and labels.</desc>
+<rect x="30" y="34" width="620" height="170" rx="12" fill="var(--h-surface)" stroke="var(--h-cherry)" stroke-width="2" stroke-dasharray="6 4"/>
+<text x="44" y="26" font-size="12.5" font-weight="700" fill="var(--h-cherry)">fig, the whole canvas</text>
+<rect x="60" y="58" width="260" height="124" rx="8" fill="var(--md-default-bg-color)" stroke="var(--h-surface-line)"/>
+<line x1="100" y1="156" x2="296" y2="156" stroke="var(--h-steel)" stroke-width="1.5"/>
+<line x1="100" y1="156" x2="100" y2="80" stroke="var(--h-steel)" stroke-width="1.5"/>
+<polyline points="108,146 148,120 188,128 228,96 268,86" fill="none" stroke="var(--h-cherry)" stroke-width="2.5"/>
+<text x="190" y="74" text-anchor="middle" font-size="11" font-weight="700" fill="var(--md-default-fg-color)">ax[0]</text>
+<rect x="360" y="58" width="260" height="124" rx="8" fill="var(--md-default-bg-color)" stroke="var(--h-surface-line)"/>
+<line x1="400" y1="156" x2="596" y2="156" stroke="var(--h-steel)" stroke-width="1.5"/>
+<line x1="400" y1="156" x2="400" y2="80" stroke="var(--h-steel)" stroke-width="1.5"/>
+<rect x="416" y="128" width="30" height="28" fill="var(--h-cherry)" opacity="0.8"/>
+<rect x="460" y="102" width="30" height="54" fill="var(--h-cherry)" opacity="0.8"/>
+<rect x="504" y="116" width="30" height="40" fill="var(--h-cherry)" opacity="0.8"/>
+<rect x="548" y="90" width="30" height="66" fill="var(--h-cherry)" opacity="0.8"/>
+<text x="490" y="74" text-anchor="middle" font-size="11" font-weight="700" fill="var(--md-default-fg-color)">ax[1]</text>
+<text x="340" y="228" text-anchor="middle" font-size="12" fill="var(--h-graphite)">fig, ax = plt.subplots(1, 2) gives you one figure and two axes. You draw on the axes, you save the figure.</text>
+</svg></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;month&quot;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;sales&quot;</span><span class="p">])</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Monthly sales&quot;</span><span class="p">)</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Month&quot;</span><span class="p">)</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Sales (EUR)&quot;</span><span class="p">)</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;sales.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<p>You will also see the shorter style, <code>plt.plot(...)</code> followed by <code>plt.title(...)</code>,
+which draws on whichever figure happens to be current. It is fine for a quick
+look and it falls apart the moment you have two charts. Learn the version above
+and you never have to unlearn anything.</p>
+<p>Several charts side by side:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;salary&quot;</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Salary distribution&quot;</span><span class="p">)</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;salary&quot;</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Age against salary&quot;</span><span class="p">)</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</span></code></pre></div>
+<p><code>tight_layout</code> stops the labels of one chart overlapping the next one. Call it
+before saving, every time.</p>
+<div class="admonition tip">
+<p class="admonition-title">Matplotlib goes much deeper than this page</p>
+<p>Everything above is enough for the whole of trimester one. When you need
+custom axes, annotations or precise styling, the official
+<a href="https://matplotlib.org/stable/users/explain/quick_start.html">quick start guide</a>
+and the
+<a href="https://matplotlib.org/stable/gallery/showcase/anatomy.html">anatomy of a figure</a>
+page are the two references worth bookmarking. Do not read them now. Read
+them the first time a chart will not do what you want.</p>
+</div>
+<h3 id="seaborn-one-line-each">Seaborn, one line each<a class="headerlink" href="#seaborn-one-line-each" title="Link to this section">&para;</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;salary&quot;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;city&quot;</span><span class="p">)</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;salary&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;city&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;month&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;sales&quot;</span><span class="p">)</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;city&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;salary&quot;</span><span class="p">)</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">corr</span><span class="p">(</span><span class="n">numeric_only</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;coolwarm&quot;</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span></code></pre></div>
+<p>Three arguments do most of the work. <code>data</code> takes the DataFrame, <code>x</code> and <code>y</code> take
+column names as strings, and <code>hue</code> splits by a category and adds the legend for
+you. That pattern is the same across every seaborn function, which is most of
+why it is worth learning.</p>
+<p>Set sensible defaults once, at the top of a notebook:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">sns</span><span class="o">.</span><span class="n">set_theme</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s2">&quot;whitegrid&quot;</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;colorblind&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<h3 id="finishing-a-chart">Finishing a chart<a class="headerlink" href="#finishing-a-chart" title="Link to this section">&para;</a></h3>
+<p>A chart is finished when somebody who did not make it can read it without
+asking you anything.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;city&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;salary&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Salary by city, 2026 survey&quot;</span><span class="p">)</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;City&quot;</span><span class="p">)</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Monthly salary (EUR)&quot;</span><span class="p">)</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;salary_by_city.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<p>Note <code>ax=ax</code>, which tells seaborn to draw on the axes you created rather than
+making its own. That is how the two libraries combine.</p>
+<p>The checklist: a title that states the finding rather than the variables, axis
+labels with units, a legend when there is more than one series, and a source or
+date if the chart leaves your machine.</p>
+<h2 id="the-charts-you-will-make-in-every-project">The charts you will make in every project<a class="headerlink" href="#the-charts-you-will-make-in-every-project" title="Link to this section">&para;</a></h2>
+<p>Five of them, from here to the end of the programme.</p>
+<table>
+<thead>
+<tr>
+<th>Chart</th>
+<th>What it tells you</th>
+<th>When</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Distribution of the target</td>
+<td>Is it skewed, is it balanced</td>
+<td>Before any modelling</td>
+</tr>
+<tr>
+<td>Correlation heatmap</td>
+<td>Which features move together</td>
+<td>Feature selection</td>
+</tr>
+<tr>
+<td>Missing value map</td>
+<td>Whether gaps cluster in one group</td>
+<td>Cleaning</td>
+</tr>
+<tr>
+<td>Learning curve</td>
+<td>Whether more data would help</td>
+<td>Trimester two</td>
+</tr>
+<tr>
+<td>Confusion matrix</td>
+<td>Which classes get confused with which</td>
+<td>Evaluation</td>
+</tr>
+</tbody>
+</table>
+<p>The first three you can draw today:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;target&quot;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">corr</span><span class="p">(</span><span class="n">numeric_only</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;coolwarm&quot;</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">(),</span> <span class="n">cbar</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span></code></pre></div>
+<p>The missing value map is the one people skip. Gaps arranged in horizontal bands
+mean whole rows failed, while a solid block in one column means a field stopped
+being collected on a certain date. Both change what you should do about them,
+and <code>isna().sum()</code> cannot tell them apart.</p>
+<h2 id="when-it-goes-wrong">When it goes wrong<a class="headerlink" href="#when-it-goes-wrong" title="Link to this section">&para;</a></h2>
+<details class="note">
+<summary>Nothing appears in my notebook</summary>
+<p>In a script you need <code>plt.show()</code> at the end. In Jupyter, put the plotting
+call last in the cell, or add <code>plt.show()</code>, otherwise you may see only the
+object's text representation.</p>
+</details>
+<details class="note">
+<summary>My labels are cut off when I save the figure</summary>
+<p>Use <code>fig.savefig("name.png", bbox_inches="tight")</code>, and call
+<code>fig.tight_layout()</code> before saving when you have several subplots.</p>
+</details>
+<details class="note">
+<summary>Every chart appears on top of the previous one</summary>
+<p>You are using the <code>plt.</code> style and drawing into whichever figure is current.
+Create a new one explicitly with <code>fig, ax = plt.subplots()</code> for each chart.</p>
+</details>
+<details class="note">
+<summary>The x axis labels overlap and are unreadable</summary>
+<p>Either rotate them with <code>ax.tick_params(axis="x", rotation=45)</code> or swap the
+axes so the categories run down the side, which is usually the better fix
+when the names are long.</p>
+</details>
+<details class="note">
+<summary>My scatter plot is a solid blob</summary>
+<p>Overplotting. Reduce <code>s</code>, set <code>alpha=0.2</code>, or sample the rows. See the
+section above.</p>
+</details>
+<details class="note">
+<summary>The correlation heatmap is all one colour</summary>
+<p>You are using a sequential colour map. Use a diverging one centred at zero,
+such as <code>cmap="coolwarm", center=0</code>, so that positive and negative read as
+opposites.</p>
+</details>
+<h2 id="check-yourself">Check yourself<a class="headerlink" href="#check-yourself" title="Link to this section">&para;</a></h2>
+<p>Use any dataset you have to hand.</p>
+<ol>
+<li>Plot one numeric column as a histogram with three different bin counts. Say
+   what each one hides and what it reveals.</li>
+<li>Draw the same comparison as a bar chart and as a pie chart. Which one lets
+   you rank the categories faster, and why does the encoding ladder predict
+   that?</li>
+<li>Take a bar chart and redraw it with a truncated axis. Write one sentence
+   describing the story each version tells.</li>
+<li>Make a scatter plot of two columns with at least a few thousand rows. Fix the
+   overplotting and describe what became visible.</li>
+<li>Build a two panel figure with <code>plt.subplots</code>, label both panels fully, and
+   save it at 150 dpi with nothing cut off.</li>
+<li>Draw the missing value heatmap for a real file. Say whether the gaps look
+   random, and what you would do next.</li>
+</ol>
+<h2 id="quick-reference">Quick reference<a class="headerlink" href="#quick-reference" title="Link to this section">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>New figure</td>
+<td><code>fig, ax = plt.subplots(figsize=(8, 5))</code></td>
+</tr>
+<tr>
+<td>Several panels</td>
+<td><code>fig, axes = plt.subplots(1, 2, figsize=(12, 5))</code></td>
+</tr>
+<tr>
+<td>Histogram</td>
+<td><code>sns.histplot(data=df, x="col", bins=30)</code></td>
+</tr>
+<tr>
+<td>Counts per category</td>
+<td><code>sns.countplot(data=df, x="col")</code></td>
+</tr>
+<tr>
+<td>Bar of a value</td>
+<td><code>sns.barplot(data=df, x="cat", y="val")</code></td>
+</tr>
+<tr>
+<td>Scatter</td>
+<td><code>sns.scatterplot(data=df, x="a", y="b", hue="c", alpha=0.3)</code></td>
+</tr>
+<tr>
+<td>Line</td>
+<td><code>sns.lineplot(data=df, x="t", y="v")</code></td>
+</tr>
+<tr>
+<td>Box by group</td>
+<td><code>sns.boxplot(data=df, x="cat", y="val")</code></td>
+</tr>
+<tr>
+<td>Correlation heatmap</td>
+<td><code>sns.heatmap(df.corr(numeric_only=True), cmap="coolwarm", center=0)</code></td>
+</tr>
+<tr>
+<td>Missing values</td>
+<td><code>sns.heatmap(df.isna(), cbar=False)</code></td>
+</tr>
+<tr>
+<td>Draw into your axes</td>
+<td><code>sns.boxplot(..., ax=ax)</code></td>
+</tr>
+<tr>
+<td>Labels</td>
+<td><code>ax.set_title(...)</code>, <code>ax.set_xlabel(...)</code>, <code>ax.set_ylabel(...)</code></td>
+</tr>
+<tr>
+<td>Rotate ticks</td>
+<td><code>ax.tick_params(axis="x", rotation=45)</code></td>
+</tr>
+<tr>
+<td>Defaults</td>
+<td><code>sns.set_theme(style="whitegrid", palette="colorblind")</code></td>
+</tr>
+<tr>
+<td>Save</td>
+<td><code>fig.savefig("f.png", dpi=150, bbox_inches="tight")</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="questions-to-sit-with">Questions to sit with<a class="headerlink" href="#questions-to-sit-with" title="Link to this section">&para;</a></h2>
+<ol>
+<li>The encoding ladder says position and length are read most accurately. Name a
+   chart you have seen recently that put the most important number on a weak
+   channel. What was gained by doing that, and by whom?</li>
+<li>A truncated axis on a bar chart is misleading, but on a line chart it is often
+   correct. What is the difference, in terms of what each chart encodes?</li>
+<li>You draw a chart, dislike the story it tells, and redraw it differently. When
+   is that clarification and when is it manipulation? What would you record so
+   that somebody else could tell?</li>
+<li>Anscombe's quartet exists because summary statistics hide shape. What is the
+   equivalent risk when you report a single accuracy number for a model?</li>
+</ol>
+<h2 id="next">Next<a class="headerlink" href="#next" title="Link to this section">&para;</a></h2>
+<p>You can see your data. Now the language for describing what you are seeing, and
+for saying how confident you should be about it.</p>
+<p><a class="h-button" href="../probability/">Probability</a></p>
+<p>Worth your time: the
+<a href="https://seaborn.pydata.org/tutorial.html">seaborn tutorial</a> is short and well
+written, and the
+<a href="https://datavizcatalogue.com/">Data Visualisation Catalogue</a> is a good browse
+when you are unsure which chart fits.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../pandas/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Pandas">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Pandas
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../probability/" class="md-footer__link md-footer__link--next" aria-label="Next: Probability">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Probability
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Holberton School Albania
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://github.com/evisp" target="_blank" rel="noopener" title="GitHub" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://www.linkedin.com/school/holbertonschool/" target="_blank" rel="noopener" title="Holberton School" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.indexes", "navigation.path", "navigation.top", "navigation.tracking", "navigation.footer", "toc.follow", "search.highlight", "search.share", "search.suggest", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.action.edit"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

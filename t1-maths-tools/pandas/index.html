@@ -1,0 +1,3272 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A practical, project-based machine learning curriculum for Holberton School Albania. Real projects, real skills, real careers.">
+      
+      
+        <meta name="author" content="Evis Plaku">
+      
+      
+        <link rel="canonical" href="https://evisp.github.io/ml-handbook/t1-maths-tools/pandas/">
+      
+      
+        <link rel="prev" href="../linear-algebra/">
+      
+      
+        <link rel="next" href="../plotting/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Pandas - Holberton ML Handbook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Host+Grotesk:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Host Grotesk";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/brand.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#pandas" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Holberton ML Handbook" class="md-header__button md-logo" aria-label="Holberton ML Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Holberton ML Handbook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Pandas
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/evisp/ml-handbook" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    evisp/ml-handbook
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../roadmap/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Roadmap
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../01-tools/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Tools
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../02-fundamentals/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Fundamentals
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Data Analyst
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../projects/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Projects
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Holberton ML Handbook" class="md-nav__button md-logo" aria-label="Holberton ML Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Holberton ML Handbook
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/evisp/ml-handbook" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    evisp/ml-handbook
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../01-tools/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/zero-day/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Zero day
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/git-and-github/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git & GitHub
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/notebook-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jupyter notebook setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/vscode-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/python-warm-up/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python warm up
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../02-fundamentals/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Fundamentals
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-fundamentals/what-is-ai/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    What AI is
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-fundamentals/what-is-ml/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How machines learn
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-fundamentals/framing-ml-problems/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Framing a problem
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-fundamentals/working-with-data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Working with data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-fundamentals/ethics-and-responsibility/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ethics and responsibility
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-fundamentals/how-training-works/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    What training actually does
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Analyst
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Data Analyst
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_1" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Maths and tools
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5_1" id="__nav_5_1_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Maths and tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../linear-algebra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linear Algebra
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pandas
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pandas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this matters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-dataframe-is-a-labelled-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A DataFrame is a labelled table
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-the-labels-buy-you" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the labels buy you
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#loading-and-looking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Loading and looking
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#selecting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Selecting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Selecting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#columns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Columns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rows-by-label-or-position" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rows by label or position
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rows-by-condition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rows by condition
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-copy-trap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The copy trap
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Missing data
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#types-and-text" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Types and text
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-columns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating columns
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#grouping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Grouping
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#merging-two-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Merging two tables
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#saving-your-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Saving your work
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-whole-thing-on-one-screen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The whole thing on one screen
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-this-sits-in-the-lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where this sits in the lifecycle
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-it-goes-wrong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When it goes wrong
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#questions-to-sit-with" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Questions to sit with
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plotting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plotting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../probability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Probability
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../t1-real-data/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Real data
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5_2" id="__nav_5_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Real data
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-real-data/web-scraping/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Scraping
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-real-data/apis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    APIs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-real-data/data-preparation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Preparation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-real-data/data-preprocessing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Preprocessing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../t1-models/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classic models
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5_3" id="__nav_5_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Classic models
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-models/classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-models/linear-models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linear Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-models/tree-models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tree-Based Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-models/bias-variance.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bias, variance and tuning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-models/unsupervised-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unsupervised Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-models/clustering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../projects/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Projects
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Projects
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../projects/rock-paper-scissors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rock, paper, scissors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../projects/one-page-finding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    One page, one finding
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this matters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-dataframe-is-a-labelled-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A DataFrame is a labelled table
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-the-labels-buy-you" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the labels buy you
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#loading-and-looking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Loading and looking
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#selecting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Selecting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Selecting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#columns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Columns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rows-by-label-or-position" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rows by label or position
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rows-by-condition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rows by condition
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-copy-trap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The copy trap
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Missing data
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#types-and-text" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Types and text
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-columns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating columns
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#grouping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Grouping
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#merging-two-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Merging two tables
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#saving-your-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Saving your work
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-whole-thing-on-one-screen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The whole thing on one screen
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-this-sits-in-the-lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where this sits in the lifecycle
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-it-goes-wrong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When it goes wrong
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#questions-to-sit-with" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Questions to sit with
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Data Analyst
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Maths and tools
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/evisp/ml-handbook/edit/main/docs/t1-maths-tools/pandas.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="pandas">Pandas<a class="headerlink" href="#pandas" title="Link to this section">&para;</a></h1>
+<p><span class="badge badge--time">70 min</span>
+<span class="badge badge--level">Foundations</span>
+<span class="badge">Needs: Linear Algebra with NumPy</span></p>
+<p>NumPy gives you fast grids of numbers. Pandas gives those grids names, mixed
+types and an index, which is what turns an array into a dataset you can reason
+about.</p>
+<h2 id="why-this-matters">Why this matters<a class="headerlink" href="#why-this-matters" title="Link to this section">&para;</a></h2>
+<p>Most of the work in machine learning happens before any model is trained. Data
+arrives with missing values, inconsistent spellings, numbers stored as text and
+rows that appear twice. Pandas is how you find those problems and fix them, and
+it is the library you will spend more hours in than any other this year.</p>
+<p>It is also what interviewers reach for. Being fluent here is closer to knowing
+SQL than to knowing a framework, because it does not go out of fashion.</p>
+<h2 id="a-dataframe-is-a-labelled-table">A DataFrame is a labelled table<a class="headerlink" href="#a-dataframe-is-a-labelled-table" title="Link to this section">&para;</a></h2>
+<p><svg viewBox="0 0 680 252" role="img" aria-labelledby="df-title df-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="df-title">The parts of a DataFrame</title>
+<desc id="df-desc">A table with an index down the left, named columns across the top, and a data type for each column. A single column together with the index is a Series.</desc>
+<text x="40" y="34" font-size="12" font-weight="700" fill="var(--h-graphite)">index</text>
+<text x="100" y="34" font-size="12" font-weight="700" fill="var(--h-graphite)">column names</text>
+<rect x="40" y="44" width="60" height="30" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<rect x="100" y="44" width="120" height="30" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<rect x="220" y="44" width="120" height="30" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<rect x="340" y="44" width="120" height="30" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<rect x="460" y="44" width="120" height="30" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="160" y="64" text-anchor="middle" font-size="12" font-weight="700" fill="var(--md-default-fg-color)">name</text>
+<text x="280" y="64" text-anchor="middle" font-size="12" font-weight="700" fill="var(--md-default-fg-color)">city</text>
+<text x="400" y="64" text-anchor="middle" font-size="12" font-weight="700" fill="var(--md-default-fg-color)">salary</text>
+<text x="520" y="64" text-anchor="middle" font-size="12" font-weight="700" fill="var(--md-default-fg-color)">joined</text>
+<rect x="40" y="74" width="60" height="30" fill="none" stroke="var(--h-surface-line)"/>
+<rect x="100" y="74" width="480" height="30" fill="none" stroke="var(--h-surface-line)"/>
+<text x="70" y="94" text-anchor="middle" font-size="12" font-weight="700" fill="var(--h-space)">0</text>
+<text x="160" y="94" text-anchor="middle" font-size="12" fill="var(--h-graphite)">Ana</text>
+<text x="280" y="94" text-anchor="middle" font-size="12" fill="var(--h-graphite)">Tirana</text>
+<text x="400" y="94" text-anchor="middle" font-size="12" fill="var(--h-graphite)">1152000</text>
+<text x="520" y="94" text-anchor="middle" font-size="12" fill="var(--h-graphite)">2021-03-01</text>
+<rect x="40" y="104" width="60" height="30" fill="none" stroke="var(--h-surface-line)"/>
+<rect x="100" y="104" width="480" height="30" fill="none" stroke="var(--h-surface-line)"/>
+<text x="70" y="124" text-anchor="middle" font-size="12" font-weight="700" fill="var(--h-space)">1</text>
+<text x="160" y="124" text-anchor="middle" font-size="12" fill="var(--h-graphite)">Blerim</text>
+<text x="280" y="124" text-anchor="middle" font-size="12" fill="var(--h-graphite)">Durres</text>
+<text x="400" y="124" text-anchor="middle" font-size="12" fill="var(--h-graphite)">94000</text>
+<text x="520" y="124" text-anchor="middle" font-size="12" fill="var(--h-graphite)">2019-11-15</text>
+<rect x="40" y="134" width="60" height="30" fill="none" stroke="var(--h-surface-line)"/>
+<rect x="100" y="134" width="480" height="30" fill="none" stroke="var(--h-surface-line)"/>
+<text x="70" y="154" text-anchor="middle" font-size="12" font-weight="700" fill="var(--h-space)">2</text>
+<text x="160" y="154" text-anchor="middle" font-size="12" fill="var(--h-graphite)">Eda</text>
+<text x="280" y="154" text-anchor="middle" font-size="12" fill="var(--h-graphite)">Vlore</text>
+<text x="400" y="154" text-anchor="middle" font-size="12" fill="var(--h-graphite)">87000</text>
+<text x="520" y="154" text-anchor="middle" font-size="12" fill="var(--h-graphite)">2022-06-30</text>
+<rect x="340" y="44" width="120" height="120" fill="none" stroke="var(--h-cherry)" stroke-width="2.5"/>
+<text x="160" y="184" text-anchor="middle" font-size="11" fill="var(--h-space)">object</text>
+<text x="280" y="184" text-anchor="middle" font-size="11" fill="var(--h-space)">object</text>
+<text x="400" y="184" text-anchor="middle" font-size="11" font-weight="700" fill="var(--h-cherry)">int64</text>
+<text x="520" y="184" text-anchor="middle" font-size="11" fill="var(--h-space)">object</text>
+<text x="600" y="110" font-size="11.5" font-weight="700" fill="var(--h-cherry)">one column</text>
+<text x="600" y="126" font-size="11.5" font-weight="700" fill="var(--h-cherry)">is a Series</text>
+<text x="40" y="216" font-size="12" fill="var(--h-graphite)">Each column has its own type. Notice that joined is object, meaning text, not a date. That will matter.</text>
+<text x="40" y="236" font-size="12" fill="var(--h-graphite)">The index labels the rows. It is not a column, and it does not have to be 0, 1, 2.</text>
+</svg></p>
+<p>Two objects, and you will use both constantly.</p>
+<p>A <strong>DataFrame</strong> is the whole table. A <strong>Series</strong> is one column together with the
+index. Every column you pull out of a DataFrame comes back as a Series, and most
+of the methods you learn work on both.</p>
+<h2 id="what-the-labels-buy-you">What the labels buy you<a class="headerlink" href="#what-the-labels-buy-you" title="Link to this section">&para;</a></h2>
+<p><svg viewBox="0 0 680 226" role="img" aria-labelledby="np-title np-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="np-title">A NumPy array compared with a DataFrame</title>
+<desc id="np-desc">A NumPy array holds numbers of one type and is accessed by position. A DataFrame holds named columns of mixed types and is accessed by name.</desc>
+<rect x="10" y="14" width="300" height="190" rx="12" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="160" y="42" text-anchor="middle" font-size="13.5" font-weight="700" fill="var(--md-default-fg-color)">NumPy array</text>
+<rect x="46" y="58" width="76" height="28" fill="var(--md-default-bg-color)" stroke="var(--h-surface-line)"/>
+<rect x="122" y="58" width="76" height="28" fill="var(--md-default-bg-color)" stroke="var(--h-surface-line)"/>
+<rect x="198" y="58" width="76" height="28" fill="var(--md-default-bg-color)" stroke="var(--h-surface-line)"/>
+<rect x="46" y="86" width="76" height="28" fill="var(--md-default-bg-color)" stroke="var(--h-surface-line)"/>
+<rect x="122" y="86" width="76" height="28" fill="var(--md-default-bg-color)" stroke="var(--h-surface-line)"/>
+<rect x="198" y="86" width="76" height="28" fill="var(--md-default-bg-color)" stroke="var(--h-surface-line)"/>
+<text x="84" y="77" text-anchor="middle" font-size="12" fill="var(--h-graphite)">34</text>
+<text x="160" y="77" text-anchor="middle" font-size="12" fill="var(--h-graphite)">1</text>
+<text x="236" y="77" text-anchor="middle" font-size="12" fill="var(--h-graphite)">152000</text>
+<text x="84" y="105" text-anchor="middle" font-size="12" fill="var(--h-graphite)">28</text>
+<text x="160" y="105" text-anchor="middle" font-size="12" fill="var(--h-graphite)">2</text>
+<text x="236" y="105" text-anchor="middle" font-size="12" fill="var(--h-graphite)">87000</text>
+<text x="160" y="140" text-anchor="middle" font-size="11.5" fill="var(--h-graphite)">one type, no names</text>
+<text x="160" y="170" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)">arr[:, 2]</text>
+<text x="160" y="188" text-anchor="middle" font-size="11" fill="var(--h-space)">which column was that again</text>
+<rect x="370" y="14" width="300" height="190" rx="12" fill="var(--h-cherry)"/>
+<text x="520" y="42" text-anchor="middle" font-size="13.5" font-weight="700" fill="#ffffff">DataFrame</text>
+<rect x="406" y="58" width="76" height="28" fill="rgba(255,255,255,0.18)"/>
+<rect x="482" y="58" width="76" height="28" fill="rgba(255,255,255,0.18)"/>
+<rect x="558" y="58" width="76" height="28" fill="rgba(255,255,255,0.18)"/>
+<text x="444" y="77" text-anchor="middle" font-size="11.5" font-weight="700" fill="#ffffff">age</text>
+<text x="520" y="77" text-anchor="middle" font-size="11.5" font-weight="700" fill="#ffffff">city</text>
+<text x="596" y="77" text-anchor="middle" font-size="11.5" font-weight="700" fill="#ffffff">salary</text>
+<text x="444" y="105" text-anchor="middle" font-size="12" fill="#ffffff" opacity="0.9">34</text>
+<text x="520" y="105" text-anchor="middle" font-size="12" fill="#ffffff" opacity="0.9">Tirana</text>
+<text x="596" y="105" text-anchor="middle" font-size="12" fill="#ffffff" opacity="0.9">152000</text>
+<text x="520" y="140" text-anchor="middle" font-size="11.5" fill="#ffffff" opacity="0.88">mixed types, named columns</text>
+<text x="520" y="170" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ffffff">df["salary"]</text>
+<text x="520" y="188" text-anchor="middle" font-size="11" fill="#ffffff" opacity="0.8">reads like what it means</text>
+</svg></p>
+<p>Underneath, a DataFrame is still NumPy arrays. Everything you learned about
+vectorised operations still applies. What pandas adds is names, an index, the
+ability to mix text with numbers in one table, and a notion of missing data.</p>
+<h2 id="loading-and-looking">Loading and looking<a class="headerlink" href="#loading-and-looking" title="Link to this section">&para;</a></h2>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;employees.csv&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<p>Useful arguments you will reach for: <code>sep=";"</code> for European exports,
+<code>na_values=["", "NA", "unknown"]</code> to mark junk as missing on the way in, and
+<code>parse_dates=["joined"]</code> so date columns arrive as dates.</p>
+<p>Before doing anything else, look at the thing.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>          <span class="c1"># first five rows</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">df</span><span class="o">.</span><span class="n">shape</span>           <span class="c1"># (rows, columns)</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>          <span class="c1"># column names, types, non-null counts</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>      <span class="c1"># count, mean, std, min, quartiles, max for numeric columns</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">df</span><span class="p">[</span><span class="s2">&quot;city&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</span></code></pre></div>
+<p><code>info()</code> is the one to internalise. In a single output it tells you how many
+rows you have, which columns are the wrong type, and which have missing values.</p>
+<div class="admonition tip">
+<p class="admonition-title">Look before you transform</p>
+<p>Every mistake in this page is cheaper to catch at this stage. Run <code>head</code>,
+<code>info</code> and <code>describe</code> before writing a single line of cleaning code, and
+again after each significant change.</p>
+</div>
+<h2 id="selecting">Selecting<a class="headerlink" href="#selecting" title="Link to this section">&para;</a></h2>
+<p>This is where beginners lose the most time, because there are several ways to
+select and they are not interchangeable.</p>
+<p><svg viewBox="0 0 680 236" role="img" aria-labelledby="sel-title sel-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="sel-title">Choosing the right selection syntax</title>
+<desc id="sel-desc">Five ways to select. One column by name. Several columns with a list. Rows by label using loc. Rows by position using iloc. Rows by condition using a boolean mask.</desc>
+<rect x="240" y="8" width="200" height="40" rx="10" fill="var(--h-cherry)"/>
+<text x="340" y="28" dy="0.36em" text-anchor="middle" font-size="13.5" font-weight="700" fill="#ffffff">what do you want?</text>
+<polyline points="340,48 340,68 68,68 68,92" fill="none" stroke="var(--h-steel)" stroke-width="1.5"/>
+<polyline points="340,48 340,68 204,68 204,92" fill="none" stroke="var(--h-steel)" stroke-width="1.5"/>
+<polyline points="340,48 340,92" fill="none" stroke="var(--h-steel)" stroke-width="1.5"/>
+<polyline points="340,48 340,68 476,68 476,92" fill="none" stroke="var(--h-steel)" stroke-width="1.5"/>
+<polyline points="340,48 340,68 612,68 612,92" fill="none" stroke="var(--h-steel)" stroke-width="1.5"/>
+<rect x="5" y="92" width="126" height="84" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="68" y="118" text-anchor="middle" font-size="11.5" fill="var(--h-graphite)">one column</text>
+<text x="68" y="146" text-anchor="middle" font-size="12" font-weight="700" fill="var(--md-default-fg-color)">df["city"]</text>
+<text x="68" y="164" text-anchor="middle" font-size="10" fill="var(--h-space)">gives a Series</text>
+<rect x="141" y="92" width="126" height="84" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="204" y="118" text-anchor="middle" font-size="11.5" fill="var(--h-graphite)">some columns</text>
+<text x="204" y="146" text-anchor="middle" font-size="12" font-weight="700" fill="var(--md-default-fg-color)">df[["a","b"]]</text>
+<text x="204" y="164" text-anchor="middle" font-size="10" fill="var(--h-space)">note the two brackets</text>
+<rect x="277" y="92" width="126" height="84" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="340" y="118" text-anchor="middle" font-size="11.5" fill="var(--h-graphite)">rows by label</text>
+<text x="340" y="146" text-anchor="middle" font-size="12" font-weight="700" fill="var(--md-default-fg-color)">df.loc[2]</text>
+<text x="340" y="164" text-anchor="middle" font-size="10" fill="var(--h-space)">uses the index</text>
+<rect x="413" y="92" width="126" height="84" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="476" y="118" text-anchor="middle" font-size="11.5" fill="var(--h-graphite)">rows by position</text>
+<text x="476" y="146" text-anchor="middle" font-size="12" font-weight="700" fill="var(--md-default-fg-color)">df.iloc[2]</text>
+<text x="476" y="164" text-anchor="middle" font-size="10" fill="var(--h-space)">counts from 0</text>
+<rect x="549" y="92" width="126" height="84" rx="10" fill="var(--h-cherry)"/>
+<text x="612" y="118" text-anchor="middle" font-size="11.5" fill="#ffffff" opacity="0.9">rows by condition</text>
+<text x="612" y="146" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">df[mask]</text>
+<text x="612" y="164" text-anchor="middle" font-size="10" fill="#ffffff" opacity="0.8">the one you use most</text>
+<text x="340" y="212" text-anchor="middle" font-size="12" fill="var(--h-graphite)">loc uses labels, iloc uses positions. When the index is 0, 1, 2 they look the same, which is how people get caught.</text>
+</svg></p>
+<h3 id="columns">Columns<a class="headerlink" href="#columns" title="Link to this section">&para;</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">df</span><span class="p">[</span><span class="s2">&quot;salary&quot;</span><span class="p">]</span>                  <span class="c1"># one column, a Series</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">df</span><span class="p">[[</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;salary&quot;</span><span class="p">]]</span>        <span class="c1"># several columns, a DataFrame</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;notes&quot;</span><span class="p">])</span>    <span class="c1"># returns a new DataFrame without that column</span>
+</span></code></pre></div>
+<p>The double brackets confuse people. The inner brackets are a Python list of
+column names, and the outer ones are the selection. Ask for one name and you get
+a Series, ask for a list and you get a table.</p>
+<h3 id="rows-by-label-or-position">Rows by label or position<a class="headerlink" href="#rows-by-label-or-position" title="Link to this section">&para;</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>                     <span class="c1"># the row whose index label is 2</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>                    <span class="c1"># the third row, whatever its label</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;salary&quot;</span><span class="p">]</span>           <span class="c1"># one cell, by label</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>             <span class="c1"># first three rows, first two columns</span>
+</span></code></pre></div>
+<p>On a freshly loaded file the index is 0, 1, 2 and the two behave identically.
+Sort or filter the data and they diverge immediately, because <code>loc</code> follows the
+label while <code>iloc</code> follows the position. When in doubt, ask yourself whether you
+mean "the row called 5" or "the sixth row".</p>
+<h3 id="rows-by-condition">Rows by condition<a class="headerlink" href="#rows-by-condition" title="Link to this section">&para;</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;salary&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">50000</span><span class="p">]</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;city&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Tirana&quot;</span><span class="p">]</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;city&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s2">&quot;Tirana&quot;</span><span class="p">,</span> <span class="s2">&quot;Durres&quot;</span><span class="p">])]</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">df</span><span class="p">[</span><span class="o">~</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;city&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s2">&quot;Tirana&quot;</span><span class="p">])]</span>
+</span></code></pre></div>
+<p>This is the same boolean mask idea from NumPy, and you will use it more than
+everything else on this page combined.</p>
+<div class="admonition warning">
+<p class="admonition-title">Brackets around every condition</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">25</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;city&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Tirana&quot;</span><span class="p">)]</span>
+</span></code></pre></div>
+<p>Use <code>&amp;</code> for and, <code>|</code> for or, and wrap each condition in its own brackets.
+Without them Python's operator precedence evaluates the <code>&amp;</code> first and you
+get an error that explains nothing. Also use <code>&amp;</code> rather than the word <code>and</code>,
+which cannot work on a whole column.</p>
+</div>
+<h2 id="the-copy-trap">The copy trap<a class="headerlink" href="#the-copy-trap" title="Link to this section">&para;</a></h2>
+<p>You met this in NumPy, where a slice was a view into the same memory. Pandas has
+its own version of the problem and it produces a warning that beginners learn to
+ignore.</p>
+<div class="admonition warning">
+<p class="admonition-title">SettingWithCopyWarning</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">subset</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;city&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Tirana&quot;</span><span class="p">]</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">subset</span><span class="p">[</span><span class="s2">&quot;bonus&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1000</span>
+</span></code></pre></div>
+<p>Pandas cannot tell whether <code>subset</code> is a view into <code>df</code> or an independent
+table, so it warns you that your assignment might not do what you expect.</p>
+<p>Two fixes, depending on what you meant. If you wanted a separate table, say
+so with <code>subset = df[df["city"] == "Tirana"].copy()</code>. If you wanted to change
+the original, address it directly:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;city&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Tirana&quot;</span><span class="p">,</span> <span class="s2">&quot;bonus&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1000</span>
+</span></code></pre></div>
+<p>Never chain two selections when assigning. <code>df[df["a"] &gt; 1]["b"] = 0</code> looks
+reasonable and silently does nothing at all.</p>
+</div>
+<h2 id="missing-data">Missing data<a class="headerlink" href="#missing-data" title="Link to this section">&para;</a></h2>
+<p>Finding it is easy. Deciding what to do is the actual skill.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>               <span class="c1"># count of missing values per column</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>         <span class="c1"># total across the table</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;salary&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()]</span>       <span class="c1"># the rows that are missing a salary</span>
+</span></code></pre></div>
+<p><svg viewBox="0 0 680 262" role="img" aria-labelledby="miss-title miss-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="miss-title">Deciding what to do about missing values</title>
+<desc id="miss-desc">If a column is mostly empty, drop the column. If only a few rows are affected, drop those rows. If the column matters, fill the values and add a flag column recording that they were filled.</desc>
+<rect x="180" y="8" width="320" height="44" rx="10" fill="var(--h-cherry)"/>
+<text x="340" y="30" dy="0.36em" text-anchor="middle" font-size="13.5" font-weight="700" fill="#ffffff">this column has missing values</text>
+<polyline points="340,52 340,74 110,74 110,128" fill="none" stroke="var(--h-steel)" stroke-width="1.5"/>
+<polyline points="340,52 340,128" fill="none" stroke="var(--h-steel)" stroke-width="1.5"/>
+<polyline points="340,52 340,74 570,74 570,128" fill="none" stroke="var(--h-steel)" stroke-width="1.5"/>
+<text x="110" y="100" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--h-cherry)">mostly empty</text>
+<text x="340" y="100" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--h-cherry)">a few rows</text>
+<text x="570" y="100" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--h-cherry)">worth keeping</text>
+<rect x="10" y="128" width="200" height="82" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="110" y="156" text-anchor="middle" font-size="13" font-weight="700" fill="var(--md-default-fg-color)">drop the column</text>
+<text x="110" y="178" text-anchor="middle" font-size="11" fill="var(--h-graphite)">it carries almost</text>
+<text x="110" y="194" text-anchor="middle" font-size="11" fill="var(--h-graphite)">no information</text>
+<rect x="240" y="128" width="200" height="82" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="340" y="156" text-anchor="middle" font-size="13" font-weight="700" fill="var(--md-default-fg-color)">drop those rows</text>
+<text x="340" y="178" text-anchor="middle" font-size="11" fill="var(--h-graphite)">check first that they</text>
+<text x="340" y="194" text-anchor="middle" font-size="11" fill="var(--h-graphite)">are not all one group</text>
+<rect x="470" y="128" width="200" height="82" rx="10" fill="var(--h-surface)" stroke="var(--h-cherry)"/>
+<text x="570" y="156" text-anchor="middle" font-size="13" font-weight="700" fill="var(--md-default-fg-color)">fill, and flag</text>
+<text x="570" y="178" text-anchor="middle" font-size="11" fill="var(--h-graphite)">record that the value</text>
+<text x="570" y="194" text-anchor="middle" font-size="11" fill="var(--h-graphite)">was filled, not measured</text>
+<text x="340" y="242" text-anchor="middle" font-size="12" fill="var(--h-graphite)">before any of these, ask why the data is missing. That answer changes the right choice.</text>
+</svg></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;salary&quot;</span><span class="p">])</span>              <span class="c1"># drop rows missing a salary</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;notes&quot;</span><span class="p">])</span>                <span class="c1"># drop a column that is mostly empty</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="n">df</span><span class="p">[</span><span class="s2">&quot;salary_missing&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;salary&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span>     <span class="c1"># flag before filling</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="n">df</span><span class="p">[</span><span class="s2">&quot;salary&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;salary&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;salary&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">())</span>
+</span></code></pre></div>
+<p>Median rather than mean when the column is skewed, which salaries always are. A
+handful of executives will drag a mean somewhere no real employee sits.</p>
+<div class="admonition ml">
+<p class="admonition-title">ML connection</p>
+<p>Missing values are rarely missing at random. If income is blank more often
+for people who declined to answer, then filling those blanks with the
+average quietly invents a population that does not exist. The flag column
+costs nothing and lets a model learn that the absence itself carried
+information.</p>
+</div>
+<h2 id="types-and-text">Types and text<a class="headerlink" href="#types-and-text" title="Link to this section">&para;</a></h2>
+<p>The <code>joined</code> column in the diagram was text, not a date. Fixing types is
+unglamorous and it unlocks everything downstream.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">df</span><span class="p">[</span><span class="s2">&quot;salary&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;salary&quot;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;coerce&quot;</span><span class="p">)</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="n">df</span><span class="p">[</span><span class="s2">&quot;joined&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;joined&quot;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;coerce&quot;</span><span class="p">)</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="n">df</span><span class="p">[</span><span class="s2">&quot;city&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;city&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;category&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<p><code>errors="coerce"</code> turns anything unparseable into a missing value rather than
+raising. Combine it with <code>isna()</code> afterwards to find exactly which rows were
+junk.</p>
+<p>Text needs its own cleaning, because <code>Tirana</code>, <code>tirana</code> and <code>Tirana</code> are three
+different cities as far as pandas is concerned.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">df</span><span class="p">[</span><span class="s2">&quot;city&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;city&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">title</span><span class="p">()</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="n">df</span><span class="p">[</span><span class="s2">&quot;email&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;email&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;email&quot;</span><span class="p">],</span> <span class="n">keep</span><span class="o">=</span><span class="s2">&quot;last&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<p>Once dates are real dates, they become useful:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">df</span><span class="p">[</span><span class="s2">&quot;year_joined&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;joined&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">year</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="n">df</span><span class="p">[</span><span class="s2">&quot;tenure_days&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="o">.</span><span class="n">today</span><span class="p">()</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;joined&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">days</span>
+</span></code></pre></div>
+<h2 id="creating-columns">Creating columns<a class="headerlink" href="#creating-columns" title="Link to this section">&para;</a></h2>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">df</span><span class="p">[</span><span class="s2">&quot;monthly&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;salary&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">12</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="n">df</span><span class="p">[</span><span class="s2">&quot;senior&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;salary&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">55000</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="n">df</span><span class="p">[</span><span class="s2">&quot;band&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;salary&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">55000</span><span class="p">,</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span> <span class="s2">&quot;standard&quot;</span><span class="p">)</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="n">df</span><span class="p">[</span><span class="s2">&quot;region&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;city&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="s2">&quot;Tirana&quot;</span><span class="p">:</span> <span class="s2">&quot;Central&quot;</span><span class="p">,</span> <span class="s2">&quot;Durres&quot;</span><span class="p">:</span> <span class="s2">&quot;Coast&quot;</span><span class="p">})</span>
+</span></code></pre></div>
+<p><code>map</code> on a dictionary is the clean way to recode categories. Anything it does
+not find becomes missing, which is a feature: it tells you about spellings you
+did not anticipate.</p>
+<p>When the logic will not fit in an expression, <code>apply</code> takes a function, but
+reach for it last. It runs a Python loop underneath and gives up the speed you
+came to pandas for.</p>
+<h2 id="grouping">Grouping<a class="headerlink" href="#grouping" title="Link to this section">&para;</a></h2>
+<p>Split the table into piles, compute something for each pile, stack the answers
+back together.</p>
+<p><svg viewBox="0 0 680 264" role="img" aria-labelledby="gb-title gb-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="gb-title">Split, apply, combine</title>
+<desc id="gb-desc">One table of salaries by city is split into one pile per city, the mean is applied to each pile, and the results are combined into a small table with one row per city.</desc>
+<text x="100" y="28" text-anchor="middle" font-size="12" font-weight="700" fill="var(--h-graphite)">one table</text>
+<rect x="20" y="40" width="160" height="26" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<rect x="20" y="66" width="160" height="26" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<rect x="20" y="92" width="160" height="26" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<rect x="20" y="118" width="160" height="26" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<rect x="20" y="144" width="160" height="26" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<rect x="20" y="170" width="160" height="26" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="45" y="58" font-size="11.5" fill="var(--md-default-fg-color)">Tirana</text>
+<text x="150" y="58" text-anchor="end" font-size="11.5" fill="var(--h-graphite)">52</text>
+<text x="45" y="84" font-size="11.5" fill="var(--md-default-fg-color)">Durres</text>
+<text x="150" y="84" text-anchor="end" font-size="11.5" fill="var(--h-graphite)">41</text>
+<text x="45" y="110" font-size="11.5" fill="var(--md-default-fg-color)">Tirana</text>
+<text x="150" y="110" text-anchor="end" font-size="11.5" fill="var(--h-graphite)">60</text>
+<text x="45" y="136" font-size="11.5" fill="var(--md-default-fg-color)">Vlore</text>
+<text x="150" y="136" text-anchor="end" font-size="11.5" fill="var(--h-graphite)">38</text>
+<text x="45" y="162" font-size="11.5" fill="var(--md-default-fg-color)">Durres</text>
+<text x="150" y="162" text-anchor="end" font-size="11.5" fill="var(--h-graphite)">45</text>
+<text x="45" y="188" font-size="11.5" fill="var(--md-default-fg-color)">Tirana</text>
+<text x="150" y="188" text-anchor="end" font-size="11.5" fill="var(--h-graphite)">55</text>
+<line x1="192" y1="118" x2="246" y2="118" stroke="var(--h-steel)" stroke-width="2"/>
+<text x="219" y="108" text-anchor="middle" font-size="11" font-weight="700" fill="var(--h-cherry)">split</text>
+<rect x="256" y="40" width="150" height="78" rx="8" fill="var(--h-cherry-wash)" stroke="var(--h-cherry-line)"/>
+<text x="272" y="58" font-size="11" font-weight="700" fill="var(--h-cherry)">Tirana</text>
+<text x="272" y="78" font-size="11.5" fill="var(--h-graphite)">52</text>
+<text x="322" y="78" font-size="11.5" fill="var(--h-graphite)">60</text>
+<text x="372" y="78" font-size="11.5" fill="var(--h-graphite)">55</text>
+<rect x="256" y="126" width="150" height="58" rx="8" fill="var(--h-cherry-wash)" stroke="var(--h-cherry-line)"/>
+<text x="272" y="144" font-size="11" font-weight="700" fill="var(--h-cherry)">Durres</text>
+<text x="272" y="164" font-size="11.5" fill="var(--h-graphite)">41</text>
+<text x="322" y="164" font-size="11.5" fill="var(--h-graphite)">45</text>
+<rect x="256" y="192" width="150" height="46" rx="8" fill="var(--h-cherry-wash)" stroke="var(--h-cherry-line)"/>
+<text x="272" y="210" font-size="11" font-weight="700" fill="var(--h-cherry)">Vlore</text>
+<text x="272" y="228" font-size="11.5" fill="var(--h-graphite)">38</text>
+<line x1="418" y1="118" x2="472" y2="118" stroke="var(--h-steel)" stroke-width="2"/>
+<text x="445" y="108" text-anchor="middle" font-size="11" font-weight="700" fill="var(--h-cherry)">apply mean</text>
+<text x="570" y="28" text-anchor="middle" font-size="12" font-weight="700" fill="var(--h-graphite)">combine</text>
+<rect x="482" y="40" width="180" height="30" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<rect x="482" y="70" width="180" height="30" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<rect x="482" y="100" width="180" height="30" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="502" y="60" font-size="11.5" font-weight="700" fill="var(--md-default-fg-color)">Tirana</text>
+<text x="642" y="60" text-anchor="end" font-size="11.5" fill="var(--h-graphite)">55.7</text>
+<text x="502" y="90" font-size="11.5" font-weight="700" fill="var(--md-default-fg-color)">Durres</text>
+<text x="642" y="90" text-anchor="end" font-size="11.5" fill="var(--h-graphite)">43.0</text>
+<text x="502" y="120" font-size="11.5" font-weight="700" fill="var(--md-default-fg-color)">Vlore</text>
+<text x="642" y="120" text-anchor="end" font-size="11.5" fill="var(--h-graphite)">38.0</text>
+<text x="572" y="164" text-anchor="middle" font-size="11.5" fill="var(--h-graphite)">one row per group,</text>
+<text x="572" y="180" text-anchor="middle" font-size="11.5" fill="var(--h-graphite)">the group becomes</text>
+<text x="572" y="196" text-anchor="middle" font-size="11.5" fill="var(--h-graphite)">the new index</text>
+</svg></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;city&quot;</span><span class="p">)[</span><span class="s2">&quot;salary&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;city&quot;</span><span class="p">)[</span><span class="s2">&quot;salary&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s2">&quot;count&quot;</span><span class="p">,</span> <span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="s2">&quot;median&quot;</span><span class="p">,</span> <span class="s2">&quot;max&quot;</span><span class="p">])</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;city&quot;</span><span class="p">,</span> <span class="s2">&quot;band&quot;</span><span class="p">])[</span><span class="s2">&quot;salary&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;city&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">headcount</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;count&quot;</span><span class="p">),</span> <span class="n">payroll</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;salary&quot;</span><span class="p">,</span> <span class="s2">&quot;sum&quot;</span><span class="p">))</span>
+</span></code></pre></div>
+<p>The grouping key becomes the index of the result, which is why the output looks
+different from a normal table. <code>reset_index()</code> turns it back into an ordinary
+column when you want one.</p>
+<h2 id="merging-two-tables">Merging two tables<a class="headerlink" href="#merging-two-tables" title="Link to this section">&para;</a></h2>
+<p>Real data arrives split across files: employees in one, departments in another.
+<code>merge</code> joins them on a shared key.</p>
+<p><svg viewBox="0 0 680 320" role="img" aria-labelledby="mg-title mg-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="mg-title">Merging two tables on a shared key</title>
+<desc id="mg-desc">An employees table and a departments table share a department id column. Merging matches rows with the same id and combines their columns into one table. An id present in only one table is dropped by an inner join.</desc>
+<text x="150" y="26" text-anchor="middle" font-size="12" font-weight="700" fill="var(--h-graphite)">employees</text>
+<rect x="30" y="36" width="70" height="28" fill="var(--h-cherry-wash)" stroke="var(--h-cherry-line)"/>
+<rect x="100" y="36" width="140" height="28" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="65" y="55" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--h-cherry)">dept_id</text>
+<text x="170" y="55" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--md-default-fg-color)">name</text>
+<rect x="30" y="64" width="70" height="26" fill="var(--h-cherry-wash)" stroke="var(--h-cherry-line)"/>
+<rect x="100" y="64" width="140" height="26" fill="none" stroke="var(--h-surface-line)"/>
+<text x="65" y="82" text-anchor="middle" font-size="11.5" fill="var(--h-cherry)">1</text>
+<text x="170" y="82" text-anchor="middle" font-size="11.5" fill="var(--h-graphite)">Ana</text>
+<rect x="30" y="90" width="70" height="26" fill="var(--h-cherry-wash)" stroke="var(--h-cherry-line)"/>
+<rect x="100" y="90" width="140" height="26" fill="none" stroke="var(--h-surface-line)"/>
+<text x="65" y="108" text-anchor="middle" font-size="11.5" fill="var(--h-cherry)">2</text>
+<text x="170" y="108" text-anchor="middle" font-size="11.5" fill="var(--h-graphite)">Blerim</text>
+<rect x="30" y="116" width="70" height="26" fill="var(--h-cherry-wash)" stroke="var(--h-cherry-line)"/>
+<rect x="100" y="116" width="140" height="26" fill="none" stroke="var(--h-surface-line)"/>
+<text x="65" y="134" text-anchor="middle" font-size="11.5" fill="var(--h-cherry)">9</text>
+<text x="170" y="134" text-anchor="middle" font-size="11.5" fill="var(--h-graphite)">Eda</text>
+<text x="530" y="26" text-anchor="middle" font-size="12" font-weight="700" fill="var(--h-graphite)">departments</text>
+<rect x="420" y="36" width="70" height="28" fill="var(--h-cherry-wash)" stroke="var(--h-cherry-line)"/>
+<rect x="490" y="36" width="150" height="28" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="455" y="55" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--h-cherry)">dept_id</text>
+<text x="565" y="55" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--md-default-fg-color)">dept_name</text>
+<rect x="420" y="64" width="70" height="26" fill="var(--h-cherry-wash)" stroke="var(--h-cherry-line)"/>
+<rect x="490" y="64" width="150" height="26" fill="none" stroke="var(--h-surface-line)"/>
+<text x="455" y="82" text-anchor="middle" font-size="11.5" fill="var(--h-cherry)">1</text>
+<text x="565" y="82" text-anchor="middle" font-size="11.5" fill="var(--h-graphite)">Engineering</text>
+<rect x="420" y="90" width="70" height="26" fill="var(--h-cherry-wash)" stroke="var(--h-cherry-line)"/>
+<rect x="490" y="90" width="150" height="26" fill="none" stroke="var(--h-surface-line)"/>
+<text x="455" y="108" text-anchor="middle" font-size="11.5" fill="var(--h-cherry)">2</text>
+<text x="565" y="108" text-anchor="middle" font-size="11.5" fill="var(--h-graphite)">Sales</text>
+<text x="340" y="88" text-anchor="middle" font-size="20" fill="var(--h-graphite)">+</text>
+<polyline points="150,148 150,168 340,168 340,196" fill="none" stroke="var(--h-steel)" stroke-width="1.5"/>
+<polyline points="530,122 530,168 340,168" fill="none" stroke="var(--h-steel)" stroke-width="1.5"/>
+<text x="340" y="188" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--h-cherry)">match on dept_id</text>
+<rect x="170" y="200" width="70" height="28" fill="var(--h-cherry)"/>
+<rect x="240" y="200" width="130" height="28" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<rect x="370" y="200" width="140" height="28" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="205" y="219" text-anchor="middle" font-size="11.5" font-weight="700" fill="#ffffff">dept_id</text>
+<text x="305" y="219" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--md-default-fg-color)">name</text>
+<text x="440" y="219" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--md-default-fg-color)">dept_name</text>
+<rect x="170" y="228" width="70" height="26" fill="var(--h-cherry-wash)" stroke="var(--h-cherry-line)"/>
+<rect x="240" y="228" width="130" height="26" fill="none" stroke="var(--h-surface-line)"/>
+<rect x="370" y="228" width="140" height="26" fill="none" stroke="var(--h-surface-line)"/>
+<text x="205" y="246" text-anchor="middle" font-size="11.5" fill="var(--h-cherry)">1</text>
+<text x="305" y="246" text-anchor="middle" font-size="11.5" fill="var(--h-graphite)">Ana</text>
+<text x="440" y="246" text-anchor="middle" font-size="11.5" fill="var(--h-graphite)">Engineering</text>
+<rect x="170" y="254" width="70" height="26" fill="var(--h-cherry-wash)" stroke="var(--h-cherry-line)"/>
+<rect x="240" y="254" width="130" height="26" fill="none" stroke="var(--h-surface-line)"/>
+<rect x="370" y="254" width="140" height="26" fill="none" stroke="var(--h-surface-line)"/>
+<text x="205" y="272" text-anchor="middle" font-size="11.5" fill="var(--h-cherry)">2</text>
+<text x="305" y="272" text-anchor="middle" font-size="11.5" fill="var(--h-graphite)">Blerim</text>
+<text x="440" y="272" text-anchor="middle" font-size="11.5" fill="var(--h-graphite)">Sales</text>
+<text x="340" y="302" text-anchor="middle" font-size="12" fill="var(--h-graphite)">Eda had dept_id 9, which appears in no department. An inner join drops her silently.</text>
+</svg></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="n">merged</span> <span class="o">=</span> <span class="n">employees</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">departments</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;dept_id&quot;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;inner&quot;</span><span class="p">)</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="n">merged</span> <span class="o">=</span> <span class="n">employees</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">departments</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;dept_id&quot;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">)</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="n">merged</span> <span class="o">=</span> <span class="n">employees</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">departments</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="s2">&quot;dept&quot;</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th><code>how</code></th>
+<th>What you keep</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>inner</code></td>
+<td>Only rows whose key appears in both tables</td>
+</tr>
+<tr>
+<td><code>left</code></td>
+<td>Every row of the left table, with blanks where there was no match</td>
+</tr>
+<tr>
+<td><code>right</code></td>
+<td>Every row of the right table</td>
+</tr>
+<tr>
+<td><code>outer</code></td>
+<td>Everything from both, with blanks on either side</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">Always check the row count after a merge</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">employees</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">merged</span><span class="p">))</span>
+</span></code></pre></div>
+<p>Rows vanishing means keys did not match, often because one side is text and
+the other is a number, or because of trailing spaces. Rows multiplying means
+the key is not unique on one side and you have accidentally created
+duplicates. Both are common and neither raises an error.</p>
+<p><code>how="left"</code> plus <code>validate="many_to_one"</code> will make pandas complain loudly
+instead of silently producing a wrong table.</p>
+</div>
+<h2 id="saving-your-work">Saving your work<a class="headerlink" href="#saving-your-work" title="Link to this section">&para;</a></h2>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;clean.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span></code></pre></div>
+<p>Pass <code>index=False</code> unless the index means something, otherwise you get a stray
+unnamed column every time you reload the file. <code>to_excel</code>, <code>to_parquet</code> and
+<code>to_json</code> work the same way, and parquet is worth knowing for anything large
+because it keeps your data types.</p>
+<h2 id="the-whole-thing-on-one-screen">The whole thing on one screen<a class="headerlink" href="#the-whole-thing-on-one-screen" title="Link to this section">&para;</a></h2>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;employees.csv&quot;</span><span class="p">,</span> <span class="n">na_values</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;NA&quot;</span><span class="p">,</span> <span class="s2">&quot;unknown&quot;</span><span class="p">])</span>
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="n">df</span><span class="p">[</span><span class="s2">&quot;city&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;city&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">title</span><span class="p">()</span>
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="n">df</span><span class="p">[</span><span class="s2">&quot;salary&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;salary&quot;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;coerce&quot;</span><span class="p">)</span>
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="n">df</span><span class="p">[</span><span class="s2">&quot;joined&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;joined&quot;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;coerce&quot;</span><span class="p">)</span>
+</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
+</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="n">df</span><span class="p">[</span><span class="s2">&quot;salary_missing&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;salary&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span>
+</span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="n">df</span><span class="p">[</span><span class="s2">&quot;salary&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;salary&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;salary&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">())</span>
+</span><span id="__span-18-11"><a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a><span class="n">df</span><span class="p">[</span><span class="s2">&quot;tenure_days&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="o">.</span><span class="n">today</span><span class="p">()</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;joined&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">days</span>
+</span><span id="__span-18-12"><a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">departments</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;dept_id&quot;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">)</span>
+</span><span id="__span-18-13"><a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a><span class="n">summary</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;city&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">headcount</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;count&quot;</span><span class="p">),</span> <span class="n">pay</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;salary&quot;</span><span class="p">,</span> <span class="s2">&quot;median&quot;</span><span class="p">))</span>
+</span><span id="__span-18-14"><a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a><span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;clean.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span></code></pre></div>
+<p>Twelve lines, and it is the shape of most real data preparation jobs. Load,
+standardise text, fix types, deduplicate, handle missing values, derive what you
+need, join what is elsewhere, summarise, save.</p>
+<h2 id="where-this-sits-in-the-lifecycle">Where this sits in the lifecycle<a class="headerlink" href="#where-this-sits-in-the-lifecycle" title="Link to this section">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Lifecycle stage</th>
+<th>What you use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Collect</td>
+<td><code>read_csv</code>, <code>read_excel</code>, <code>read_sql</code>, <code>merge</code></td>
+</tr>
+<tr>
+<td>Prepare</td>
+<td><code>dropna</code>, <code>fillna</code>, <code>astype</code>, <code>str</code> methods, <code>drop_duplicates</code></td>
+</tr>
+<tr>
+<td>Prepare</td>
+<td>new columns, <code>map</code>, <code>np.where</code>, <code>groupby</code></td>
+</tr>
+<tr>
+<td>Evaluate</td>
+<td><code>value_counts</code>, <code>describe</code>, <code>crosstab</code> to check what you built</td>
+</tr>
+</tbody>
+</table>
+<p>Collect and Prepare are the first two boxes of the loop from Fundamentals, and
+they are where most of your time goes.</p>
+<h2 id="when-it-goes-wrong">When it goes wrong<a class="headerlink" href="#when-it-goes-wrong" title="Link to this section">&para;</a></h2>
+<details class="note">
+<summary><code>KeyError: 'salary'</code></summary>
+<p>The column does not exist under that name. Print <code>df.columns.tolist()</code>.
+Usually it is a trailing space or a different capitalisation in the file
+header. <code>df.columns = df.columns.str.strip().str.lower()</code> right after
+loading prevents a whole category of this.</p>
+</details>
+<details class="note">
+<summary><code>SettingWithCopyWarning</code></summary>
+<p>You assigned into something that may be a view. Use <code>.copy()</code> if you wanted
+a separate table, or <code>df.loc[condition, "column"] = value</code> if you wanted to
+change the original.</p>
+</details>
+<details class="note">
+<summary><code>ValueError: The truth value of a Series is ambiguous</code></summary>
+<p>You used <code>and</code>, <code>or</code> or <code>not</code> on a whole column. Use <code>&amp;</code>, <code>|</code> and <code>~</code>, with
+brackets around each condition.</p>
+</details>
+<details class="note">
+<summary>My filter returned an empty table</summary>
+<p>Compare against the real values with <code>df["city"].unique()</code>. It is almost
+always whitespace or capitalisation, which is why cleaning text comes before
+filtering.</p>
+</details>
+<details class="note">
+<summary>After merging I have more rows than I started with</summary>
+<p>The key is not unique in the right-hand table, so each left row matched
+several right rows. Check with <code>departments["dept_id"].duplicated().sum()</code>.</p>
+</details>
+<details class="note">
+<summary>A column of numbers has dtype object</summary>
+<p>Something in it is not a number: a currency symbol, a comma, or the word
+unknown. <code>pd.to_numeric(col, errors="coerce")</code> then <code>isna()</code> shows you
+exactly which rows.</p>
+</details>
+<h2 id="check-yourself">Check yourself<a class="headerlink" href="#check-yourself" title="Link to this section">&para;</a></h2>
+<p>Use any small CSV you have, or one column of the data from the project.</p>
+<ol>
+<li>Load a file and, without looking at it in a spreadsheet, say how many rows it
+   has, which columns are the wrong type, and which have missing values.</li>
+<li>Select two columns, then the rows where a numeric column exceeds its own
+   median. Do it in one expression.</li>
+<li>Take a column with inconsistent text values and reduce it to a clean set.
+   Prove it with <code>value_counts()</code> before and after.</li>
+<li>Fill a column's missing values, and add a flag column recording which rows
+   were filled. Explain why you chose mean or median.</li>
+<li>Group by a category and produce count and median in one call, then reset the
+   index so the result is an ordinary table.</li>
+<li>Merge two tables on a key, then check that the row count is what you expected
+   and explain any difference.</li>
+</ol>
+<h2 id="quick-reference">Quick reference<a class="headerlink" href="#quick-reference" title="Link to this section">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Load</td>
+<td><code>pd.read_csv("f.csv", na_values=["NA"])</code></td>
+</tr>
+<tr>
+<td>First look</td>
+<td><code>df.head()</code>, <code>df.info()</code>, <code>df.describe()</code></td>
+</tr>
+<tr>
+<td>Size</td>
+<td><code>df.shape</code></td>
+</tr>
+<tr>
+<td>One column</td>
+<td><code>df["col"]</code></td>
+</tr>
+<tr>
+<td>Several columns</td>
+<td><code>df[["a", "b"]]</code></td>
+</tr>
+<tr>
+<td>Row by label, by position</td>
+<td><code>df.loc[2]</code>, <code>df.iloc[2]</code></td>
+</tr>
+<tr>
+<td>Filter</td>
+<td><code>df[(df["a"] &gt; 1) &amp; (df["b"] == "x")]</code></td>
+</tr>
+<tr>
+<td>Missing counts</td>
+<td><code>df.isna().sum()</code></td>
+</tr>
+<tr>
+<td>Drop, fill</td>
+<td><code>df.dropna(subset=["a"])</code>, <code>df["a"].fillna(value)</code></td>
+</tr>
+<tr>
+<td>Fix types</td>
+<td><code>pd.to_numeric(...)</code>, <code>pd.to_datetime(...)</code>, <code>.astype("category")</code></td>
+</tr>
+<tr>
+<td>Clean text</td>
+<td><code>df["a"].str.strip().str.title()</code></td>
+</tr>
+<tr>
+<td>Duplicates</td>
+<td><code>df.drop_duplicates(subset=["id"])</code></td>
+</tr>
+<tr>
+<td>New column</td>
+<td><code>df["new"] = df["a"] / 12</code></td>
+</tr>
+<tr>
+<td>Recode</td>
+<td><code>df["a"].map({"x": 1})</code>, <code>np.where(cond, "y", "n")</code></td>
+</tr>
+<tr>
+<td>Group</td>
+<td><code>df.groupby("city")["salary"].agg(["count", "median"])</code></td>
+</tr>
+<tr>
+<td>Join</td>
+<td><code>a.merge(b, on="key", how="left")</code></td>
+</tr>
+<tr>
+<td>Save</td>
+<td><code>df.to_csv("out.csv", index=False)</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="questions-to-sit-with">Questions to sit with<a class="headerlink" href="#questions-to-sit-with" title="Link to this section">&para;</a></h2>
+<ol>
+<li>You fill missing salaries with the column median. What have you told the
+   model, and what have you hidden from it?</li>
+<li>An inner join quietly dropped a quarter of your rows. Nothing raised an
+   error. What process would catch that before it reaches a model?</li>
+<li><code>df["city"].value_counts()</code> shows Tirana with 40 and Tirane with 12. Is
+   merging them a data cleaning decision or a modelling decision, and does the
+   distinction matter?</li>
+<li>Pandas makes it easy to transform data until it gives the answer you wanted.
+   What would you keep, in your code or your notes, so that somebody else could
+   tell the difference between cleaning and tuning?</li>
+</ol>
+<h2 id="next">Next<a class="headerlink" href="#next" title="Link to this section">&para;</a></h2>
+<p>You can shape data. Now make it visible, which is how you find the problems that
+<code>info()</code> cannot show you.</p>
+<p><a class="h-button" href="../plotting/">Plotting</a></p>
+<p>Worth your time: the
+<a href="https://pandas.pydata.org/docs/user_guide/index.html">pandas user guide</a> for
+depth, and
+<a href="https://wesmckinney.com/book/">Python for Data Analysis</a> by the author of
+pandas, free to read online.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../linear-algebra/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Linear Algebra">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Linear Algebra
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../plotting/" class="md-footer__link md-footer__link--next" aria-label="Next: Plotting">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Plotting
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Holberton School Albania
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://github.com/evisp" target="_blank" rel="noopener" title="GitHub" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://www.linkedin.com/school/holbertonschool/" target="_blank" rel="noopener" title="Holberton School" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.indexes", "navigation.path", "navigation.top", "navigation.tracking", "navigation.footer", "toc.follow", "search.highlight", "search.share", "search.suggest", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.action.edit"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

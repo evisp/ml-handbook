@@ -1,0 +1,3309 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A practical, project-based machine learning curriculum for Holberton School Albania. Real projects, real skills, real careers.">
+      
+      
+        <meta name="author" content="Evis Plaku">
+      
+      
+        <link rel="canonical" href="https://evisp.github.io/ml-handbook/t1-real-data/web-scraping/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../apis/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Web Scraping - Holberton ML Handbook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Host+Grotesk:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Host Grotesk";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/brand.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#data-collection-web-scraping" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Holberton ML Handbook" class="md-header__button md-logo" aria-label="Holberton ML Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Holberton ML Handbook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Web Scraping
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/evisp/ml-handbook" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    evisp/ml-handbook
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../roadmap/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Roadmap
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../01-tools/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Tools
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../02-fundamentals/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Fundamentals
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../t1-maths-tools/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Data Analyst
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../projects/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Projects
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Holberton ML Handbook" class="md-nav__button md-logo" aria-label="Holberton ML Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Holberton ML Handbook
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/evisp/ml-handbook" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    evisp/ml-handbook
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../01-tools/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/zero-day/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Zero day
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/git-and-github/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git & GitHub
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/notebook-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jupyter notebook setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/vscode-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/python-warm-up/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python warm up
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../02-fundamentals/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Fundamentals
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-fundamentals/what-is-ai/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    What AI is
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-fundamentals/what-is-ml/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How machines learn
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-fundamentals/framing-ml-problems/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Framing a problem
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-fundamentals/working-with-data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Working with data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-fundamentals/ethics-and-responsibility/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ethics and responsibility
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-fundamentals/how-training-works/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    What training actually does
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Analyst
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Data Analyst
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../t1-maths-tools/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Maths and tools
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5_1" id="__nav_5_1_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Maths and tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-maths-tools/linear-algebra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linear Algebra
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-maths-tools/pandas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pandas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-maths-tools/plotting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plotting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-maths-tools/probability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Probability
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Real data
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5_2" id="__nav_5_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Real data
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Scraping
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Scraping
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this matters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-the-cheaper-routes-first" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check the cheaper routes first
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#static-and-dynamic-pages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Static and dynamic pages
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reading-html" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading HTML
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#css-selectors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CSS selectors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scraping-a-static-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scraping a static page
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#following-pagination" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Following pagination
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-that-is-already-structured" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data that is already structured
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-you-need-a-real-browser" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When you need a real browser
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="When you need a real browser">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#waiting-properly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Waiting properly
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clicking-typing-and-filtering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Clicking, typing and filtering
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cookie-banners-and-popups" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cookie banners and popups
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#infinite-scroll" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Infinite scroll
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#not-collecting-the-same-thing-twice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Not collecting the same thing twice
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#organising-a-scraper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Organising a scraper
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scraping-responsibly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scraping responsibly
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-it-goes-wrong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When it goes wrong
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#questions-to-sit-with" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Questions to sit with
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../apis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    APIs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-preparation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Preparation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-preprocessing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Preprocessing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../t1-models/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classic models
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5_3" id="__nav_5_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Classic models
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-models/classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-models/linear-models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linear Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-models/tree-models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tree-Based Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-models/bias-variance.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bias, variance and tuning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-models/unsupervised-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unsupervised Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-models/clustering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../projects/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Projects
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Projects
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../projects/rock-paper-scissors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rock, paper, scissors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../projects/one-page-finding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    One page, one finding
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this matters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-the-cheaper-routes-first" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check the cheaper routes first
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#static-and-dynamic-pages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Static and dynamic pages
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reading-html" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading HTML
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#css-selectors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CSS selectors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scraping-a-static-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scraping a static page
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#following-pagination" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Following pagination
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-that-is-already-structured" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data that is already structured
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-you-need-a-real-browser" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When you need a real browser
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="When you need a real browser">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#waiting-properly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Waiting properly
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clicking-typing-and-filtering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Clicking, typing and filtering
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cookie-banners-and-popups" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cookie banners and popups
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#infinite-scroll" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Infinite scroll
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#not-collecting-the-same-thing-twice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Not collecting the same thing twice
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#organising-a-scraper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Organising a scraper
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scraping-responsibly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scraping responsibly
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-it-goes-wrong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When it goes wrong
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#questions-to-sit-with" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Questions to sit with
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../../t1-maths-tools/" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Data Analyst
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Real data
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/evisp/ml-handbook/edit/main/docs/t1-real-data/web-scraping.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="data-collection-web-scraping">Data Collection: Web Scraping<a class="headerlink" href="#data-collection-web-scraping" title="Link to this section">&para;</a></h1>
+<p><span class="badge badge--time">75 min</span>
+<span class="badge badge--level">Real data</span>
+<span class="badge">Needs: Pandas</span></p>
+<p>Web scraping is pulling structured data out of pages that were built for people
+to look at. This page covers how to do it, how to decide whether you should, and
+how to tell which of the two tools you need.</p>
+<h2 id="why-this-matters">Why this matters<a class="headerlink" href="#why-this-matters" title="Link to this section">&para;</a></h2>
+<p>Most interesting data is not sitting in a CSV waiting for you. It is on a page
+somewhere, formatted for a human reader, and getting it into a DataFrame is your
+problem. Being able to solve that problem yourself is the difference between
+working on datasets somebody handed you and working on questions you chose.</p>
+<p>It is also the first thing in this programme that touches somebody else's
+machine. Everything until now ran on your laptop and could only hurt you. A
+scraper sends requests to a server you do not own, which is why half of this page
+is about judgment rather than code.</p>
+<h2 id="check-the-cheaper-routes-first">Check the cheaper routes first<a class="headerlink" href="#check-the-cheaper-routes-first" title="Link to this section">&para;</a></h2>
+<p>Almost everybody's instinct is to open the page, look at the HTML and start
+parsing. That is the slowest and most fragile of four options, and it should be
+your third choice.</p>
+<p><svg viewBox="0 0 680 318" role="img" aria-labelledby="ld-title ld-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="ld-title">Four ways to get data from a website, best first</title>
+<desc id="ld-desc">Try a documented API first. Then structured data embedded in the page. Then parsing the static HTML. Only use a real browser when nothing else works.</desc>
+<defs><marker id="ld" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--h-steel)"/></marker></defs>
+<line x1="34" y1="44" x2="34" y2="292" stroke="var(--h-steel)" stroke-width="2" marker-end="url(#ld)"/>
+<text x="22" y="36" font-size="11" font-weight="700" fill="var(--h-graphite)">try in</text>
+<text x="22" y="50" font-size="11" font-weight="700" fill="var(--h-graphite)">this order</text>
+<rect x="60" y="40" width="560" height="56" rx="10" fill="var(--h-cherry)" opacity="1.0"/>
+<text x="80" y="64" font-size="13.5" font-weight="700" fill="#ffffff">A documented API</text>
+<text x="80" y="83" font-size="11" fill="#ffffff" opacity="0.9">ask for the data the way the site intends</text>
+<text x="636" y="70" text-anchor="end" font-size="0" fill="var(--h-graphite)"> </text>
+<rect x="60" y="106" width="560" height="56" rx="10" fill="var(--h-cherry)" opacity="0.72"/>
+<text x="80" y="130" font-size="13.5" font-weight="700" fill="#ffffff">Structured data inside the page</text>
+<text x="80" y="149" font-size="11" fill="#ffffff" opacity="0.9">JSON-LD in a script tag, put there for search engines</text>
+<text x="636" y="136" text-anchor="end" font-size="0" fill="var(--h-graphite)"> </text>
+<rect x="60" y="172" width="560" height="56" rx="10" fill="var(--h-cherry)" opacity="0.46"/>
+<text x="80" y="196" font-size="13.5" font-weight="700" fill="#ffffff">Static HTML</text>
+<text x="80" y="215" font-size="11" fill="#ffffff" opacity="0.9">requests plus BeautifulSoup over the page source</text>
+<text x="636" y="202" text-anchor="end" font-size="0" fill="var(--h-graphite)"> </text>
+<rect x="60" y="238" width="560" height="56" rx="10" fill="var(--h-cherry)" opacity="0.22"/>
+<text x="80" y="262" font-size="13.5" font-weight="700" fill="#ffffff">A real browser</text>
+<text x="80" y="281" font-size="11" fill="#ffffff" opacity="0.9">Selenium, when the data only exists after JavaScript runs</text>
+<text x="636" y="268" text-anchor="end" font-size="0" fill="var(--h-graphite)"> </text>
+<text x="600" y="74" text-anchor="end" font-size="10.5" font-weight="700" fill="#ffffff" opacity="0.85">fastest, stable, usually allowed</text>
+<text x="600" y="140" text-anchor="end" font-size="10.5" font-weight="700" fill="#ffffff" opacity="0.85">still just text, no parsing guesswork</text>
+<text x="600" y="206" text-anchor="end" font-size="10.5" font-weight="700" fill="#ffffff" opacity="0.85">breaks when the layout changes</text>
+<text x="600" y="272" text-anchor="end" font-size="10.5" font-weight="700" fill="#ffffff" opacity="0.85">slow, heavy, brittle, last resort</text>
+<text x="340" y="308" text-anchor="middle" font-size="12" fill="var(--h-graphite)">Most people start at the bottom. Almost every site you will meet can be scraped from higher up the list.</text>
+</svg></p>
+<p>The reason is fragility. A parser built on the page layout breaks the next time
+somebody changes a CSS class. An API returns the data as data, and keeps working.</p>
+<p>You will do exactly this comparison in the project. One task scrapes the quotes
+by parsing HTML. Another task gets the same quotes from
+<code>/api/quotes?page=1</code>, which the site's own JavaScript uses. The second is shorter,
+faster and more reliable, and the only way to find it was to look.</p>
+<div class="admonition tip">
+<p class="admonition-title">How to find the hidden API</p>
+<p>Open the page, press F12, go to the <strong>Network</strong> tab, tick <strong>Fetch/XHR</strong> and
+reload. Every request the page makes to fetch its own data appears there.
+Click one and look at the response. If it is JSON, you have just skipped the
+hardest part of the project.</p>
+</div>
+<h2 id="static-and-dynamic-pages">Static and dynamic pages<a class="headerlink" href="#static-and-dynamic-pages" title="Link to this section">&para;</a></h2>
+<p>This distinction decides which tool you need, and it is the single most useful
+thing on this page.</p>
+<p><svg viewBox="0 0 680 296" role="img" aria-labelledby="sd-title sd-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="sd-title">A static page compared with a dynamic page</title>
+<desc id="sd-desc">On a static page the server returns HTML that already contains the data. On a dynamic page the server returns an empty shell and JavaScript fetches the data afterwards, so a plain request sees nothing.</desc>
+<defs><marker id="sd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--h-steel)"/></marker></defs>
+<text x="20" y="28" font-size="13" font-weight="700" fill="var(--h-cherry)">static page</text>
+<rect x="20" y="40" width="130" height="58" rx="9" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="85" y="66" text-anchor="middle" font-size="12" font-weight="700" fill="var(--md-default-fg-color)">requests.get</text>
+<text x="85" y="84" text-anchor="middle" font-size="10" fill="var(--h-space)">your code</text>
+<line x1="154" y1="69" x2="196" y2="69" stroke="var(--h-steel)" stroke-width="2" marker-end="url(#sd)"/>
+<rect x="200" y="40" width="130" height="58" rx="9" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="265" y="66" text-anchor="middle" font-size="12" font-weight="700" fill="var(--md-default-fg-color)">server</text>
+<text x="265" y="84" text-anchor="middle" font-size="10" fill="var(--h-space)">builds the page</text>
+<line x1="334" y1="69" x2="376" y2="69" stroke="var(--h-steel)" stroke-width="2" marker-end="url(#sd)"/>
+<rect x="380" y="40" width="280" height="58" rx="9" fill="var(--h-cherry)"/>
+<text x="520" y="66" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ffffff">HTML with the quotes already in it</text>
+<text x="520" y="84" text-anchor="middle" font-size="10" fill="#ffffff" opacity="0.88">BeautifulSoup can read this</text>
+<text x="20" y="146" font-size="13" font-weight="700" fill="var(--h-graphite)">dynamic page</text>
+<rect x="20" y="158" width="130" height="58" rx="9" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="85" y="184" text-anchor="middle" font-size="12" font-weight="700" fill="var(--md-default-fg-color)">requests.get</text>
+<text x="85" y="202" text-anchor="middle" font-size="10" fill="var(--h-space)">your code</text>
+<line x1="154" y1="187" x2="196" y2="187" stroke="var(--h-steel)" stroke-width="2" marker-end="url(#sd)"/>
+<rect x="200" y="158" width="130" height="58" rx="9" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="265" y="184" text-anchor="middle" font-size="12" font-weight="700" fill="var(--md-default-fg-color)">server</text>
+<text x="265" y="202" text-anchor="middle" font-size="10" fill="var(--h-space)">sends a shell</text>
+<line x1="334" y1="187" x2="376" y2="187" stroke="var(--h-steel)" stroke-width="2" marker-end="url(#sd)"/>
+<rect x="380" y="158" width="280" height="58" rx="9" fill="var(--h-surface)" stroke="var(--h-steel)" stroke-dasharray="5 4"/>
+<text x="520" y="184" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--h-graphite)">HTML with no quotes in it</text>
+<text x="520" y="202" text-anchor="middle" font-size="10" fill="var(--h-space)">JavaScript fetches them later, in a browser</text>
+<text x="340" y="252" text-anchor="middle" font-size="12" fill="var(--h-graphite)">The test takes ten seconds: open the page source, or print the HTML, and search for a value you can see on screen.</text>
+<text x="340" y="272" text-anchor="middle" font-size="12" fill="var(--h-graphite)">If it is there, requests is enough. If it is not, the data arrives by JavaScript and you need a browser.</text>
+</svg></p>
+<p>A <strong>static page</strong> arrives complete. The server built the HTML, the data is in it,
+and <code>requests</code> gets everything a browser would.</p>
+<p>A <strong>dynamic page</strong> arrives as a shell. The HTML has the layout but not the
+content, and JavaScript fetches the data after the page loads. <code>requests</code> does not
+run JavaScript, so it sees an empty page and you get an empty list with no error
+to explain it.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">html</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://quotes.toscrape.com/&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Einstein&quot;</span> <span class="ow">in</span> <span class="n">html</span><span class="p">)</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">html_js</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://quotes.toscrape.com/js/&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Einstein&quot;</span> <span class="ow">in</span> <span class="n">html_js</span><span class="p">)</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>True
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>False
+</span></code></pre></div>
+<p>Same site, same quotes on screen, two different answers. The <code>/js/</code> version
+builds its page with JavaScript, which is why the project gives you both.</p>
+<p>When the answer is <code>False</code>, you have two options and the order matters: look for
+the underlying API first, and reach for a browser only if there is not one.</p>
+<h2 id="reading-html">Reading HTML<a class="headerlink" href="#reading-html" title="Link to this section">&para;</a></h2>
+<p>An HTML page is a tree of nested elements. Each element has a <strong>tag</strong> that says
+what kind of thing it is, optional <strong>attributes</strong> including <code>class</code> and <code>id</code>, and
+content that may be text or more elements.</p>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;quote&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>  <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;text&quot;</span><span class="p">&gt;</span>The world as we have created it...<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>  <span class="p">&lt;</span><span class="nt">small</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;author&quot;</span><span class="p">&gt;</span>Albert Einstein<span class="p">&lt;/</span><span class="nt">small</span><span class="p">&gt;</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;tags&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;tag&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;/tag/change/&quot;</span><span class="p">&gt;</span>change<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></code></pre></div>
+<p><code>div</code> and <code>span</code> and <code>a</code> are tags. <code>class="quote"</code> is an attribute. Classes are
+how a site labels elements that play the same role, which is exactly what makes
+them useful to you: every quote on the page is wrapped in <code>div.quote</code>.</p>
+<p>Inspect this yourself before writing any code. Right click on the thing you want,
+choose <strong>Inspect</strong>, and the browser shows you the element and its classes.</p>
+<h2 id="css-selectors">CSS selectors<a class="headerlink" href="#css-selectors" title="Link to this section">&para;</a></h2>
+<p>A selector is a pattern that picks elements out of the tree. You need about six
+of them.</p>
+<p><svg viewBox="0 0 680 312" role="img" aria-labelledby="ht-title ht-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="ht-title">The structure of one quote block and the selector for each part</title>
+<desc id="ht-desc">A div with class quote contains a span with class text, a small with class author, and a div with class tags holding several anchors with class tag. Each part has a CSS selector that reaches it.</desc>
+<text x="24" y="26" font-size="12" font-weight="700" fill="var(--h-graphite)">the page structure</text>
+<text x="430" y="26" font-size="12" font-weight="700" fill="var(--h-cherry)">the selector that reaches it</text>
+<rect x="20" y="36" width="380" height="244" rx="10" fill="var(--h-cherry-wash)" stroke="var(--h-cherry)" stroke-width="2"/>
+<text x="36" y="58" font-size="12.5" font-weight="700" fill="var(--h-cherry)">div.quote</text>
+<rect x="40" y="70" width="340" height="52" rx="8" fill="var(--md-default-bg-color)" stroke="var(--h-surface-line)"/>
+<text x="56" y="90" font-size="12" font-weight="700" fill="var(--md-default-fg-color)">span.text</text>
+<text x="56" y="108" font-size="10.5" fill="var(--h-space)">the quote itself</text>
+<rect x="40" y="130" width="340" height="52" rx="8" fill="var(--md-default-bg-color)" stroke="var(--h-surface-line)"/>
+<text x="56" y="150" font-size="12" font-weight="700" fill="var(--md-default-fg-color)">small.author</text>
+<text x="56" y="168" font-size="10.5" fill="var(--h-space)">who said it</text>
+<rect x="40" y="190" width="340" height="74" rx="8" fill="var(--md-default-bg-color)" stroke="var(--h-surface-line)"/>
+<text x="56" y="210" font-size="12" font-weight="700" fill="var(--md-default-fg-color)">div.tags</text>
+<rect x="58" y="222" width="94" height="30" rx="6" fill="var(--h-cherry)" opacity="0.8"/>
+<text x="105" y="237" dy="0.36em" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ffffff">a.tag</text>
+<rect x="162" y="222" width="94" height="30" rx="6" fill="var(--h-cherry)" opacity="0.8"/>
+<text x="209" y="237" dy="0.36em" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ffffff">a.tag</text>
+<rect x="266" y="222" width="94" height="30" rx="6" fill="var(--h-cherry)" opacity="0.8"/>
+<text x="313" y="237" dy="0.36em" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ffffff">a.tag</text>
+<line x1="404" y1="58" x2="426" y2="58" stroke="var(--h-steel)" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text x="432" y="62" font-size="12.5" font-weight="700" fill="var(--h-cherry)">div.quote</text>
+<text x="432" y="78" font-size="10.5" fill="var(--h-space)">one whole block</text>
+<line x1="404" y1="96" x2="426" y2="96" stroke="var(--h-steel)" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text x="432" y="100" font-size="12.5" font-weight="700" fill="var(--h-cherry)">.quote .text</text>
+<text x="432" y="116" font-size="10.5" fill="var(--h-space)">the text inside it</text>
+<line x1="404" y1="156" x2="426" y2="156" stroke="var(--h-steel)" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text x="432" y="160" font-size="12.5" font-weight="700" fill="var(--h-cherry)">.quote .author</text>
+<text x="432" y="176" font-size="10.5" fill="var(--h-space)">the author inside it</text>
+<line x1="404" y1="230" x2="426" y2="230" stroke="var(--h-steel)" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text x="432" y="234" font-size="12.5" font-weight="700" fill="var(--h-cherry)">.quote .tags a</text>
+<text x="432" y="250" font-size="10.5" fill="var(--h-space)">every tag anchor</text>
+<text x="340" y="302" text-anchor="middle" font-size="12" fill="var(--h-graphite)">A dot means a class. A space means "somewhere inside". That is almost every selector you will need.</text>
+</svg></p>
+<table>
+<thead>
+<tr>
+<th>Selector</th>
+<th>Picks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>div</code></td>
+<td>every div</td>
+</tr>
+<tr>
+<td><code>.quote</code></td>
+<td>every element with class quote</td>
+</tr>
+<tr>
+<td><code>#main</code></td>
+<td>the element with id main</td>
+</tr>
+<tr>
+<td><code>div.quote</code></td>
+<td>every div that has class quote</td>
+</tr>
+<tr>
+<td><code>.quote .text</code></td>
+<td>anything with class text inside something with class quote</td>
+</tr>
+<tr>
+<td><code>.quote &gt; span</code></td>
+<td>a span that is a direct child, not a grandchild</td>
+</tr>
+<tr>
+<td><code>a[href]</code></td>
+<td>every anchor that has an href attribute</td>
+</tr>
+<tr>
+<td><code>li.next a</code></td>
+<td>the anchor inside the list item with class next</td>
+</tr>
+</tbody>
+</table>
+<p>The last one is the pagination link in the project. The space means "somewhere
+inside", and the dot means "has this class". Those two ideas cover most real
+selectors.</p>
+<div class="admonition warning">
+<p class="admonition-title">Do not parse HTML with regular expressions</p>
+<p>The project forbids it, and the reason is not arbitrary. HTML nests, and
+regular expressions cannot count nesting. A pattern that works on the first
+page breaks on the one where somebody put a <code>&lt;span&gt;</code> inside a <code>&lt;span&gt;</code>, and
+it fails silently by matching the wrong thing rather than by raising.</p>
+</div>
+<h2 id="scraping-a-static-page">Scraping a static page<a class="headerlink" href="#scraping-a-static-page" title="Link to this section">&para;</a></h2>
+<p>Two libraries. <code>requests</code> gets the page, BeautifulSoup parses it.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>pip<span class="w"> </span>install<span class="w"> </span>requests<span class="w"> </span>beautifulsoup4
+</span></code></pre></div>
+<p>Start with fetching, and make it its own function.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="k">def</span><span class="w"> </span><span class="nf">fetch_html</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Fetch a page and return its HTML as text.&quot;&quot;&quot;</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>    <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span>
+</span></code></pre></div>
+<p>Three things in four lines are worth naming. <code>timeout</code> stops your script hanging
+forever on a server that never answers. <code>raise_for_status</code> turns a 404 or a 500
+into an exception instead of letting you parse an error page as if it were data.
+And <code>headers</code> is where you identify yourself, which comes up later.</p>
+<p>Then parse.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">bs4</span><span class="w"> </span><span class="kn">import</span> <span class="n">BeautifulSoup</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="k">def</span><span class="w"> </span><span class="nf">scrape_basic</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the quotes on one page as a list of dicts.&quot;&quot;&quot;</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>    <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">fetch_html</span><span class="p">(</span><span class="n">url</span><span class="p">),</span> <span class="s2">&quot;html.parser&quot;</span><span class="p">)</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>    <span class="n">quotes</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>    <span class="k">for</span> <span class="n">block</span> <span class="ow">in</span> <span class="n">soup</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;div.quote&quot;</span><span class="p">):</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>        <span class="n">quotes</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>            <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">block</span><span class="o">.</span><span class="n">select_one</span><span class="p">(</span><span class="s2">&quot;span.text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">get_text</span><span class="p">(</span><span class="n">strip</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>            <span class="s2">&quot;author&quot;</span><span class="p">:</span> <span class="n">block</span><span class="o">.</span><span class="n">select_one</span><span class="p">(</span><span class="s2">&quot;small.author&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">get_text</span><span class="p">(</span><span class="n">strip</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>            <span class="s2">&quot;tags&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">tag</span><span class="o">.</span><span class="n">get_text</span><span class="p">(</span><span class="n">strip</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">block</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;a.tag&quot;</span><span class="p">)],</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>        <span class="p">})</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>    <span class="k">return</span> <span class="n">quotes</span>
+</span></code></pre></div>
+<p>The pattern is always the same: <strong>select the blocks, then select inside each
+block.</strong> Selecting all the texts and all the authors separately and zipping them
+together works right up until one quote is missing an author, and then every row
+after it is wrong.</p>
+<p><code>select</code> returns a list and <code>select_one</code> returns one element or <code>None</code>. Use
+<code>get_text(strip=True)</code> rather than <code>.text</code> to lose the surrounding whitespace.</p>
+<h2 id="following-pagination">Following pagination<a class="headerlink" href="#following-pagination" title="Link to this section">&para;</a></h2>
+<p>Do not hard-code how many pages there are. Follow the link the site gives you and
+stop when it is gone.</p>
+<p><svg viewBox="0 0 680 236" role="img" aria-labelledby="pg-title pg-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="pg-title">The pagination loop</title>
+<desc id="pg-desc">Fetch a page, parse the items out of it, look for a next link. If there is one, wait politely and repeat. If there is not, stop.</desc>
+<defs><marker id="pg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--h-steel)"/></marker></defs>
+<rect x="5" y="46" width="152" height="70" rx="10" fill="var(--h-cherry)" stroke="var(--h-cherry)"/>
+<text x="81" y="76" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ffffff">fetch the page</text>
+<text x="81" y="96" text-anchor="middle" font-size="10.5" fill="#ffffff" opacity="0.85">one request</text>
+<line x1="163" y1="81" x2="175" y2="81" stroke="var(--h-steel)" stroke-width="2" marker-end="url(#pg)"/>
+<rect x="175" y="46" width="152" height="70" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="251" y="76" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)">parse the items</text>
+<text x="251" y="96" text-anchor="middle" font-size="10.5" fill="var(--md-default-fg-color)" opacity="0.85">collect the dicts</text>
+<line x1="333" y1="81" x2="345" y2="81" stroke="var(--h-steel)" stroke-width="2" marker-end="url(#pg)"/>
+<rect x="345" y="46" width="152" height="70" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="421" y="76" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)">look for next</text>
+<text x="421" y="96" text-anchor="middle" font-size="10.5" fill="var(--md-default-fg-color)" opacity="0.85">li.next a</text>
+<line x1="503" y1="81" x2="515" y2="81" stroke="var(--h-steel)" stroke-width="2" marker-end="url(#pg)"/>
+<rect x="515" y="46" width="152" height="70" rx="10" fill="var(--h-cherry)" stroke="var(--h-cherry)"/>
+<text x="591" y="76" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ffffff">wait, then repeat</text>
+<text x="591" y="96" text-anchor="middle" font-size="10.5" fill="#ffffff" opacity="0.85">be polite</text>
+<polyline points="601,120 601,158 81,158 81,122" fill="none" stroke="var(--h-steel)" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#pg)"/>
+<text x="340" y="178" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--h-graphite)">while a next link exists</text>
+<line x1="430" y1="120" x2="430" y2="196" stroke="var(--h-cherry)" stroke-width="2"/>
+<text x="440" y="200" font-size="11.5" font-weight="700" fill="var(--h-cherry)">no next link, stop</text>
+<text x="340" y="226" text-anchor="middle" font-size="12" fill="var(--h-graphite)">Never hard-code the number of pages. Follow the link the site gives you, and stop when it disappears.</text>
+</svg></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">urllib</span><span class="w"> </span><span class="kn">import</span> <span class="n">parse</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="k">def</span><span class="w"> </span><span class="nf">scrape_paginated</span><span class="p">(</span><span class="n">base_url</span><span class="p">):</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Follow the next links until there are none left.&quot;&quot;&quot;</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>    <span class="n">all_quotes</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>    <span class="n">url</span> <span class="o">=</span> <span class="n">base_url</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>    <span class="k">while</span> <span class="n">url</span><span class="p">:</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>        <span class="n">all_quotes</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">scrape_basic</span><span class="p">(</span><span class="n">url</span><span class="p">))</span>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>        <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">fetch_html</span><span class="p">(</span><span class="n">url</span><span class="p">),</span> <span class="s2">&quot;html.parser&quot;</span><span class="p">)</span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>        <span class="n">next_link</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">select_one</span><span class="p">(</span><span class="s2">&quot;li.next a&quot;</span><span class="p">)</span>
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>        <span class="n">url</span> <span class="o">=</span> <span class="n">parse</span><span class="o">.</span><span class="n">urljoin</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">next_link</span><span class="p">[</span><span class="s2">&quot;href&quot;</span><span class="p">])</span> <span class="k">if</span> <span class="n">next_link</span> <span class="k">else</span> <span class="kc">None</span>
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>    <span class="k">return</span> <span class="n">all_quotes</span>
+</span></code></pre></div>
+<p><code>urljoin</code> is there because the href is <code>/page/2/</code>, a path rather than a full
+address. Joining it to the page you are on gives you the address to request, and
+it keeps working if the site moves to a different domain.</p>
+<p>The <code>sleep</code> is not optional and it is not politeness theatre. Without it you send
+requests as fast as your connection allows, which is what a denial of service
+attack looks like from the other end.</p>
+<div class="admonition warning">
+<p class="admonition-title">Guard against the loop that never ends</p>
+<p>If a site's next link points back at a page you have already seen, that
+<code>while</code> loop runs forever. Keep a set of visited URLs and stop if one repeats,
+and put a maximum page count on any scraper you leave running.</p>
+</div>
+<h2 id="data-that-is-already-structured">Data that is already structured<a class="headerlink" href="#data-that-is-already-structured" title="Link to this section">&para;</a></h2>
+<p>Before parsing layout, check whether the page is carrying its data in a clean
+form. Two places to look.</p>
+<p><strong>A JSON API</strong>, found in the Network tab as described above. On the quotes site:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="k">def</span><span class="w"> </span><span class="nf">scrape_via_api</span><span class="p">(</span><span class="n">base_url</span><span class="p">):</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Read the quotes from the site&#39;s own JSON endpoint.&quot;&quot;&quot;</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>    <span class="n">quotes</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>    <span class="n">page</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>        <span class="n">payload</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">fetch_html</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">base_url</span><span class="si">}</span><span class="s2">/api/quotes?page=</span><span class="si">{</span><span class="n">page</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;quotes&quot;</span><span class="p">]:</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>            <span class="n">quotes</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>                <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">item</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">],</span>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>                <span class="s2">&quot;author&quot;</span><span class="p">:</span> <span class="n">item</span><span class="p">[</span><span class="s2">&quot;author&quot;</span><span class="p">][</span><span class="s2">&quot;name&quot;</span><span class="p">],</span>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>                <span class="s2">&quot;tags&quot;</span><span class="p">:</span> <span class="n">item</span><span class="p">[</span><span class="s2">&quot;tags&quot;</span><span class="p">],</span>
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>            <span class="p">})</span>
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;has_next&quot;</span><span class="p">):</span>
+</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>            <span class="k">break</span>
+</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a>        <span class="n">page</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span id="__span-7-18"><a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a>    <span class="k">return</span> <span class="n">quotes</span>
+</span></code></pre></div>
+<p>No selectors, no layout assumptions, nothing to break when the design changes.</p>
+<p><strong>JSON-LD</strong>, which many sites embed so that search engines can read them.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">extract_json_ld</span><span class="p">(</span><span class="n">html</span><span class="p">):</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the structured data blocks a page publishes for search engines.&quot;&quot;&quot;</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="s2">&quot;html.parser&quot;</span><span class="p">)</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>    <span class="n">blocks</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>    <span class="k">for</span> <span class="n">script</span> <span class="ow">in</span> <span class="n">soup</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;script[type=&quot;application/ld+json&quot;]&#39;</span><span class="p">):</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>        <span class="n">blocks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">script</span><span class="o">.</span><span class="n">string</span><span class="p">))</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>    <span class="k">return</span> <span class="n">blocks</span>
+</span></code></pre></div>
+<p>Product pages, recipes, articles and events very often carry this. It is the
+site handing you clean data, and most people scraping the page never notice it
+is there.</p>
+<h2 id="when-you-need-a-real-browser">When you need a real browser<a class="headerlink" href="#when-you-need-a-real-browser" title="Link to this section">&para;</a></h2>
+<p>Selenium drives an actual browser. It loads the page, runs the JavaScript, and
+lets you read the result or interact with it. Use it when, and only when, the
+data does not exist without JavaScript, or when you have to click, type, filter
+or scroll to reach it.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>pip<span class="w"> </span>install<span class="w"> </span>selenium
+</span></code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">selenium</span><span class="w"> </span><span class="kn">import</span> <span class="n">webdriver</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">selenium.webdriver.common.by</span><span class="w"> </span><span class="kn">import</span> <span class="n">By</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">selenium.webdriver.support.ui</span><span class="w"> </span><span class="kn">import</span> <span class="n">WebDriverWait</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">selenium.webdriver.support</span><span class="w"> </span><span class="kn">import</span> <span class="n">expected_conditions</span> <span class="k">as</span> <span class="n">EC</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="n">options</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">ChromeOptions</span><span class="p">()</span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="n">options</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--headless=new&quot;</span><span class="p">)</span>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Chrome</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">)</span>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://quotes.toscrape.com/js/&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<p>Headless means the browser runs without drawing a window. Keep it off while you
+are developing, because watching what happens is how you debug, and turn it on
+once the script works.</p>
+<p>Always close it when you are finished, or the processes pile up until your
+machine slows to a crawl.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">driver</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+</span></code></pre></div>
+<h3 id="waiting-properly">Waiting properly<a class="headerlink" href="#waiting-properly" title="Link to this section">&para;</a></h3>
+<p>This is the part everybody gets wrong first.</p>
+<p><svg viewBox="0 0 680 274" role="img" aria-labelledby="wt-title wt-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="wt-title">Fixed sleep compared with an explicit wait</title>
+<desc id="wt-desc">After the page loads, JavaScript runs and the element appears some time later. A fixed sleep either wastes time or gives up too early. An explicit wait continues the moment the element exists.</desc>
+<defs><marker id="wt" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--h-steel)"/></marker></defs>
+<line x1="60" y1="70" x2="640" y2="70" stroke="var(--h-steel)" stroke-width="1.5"/>
+<text x="60" y="34" font-size="11.5" font-weight="700" fill="var(--h-graphite)">page requested</text>
+<line x1="60" y1="40" x2="60" y2="78" stroke="var(--h-graphite)" stroke-width="1.5"/>
+<text x="220" y="34" font-size="11.5" font-weight="700" fill="var(--h-graphite)">HTML arrives</text>
+<line x1="220" y1="40" x2="220" y2="78" stroke="var(--h-graphite)" stroke-width="1.5"/>
+<text x="380" y="34" font-size="11.5" font-weight="700" fill="var(--h-cherry)">element appears</text>
+<line x1="380" y1="40" x2="380" y2="78" stroke="var(--h-cherry)" stroke-width="2"/>
+<text x="640" y="34" text-anchor="end" font-size="11" fill="var(--h-space)">time</text>
+<rect x="60" y="100" width="160" height="26" rx="5" fill="var(--h-steel)" opacity="0.35"/>
+<text x="140" y="116" dy="0.36em" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--h-graphite)">sleep(1) too short</text>
+<text x="232" y="120" font-size="11" font-weight="700" fill="var(--h-cherry)">element not there yet, your code crashes</text>
+<rect x="60" y="140" width="500" height="26" rx="5" fill="var(--h-steel)" opacity="0.35"/>
+<text x="310" y="156" dy="0.36em" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--h-graphite)">sleep(5) works, and wastes 2 seconds on every page</text>
+<rect x="60" y="180" width="320" height="26" rx="5" fill="var(--h-cherry)"/>
+<text x="220" y="196" dy="0.36em" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ffffff">WebDriverWait continues the instant it appears</text>
+<text x="340" y="238" text-anchor="middle" font-size="12" fill="var(--h-graphite)">A fixed sleep is a guess about somebody else’s network. An explicit wait asks the page a question.</text>
+<text x="340" y="258" text-anchor="middle" font-size="12" fill="var(--h-graphite)">Over a thousand pages the difference is hours.</text>
+</svg></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">quotes</span> <span class="o">=</span> <span class="n">WebDriverWait</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">until</span><span class="p">(</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>    <span class="n">EC</span><span class="o">.</span><span class="n">presence_of_all_elements_located</span><span class="p">((</span><span class="n">By</span><span class="o">.</span><span class="n">CSS_SELECTOR</span><span class="p">,</span> <span class="s2">&quot;div.quote&quot;</span><span class="p">))</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="p">)</span>
+</span></code></pre></div>
+<p>This means "wait up to ten seconds, and continue the moment these elements
+exist". It is faster than a fixed sleep on a good connection and more reliable on
+a bad one.</p>
+<p>Two conditions cover most cases. <code>presence_of_element_located</code> means the element
+is in the page. <code>element_to_be_clickable</code> means it is also visible and enabled,
+which is what you need before a click.</p>
+<div class="admonition tip">
+<p class="admonition-title">Read the page with BeautifulSoup once the browser is done</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">driver</span><span class="o">.</span><span class="n">page_source</span><span class="p">,</span> <span class="s2">&quot;html.parser&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<p>You already know how to parse HTML. Let Selenium do the part only a browser
+can do, then hand the finished page to the parser you are comfortable with.</p>
+</div>
+<h3 id="clicking-typing-and-filtering">Clicking, typing and filtering<a class="headerlink" href="#clicking-typing-and-filtering" title="Link to this section">&para;</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://quotes.toscrape.com/login&quot;</span><span class="p">)</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="n">driver</span><span class="o">.</span><span class="n">find_element</span><span class="p">(</span><span class="n">By</span><span class="o">.</span><span class="n">ID</span><span class="p">,</span> <span class="s2">&quot;username&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="s2">&quot;student&quot;</span><span class="p">)</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="n">driver</span><span class="o">.</span><span class="n">find_element</span><span class="p">(</span><span class="n">By</span><span class="o">.</span><span class="n">ID</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="s2">&quot;student&quot;</span><span class="p">)</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="n">driver</span><span class="o">.</span><span class="n">find_element</span><span class="p">(</span><span class="n">By</span><span class="o">.</span><span class="n">CSS_SELECTOR</span><span class="p">,</span> <span class="s2">&quot;input[type=&#39;submit&#39;]&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+</span></code></pre></div>
+<p>Filters in a user interface work the same way: find the control, set it, click
+the button, then wait for the results to appear. The wait matters, because the
+old results are still on screen for a moment after you click and you will scrape
+them by accident.</p>
+<h3 id="cookie-banners-and-popups">Cookie banners and popups<a class="headerlink" href="#cookie-banners-and-popups" title="Link to this section">&para;</a></h3>
+<p>A banner covering the page will make clicks fail with an error about the element
+being intercepted. Dismiss it first, and do not assume it is always there.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">selenium.common.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeoutException</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="k">try</span><span class="p">:</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>    <span class="n">button</span> <span class="o">=</span> <span class="n">WebDriverWait</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">until</span><span class="p">(</span>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>        <span class="n">EC</span><span class="o">.</span><span class="n">element_to_be_clickable</span><span class="p">((</span><span class="n">By</span><span class="o">.</span><span class="n">CSS_SELECTOR</span><span class="p">,</span> <span class="s2">&quot;.cookie-accept&quot;</span><span class="p">))</span>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>    <span class="p">)</span>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>    <span class="n">button</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="k">except</span> <span class="n">TimeoutException</span><span class="p">:</span>
+</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>    <span class="k">pass</span>
+</span></code></pre></div>
+<p>The <code>try</code> is the point. A banner that appears only for new visitors will be
+missing when you run the script a second time, and an unhandled exception there
+kills an otherwise working scraper.</p>
+<h3 id="infinite-scroll">Infinite scroll<a class="headerlink" href="#infinite-scroll" title="Link to this section">&para;</a></h3>
+<p>Some pages load more content as you scroll rather than paginating. The pattern is
+to scroll to the bottom, wait, and check whether the page got taller.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="k">def</span><span class="w"> </span><span class="nf">scroll_to_bottom</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span> <span class="n">pause</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">max_rounds</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Scroll until the page stops growing.&quot;&quot;&quot;</span>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>    <span class="n">last_height</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">execute_script</span><span class="p">(</span><span class="s2">&quot;return document.body.scrollHeight&quot;</span><span class="p">)</span>
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_rounds</span><span class="p">):</span>
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>        <span class="n">driver</span><span class="o">.</span><span class="n">execute_script</span><span class="p">(</span><span class="s2">&quot;window.scrollTo(0, document.body.scrollHeight);&quot;</span><span class="p">)</span>
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">pause</span><span class="p">)</span>
+</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>        <span class="n">new_height</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">execute_script</span><span class="p">(</span><span class="s2">&quot;return document.body.scrollHeight&quot;</span><span class="p">)</span>
+</span><span id="__span-16-10"><a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>        <span class="k">if</span> <span class="n">new_height</span> <span class="o">==</span> <span class="n">last_height</span><span class="p">:</span>
+</span><span id="__span-16-11"><a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>            <span class="k">return</span>
+</span><span id="__span-16-12"><a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>        <span class="n">last_height</span> <span class="o">=</span> <span class="n">new_height</span>
+</span></code></pre></div>
+<p><code>max_rounds</code> is a safety net. Some feeds are genuinely endless, and without a
+limit your script runs until the machine runs out of memory.</p>
+<h2 id="not-collecting-the-same-thing-twice">Not collecting the same thing twice<a class="headerlink" href="#not-collecting-the-same-thing-twice" title="Link to this section">&para;</a></h2>
+<p>Pagination that overlaps, a scroll that reloads, a retry after a failure: all
+three give you duplicates. Decide what makes a record unique and check it as you
+go.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">deduplicate</span><span class="p">(</span><span class="n">records</span><span class="p">,</span> <span class="n">key_fields</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;author&quot;</span><span class="p">)):</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Keep the first occurrence of each record.&quot;&quot;&quot;</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>    <span class="n">seen</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>    <span class="n">unique</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>    <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">records</span><span class="p">:</span>
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>        <span class="n">key</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">record</span><span class="p">[</span><span class="n">field</span><span class="p">]</span> <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">key_fields</span><span class="p">)</span>
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">seen</span><span class="p">:</span>
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>            <span class="k">continue</span>
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>        <span class="n">seen</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>        <span class="n">unique</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>    <span class="k">return</span> <span class="n">unique</span>
+</span></code></pre></div>
+<p>A set membership test is instant no matter how many records you have already
+seen, which a list is not. On ten thousand records that difference is the
+difference between a second and a minute.</p>
+<p>You can also do it at the end in pandas with <code>drop_duplicates</code>, but doing it
+during the scrape means a duplicate can also tell you to stop early.</p>
+<h2 id="organising-a-scraper">Organising a scraper<a class="headerlink" href="#organising-a-scraper" title="Link to this section">&para;</a></h2>
+<p>The project's task numbering is the architecture, and it is worth noticing.</p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>fetch_html</code></td>
+<td>Talk to the network. Headers, timeouts, retries, errors</td>
+</tr>
+<tr>
+<td><code>scrape_basic</code></td>
+<td>Turn one page of HTML into records</td>
+</tr>
+<tr>
+<td><code>scrape_paginated</code></td>
+<td>Decide which pages to visit and in what order</td>
+</tr>
+</tbody>
+</table>
+<p>Each layer knows nothing about the ones above it. That means you can test the
+parser on a saved HTML file with no network at all, which is the single biggest
+improvement you can make to how quickly you develop a scraper.</p>
+<div class="admonition tip">
+<p class="admonition-title">Save the page while you are developing</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="n">html</span> <span class="o">=</span> <span class="n">fetch_html</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="nb">open</span><span class="p">(</span><span class="s2">&quot;page.html&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">html</span><span class="p">)</span>
+</span></code></pre></div>
+<p>Then work on your selectors against the saved copy. You will run the parser
+fifty times before it is right, and there is no reason for the server to see
+any of that.</p>
+</div>
+<h2 id="scraping-responsibly">Scraping responsibly<a class="headerlink" href="#scraping-responsibly" title="Link to this section">&para;</a></h2>
+<p><svg viewBox="0 0 680 286" role="img" aria-labelledby="rs-title rs-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="rs-title">The checks to make before you scrape</title>
+<desc id="rs-desc">Check robots.txt, check the terms of service, and check that you are taking only what you need. If all three pass, scrape slowly and identify yourself. If any fails, do not scrape.</desc>
+<defs><marker id="rs" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--h-steel)"/></marker></defs>
+<rect x="10" y="30" width="204" height="76" rx="10" fill="var(--h-surface)" stroke="var(--h-cherry-line)"/>
+<text x="112" y="58" text-anchor="middle" font-size="13" font-weight="700" fill="var(--md-default-fg-color)">robots.txt</text>
+<text x="112" y="80" text-anchor="middle" font-size="10.5" fill="var(--h-graphite)">does it allow this path?</text>
+<line x1="112" y1="110" x2="112" y2="146" stroke="var(--h-steel)" stroke-width="1.5" marker-end="url(#rs)"/>
+<line x1="218" y1="68" x2="230" y2="68" stroke="var(--h-steel)" stroke-width="2" marker-end="url(#rs)"/>
+<rect x="234" y="30" width="204" height="76" rx="10" fill="var(--h-surface)" stroke="var(--h-cherry-line)"/>
+<text x="336" y="58" text-anchor="middle" font-size="13" font-weight="700" fill="var(--md-default-fg-color)">terms of service</text>
+<text x="336" y="80" text-anchor="middle" font-size="10.5" fill="var(--h-graphite)">do they forbid automated access?</text>
+<line x1="336" y1="110" x2="336" y2="146" stroke="var(--h-steel)" stroke-width="1.5" marker-end="url(#rs)"/>
+<line x1="442" y1="68" x2="454" y2="68" stroke="var(--h-steel)" stroke-width="2" marker-end="url(#rs)"/>
+<rect x="458" y="30" width="204" height="76" rx="10" fill="var(--h-surface)" stroke="var(--h-cherry-line)"/>
+<text x="560" y="58" text-anchor="middle" font-size="13" font-weight="700" fill="var(--md-default-fg-color)">what you take</text>
+<text x="560" y="80" text-anchor="middle" font-size="10.5" fill="var(--h-graphite)">only what you need, never personal data</text>
+<line x1="560" y1="110" x2="560" y2="146" stroke="var(--h-steel)" stroke-width="1.5" marker-end="url(#rs)"/>
+<rect x="10" y="150" width="652" height="54" rx="10" fill="var(--h-cherry)"/>
+<text x="336" y="172" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">all three pass: scrape politely</text>
+<text x="336" y="192" text-anchor="middle" font-size="11" fill="#ffffff" opacity="0.9">a delay between requests, a user agent that says who you are, and cache what you already have</text>
+<text x="340" y="232" text-anchor="middle" font-size="12" font-weight="700" fill="var(--h-cherry)">any one of them fails: do not scrape it</text>
+<text x="340" y="258" text-anchor="middle" font-size="12" fill="var(--h-graphite)">Fifteen students hitting one server from one building looks exactly like an attack, and gets one IP banned.</text>
+<text x="340" y="276" text-anchor="middle" font-size="12" fill="var(--h-graphite)">That IP belongs to the school.</text>
+</svg></p>
+<p><strong>Read robots.txt.</strong> It is at the root of every site, and Python will read it for
+you.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">urllib</span><span class="w"> </span><span class="kn">import</span> <span class="n">robotparser</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="n">rp</span> <span class="o">=</span> <span class="n">robotparser</span><span class="o">.</span><span class="n">RobotFileParser</span><span class="p">()</span>
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="n">rp</span><span class="o">.</span><span class="n">set_url</span><span class="p">(</span><span class="s2">&quot;https://quotes.toscrape.com/robots.txt&quot;</span><span class="p">)</span>
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="n">rp</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="nb">print</span><span class="p">(</span><span class="n">rp</span><span class="o">.</span><span class="n">can_fetch</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="s2">&quot;https://quotes.toscrape.com/page/2/&quot;</span><span class="p">))</span>
+</span></code></pre></div>
+<p>It is a request rather than a lock, which is exactly why ignoring it says
+something about you.</p>
+<p><strong>Say who you are.</strong> The default user agent announces you as a Python script,
+and many sites block it. Do not disguise yourself as a browser you are not. Say
+what you are and leave a way to contact you.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;User-Agent&quot;</span><span class="p">:</span> <span class="s2">&quot;HolbertonML-student-project (evis.plaku@example.com)&quot;</span><span class="p">}</span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="n">html</span> <span class="o">=</span> <span class="n">fetch_html</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+</span></code></pre></div>
+<p><strong>Go slowly.</strong> One request per second is a reasonable default for a small site.
+There is no prize for finishing first, and the cost of going too fast is paid by
+somebody else.</p>
+<p><strong>Take only what you need.</strong> Scraping personal data brings you under data
+protection law, which you read about in Fundamentals. Do not collect names,
+emails or profiles because they happen to be there.</p>
+<p><strong>Cache.</strong> If you have already downloaded a page, use your copy. Re-downloading
+the same thing because it was easier than saving it is the most common way
+students generate thousands of pointless requests.</p>
+<div class="admonition warning">
+<p class="admonition-title">You are sharing an IP address</p>
+<p>Every student in the building appears to a server as the same address. If
+fifteen scrapers run without delays at the same time, that server sees an
+attack and blocks the school, not you. This is the reason the project uses
+a practice site built for the purpose.</p>
+</div>
+<h2 id="when-it-goes-wrong">When it goes wrong<a class="headerlink" href="#when-it-goes-wrong" title="Link to this section">&para;</a></h2>
+<details class="note">
+<summary>My list is empty and there is no error</summary>
+<p>Either the selector matches nothing or the data is not in the HTML. Print
+<code>len(html)</code> and search it for a value you can see on screen. If it is
+missing, the page is dynamic and you need the API or a browser.</p>
+</details>
+<details class="note">
+<summary><code>AttributeError: 'NoneType' object has no attribute 'get_text'</code></summary>
+<p><code>select_one</code> found nothing and returned <code>None</code>. Some blocks are missing the
+element you assumed was always there. Check before using it, or use a
+default.</p>
+</details>
+<details class="note">
+<summary>403 Forbidden</summary>
+<p>The site is refusing your request, often because of the default user agent.
+Set a real one that identifies you. If it still refuses, that is an answer
+and the answer is no.</p>
+</details>
+<details class="note">
+<summary>429 Too Many Requests</summary>
+<p>You are going too fast. Increase the delay, and back off further each time
+you see this rather than retrying immediately.</p>
+</details>
+<details class="note">
+<summary><code>ElementClickInterceptedException</code></summary>
+<p>Something is on top of the element, usually a cookie banner or a modal.
+Dismiss it first.</p>
+</details>
+<details class="note">
+<summary><code>NoSuchElementException</code> even though I can see the element</summary>
+<p>Selenium looked before JavaScript had finished. Use <code>WebDriverWait</code> rather
+than reading immediately after <code>get</code>.</p>
+</details>
+<details class="note">
+<summary>Everything worked yesterday and today it returns nothing</summary>
+<p>The site changed its layout. This is normal, it is the cost of scraping, and
+it is why an API is worth looking for first.</p>
+</details>
+<h2 id="check-yourself">Check yourself<a class="headerlink" href="#check-yourself" title="Link to this section">&para;</a></h2>
+<p>Use <code>quotes.toscrape.com</code> for all of these.</p>
+<ol>
+<li>Write <code>fetch_html</code> and prove it raises on a URL that returns 404.</li>
+<li>Scrape the first page into a list of dicts and load it into a DataFrame.
+   Confirm you have ten rows and the tags are lists.</li>
+<li>Follow the pagination to the end. How many quotes are there in total, and how
+   did your code know when to stop?</li>
+<li>Find the JSON endpoint in the Network tab and scrape the same data through
+   it. Compare the two results and the time each took.</li>
+<li>Open <code>/js/</code> with <code>requests</code> and show that the quotes are not in the HTML. Then
+   get them with Selenium and an explicit wait.</li>
+<li>Combine the results of two overlapping scrapes and deduplicate them. Say what
+   you chose as the key and why.</li>
+<li>Read the site's robots.txt and say, in one sentence, what it permits.</li>
+</ol>
+<h2 id="quick-reference">Quick reference<a class="headerlink" href="#quick-reference" title="Link to this section">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fetch a page</td>
+<td><code>requests.get(url, headers=h, timeout=10)</code></td>
+</tr>
+<tr>
+<td>Fail on error status</td>
+<td><code>response.raise_for_status()</code></td>
+</tr>
+<tr>
+<td>Parse</td>
+<td><code>BeautifulSoup(html, "html.parser")</code></td>
+</tr>
+<tr>
+<td>All matches</td>
+<td><code>soup.select("div.quote")</code></td>
+</tr>
+<tr>
+<td>First match</td>
+<td><code>soup.select_one("span.text")</code></td>
+</tr>
+<tr>
+<td>Clean text</td>
+<td><code>el.get_text(strip=True)</code></td>
+</tr>
+<tr>
+<td>Attribute</td>
+<td><code>el["href"]</code></td>
+</tr>
+<tr>
+<td>Absolute URL</td>
+<td><code>parse.urljoin(base, href)</code></td>
+</tr>
+<tr>
+<td>Start a browser</td>
+<td><code>webdriver.Chrome(options=options)</code></td>
+</tr>
+<tr>
+<td>Wait for an element</td>
+<td><code>WebDriverWait(driver, 10).until(EC.presence_of_element_located(...))</code></td>
+</tr>
+<tr>
+<td>Click, type</td>
+<td><code>el.click()</code>, <code>el.send_keys("text")</code></td>
+</tr>
+<tr>
+<td>Scroll</td>
+<td><code>driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")</code></td>
+</tr>
+<tr>
+<td>Hand over to the parser</td>
+<td><code>BeautifulSoup(driver.page_source, "html.parser")</code></td>
+</tr>
+<tr>
+<td>Close the browser</td>
+<td><code>driver.quit()</code></td>
+</tr>
+<tr>
+<td>Check permission</td>
+<td><code>robotparser.RobotFileParser()</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="questions-to-sit-with">Questions to sit with<a class="headerlink" href="#questions-to-sit-with" title="Link to this section">&para;</a></h2>
+<ol>
+<li>The data was public on a page anybody could open. Does that make collecting
+   all of it, automatically, the same thing? What changes between one visit and
+   ten thousand?</li>
+<li>Your scraper is polite, identifies itself and respects robots.txt, and the
+   site still blocks it. What does that tell you, and what do you do next?</li>
+<li>A site publishes JSON-LD so search engines can read it. Is using that data
+   different from parsing the visible page, and should it be?</li>
+<li>Scrapers break when layouts change, so the data you collected last month
+   cannot be collected the same way today. What does that mean for anyone trying
+   to reproduce your results?</li>
+</ol>
+<h2 id="next">Next<a class="headerlink" href="#next" title="Link to this section">&para;</a></h2>
+<p>Scraping is what you do when nobody gave you a proper way in. Next, the proper
+way in.</p>
+<p><a class="h-button" href="../apis/">Data Collection: APIs</a></p>
+<p>Worth your time: the
+<a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/">BeautifulSoup documentation</a>
+is short and genuinely readable, and the
+<a href="https://www.selenium.dev/documentation/webdriver/waits/">Selenium waits guide</a>
+explains the difference between the wait types better than any tutorial.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Real data">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Real data
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../apis/" class="md-footer__link md-footer__link--next" aria-label="Next: APIs">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                APIs
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Holberton School Albania
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://github.com/evisp" target="_blank" rel="noopener" title="GitHub" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://www.linkedin.com/school/holbertonschool/" target="_blank" rel="noopener" title="Holberton School" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.indexes", "navigation.path", "navigation.top", "navigation.tracking", "navigation.footer", "toc.follow", "search.highlight", "search.share", "search.suggest", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.action.edit"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

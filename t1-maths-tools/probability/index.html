@@ -1,0 +1,3361 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A practical, project-based machine learning curriculum for Holberton School Albania. Real projects, real skills, real careers.">
+      
+      
+        <meta name="author" content="Evis Plaku">
+      
+      
+        <link rel="canonical" href="https://evisp.github.io/ml-handbook/t1-maths-tools/probability/">
+      
+      
+        <link rel="prev" href="../plotting/">
+      
+      
+        <link rel="next" href="../../t1-real-data/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Probability - Holberton ML Handbook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Host+Grotesk:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Host Grotesk";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/brand.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#probability" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Holberton ML Handbook" class="md-header__button md-logo" aria-label="Holberton ML Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Holberton ML Handbook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Probability
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/evisp/ml-handbook" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    evisp/ml-handbook
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../roadmap/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Roadmap
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../01-tools/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Tools
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../02-fundamentals/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Fundamentals
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Data Analyst
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../projects/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Projects
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Holberton ML Handbook" class="md-nav__button md-logo" aria-label="Holberton ML Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Holberton ML Handbook
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/evisp/ml-handbook" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    evisp/ml-handbook
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../01-tools/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/zero-day/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Zero day
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/git-and-github/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git & GitHub
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/notebook-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jupyter notebook setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/vscode-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/python-warm-up/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python warm up
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../02-fundamentals/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Fundamentals
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-fundamentals/what-is-ai/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    What AI is
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-fundamentals/what-is-ml/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How machines learn
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-fundamentals/framing-ml-problems/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Framing a problem
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-fundamentals/working-with-data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Working with data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-fundamentals/ethics-and-responsibility/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ethics and responsibility
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-fundamentals/how-training-works/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    What training actually does
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Analyst
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Data Analyst
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_1" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Maths and tools
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5_1" id="__nav_5_1_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Maths and tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../linear-algebra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linear Algebra
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pandas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pandas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plotting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plotting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Probability
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Probability
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this matters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-basics-quickly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The basics, quickly
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#disjoint-is-not-independent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Disjoint is not independent
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-two-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The two rules
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conditional-probability-and-bayes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conditional probability and Bayes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#random-variables-and-their-distributions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Random variables and their distributions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#describing-a-distribution-with-numbers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Describing a distribution with numbers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Describing a distribution with numbers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#percentiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Percentiles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-the-mean-stops-being-typical" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When the mean stops being typical
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-distributions-worth-knowing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The distributions worth knowing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The distributions worth knowing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#normal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Normal
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bernoulli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bernoulli
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#binomial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Binomial
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#three-to-recognise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Three to recognise
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sampling-and-seeing-the-shape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sampling and seeing the shape
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-the-bell-curve-is-everywhere" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why the bell curve is everywhere
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#your-test-score-is-an-estimate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Your test score is an estimate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#likelihood-and-where-loss-functions-come-from" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Likelihood, and where loss functions come from
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#correlation-and-its-limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Correlation, and its limits
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-confusions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common confusions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#questions-to-sit-with" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Questions to sit with
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../t1-real-data/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Real data
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5_2" id="__nav_5_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Real data
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-real-data/web-scraping/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Scraping
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-real-data/apis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    APIs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-real-data/data-preparation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Preparation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-real-data/data-preprocessing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Preprocessing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../t1-models/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classic models
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5_3" id="__nav_5_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Classic models
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-models/classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-models/linear-models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linear Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-models/tree-models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tree-Based Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-models/bias-variance.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bias, variance and tuning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-models/unsupervised-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unsupervised Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-models/clustering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../projects/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Projects
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Projects
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../projects/rock-paper-scissors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rock, paper, scissors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../projects/one-page-finding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    One page, one finding
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../projects/how-sure-are-you/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How sure are you?
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this matters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-basics-quickly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The basics, quickly
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#disjoint-is-not-independent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Disjoint is not independent
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-two-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The two rules
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conditional-probability-and-bayes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conditional probability and Bayes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#random-variables-and-their-distributions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Random variables and their distributions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#describing-a-distribution-with-numbers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Describing a distribution with numbers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Describing a distribution with numbers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#percentiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Percentiles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-the-mean-stops-being-typical" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When the mean stops being typical
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-distributions-worth-knowing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The distributions worth knowing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The distributions worth knowing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#normal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Normal
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bernoulli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bernoulli
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#binomial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Binomial
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#three-to-recognise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Three to recognise
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sampling-and-seeing-the-shape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sampling and seeing the shape
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-the-bell-curve-is-everywhere" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why the bell curve is everywhere
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#your-test-score-is-an-estimate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Your test score is an estimate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#likelihood-and-where-loss-functions-come-from" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Likelihood, and where loss functions come from
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#correlation-and-its-limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Correlation, and its limits
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-confusions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common confusions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#questions-to-sit-with" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Questions to sit with
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Data Analyst
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Maths and tools
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/evisp/ml-handbook/edit/main/docs/t1-maths-tools/probability.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="probability">Probability<a class="headerlink" href="#probability" title="Link to this section">&para;</a></h1>
+<p><span class="badge badge--time">80 min</span>
+<span class="badge badge--level">Foundations</span>
+<span class="badge">Needs: Plotting</span></p>
+<p>Machine learning is the business of making statements you are not certain about.
+Probability is the language for saying how uncertain, and statistics is how you
+check whether the uncertainty you claimed matches reality.</p>
+<h2 id="why-this-matters">Why this matters<a class="headerlink" href="#why-this-matters" title="Link to this section">&para;</a></h2>
+<p>A classifier does not tell you an image is a cat. It tells you it is 85 percent
+sure. Every number a model gives you is a claim about probability, and by the end
+of this programme you will be training models whose entire objective is to make
+those claims better.</p>
+<p>This page is also where the loss functions of trimester two stop being magic.
+The thing a neural network minimises is a probability statement, and the last
+section of this page is that statement.</p>
+<h2 id="the-basics-quickly">The basics, quickly<a class="headerlink" href="#the-basics-quickly" title="Link to this section">&para;</a></h2>
+<p>A probability is a number between 0 and 1. Zero is impossible, one is certain,
+everything interesting is in between.</p>
+<table>
+<thead>
+<tr>
+<th>Notation</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(P(A)\)</span></td>
+<td>the probability that A happens</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(P(A^c)\)</span></td>
+<td>the probability that A does not happen, equal to <span class="arithmatex">\(1 - P(A)\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(P(A \cap B)\)</span></td>
+<td>both A and B happen</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(P(A \cup B)\)</span></td>
+<td>at least one of A and B happens</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(P(A \mid B)\)</span></td>
+<td>A happens, given that B has happened</td>
+</tr>
+</tbody>
+</table>
+<p>A fair die gives <span class="arithmatex">\(P(6) = 1/6\)</span> and <span class="arithmatex">\(P(\text{even}) = 1/2\)</span>. Nothing here is
+difficult. The difficulty starts when two events interact.</p>
+<h2 id="disjoint-is-not-independent">Disjoint is not independent<a class="headerlink" href="#disjoint-is-not-independent" title="Link to this section">&para;</a></h2>
+<p>These two words get swapped constantly, and they mean close to opposite things.</p>
+<p><svg viewBox="0 0 680 248" role="img" aria-labelledby="di-title di-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="di-title">Disjoint events compared with independent events</title>
+<desc id="di-desc">Disjoint events cannot both happen, so their circles do not overlap. Independent events can both happen, and the overlap equals the product of the two probabilities.</desc>
+<rect x="10" y="30" width="320" height="150" rx="12" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="170" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--md-default-fg-color)">disjoint</text>
+<circle cx="112" cy="105" r="48" fill="var(--h-cherry-wash)" stroke="var(--h-cherry-line)" stroke-width="2"/>
+<circle cx="228" cy="105" r="48" fill="var(--h-cherry-wash)" stroke="var(--h-cherry-line)" stroke-width="2"/>
+<text x="112" y="105" dy="0.36em" text-anchor="middle" font-size="16" font-weight="700" fill="var(--h-cherry)">A</text>
+<text x="228" y="105" dy="0.36em" text-anchor="middle" font-size="16" font-weight="700" fill="var(--h-cherry)">B</text>
+<text x="170" y="170" text-anchor="middle" font-size="11.5" fill="var(--h-graphite)">no overlap at all</text>
+<rect x="350" y="30" width="320" height="150" rx="12" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="510" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--md-default-fg-color)">independent</text>
+<circle cx="466" cy="105" r="48" fill="var(--h-cherry-wash)" stroke="var(--h-cherry-line)" stroke-width="2"/>
+<circle cx="554" cy="105" r="48" fill="var(--h-cherry-wash)" stroke="var(--h-cherry-line)" stroke-width="2"/>
+<text x="440" y="105" dy="0.36em" text-anchor="middle" font-size="16" font-weight="700" fill="var(--h-cherry)">A</text>
+<text x="580" y="105" dy="0.36em" text-anchor="middle" font-size="16" font-weight="700" fill="var(--h-cherry)">B</text>
+<text x="510" y="109" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--h-cherry)">both</text>
+<text x="510" y="170" text-anchor="middle" font-size="11.5" fill="var(--h-graphite)">overlap is exactly P(A) times P(B)</text>
+<text x="340" y="206" text-anchor="middle" font-size="12" fill="var(--h-graphite)">Disjoint events are never independent. If A happening rules B out, then A tells you a great deal about B.</text>
+<text x="340" y="226" text-anchor="middle" font-size="12" fill="var(--h-graphite)">That is the opposite of independence, and it is the confusion that costs marks in every exam.</text>
+</svg></p>
+<p><strong>Disjoint</strong> means the events cannot both happen. Rolling a 3 and rolling a 5 on
+one throw.</p>
+<p><strong>Independent</strong> means one event tells you nothing about the other. Two separate
+coin flips.</p>
+<p>If A and B are disjoint and A happens, you now know B did not. That is a very
+strong piece of information, which is exactly what independence rules out.</p>
+<h2 id="the-two-rules">The two rules<a class="headerlink" href="#the-two-rules" title="Link to this section">&para;</a></h2>
+<p><strong>Addition</strong>, for at least one of them happening:</p>
+<div class="arithmatex">\[
+P(A \cup B) = P(A) + P(B) - P(A \cap B)
+\]</div>
+<p>The subtraction is there because adding the two counts the overlap twice. When
+the events are disjoint the overlap is zero and the rule simplifies.</p>
+<p><strong>Multiplication</strong>, for both of them happening:</p>
+<div class="arithmatex">\[
+P(A \cap B) = P(A) \cdot P(B \mid A)
+\]</div>
+<p>When the events are independent, <span class="arithmatex">\(P(B \mid A) = P(B)\)</span> and this becomes a plain
+product.</p>
+<p>Drawing two aces from a deck without replacement: the first is <span class="arithmatex">\(4/52\)</span>, and the
+second is <span class="arithmatex">\(3/51\)</span>, because the deck changed. Multiply for about 0.45 percent.</p>
+<h2 id="conditional-probability-and-bayes">Conditional probability and Bayes<a class="headerlink" href="#conditional-probability-and-bayes" title="Link to this section">&para;</a></h2>
+<p>Conditional probability is the probability of one thing once you know another.</p>
+<div class="arithmatex">\[
+P(A \mid B) = \frac{P(A \cap B)}{P(B)}
+\]</div>
+<p>Bayes' theorem lets you turn a conditional around, which is the operation almost
+every classifier performs.</p>
+<div class="arithmatex">\[
+P(A \mid B) = \frac{P(B \mid A) \cdot P(A)}{P(B)}
+\]</div>
+<p>The formula is easy to apply and hard to feel. So here is the classic example
+counted out in people rather than symbols.</p>
+<p>A disease affects 1 percent of the population. The test catches 95 percent of
+people who have it, and wrongly flags 5 percent of people who do not. You test
+positive. What is the chance you are ill?</p>
+<p><svg viewBox="0 0 680 336" role="img" aria-labelledby="by-title by-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="by-title">Bayes theorem worked as a group of 1000 people</title>
+<desc id="by-desc">Out of 1000 people, 10 have the disease and 990 do not. The test finds 9 of the 10, and wrongly flags about 50 of the 990. So 59 people test positive and only 9 of them are actually ill.</desc>
+<rect x="265" y="8" width="150" height="38" rx="9" fill="var(--md-default-fg-color)"/>
+<text x="340" y="27" dy="0.36em" text-anchor="middle" font-size="13.5" font-weight="700" fill="var(--md-default-bg-color)">1000 people</text>
+<polyline points="340,46 340,62 180,62 180,84" fill="none" stroke="var(--h-steel)" stroke-width="1.5"/>
+<polyline points="340,46 340,62 500,62 500,84" fill="none" stroke="var(--h-steel)" stroke-width="1.5"/>
+<rect x="100" y="84" width="160" height="38" rx="9" fill="var(--h-cherry)"/>
+<text x="180" y="103" dy="0.36em" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">10 are ill</text>
+<rect x="420" y="84" width="160" height="38" rx="9" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="500" y="103" dy="0.36em" text-anchor="middle" font-size="13" font-weight="700" fill="var(--md-default-fg-color)">990 are not</text>
+<polyline points="180,122 180,138 96,138 96,160" fill="none" stroke="var(--h-steel)" stroke-width="1.5"/>
+<polyline points="180,122 180,138 246,138 246,160" fill="none" stroke="var(--h-steel)" stroke-width="1.5"/>
+<polyline points="500,122 500,138 416,138 416,160" fill="none" stroke="var(--h-steel)" stroke-width="1.5"/>
+<polyline points="500,122 500,138 584,138 584,160" fill="none" stroke="var(--h-steel)" stroke-width="1.5"/>
+<rect x="36" y="160" width="120" height="40" rx="8" fill="var(--h-cherry)"/>
+<text x="96" y="176" dy="0.36em" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ffffff">9 positive</text>
+<text x="96" y="192" dy="0.36em" text-anchor="middle" font-size="10" fill="#ffffff" opacity="0.85">correctly</text>
+<rect x="186" y="160" width="120" height="40" rx="8" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="246" y="176" dy="0.36em" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--h-graphite)">1 missed</text>
+<text x="246" y="192" dy="0.36em" text-anchor="middle" font-size="10" fill="var(--h-space)">told they are fine</text>
+<rect x="356" y="160" width="120" height="40" rx="8" fill="var(--h-cherry-wash)" stroke="var(--h-cherry)" stroke-width="2"/>
+<text x="416" y="176" dy="0.36em" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--h-cherry)">50 positive</text>
+<text x="416" y="192" dy="0.36em" text-anchor="middle" font-size="10" fill="var(--h-graphite)">wrongly</text>
+<rect x="524" y="160" width="120" height="40" rx="8" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="584" y="176" dy="0.36em" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--h-graphite)">940 negative</text>
+<text x="584" y="192" dy="0.36em" text-anchor="middle" font-size="10" fill="var(--h-space)">correctly</text>
+<text x="340" y="232" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)">59 people are told they tested positive</text>
+<rect x="40" y="244" width="600" height="30" rx="6" fill="var(--h-cherry-wash)" stroke="var(--h-cherry-line)"/>
+<rect x="40" y="244" width="92" height="30" rx="6" fill="var(--h-cherry)"/>
+<text x="86" y="259" dy="0.36em" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">9 ill</text>
+<text x="390" y="259" dy="0.36em" text-anchor="middle" font-size="12" font-weight="700" fill="var(--h-cherry)">50 perfectly healthy</text>
+<text x="340" y="300" text-anchor="middle" font-size="12" fill="var(--h-graphite)">A positive result means about a 15 percent chance of being ill, not 95 percent.</text>
+<text x="340" y="320" text-anchor="middle" font-size="12" fill="var(--h-graphite)">The test is good. The disease is rare. Rarity wins.</text>
+</svg></p>
+<p>Almost everyone says 95 percent. The answer is about 15.</p>
+<p>The reason is the <strong>base rate</strong>. There are so many more healthy people that 5
+percent of them outnumbers 95 percent of the sick ones, five to one. The test
+did nothing wrong. The population did it.</p>
+<div class="admonition ml">
+<p class="admonition-title">ML connection</p>
+<p>This is class imbalance, which you met on the Working with Data page, seen
+from the probability side. Your fraud detector will run into exactly this:
+even a very accurate model, applied to a rare event, produces more false
+alarms than real catches. When somebody quotes you an accuracy figure, the
+first question is always what the base rate was.</p>
+</div>
+<p>You can check the whole thing by simulation, which is often faster than
+rearranging symbols.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">n</span> <span class="o">=</span> <span class="mi">1_000_000</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">ill</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.01</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">positive</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">ill</span><span class="p">,</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.95</span><span class="p">,</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.05</span><span class="p">)</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="nb">print</span><span class="p">(</span><span class="n">ill</span><span class="p">[</span><span class="n">positive</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>0.16...
+</span></code></pre></div>
+<p>If you can simulate it, you never have to trust your algebra alone.</p>
+<h2 id="random-variables-and-their-distributions">Random variables and their distributions<a class="headerlink" href="#random-variables-and-their-distributions" title="Link to this section">&para;</a></h2>
+<p>A <strong>random variable</strong> is a quantity whose value depends on chance. Discrete ones
+take countable values, such as the number of clicks. Continuous ones take any
+value in a range, such as a prediction error.</p>
+<p>A <strong>distribution</strong> describes how probability is spread across the possible
+values. There are three ways to write one down and they answer different
+questions.</p>
+<p><svg viewBox="0 0 680 236" role="img" aria-labelledby="fn-title fn-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="fn-title">PMF, PDF and CDF</title>
+<desc id="fn-desc">A probability mass function gives the probability of each separate value. A probability density function gives probability as area under a curve. A cumulative distribution function gives the probability of being below a value.</desc>
+<rect x="5" y="14" width="214" height="176" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="112" y="36" text-anchor="middle" font-size="13" font-weight="700" fill="var(--md-default-fg-color)">PMF</text>
+<text x="112" y="52" text-anchor="middle" font-size="10.5" fill="var(--h-space)">one bar per value</text>
+<line x1="35" y1="152" x2="195" y2="152" stroke="var(--h-steel)" stroke-width="1.5"/>
+<line x1="35" y1="152" x2="35" y2="66" stroke="var(--h-steel)" stroke-width="1.5"/>
+<text x="112" y="178" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--h-cherry)">each bar is a probability</text>
+<rect x="233" y="14" width="214" height="176" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="340" y="36" text-anchor="middle" font-size="13" font-weight="700" fill="var(--md-default-fg-color)">PDF</text>
+<text x="340" y="52" text-anchor="middle" font-size="10.5" fill="var(--h-space)">a smooth curve</text>
+<line x1="263" y1="152" x2="423" y2="152" stroke="var(--h-steel)" stroke-width="1.5"/>
+<line x1="263" y1="152" x2="263" y2="66" stroke="var(--h-steel)" stroke-width="1.5"/>
+<text x="340" y="178" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--h-cherry)">area is the probability</text>
+<rect x="461" y="14" width="214" height="176" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="568" y="36" text-anchor="middle" font-size="13" font-weight="700" fill="var(--md-default-fg-color)">CDF</text>
+<text x="568" y="52" text-anchor="middle" font-size="10.5" fill="var(--h-space)">runs from 0 up to 1</text>
+<line x1="491" y1="152" x2="651" y2="152" stroke="var(--h-steel)" stroke-width="1.5"/>
+<line x1="491" y1="152" x2="491" y2="66" stroke="var(--h-steel)" stroke-width="1.5"/>
+<text x="568" y="178" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--h-cherry)">height is P(X at most x)</text>
+<rect x="45" y="138" width="18" height="14" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="54" cy="138" r="3" fill="var(--h-cherry)"/>
+<rect x="70" y="118" width="18" height="34" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="79" cy="118" r="3" fill="var(--h-cherry)"/>
+<rect x="95" y="94" width="18" height="58" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="104" cy="94" r="3" fill="var(--h-cherry)"/>
+<rect x="120" y="94" width="18" height="58" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="129" cy="94" r="3" fill="var(--h-cherry)"/>
+<rect x="145" y="118" width="18" height="34" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="154" cy="118" r="3" fill="var(--h-cherry)"/>
+<rect x="170" y="138" width="18" height="14" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="179" cy="138" r="3" fill="var(--h-cherry)"/>
+<polyline points="267.0,151.4 269.5,151.2 272.1,150.9 274.6,150.5 277.1,150.1 279.7,149.4 282.2,148.7 284.7,147.7 287.3,146.5 289.8,145.1 292.3,143.3 294.9,141.3 297.4,138.9 299.9,136.2 302.5,133.0 305.0,129.6 307.5,125.8 310.1,121.6 312.6,117.2 315.1,112.6 317.7,107.8 320.2,103.0 322.7,98.3 325.3,93.7 327.8,89.5 330.3,85.6 332.9,82.3 335.4,79.6 337.9,77.6 340.5,76.4 343.0,76.0 345.5,76.4 348.1,77.6 350.6,79.6 353.1,82.3 355.7,85.6 358.2,89.5 360.7,93.7 363.3,98.3 365.8,103.0 368.3,107.8 370.9,112.6 373.4,117.2 375.9,121.6 378.5,125.8 381.0,129.6 383.5,133.0 386.1,136.2 388.6,138.9 391.1,141.3 393.7,143.3 396.2,145.1 398.7,146.5 401.3,147.7 403.8,148.7 406.3,149.4 408.9,150.1 411.4,150.5 413.9,150.9 416.5,151.2 419.0,151.4" fill="none" stroke="var(--h-cherry)" stroke-width="2.5"/>
+<polygon points="312.6,152.0 312.6,117.2 315.1,112.6 317.7,107.8 320.2,103.0 322.7,98.3 325.3,93.7 327.8,89.5 330.3,85.6 332.9,82.3 335.4,79.6 337.9,77.6 340.5,76.4 343.0,76.0 345.5,76.4 348.1,77.6 350.6,79.6 353.1,82.3 353.1,152.0" fill="var(--h-cherry)" opacity="0.3"/>
+<text x="337" y="146" text-anchor="middle" font-size="9.5" font-weight="700" fill="var(--h-cherry)">area</text>
+<polyline points="495.0,152.0 497.5,151.9 500.1,151.9 502.6,151.8 505.1,151.8 507.7,151.7 510.2,151.5 512.7,151.3 515.3,151.1 517.8,150.8 520.3,150.5 522.9,150.0 525.4,149.5 527.9,148.8 530.5,148.0 533.0,147.1 535.5,146.0 538.1,144.7 540.6,143.3 543.1,141.6 545.7,139.8 548.2,137.8 550.7,135.5 553.3,133.1 555.8,130.5 558.3,127.7 560.9,124.8 563.4,121.8 565.9,118.7 568.5,115.6 571.0,112.4 573.5,109.3 576.1,106.2 578.6,103.2 581.1,100.3 583.7,97.5 586.2,94.9 588.7,92.5 591.3,90.2 593.8,88.2 596.3,86.4 598.9,84.7 601.4,83.3 603.9,82.0 606.5,80.9 609.0,80.0 611.5,79.2 614.1,78.5 616.6,78.0 619.1,77.5 621.7,77.2 624.2,76.9 626.7,76.7 629.3,76.5 631.8,76.3 634.3,76.2 636.9,76.2 639.4,76.1 641.9,76.1 644.5,76.0 647.0,76.0" fill="none" stroke="var(--h-cherry)" stroke-width="2.5"/>
+<line x1="491" y1="76" x2="651" y2="76" stroke="var(--h-steel)" stroke-width="1" stroke-dasharray="3 3"/>
+<text x="487" y="80" text-anchor="end" font-size="9.5" fill="var(--h-space)">1</text>
+<text x="340" y="216" text-anchor="middle" font-size="12" fill="var(--h-graphite)">For a continuous variable the probability of any exact value is zero. Only ranges have probability.</text>
+</svg></p>
+<p>The <strong>PMF</strong> gives the probability of each separate value, and only makes sense
+for discrete variables. The <strong>PDF</strong> describes a continuous variable, where
+probability lives in areas rather than points. The <strong>CDF</strong> gives the probability
+of being at or below a value, and it is what percentiles are built from.</p>
+<div class="admonition warning">
+<p class="admonition-title">The height of a PDF is not a probability</p>
+<p>It can exceed 1. Only the area under the curve is a probability, which is
+why <span class="arithmatex">\(P(X = x) = 0\)</span> exactly for a continuous variable. Asking for the
+probability that somebody is exactly 175.000 centimetres tall is asking for
+the area of a line.</p>
+</div>
+<h2 id="describing-a-distribution-with-numbers">Describing a distribution with numbers<a class="headerlink" href="#describing-a-distribution-with-numbers" title="Link to this section">&para;</a></h2>
+<p><strong>Expected value</strong> is the long run average, weighting each value by how likely
+it is.</p>
+<div class="arithmatex">\[
+E[X] = \sum_x x \, P(X = x)
+\]</div>
+<p><strong>Variance</strong> is the average squared distance from that centre, and <strong>standard
+deviation</strong> is its square root, which puts it back into the units of the data.</p>
+<p>For the scores 70, 75, 80, 85 and 90, the mean is 80, the variance is 50 and the
+standard deviation is about 7.07. So a typical score sits about 7 points from
+the average.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">scores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">70</span><span class="p">,</span> <span class="mi">75</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">85</span><span class="p">,</span> <span class="mi">90</span><span class="p">])</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nb">print</span><span class="p">(</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">scores</span><span class="o">.</span><span class="n">var</span><span class="p">(),</span> <span class="n">scores</span><span class="o">.</span><span class="n">std</span><span class="p">())</span>
+</span></code></pre></div>
+<p>Squaring is what makes variance awkward to interpret and useful to optimise. It
+is differentiable everywhere and it punishes large errors far more than small
+ones.</p>
+<div class="admonition ml">
+<p class="admonition-title">ML connection</p>
+<p>Mean squared error is the variance of your prediction errors. When you
+minimise MSE you are shrinking the spread of how wrong you are, and the
+squaring is why one catastrophic prediction hurts more than ten mediocre
+ones. That is a choice, not a law, and in trimester two you will meet losses
+that make a different one.</p>
+</div>
+<h3 id="percentiles">Percentiles<a class="headerlink" href="#percentiles" title="Link to this section">&para;</a></h3>
+<p>The p-th percentile is the value below which p percent of the data falls. The
+25th, 50th and 75th are the quartiles, and the gap between the outer two is the
+interquartile range.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">q1</span><span class="p">,</span> <span class="n">med</span><span class="p">,</span> <span class="n">q3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">scores</span><span class="p">,</span> <span class="p">[</span><span class="mi">25</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">75</span><span class="p">])</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">iqr</span> <span class="o">=</span> <span class="n">q3</span> <span class="o">-</span> <span class="n">q1</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">low</span><span class="p">,</span> <span class="n">high</span> <span class="o">=</span> <span class="n">q1</span> <span class="o">-</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">iqr</span><span class="p">,</span> <span class="n">q3</span> <span class="o">+</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">iqr</span>
+</span></code></pre></div>
+<p>Those last two numbers are the whiskers of the box plot you drew last week, and
+anything outside them is conventionally called an outlier. Conventionally, not
+truly. It is a rule of thumb, not a verdict.</p>
+<h3 id="when-the-mean-stops-being-typical">When the mean stops being typical<a class="headerlink" href="#when-the-mean-stops-being-typical" title="Link to this section">&para;</a></h3>
+<p><svg viewBox="0 0 680 246" role="img" aria-labelledby="sk-title sk-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="sk-title">Mean and median on a skewed distribution</title>
+<desc id="sk-desc">On a right skewed distribution such as salaries, the long tail pulls the mean to the right of the median, so the mean no longer describes a typical value.</desc>
+<line x1="60" y1="180" x2="640" y2="180" stroke="var(--h-steel)" stroke-width="1.5"/>
+<line x1="60" y1="180" x2="60" y2="40" stroke="var(--h-steel)" stroke-width="1.5"/>
+<polygon points="60.0,180.0 60.0,180.0 64.8,178.2 69.7,174.7 74.5,170.2 79.3,165.1 84.2,159.7 89.0,153.9 93.8,148.0 98.7,142.1 103.5,136.2 108.3,130.4 113.2,124.6 118.0,119.1 122.8,113.7 127.7,108.5 132.5,103.5 137.3,98.8 142.2,94.3 147.0,90.1 151.8,86.1 156.7,82.4 161.5,79.0 166.3,75.8 171.2,72.8 176.0,70.2 180.8,67.7 185.7,65.5 190.5,63.5 195.3,61.8 200.2,60.3 205.0,59.0 209.8,57.9 214.7,56.9 219.5,56.2 224.3,55.7 229.2,55.3 234.0,55.1 238.8,55.0 243.7,55.1 248.5,55.3 253.3,55.7 258.2,56.1 263.0,56.7 267.8,57.4 272.7,58.2 277.5,59.1 282.3,60.1 287.2,61.2 292.0,62.3 296.8,63.5 301.7,64.8 306.5,66.1 311.3,67.5 316.2,69.0 321.0,70.4 325.8,72.0 330.7,73.5 335.5,75.1 340.3,76.7 345.2,78.3 350.0,80.0 354.8,81.7 359.7,83.4 364.5,85.1 369.3,86.8 374.2,88.5 379.0,90.2 383.8,91.9 388.7,93.6 393.5,95.3 398.3,97.0 403.2,98.7 408.0,100.4 412.8,102.1 417.7,103.8 422.5,105.4 427.3,107.0 432.2,108.6 437.0,110.3 441.8,111.8 446.7,113.4 451.5,114.9 456.3,116.5 461.2,118.0 466.0,119.4 470.8,120.9 475.7,122.3 480.5,123.8 485.3,125.2 490.2,126.5 495.0,127.9 499.8,129.2 504.7,130.5 509.5,131.8 514.3,133.0 519.2,134.2 524.0,135.4 528.8,136.6 533.7,137.8 538.5,138.9 543.3,140.0 548.2,141.1 553.0,142.1 557.8,143.2 562.7,144.2 567.5,145.2 572.3,146.1 577.2,147.1 582.0,148.0 586.8,148.9 591.7,149.8 596.5,150.6 601.3,151.5 606.2,152.3 611.0,153.1 615.8,153.9 620.7,154.6 625.5,155.4 630.3,156.1 635.2,156.8 640.0,157.5 640.0,180.0" fill="var(--h-cherry)" opacity="0.18"/>
+<polyline points="60.0,180.0 64.8,178.2 69.7,174.7 74.5,170.2 79.3,165.1 84.2,159.7 89.0,153.9 93.8,148.0 98.7,142.1 103.5,136.2 108.3,130.4 113.2,124.6 118.0,119.1 122.8,113.7 127.7,108.5 132.5,103.5 137.3,98.8 142.2,94.3 147.0,90.1 151.8,86.1 156.7,82.4 161.5,79.0 166.3,75.8 171.2,72.8 176.0,70.2 180.8,67.7 185.7,65.5 190.5,63.5 195.3,61.8 200.2,60.3 205.0,59.0 209.8,57.9 214.7,56.9 219.5,56.2 224.3,55.7 229.2,55.3 234.0,55.1 238.8,55.0 243.7,55.1 248.5,55.3 253.3,55.7 258.2,56.1 263.0,56.7 267.8,57.4 272.7,58.2 277.5,59.1 282.3,60.1 287.2,61.2 292.0,62.3 296.8,63.5 301.7,64.8 306.5,66.1 311.3,67.5 316.2,69.0 321.0,70.4 325.8,72.0 330.7,73.5 335.5,75.1 340.3,76.7 345.2,78.3 350.0,80.0 354.8,81.7 359.7,83.4 364.5,85.1 369.3,86.8 374.2,88.5 379.0,90.2 383.8,91.9 388.7,93.6 393.5,95.3 398.3,97.0 403.2,98.7 408.0,100.4 412.8,102.1 417.7,103.8 422.5,105.4 427.3,107.0 432.2,108.6 437.0,110.3 441.8,111.8 446.7,113.4 451.5,114.9 456.3,116.5 461.2,118.0 466.0,119.4 470.8,120.9 475.7,122.3 480.5,123.8 485.3,125.2 490.2,126.5 495.0,127.9 499.8,129.2 504.7,130.5 509.5,131.8 514.3,133.0 519.2,134.2 524.0,135.4 528.8,136.6 533.7,137.8 538.5,138.9 543.3,140.0 548.2,141.1 553.0,142.1 557.8,143.2 562.7,144.2 567.5,145.2 572.3,146.1 577.2,147.1 582.0,148.0 586.8,148.9 591.7,149.8 596.5,150.6 601.3,151.5 606.2,152.3 611.0,153.1 615.8,153.9 620.7,154.6 625.5,155.4 630.3,156.1 635.2,156.8 640.0,157.5" fill="none" stroke="var(--h-cherry)" stroke-width="2.5"/>
+<line x1="138" y1="180" x2="138" y2="52" stroke="var(--md-default-fg-color)" stroke-width="2" stroke-dasharray="5 4"/>
+<text x="138" y="44" text-anchor="middle" font-size="12" font-weight="700" fill="var(--md-default-fg-color)">median</text>
+<line x1="196" y1="180" x2="196" y2="76" stroke="var(--h-cherry)" stroke-width="2"/>
+<text x="238" y="70" text-anchor="middle" font-size="12" font-weight="700" fill="var(--h-cherry)">mean</text>
+<text x="470" y="150" text-anchor="middle" font-size="11.5" fill="var(--h-graphite)">a few very large values live out here</text>
+<text x="340" y="212" text-anchor="middle" font-size="12" fill="var(--h-graphite)">The tail drags the mean away from the middle. Half the people are still below the median.</text>
+<text x="340" y="232" text-anchor="middle" font-size="12" fill="var(--h-graphite)">This is why you filled missing salaries with the median on the Pandas page.</text>
+</svg></p>
+<p>On a symmetric distribution the mean and median sit together. On a skewed one
+they separate, and the mean stops describing anybody in particular.</p>
+<p>Report the median for skewed data, and report both when you want to show that
+the skew exists. A dataset where the mean is far above the median is telling you
+something before you have plotted anything.</p>
+<h2 id="the-distributions-worth-knowing">The distributions worth knowing<a class="headerlink" href="#the-distributions-worth-knowing" title="Link to this section">&para;</a></h2>
+<p><svg viewBox="0 0 680 320" role="img" aria-labelledby="ga-title ga-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="ga-title">Six distributions and what each one models</title>
+<desc id="ga-desc">Uniform for equally likely values. Normal for measurements clustered around an average. Bernoulli for one yes or no trial. Binomial for the number of successes in many trials. Poisson for counts of rare events. Exponential for waiting times.</desc>
+<rect x="5" y="14" width="214" height="138" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="112" y="38" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)">Uniform</text>
+<text x="112" y="142" text-anchor="middle" font-size="10.5" fill="var(--h-space)">every value equally likely</text>
+<line x1="33" y1="120" x2="193" y2="120" stroke="var(--h-steel)" stroke-width="1.2"/>
+<rect x="233" y="14" width="214" height="138" rx="10" fill="var(--h-surface)" stroke="var(--h-cherry-line)"/>
+<text x="340" y="38" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--h-cherry)">Normal</text>
+<text x="340" y="142" text-anchor="middle" font-size="10.5" fill="var(--h-space)">clustered around an average</text>
+<line x1="261" y1="120" x2="421" y2="120" stroke="var(--h-steel)" stroke-width="1.2"/>
+<rect x="461" y="14" width="214" height="138" rx="10" fill="var(--h-surface)" stroke="var(--h-cherry-line)"/>
+<text x="568" y="38" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--h-cherry)">Bernoulli</text>
+<text x="568" y="142" text-anchor="middle" font-size="10.5" fill="var(--h-space)">one yes or no trial</text>
+<line x1="489" y1="120" x2="649" y2="120" stroke="var(--h-steel)" stroke-width="1.2"/>
+<rect x="5" y="170" width="214" height="138" rx="10" fill="var(--h-surface)" stroke="var(--h-cherry-line)"/>
+<text x="112" y="194" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--h-cherry)">Binomial</text>
+<text x="112" y="298" text-anchor="middle" font-size="10.5" fill="var(--h-space)">successes out of n trials</text>
+<line x1="33" y1="276" x2="193" y2="276" stroke="var(--h-steel)" stroke-width="1.2"/>
+<rect x="233" y="170" width="214" height="138" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="340" y="194" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)">Poisson</text>
+<text x="340" y="298" text-anchor="middle" font-size="10.5" fill="var(--h-space)">how many rare events</text>
+<line x1="261" y1="276" x2="421" y2="276" stroke="var(--h-steel)" stroke-width="1.2"/>
+<rect x="461" y="170" width="214" height="138" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="568" y="194" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)">Exponential</text>
+<text x="568" y="298" text-anchor="middle" font-size="10.5" fill="var(--h-space)">how long until the next one</text>
+<line x1="489" y1="276" x2="649" y2="276" stroke="var(--h-steel)" stroke-width="1.2"/>
+<rect x="37.0" y="73.8" width="22.0" height="46.2" fill="var(--h-cherry)" opacity="0.85"/>
+<rect x="62.0" y="73.8" width="22.0" height="46.2" fill="var(--h-cherry)" opacity="0.85"/>
+<rect x="87.0" y="73.8" width="22.0" height="46.2" fill="var(--h-cherry)" opacity="0.85"/>
+<rect x="112.0" y="73.8" width="22.0" height="46.2" fill="var(--h-cherry)" opacity="0.85"/>
+<rect x="137.0" y="73.8" width="22.0" height="46.2" fill="var(--h-cherry)" opacity="0.85"/>
+<rect x="162.0" y="73.8" width="22.0" height="46.2" fill="var(--h-cherry)" opacity="0.85"/>
+<polyline points="265.0,119.1 268.0,118.8 271.1,118.3 274.1,117.7 277.2,116.9 280.2,115.9 283.2,114.6 286.3,113.0 289.3,111.1 292.4,108.8 295.4,106.1 298.4,103.0 301.5,99.5 304.5,95.6 307.6,91.4 310.6,87.0 313.6,82.3 316.7,77.6 319.7,73.0 322.8,68.6 325.8,64.5 328.8,60.9 331.9,58.0 334.9,55.8 338.0,54.5 341.0,54.0 344.0,54.5 347.1,55.8 350.1,58.0 353.2,60.9 356.2,64.5 359.2,68.6 362.3,73.0 365.3,77.6 368.4,82.3 371.4,87.0 374.4,91.4 377.5,95.6 380.5,99.5 383.6,103.0 386.6,106.1 389.6,108.8 392.7,111.1 395.7,113.0 398.8,114.6 401.8,115.9 404.8,116.9 407.9,117.7 410.9,118.3 414.0,118.8 417.0,119.1" fill="none" stroke="var(--h-cherry)" stroke-width="2.5"/>
+<rect x="493.0" y="96.9" width="72.0" height="23.1" fill="var(--h-cherry)" opacity="0.85"/>
+<rect x="568.0" y="70.5" width="72.0" height="49.5" fill="var(--h-cherry)" opacity="0.85"/>
+<rect x="37.0" y="270.7" width="18.4" height="5.3" fill="var(--h-cherry)" opacity="0.85"/>
+<rect x="58.4" y="258.8" width="18.4" height="17.2" fill="var(--h-cherry)" opacity="0.85"/>
+<rect x="79.9" y="239.7" width="18.4" height="36.3" fill="var(--h-cherry)" opacity="0.85"/>
+<rect x="101.3" y="223.2" width="18.4" height="52.8" fill="var(--h-cherry)" opacity="0.85"/>
+<rect x="122.7" y="235.1" width="18.4" height="40.9" fill="var(--h-cherry)" opacity="0.85"/>
+<rect x="144.1" y="256.2" width="18.4" height="19.8" fill="var(--h-cherry)" opacity="0.85"/>
+<rect x="165.6" y="269.4" width="18.4" height="6.6" fill="var(--h-cherry)" opacity="0.85"/>
+<rect x="265.0" y="259.5" width="18.4" height="16.5" fill="var(--h-cherry)" opacity="0.85"/>
+<rect x="286.4" y="235.1" width="18.4" height="40.9" fill="var(--h-cherry)" opacity="0.85"/>
+<rect x="307.9" y="223.2" width="18.4" height="52.8" fill="var(--h-cherry)" opacity="0.85"/>
+<rect x="329.3" y="236.4" width="18.4" height="39.6" fill="var(--h-cherry)" opacity="0.85"/>
+<rect x="350.7" y="252.9" width="18.4" height="23.1" fill="var(--h-cherry)" opacity="0.85"/>
+<rect x="372.1" y="265.4" width="18.4" height="10.6" fill="var(--h-cherry)" opacity="0.85"/>
+<rect x="393.6" y="272.0" width="18.4" height="4.0" fill="var(--h-cherry)" opacity="0.85"/>
+<polyline points="493.0,210.0 496.0,214.1 499.1,217.9 502.1,221.5 505.2,224.9 508.2,228.1 511.2,231.0 514.3,233.8 517.3,236.4 520.4,238.9 523.4,241.2 526.4,243.4 529.5,245.4 532.5,247.3 535.6,249.1 538.6,250.7 541.6,252.3 544.7,253.8 547.7,255.1 550.8,256.4 553.8,257.6 556.8,258.8 559.9,259.9 562.9,260.9 566.0,261.8 569.0,262.7 572.0,263.5 575.1,264.3 578.1,265.0 581.2,265.7 584.2,266.3 587.2,266.9 590.3,267.5 593.3,268.0 596.4,268.5 599.4,269.0 602.4,269.4 605.5,269.8 608.5,270.2 611.6,270.6 614.6,270.9 617.6,271.2 620.7,271.5 623.7,271.8 626.8,272.1 629.8,272.3 632.8,272.5 635.9,272.7 638.9,272.9 642.0,273.1 645.0,273.3" fill="none" stroke="var(--h-cherry)" stroke-width="2.5"/>
+<text x="340" y="300" text-anchor="middle" font-size="12" fill="var(--h-graphite)">The three outlined in red are the ones you will use constantly. Recognise the other three and move on.</text>
+</svg></p>
+<h3 id="normal">Normal<a class="headerlink" href="#normal" title="Link to this section">&para;</a></h3>
+<p>The bell curve. Symmetric, described entirely by a mean <span class="arithmatex">\(\mu\)</span> and a standard
+deviation <span class="arithmatex">\(\sigma\)</span>.</p>
+<p>The rule worth memorising: <strong>68, 95, 99.7</strong>. About 68 percent of values fall
+within one standard deviation of the mean, 95 percent within two, and 99.7
+percent within three. That is how you judge in your head whether a value is
+unusual.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">heights</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">170</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10_000</span><span class="p">)</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">within_one</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">heights</span> <span class="o">-</span> <span class="mi">170</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">)</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">within_one</span><span class="p">)</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>0.682...
+</span></code></pre></div>
+<h3 id="bernoulli">Bernoulli<a class="headerlink" href="#bernoulli" title="Link to this section">&para;</a></h3>
+<p>One trial with two outcomes, described by a single number <span class="arithmatex">\(p\)</span>. A coin flip, a
+click, a fraud or not fraud.</p>
+<p>This is the distribution every binary classifier outputs. When logistic
+regression returns 0.85, it is handing you a Bernoulli distribution.</p>
+<h3 id="binomial">Binomial<a class="headerlink" href="#binomial" title="Link to this section">&para;</a></h3>
+<p>The number of successes in <span class="arithmatex">\(n\)</span> independent Bernoulli trials. Mean <span class="arithmatex">\(np\)</span>, variance
+<span class="arithmatex">\(np(1-p)\)</span>.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">successes</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10_000</span><span class="p">)</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nb">print</span><span class="p">(</span><span class="n">successes</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+</span></code></pre></div>
+<p>Useful the moment you ask whether a result could have happened by chance. If a
+model gets 60 out of 100 right and guessing gives 50, the binomial tells you how
+often luck alone would manage 60.</p>
+<h3 id="three-to-recognise">Three to recognise<a class="headerlink" href="#three-to-recognise" title="Link to this section">&para;</a></h3>
+<p><strong>Uniform</strong> gives every value in a range the same chance, and is what you get
+from <code>rng.random()</code>. It is used for random initialisation and for shuffling.</p>
+<p><strong>Poisson</strong> counts rare events in a fixed window: emails per hour, arrivals per
+day. One parameter, <span class="arithmatex">\(\lambda\)</span>, which is both the mean and the variance.</p>
+<p><strong>Exponential</strong> measures the waiting time between those events. If the counts are
+Poisson, the gaps are exponential.</p>
+<p>You will not use these three often in this programme. Know what they model so
+you recognise them when they appear.</p>
+<h2 id="sampling-and-seeing-the-shape">Sampling and seeing the shape<a class="headerlink" href="#sampling-and-seeing-the-shape" title="Link to this section">&para;</a></h2>
+<p>The fastest way to understand a distribution is to draw from it and plot it.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5000</span><span class="p">),</span> <span class="n">bins</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Normal&quot;</span><span class="p">)</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">5000</span><span class="p">),</span> <span class="n">bins</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Binomial, n=10, p=0.5&quot;</span><span class="p">)</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">exponential</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mi">5000</span><span class="p">),</span> <span class="n">bins</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Exponential&quot;</span><span class="p">)</span>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</span></code></pre></div>
+<p>Change the parameters and run it again. Ten minutes of this teaches more than
+reading the formulas twice.</p>
+<h2 id="why-the-bell-curve-is-everywhere">Why the bell curve is everywhere<a class="headerlink" href="#why-the-bell-curve-is-everywhere" title="Link to this section">&para;</a></h2>
+<p>The <strong>Central Limit Theorem</strong> says that if you take averages of samples, those
+averages tend towards a normal distribution as the sample grows, almost
+regardless of the shape you started with.</p>
+<p><svg viewBox="0 0 680 256" role="img" aria-labelledby="cl-title cl-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="cl-title">The distribution of an average as the sample grows</title>
+<desc id="cl-desc">Averages of one observation are spread widely. Averages of ten are narrower. Averages of a hundred cluster tightly around the true value, and the shape becomes a bell whatever the original data looked like.</desc>
+<line x1="50" y1="186" x2="650" y2="186" stroke="var(--h-steel)" stroke-width="1.5"/>
+<line x1="350" y1="186" x2="350" y2="34" stroke="var(--md-default-fg-color)" stroke-width="1.5" stroke-dasharray="5 4"/>
+<text x="350" y="26" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--md-default-fg-color)">the true value</text>
+<polyline points="50.0,148.6 53.8,147.3 57.5,145.9 61.2,144.6 65.0,143.2 68.8,141.7 72.5,140.3 76.2,138.8 80.0,137.3 83.8,135.8 87.5,134.2 91.2,132.6 95.0,131.0 98.8,129.4 102.5,127.7 106.2,126.0 110.0,124.3 113.8,122.6 117.5,120.9 121.2,119.1 125.0,117.3 128.8,115.5 132.5,113.7 136.2,111.9 140.0,110.0 143.8,108.2 147.5,106.3 151.2,104.5 155.0,102.6 158.8,100.7 162.5,98.8 166.2,96.9 170.0,95.0 173.8,93.1 177.5,91.2 181.2,89.3 185.0,87.5 188.8,85.6 192.5,83.7 196.2,81.8 200.0,80.0 203.8,78.2 207.5,76.4 211.2,74.6 215.0,72.8 218.8,71.0 222.5,69.3 226.2,67.6 230.0,65.9 233.8,64.2 237.5,62.6 241.2,61.0 245.0,59.5 248.8,57.9 252.5,56.5 256.2,55.0 260.0,53.6 263.8,52.3 267.5,51.0 271.2,49.7 275.0,48.5 278.8,47.3 282.5,46.2 286.2,45.1 290.0,44.1 293.8,43.1 297.5,42.2 301.2,41.4 305.0,40.6 308.8,39.9 312.5,39.2 316.2,38.6 320.0,38.1 323.8,37.6 327.5,37.2 331.2,36.8 335.0,36.5 338.8,36.3 342.5,36.1 346.2,36.0 350.0,36.0 353.8,36.0 357.5,36.1 361.2,36.3 365.0,36.5 368.8,36.8 372.5,37.2 376.2,37.6 380.0,38.1 383.8,38.6 387.5,39.2 391.2,39.9 395.0,40.6 398.8,41.4 402.5,42.2 406.2,43.1 410.0,44.1 413.8,45.1 417.5,46.2 421.2,47.3 425.0,48.5 428.8,49.7 432.5,51.0 436.2,52.3 440.0,53.6 443.8,55.0 447.5,56.5 451.2,57.9 455.0,59.5 458.8,61.0 462.5,62.6 466.2,64.2 470.0,65.9 473.8,67.6 477.5,69.3 481.2,71.0 485.0,72.8 488.8,74.6 492.5,76.4 496.2,78.2 500.0,80.0 503.8,81.8 507.5,83.7 511.2,85.6 515.0,87.5 518.8,89.3 522.5,91.2 526.2,93.1 530.0,95.0 533.8,96.9 537.5,98.8 541.2,100.7 545.0,102.6 548.8,104.5 552.5,106.3 556.2,108.2 560.0,110.0 563.8,111.9 567.5,113.7 571.2,115.5 575.0,117.3 578.8,119.1 582.5,120.9 586.2,122.6 590.0,124.3 593.8,126.0 597.5,127.7 601.2,129.4 605.0,131.0 608.8,132.6 612.5,134.2 616.2,135.8 620.0,137.3 623.8,138.8 627.5,140.3 631.2,141.7 635.0,143.2 638.8,144.6 642.5,145.9 646.2,147.3 650.0,148.6" fill="none" stroke="var(--h-cherry)" stroke-width="2.5" opacity="0.22"/>
+<polyline points="50.0,185.7 53.8,185.7 57.5,185.7 61.2,185.6 65.0,185.5 68.8,185.4 72.5,185.4 76.2,185.3 80.0,185.1 83.8,185.0 87.5,184.9 91.2,184.7 95.0,184.5 98.8,184.3 102.5,184.0 106.2,183.8 110.0,183.5 113.8,183.1 117.5,182.7 121.2,182.3 125.0,181.8 128.8,181.3 132.5,180.7 136.2,180.1 140.0,179.4 143.8,178.6 147.5,177.8 151.2,176.9 155.0,175.9 158.8,174.8 162.5,173.6 166.2,172.3 170.0,170.9 173.8,169.4 177.5,167.8 181.2,166.1 185.0,164.2 188.8,162.2 192.5,160.1 196.2,157.9 200.0,155.5 203.8,153.1 207.5,150.4 211.2,147.7 215.0,144.8 218.8,141.7 222.5,138.6 226.2,135.3 230.0,131.9 233.8,128.4 237.5,124.8 241.2,121.1 245.0,117.3 248.8,113.5 252.5,109.5 256.2,105.5 260.0,101.5 263.8,97.5 267.5,93.4 271.2,89.3 275.0,85.3 278.8,81.3 282.5,77.4 286.2,73.5 290.0,69.8 293.8,66.1 297.5,62.6 301.2,59.2 305.0,56.1 308.8,53.0 312.5,50.2 316.2,47.6 320.0,45.3 323.8,43.1 327.5,41.3 331.2,39.7 335.0,38.4 338.8,37.3 342.5,36.6 346.2,36.1 350.0,36.0 353.8,36.1 357.5,36.6 361.2,37.3 365.0,38.4 368.8,39.7 372.5,41.3 376.2,43.1 380.0,45.3 383.8,47.6 387.5,50.2 391.2,53.0 395.0,56.1 398.8,59.2 402.5,62.6 406.2,66.1 410.0,69.8 413.8,73.5 417.5,77.4 421.2,81.3 425.0,85.3 428.8,89.3 432.5,93.4 436.2,97.5 440.0,101.5 443.8,105.5 447.5,109.5 451.2,113.5 455.0,117.3 458.8,121.1 462.5,124.8 466.2,128.4 470.0,131.9 473.8,135.3 477.5,138.6 481.2,141.7 485.0,144.8 488.8,147.7 492.5,150.4 496.2,153.1 500.0,155.5 503.8,157.9 507.5,160.1 511.2,162.2 515.0,164.2 518.8,166.1 522.5,167.8 526.2,169.4 530.0,170.9 533.8,172.3 537.5,173.6 541.2,174.8 545.0,175.9 548.8,176.9 552.5,177.8 556.2,178.6 560.0,179.4 563.8,180.1 567.5,180.7 571.2,181.3 575.0,181.8 578.8,182.3 582.5,182.7 586.2,183.1 590.0,183.5 593.8,183.8 597.5,184.0 601.2,184.3 605.0,184.5 608.8,184.7 612.5,184.9 616.2,185.0 620.0,185.1 623.8,185.3 627.5,185.4 631.2,185.4 635.0,185.5 638.8,185.6 642.5,185.7 646.2,185.7 650.0,185.7" fill="none" stroke="var(--h-cherry)" stroke-width="2.5" opacity="0.45"/>
+<polyline points="50.0,186.0 53.8,186.0 57.5,186.0 61.2,186.0 65.0,186.0 68.8,186.0 72.5,186.0 76.2,186.0 80.0,186.0 83.8,186.0 87.5,186.0 91.2,186.0 95.0,186.0 98.8,186.0 102.5,186.0 106.2,186.0 110.0,186.0 113.8,186.0 117.5,186.0 121.2,186.0 125.0,186.0 128.8,186.0 132.5,186.0 136.2,186.0 140.0,186.0 143.8,186.0 147.5,186.0 151.2,186.0 155.0,186.0 158.8,186.0 162.5,186.0 166.2,186.0 170.0,186.0 173.8,186.0 177.5,186.0 181.2,186.0 185.0,186.0 188.8,186.0 192.5,186.0 196.2,186.0 200.0,186.0 203.8,186.0 207.5,186.0 211.2,186.0 215.0,186.0 218.8,185.9 222.5,185.9 226.2,185.9 230.0,185.8 233.8,185.7 237.5,185.6 241.2,185.3 245.0,185.1 248.8,184.6 252.5,184.1 256.2,183.3 260.0,182.4 263.8,181.1 267.5,179.4 271.2,177.3 275.0,174.7 278.8,171.4 282.5,167.5 286.2,162.8 290.0,157.3 293.8,150.9 297.5,143.7 301.2,135.6 305.0,126.8 308.8,117.3 312.5,107.4 316.2,97.1 320.0,86.8 323.8,76.7 327.5,67.1 331.2,58.4 335.0,50.7 338.8,44.5 342.5,39.8 346.2,37.0 350.0,36.0 353.8,37.0 357.5,39.8 361.2,44.5 365.0,50.7 368.8,58.4 372.5,67.1 376.2,76.7 380.0,86.8 383.8,97.1 387.5,107.4 391.2,117.3 395.0,126.8 398.8,135.6 402.5,143.7 406.2,150.9 410.0,157.3 413.8,162.8 417.5,167.5 421.2,171.4 425.0,174.7 428.8,177.3 432.5,179.4 436.2,181.1 440.0,182.4 443.8,183.3 447.5,184.1 451.2,184.6 455.0,185.1 458.8,185.3 462.5,185.6 466.2,185.7 470.0,185.8 473.8,185.9 477.5,185.9 481.2,185.9 485.0,186.0 488.8,186.0 492.5,186.0 496.2,186.0 500.0,186.0 503.8,186.0 507.5,186.0 511.2,186.0 515.0,186.0 518.8,186.0 522.5,186.0 526.2,186.0 530.0,186.0 533.8,186.0 537.5,186.0 541.2,186.0 545.0,186.0 548.8,186.0 552.5,186.0 556.2,186.0 560.0,186.0 563.8,186.0 567.5,186.0 571.2,186.0 575.0,186.0 578.8,186.0 582.5,186.0 586.2,186.0 590.0,186.0 593.8,186.0 597.5,186.0 601.2,186.0 605.0,186.0 608.8,186.0 612.5,186.0 616.2,186.0 620.0,186.0 623.8,186.0 627.5,186.0 631.2,186.0 635.0,186.0 638.8,186.0 642.5,186.0 646.2,186.0 650.0,186.0" fill="none" stroke="var(--h-cherry)" stroke-width="2.5" opacity="1.0"/>
+<text x="120" y="150" font-size="11.5" font-weight="700" fill="var(--h-cherry)" opacity="0.5">n = 1</text>
+<text x="236" y="96" font-size="11.5" font-weight="700" fill="var(--h-cherry)" opacity="0.7">n = 10</text>
+<text x="368" y="52" font-size="11.5" font-weight="700" fill="var(--h-cherry)">n = 100</text>
+<text x="340" y="216" text-anchor="middle" font-size="12" fill="var(--h-graphite)">Averages of larger samples land closer to the truth, and the spread shrinks with the square root of n.</text>
+<text x="340" y="236" text-anchor="middle" font-size="12" fill="var(--h-graphite)">To halve the uncertainty you need four times the data.</text>
+</svg></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">population</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">exponential</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mi">1_000_000</span><span class="p">)</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="n">means_10</span> <span class="o">=</span> <span class="p">[</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2000</span><span class="p">)]</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="n">means_100</span> <span class="o">=</span> <span class="p">[</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2000</span><span class="p">)]</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">means_10</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">means_100</span><span class="p">))</span>
+</span></code></pre></div>
+<p>The population is strongly skewed and the averages are not. The standard
+deviation of the averages falls by roughly a factor of three when the sample
+grows from 10 to 100, because it shrinks with the square root of <span class="arithmatex">\(n\)</span>.</p>
+<p>Two consequences you will use constantly. Averages are far more trustworthy than
+single observations. And to halve your uncertainty you need four times the data,
+which is why collecting more of it has diminishing returns.</p>
+<h2 id="your-test-score-is-an-estimate">Your test score is an estimate<a class="headerlink" href="#your-test-score-is-an-estimate" title="Link to this section">&para;</a></h2>
+<p>This is the practical payoff of everything above, and it is the idea that will
+save you from the most embarrassing mistakes in trimester two.</p>
+<p>When you measure accuracy on a test set, you are measuring a sample. Run the
+same model on a different sample and you get a different number. The question is
+whether a difference you observe is real or is noise.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="n">true_accuracy</span> <span class="o">=</span> <span class="mf">0.90</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">10_000</span><span class="p">):</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>    <span class="n">trials</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">true_accuracy</span><span class="p">,</span> <span class="mi">2000</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">trials</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="mi">3</span><span class="p">),</span> <span class="nb">round</span><span class="p">(</span><span class="n">trials</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="mi">3</span><span class="p">))</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>100 0.81 0.98
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>1000 0.868 0.932
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>10000 0.891 0.911
+</span></code></pre></div>
+<p>The model never changed. On 100 test rows the measured accuracy wanders between
+81 and 98 percent purely by chance. So an improvement from 91 to 92 percent on a
+small test set is not an improvement, it is weather.</p>
+<div class="admonition warning">
+<p class="admonition-title">The rough rule</p>
+<p>The uncertainty on an accuracy measured over <span class="arithmatex">\(n\)</span> items is roughly
+<span class="arithmatex">\(\sqrt{p(1-p)/n}\)</span>. At 90 percent accuracy on 100 items that is about 3
+percentage points, so differences smaller than about 6 points mean nothing.
+Compute it before you celebrate.</p>
+</div>
+<h2 id="likelihood-and-where-loss-functions-come-from">Likelihood, and where loss functions come from<a class="headerlink" href="#likelihood-and-where-loss-functions-come-from" title="Link to this section">&para;</a></h2>
+<p>Here is the idea that connects this page to every model you will train.</p>
+<p>A model that outputs probabilities can be scored by asking one question: what
+probability did it assign to the answer that actually happened? High is good.
+That number is the <strong>likelihood</strong>.</p>
+<p>Multiply those probabilities across thousands of examples and you get a number
+so small that a computer cannot represent it. So we take logarithms, which turn
+products into sums, and then flip the sign so that smaller is better.</p>
+<div class="arithmatex">\[
+\text{loss} = -\frac{1}{n} \sum_i \log p_i
+\]</div>
+<p>where <span class="arithmatex">\(p_i\)</span> is the probability the model gave to the correct answer for example
+<span class="arithmatex">\(i\)</span>. That is cross-entropy, and it is the loss function behind almost every
+classifier you will build.</p>
+<p><svg viewBox="0 0 680 262" role="img" aria-labelledby="nl-title nl-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="nl-title">The cost of being confidently wrong</title>
+<desc id="nl-desc">Negative log of the probability the model gave to the correct answer. Near probability one the cost is almost zero. As the probability approaches zero the cost rises without limit.</desc>
+<line x1="70" y1="196" x2="640" y2="196" stroke="var(--h-steel)" stroke-width="1.5"/>
+<line x1="70" y1="196" x2="70" y2="36" stroke="var(--h-steel)" stroke-width="1.5"/>
+<text x="355" y="224" text-anchor="middle" font-size="12" fill="var(--h-graphite)">probability the model gave to the right answer</text>
+<text x="78" y="46" font-size="12" fill="var(--h-graphite)">cost</text>
+<text x="70" y="212" text-anchor="middle" font-size="10" fill="var(--h-space)">0</text>
+<text x="640" y="212" text-anchor="middle" font-size="10" fill="var(--h-space)">1</text>
+<polyline points="78.5,53.2 81.4,63.0 84.2,70.6 87.1,76.8 90.0,82.0 92.8,86.6 95.7,90.6 98.5,94.1 101.3,97.4 104.2,100.3 107.1,103.1 109.9,105.6 112.8,107.9 115.6,110.1 118.5,112.2 121.3,114.1 124.2,116.0 127.0,117.7 129.8,119.4 132.7,121.0 135.6,122.5 138.4,123.9 141.2,125.3 144.1,126.6 146.9,127.9 149.8,129.2 152.6,130.3 155.5,131.5 158.3,132.6 161.2,133.7 164.1,134.7 166.9,135.8 169.8,136.7 172.6,137.7 175.4,138.6 178.3,139.5 181.2,140.4 184.0,141.3 186.8,142.1 189.7,142.9 192.6,143.7 195.4,144.5 198.2,145.3 201.1,146.0 203.9,146.8 206.8,147.5 209.7,148.2 212.5,148.9 215.3,149.5 218.2,150.2 221.1,150.8 223.9,151.5 226.8,152.1 229.6,152.7 232.4,153.3 235.3,153.9 238.1,154.5 241.0,155.1 243.8,155.6 246.7,156.2 249.6,156.7 252.4,157.3 255.2,157.8 258.1,158.3 261.0,158.8 263.8,159.3 266.6,159.8 269.5,160.3 272.4,160.8 275.2,161.3 278.0,161.7 280.9,162.2 283.8,162.7 286.6,163.1 289.5,163.5 292.3,164.0 295.1,164.4 298.0,164.8 300.9,165.3 303.7,165.7 306.5,166.1 309.4,166.5 312.2,166.9 315.1,167.3 317.9,167.7 320.8,168.1 323.6,168.5 326.5,168.9 329.4,169.2 332.2,169.6 335.1,170.0 337.9,170.3 340.8,170.7 343.6,171.0 346.4,171.4 349.3,171.7 352.1,172.1 355.0,172.4 357.9,172.8 360.7,173.1 363.6,173.4 366.4,173.8 369.2,174.1 372.1,174.4 375.0,174.7 377.8,175.0 380.7,175.4 383.5,175.7 386.4,176.0 389.2,176.3 392.0,176.6 394.9,176.9 397.8,177.2 400.6,177.5 403.4,177.8 406.3,178.1 409.1,178.3 412.0,178.6 414.8,178.9 417.7,179.2 420.6,179.5 423.4,179.7 426.2,180.0 429.1,180.3 431.9,180.6 434.8,180.8 437.7,181.1 440.5,181.4 443.4,181.6 446.2,181.9 449.1,182.1 451.9,182.4 454.8,182.6 457.6,182.9 460.5,183.1 463.3,183.4 466.1,183.6 469.0,183.9 471.8,184.1 474.7,184.4 477.5,184.6 480.4,184.8 483.2,185.1 486.1,185.3 488.9,185.5 491.8,185.8 494.6,186.0 497.5,186.2 500.4,186.4 503.2,186.7 506.1,186.9 508.9,187.1 511.8,187.3 514.6,187.6 517.5,187.8 520.3,188.0 523.2,188.2 526.0,188.4 528.9,188.6 531.7,188.8 534.5,189.0 537.4,189.3 540.2,189.5 543.1,189.7 546.0,189.9 548.8,190.1 551.6,190.3 554.5,190.5 557.3,190.7 560.2,190.9 563.0,191.1 565.9,191.3 568.8,191.5 571.6,191.7 574.5,191.8 577.3,192.0 580.2,192.2 583.0,192.4 585.9,192.6 588.7,192.8 591.6,193.0 594.4,193.2 597.2,193.3 600.1,193.5 603.0,193.7 605.8,193.9 608.6,194.1 611.5,194.3 614.4,194.4 617.2,194.6 620.0,194.8 622.9,195.0 625.8,195.1 628.6,195.3 631.5,195.5 634.3,195.7 637.1,195.8 640.0,196.0" fill="none" stroke="var(--h-cherry)" stroke-width="3"/>
+<circle cx="583.0" cy="192.4" r="5" fill="var(--h-cherry)"/>
+<circle cx="355.0" cy="172.4" r="5" fill="var(--h-cherry)"/>
+<circle cx="98.5" cy="94.1" r="5" fill="var(--h-cherry)"/>
+<text x="573" y="178" text-anchor="end" font-size="11.5" font-weight="700" fill="var(--h-graphite)">confident and right</text>
+<text x="355" y="156" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--h-graphite)">a coin flip</text>
+<text x="110" y="98" text-anchor="start" font-size="11.5" font-weight="700" fill="var(--h-graphite)">confident and wrong</text>
+<text x="340" y="250" text-anchor="middle" font-size="12" fill="var(--h-graphite)">Being 90 percent sure and right costs almost nothing. Being 95 percent sure and wrong costs 30 times as much.</text>
+</svg></p>
+<p>The shape of the negative logarithm is the whole story. Give the right answer 90
+percent and the cost is 0.105. Give it 5 percent and the cost is 3.0, thirty
+times more. As the probability approaches zero the cost grows without limit.</p>
+<p>So the function does not merely punish being wrong. It punishes being confident
+and wrong, and it rewards honest uncertainty. A model that says 60 percent and is
+occasionally wrong scores better than one that says 99 percent and is
+occasionally wrong.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">p_correct</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">])</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="nb">print</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">p_correct</span><span class="p">))</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="nb">print</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">p_correct</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>[0.105 0.223 0.511 2.996]
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>0.959
+</span></code></pre></div>
+<p>One bad prediction dominates the average. That single line explains most of what
+you will see when you start watching training curves.</p>
+<h2 id="correlation-and-its-limits">Correlation, and its limits<a class="headerlink" href="#correlation-and-its-limits" title="Link to this section">&para;</a></h2>
+<p>Covariance measures whether two variables move together. Correlation is
+covariance rescaled to sit between -1 and 1, which makes it comparable across
+different units.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">x</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="n">y</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">corrcoef</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>0.89...
+</span></code></pre></div>
+<p>Two warnings, both of which will cost somebody marks this trimester.</p>
+<p><strong>Correlation only measures straight line relationships.</strong> A perfect U shape can
+have a correlation near zero. This is why you plot before you trust the number,
+which is the same lesson as Anscombe's quartet from the Plotting page.</p>
+<p><strong>Correlation is not causation.</strong> Ice cream sales correlate with drownings. Both
+are caused by summer. A model does not care, because a correlated feature
+predicts perfectly well until the underlying cause shifts and the relationship
+quietly stops holding.</p>
+<h2 id="common-confusions">Common confusions<a class="headerlink" href="#common-confusions" title="Link to this section">&para;</a></h2>
+<details class="note">
+<summary>Disjoint and independent</summary>
+<p>Disjoint means they cannot both happen. Independent means one tells you
+nothing about the other. Disjoint events with non-zero probability are
+always dependent.</p>
+</details>
+<details class="note">
+<summary><span class="arithmatex">\(P(A \mid B)\)</span> and <span class="arithmatex">\(P(B \mid A)\)</span></summary>
+<p>These are not the same number and are often wildly different. The
+probability of testing positive given illness was 95 percent. The
+probability of illness given a positive test was 15. Swapping these two is
+the single most common probability error in the wild.</p>
+</details>
+<details class="note">
+<summary>The PDF height looks like a probability</summary>
+<p>It is not, and it can exceed 1. Probability is the area under the curve
+between two values.</p>
+</details>
+<details class="note">
+<summary>A big correlation means one causes the other</summary>
+<p>It means they move together. It says nothing at all about why.</p>
+</details>
+<details class="note">
+<summary>My model improved from 91 to 92 percent</summary>
+<p>On how many test items? Work out the uncertainty first. On a few hundred
+rows that difference is indistinguishable from noise.</p>
+</details>
+<details class="note">
+<summary>Dividing by n or by n minus 1</summary>
+<p>Use <span class="arithmatex">\(n\)</span> when your data is the whole population, and <span class="arithmatex">\(n-1\)</span> when it is a
+sample you are using to estimate a wider population. NumPy defaults to <span class="arithmatex">\(n\)</span>,
+and pandas defaults to <span class="arithmatex">\(n-1\)</span>, which is why the two sometimes disagree by a
+little. For large datasets the difference is negligible.</p>
+</details>
+<h2 id="check-yourself">Check yourself<a class="headerlink" href="#check-yourself" title="Link to this section">&para;</a></h2>
+<p>Use NumPy rather than algebra wherever you can. Simulating is a legitimate way
+to answer these.</p>
+<ol>
+<li>Simulate 100,000 rolls of two dice. Estimate the probability that the sum is
+   7, and compare it with the exact answer.</li>
+<li>Change the disease prevalence in the medical test simulation from 1 percent
+   to 30 percent. Recompute the chance of being ill given a positive test, and
+   explain in one sentence why it moved so much.</li>
+<li>Draw 10,000 values from a normal distribution of your choice and verify the
+   68, 95, 99.7 rule yourself.</li>
+<li>Take an exponential population, then plot the distribution of the mean of 5
+   samples and of 50 samples. Describe what changes.</li>
+<li>A model is 85 percent accurate. How large must your test set be before a 2
+   percentage point improvement is distinguishable from noise? Answer by
+   simulation.</li>
+<li>Compute the cross-entropy loss for a model that gives the right answer 0.99,
+   0.99, 0.99 and 0.01, and for one that gives 0.7 four times. Which is the
+   better model, and does the number agree with your instinct?</li>
+</ol>
+<h2 id="quick-reference">Quick reference<a class="headerlink" href="#quick-reference" title="Link to this section">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Idea</th>
+<th>Formula or code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Complement</td>
+<td><span class="arithmatex">\(P(A^c) = 1 - P(A)\)</span></td>
+</tr>
+<tr>
+<td>Addition</td>
+<td><span class="arithmatex">\(P(A \cup B) = P(A) + P(B) - P(A \cap B)\)</span></td>
+</tr>
+<tr>
+<td>Multiplication</td>
+<td><span class="arithmatex">\(P(A \cap B) = P(A) P(B \mid A)\)</span></td>
+</tr>
+<tr>
+<td>Independence</td>
+<td><span class="arithmatex">\(P(A \cap B) = P(A) P(B)\)</span></td>
+</tr>
+<tr>
+<td>Conditional</td>
+<td><span class="arithmatex">\(P(A \mid B) = P(A \cap B) / P(B)\)</span></td>
+</tr>
+<tr>
+<td>Bayes</td>
+<td><span class="arithmatex">\(P(A \mid B) = P(B \mid A) P(A) / P(B)\)</span></td>
+</tr>
+<tr>
+<td>Mean, variance, sd</td>
+<td><code>a.mean()</code>, <code>a.var()</code>, <code>a.std()</code></td>
+</tr>
+<tr>
+<td>Percentiles</td>
+<td><code>np.percentile(a, [25, 50, 75])</code></td>
+</tr>
+<tr>
+<td>Correlation</td>
+<td><code>np.corrcoef(x, y)[0, 1]</code></td>
+</tr>
+<tr>
+<td>Seeded generator</td>
+<td><code>rng = np.random.default_rng(42)</code></td>
+</tr>
+<tr>
+<td>Normal sample</td>
+<td><code>rng.normal(loc, scale, size)</code></td>
+</tr>
+<tr>
+<td>Binomial sample</td>
+<td><code>rng.binomial(n, p, size)</code></td>
+</tr>
+<tr>
+<td>Uniform sample</td>
+<td><code>rng.random(size)</code></td>
+</tr>
+<tr>
+<td>Cross-entropy</td>
+<td><code>-np.log(p_correct).mean()</code></td>
+</tr>
+<tr>
+<td>Accuracy uncertainty</td>
+<td><span class="arithmatex">\(\sqrt{p(1-p)/n}\)</span></td>
+</tr>
+</tbody>
+</table>
+<h2 id="questions-to-sit-with">Questions to sit with<a class="headerlink" href="#questions-to-sit-with" title="Link to this section">&para;</a></h2>
+<ol>
+<li>The test in the Bayes example was 95 percent accurate and a positive result
+   still meant an 85 percent chance of being healthy. If you were designing a
+   national screening programme, what would you do with that fact?</li>
+<li>Cross-entropy punishes confident wrong answers far more than uncertain ones.
+   What behaviour does that encourage in a model, and can you think of a
+   situation where you would not want it?</li>
+<li>Minimising mean squared error means treating one error of size 10 as worse
+   than ten errors of size 1. Name a problem where that is right, and one where
+   it is badly wrong.</li>
+<li>To halve your uncertainty you need four times the data. What does that imply
+   about projects that promise big gains from collecting a bit more?</li>
+<li>A feature correlates strongly with your target and you have no idea why.
+   Do you use it? Does your answer change if the model decides who gets a loan?</li>
+</ol>
+<h2 id="next">Next<a class="headerlink" href="#next" title="Link to this section">&para;</a></h2>
+<p>That completes Maths and tools. You can represent data, shape it, see it, and
+now describe how certain you are about it.</p>
+<p>The next group moves from clean examples to real data, where nothing arrives in
+the shape you want.</p>
+<p><a class="h-button" href="../">Back to the group overview</a></p>
+<p>Worth your time:
+<a href="https://seeing-theory.brown.edu/">Seeing Theory</a> is an interactive visual
+introduction to everything on this page, and
+<a href="https://www.youtube.com/watch?v=HZGCoVF3YvM">3Blue1Brown on Bayes' theorem</a>
+explains the medical test example better than any text can.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../plotting/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Plotting">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Plotting
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../t1-real-data/" class="md-footer__link md-footer__link--next" aria-label="Next: Real data">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Real data
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Holberton School Albania
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://github.com/evisp" target="_blank" rel="noopener" title="GitHub" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://www.linkedin.com/school/holbertonschool/" target="_blank" rel="noopener" title="Holberton School" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.indexes", "navigation.path", "navigation.top", "navigation.tracking", "navigation.footer", "toc.follow", "search.highlight", "search.share", "search.suggest", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.action.edit"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

@@ -18,7 +18,7 @@ know from day one what you will be asked.
     Build an image classifier with no code, break it on purpose, and explain
     what it actually learned.
 
-    <span class="badge badge--time">ML warm-up</span>
+    <span class="badge badge--time">Two sessions</span>
     <span class="badge">Groups of 3</span>
 
     [Open the brief](rock-paper-scissors.md)
@@ -30,10 +30,24 @@ know from day one what you will be asked.
     Answer a real question about a real dataset, then fit the entire answer onto
     a single page.
 
-    <span class="badge badge--time">Storytelling</span>
+    <span class="badge badge--time">Three weeks</span>
     <span class="badge">Groups of 3 or 4</span>
+    <span class="badge">19 October</span>
 
     [Open the brief](one-page-finding.md)
+
+-   :material-scale-balance: **Project 3: How sure are you?**
+
+    ---
+
+    Collect your own data from two sources, join it into one table, and answer a
+    question with a range rather than a number.
+
+    <span class="badge badge--time">One week</span>
+    <span class="badge">Groups of 3 or 4</span>
+    <span class="badge">16 November</span>
+
+    [Open the brief](how-sure-are-you.md)
 
 </div>
 

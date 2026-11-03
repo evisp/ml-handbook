@@ -1,6 +1,6 @@
 # Probability
 
-<span class="badge badge--time">80 min</span>
+<span class="badge badge--time">100 min</span>
 <span class="badge badge--level">Foundations</span>
 <span class="badge">Needs: Plotting</span>
 
@@ -18,6 +18,10 @@ those claims better.
 This page is also where the loss functions of trimester two stop being magic.
 The thing a neural network minimises is a probability statement, and the last
 section of this page is that statement.
+
+Along the way you will learn how to tell whether a pattern in your data is real
+or just luck, which is the question behind every hypothesis test you will run
+on a dataset.
 
 ## The basics, quickly
 
@@ -529,6 +533,538 @@ small test set is not an improvement, it is weather.
     percentage points, so differences smaller than about 6 points mean nothing.
     Compute it before you celebrate.
 
+## Is a difference real?
+
+The last section asked whether a change in accuracy is real or just noise. The
+same question turns up all over data work. Customers who signed up on the
+website come back more often than customers who signed up by phone. Students
+who revised a new way scored higher. Is that a real pattern, or the kind of gap
+that luck produces all the time?
+
+A **hypothesis test** answers this with one idea: assume nothing is going on,
+then ask how surprising your data would be.
+
+The "nothing is going on" story has a name, the **null hypothesis**. For two
+groups it says the group makes no difference. Both groups come from the same
+population, and any gap you see is luck in who happened to land where.
+
+### Answer it by shuffling first
+
+Here is a concrete case. One class of 12 students tried a new way of revising.
+Another class of 12 revised the usual way. These are their exam scores.
+
+```python
+import numpy as np
+
+new_way = np.array([78, 85, 69, 91, 74, 88, 82, 93, 71, 84, 79, 90])
+usual = np.array([74, 82, 66, 78, 71, 86, 70, 77, 80, 64, 73, 79])
+print(new_way.mean(), usual.mean())
+```
+
+```
+82.0 75.0
+```
+
+A gap of 7 points. Now suppose the revision method made no difference at all.
+Then the labels "new way" and "usual" are just stickers. You could peel them
+off, shuffle all 24 scores, deal them back into two groups of 12, and nothing
+meaningful would change. So let's do exactly that, ten thousand times, and see
+how big the gap usually is when it is pure luck.
+
+```python
+rng = np.random.default_rng(0)
+observed = new_way.mean() - usual.mean()
+pooled = np.concatenate([new_way, usual])
+
+diffs = []
+for _ in range(10_000):
+    rng.shuffle(pooled)
+    diffs.append(pooled[:12].mean() - pooled[12:].mean())
+diffs = np.array(diffs)
+
+print((np.abs(diffs) >= abs(observed)).mean())
+```
+
+```
+0.0321
+```
+
+This is a **permutation test**, and the picture shows what it did.
+
+<svg viewBox="0 0 680 300" role="img" aria-labelledby="pm-title pm-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="pm-title">Shuffled differences and the p-value</title>
+<desc id="pm-desc">A histogram of 10,000 differences in mean score produced by shuffling the group labels. Most are within 5 points of zero. The real difference of 7 points sits far out on the right, and only about 3 percent of shuffles reach 7 points or more in either direction. That share is the p-value.</desc>
+<rect x="95.6" y="213.0" width="20.3" height="1.0" rx="2" fill="var(--h-cherry)" opacity="1"/>
+<rect x="117.9" y="212.2" width="20.3" height="1.8" rx="2" fill="var(--h-cherry)" opacity="1"/>
+<rect x="140.2" y="207.2" width="20.3" height="6.8" rx="2" fill="var(--h-cherry)" opacity="1"/>
+<rect x="162.5" y="201.1" width="20.3" height="12.9" rx="2" fill="var(--h-cherry)" opacity="1"/>
+<rect x="184.8" y="188.8" width="20.3" height="25.2" rx="2" fill="var(--h-steel)" opacity="0.45"/>
+<rect x="207.2" y="165.6" width="20.3" height="48.4" rx="2" fill="var(--h-steel)" opacity="0.45"/>
+<rect x="229.5" y="137.5" width="20.3" height="76.5" rx="2" fill="var(--h-steel)" opacity="0.45"/>
+<rect x="251.8" y="112.8" width="20.3" height="101.2" rx="2" fill="var(--h-steel)" opacity="0.45"/>
+<rect x="274.1" y="82.8" width="20.3" height="131.2" rx="2" fill="var(--h-steel)" opacity="0.45"/>
+<rect x="296.4" y="62.0" width="20.3" height="152.0" rx="2" fill="var(--h-steel)" opacity="0.45"/>
+<rect x="318.7" y="78.9" width="20.3" height="135.1" rx="2" fill="var(--h-steel)" opacity="0.45"/>
+<rect x="341.0" y="52.0" width="20.3" height="162.0" rx="2" fill="var(--h-steel)" opacity="0.45"/>
+<rect x="363.3" y="52.4" width="20.3" height="161.6" rx="2" fill="var(--h-steel)" opacity="0.45"/>
+<rect x="385.6" y="81.9" width="20.3" height="132.1" rx="2" fill="var(--h-steel)" opacity="0.45"/>
+<rect x="407.9" y="116.5" width="20.3" height="97.5" rx="2" fill="var(--h-steel)" opacity="0.45"/>
+<rect x="430.2" y="145.4" width="20.3" height="68.6" rx="2" fill="var(--h-steel)" opacity="0.45"/>
+<rect x="452.5" y="163.8" width="20.3" height="50.2" rx="2" fill="var(--h-steel)" opacity="0.45"/>
+<rect x="474.8" y="186.1" width="20.3" height="27.9" rx="2" fill="var(--h-steel)" opacity="0.45"/>
+<rect x="497.2" y="200.6" width="20.3" height="13.4" rx="2" fill="var(--h-cherry)" opacity="1"/>
+<rect x="519.5" y="207.9" width="20.3" height="6.1" rx="2" fill="var(--h-cherry)" opacity="1"/>
+<rect x="541.8" y="211.2" width="20.3" height="2.8" rx="2" fill="var(--h-cherry)" opacity="1"/>
+<rect x="564.1" y="213.6" width="20.3" height="0.4" rx="2" fill="var(--h-cherry)" opacity="1"/>
+<rect x="608.7" y="213.9" width="20.3" height="0.1" rx="2" fill="var(--h-cherry)" opacity="1"/>
+<line x1="50" y1="214" x2="630" y2="214" stroke="var(--h-steel)" stroke-width="1.5"/>
+<line x1="116.9" y1="214" x2="116.9" y2="219" stroke="var(--h-steel)" stroke-width="1.5"/>
+<text x="116.9" y="233" text-anchor="middle" font-size="11" fill="var(--h-space)">-10</text>
+<line x1="228.5" y1="214" x2="228.5" y2="219" stroke="var(--h-steel)" stroke-width="1.5"/>
+<text x="228.5" y="233" text-anchor="middle" font-size="11" fill="var(--h-space)">-5</text>
+<line x1="340.0" y1="214" x2="340.0" y2="219" stroke="var(--h-steel)" stroke-width="1.5"/>
+<text x="340.0" y="233" text-anchor="middle" font-size="11" fill="var(--h-space)">0</text>
+<line x1="451.5" y1="214" x2="451.5" y2="219" stroke="var(--h-steel)" stroke-width="1.5"/>
+<text x="451.5" y="233" text-anchor="middle" font-size="11" fill="var(--h-space)">5</text>
+<line x1="563.1" y1="214" x2="563.1" y2="219" stroke="var(--h-steel)" stroke-width="1.5"/>
+<text x="563.1" y="233" text-anchor="middle" font-size="11" fill="var(--h-space)">10</text>
+<text x="340" y="252" text-anchor="middle" font-size="11.5" fill="var(--h-space)">difference in mean score after shuffling the labels (points)</text>
+<line x1="496.2" y1="214" x2="496.2" y2="40" stroke="var(--md-default-fg-color)" stroke-width="2"/>
+<text x="504.2" y="50" text-anchor="start" font-size="12" font-weight="700" fill="var(--md-default-fg-color)">what we saw:</text>
+<text x="504.2" y="66" text-anchor="start" font-size="12" font-weight="700" fill="var(--md-default-fg-color)">7 points</text>
+<line x1="183.8" y1="214" x2="183.8" y2="70" stroke="var(--md-default-fg-color)" stroke-width="1.5" stroke-dasharray="5 4"/>
+<text x="175.8" y="64" text-anchor="end" font-size="11" fill="var(--h-space)">just as extreme the other way</text>
+<text x="340.0" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="var(--md-default-fg-color)">luck alone usually lands here</text>
+<rect x="110" y="262" width="460" height="30" rx="6" fill="var(--h-cherry-wash)" stroke="var(--h-cherry-line)"/>
+<text x="340" y="277" text-anchor="middle" font-size="12" font-weight="700" fill="var(--h-cherry)" dy="0.36em">Red bars: about 3 in 100 shuffles. That share is the p-value, p ≈ 0.03.</text>
+</svg>
+
+Most shuffles give a gap within about 5 points of zero. Only about 3 in 100
+reach 7 points or more, in either direction. That fraction is the **p-value**.
+
+> The p-value is the probability of seeing a difference at least as big as
+> yours, **if nothing were going on**.
+
+A small p-value means luck rarely produces something like this, so the "nothing
+is going on" story becomes hard to believe. A large p-value means luck produces
+this all the time, so your data gives you no reason to doubt that story.
+
+We counted gaps in both directions because we did not know in advance which
+class would do better, so a gap of minus 7 would have been just as surprising.
+This is called a two-sided test. It is SciPy's default, and the one to use
+unless you have a strong reason not to.
+
+### The 0.05 line
+
+By convention, a result is called **statistically significant** when $p < 0.05$,
+meaning luck alone would produce something this extreme less than 1 time in 20.
+There is nothing magic about 0.05. It is a habit the field settled on, and
+$p = 0.049$ and $p = 0.051$ are the same evidence. Report the number, not just
+which side of the line it fell on.
+
+### Two ways to be wrong
+
+Whatever you conclude, you can be wrong in one of two ways.
+
+| | Nothing is really going on | Something really is |
+|---|---|---|
+| You say "real difference" | **False alarm** | Correct |
+| You say "could be luck" | Correct | **Missed effect** |
+
+The 0.05 line is the false alarm rate you agree to live with: when nothing is
+going on, 1 test in 20 will still come out significant. Missed effects happen
+mostly when data is small. A real 7 point gain measured on 4 students per class
+can easily look like luck. These are the false positives and false negatives of
+the medical test again. Statisticians call them Type I and Type II errors.
+
+Every test on this page follows the same three steps.
+
+1. Pick a number that measures the difference, such as a gap in means or a gap
+   between counts.
+2. Work out how that number behaves when nothing is going on.
+3. See how far out your real number falls. That is the p-value.
+
+Shuffling does step 2 by brute force. The tests below do it with a formula,
+which is faster and is what you will see in libraries and reports. When you are
+unsure about a formula, you can always check it against shuffling.
+
+## Two categories: the chi-square test
+
+Often both things you care about are categories. Did the customer come back,
+yes or no? How did they sign up: by phone, in a store, or on the website? The
+question is whether the two are related.
+
+Start by counting. `pd.crosstab` builds a **contingency table**, with one row
+for each value of one column, one column for each value of the other, and a
+count in every cell.
+
+```python
+import pandas as pd
+
+print(pd.crosstab(df["signup"], df["came_back"], margins=True))
+```
+
+```
+came_back   No  Yes  All
+signup
+phone       52   48  100
+store       50   30   80
+web         48   72  120
+All        150  150  300
+```
+
+Each row is a conditional probability waiting to be read.
+$P(\text{came back} \mid \text{web}) = 72/120 = 60$ percent, against 48 percent
+for phone and 37.5 percent for store. Passing `normalize="index"` to
+`pd.crosstab` gives you these rates directly. They are clearly different. The
+question is the same as before: is that more than luck would produce among 300
+people?
+
+### What "no relationship" would look like
+
+If the sign-up route and coming back were independent, the multiplication rule
+from the top of this page would hold:
+$P(\text{web and came back}) = P(\text{web}) \cdot P(\text{came back})$.
+Multiply by $n$ to turn that probability into a count, and you get the
+**expected count** for each cell.
+
+$$
+E = n \cdot \frac{\text{row total}}{n} \cdot \frac{\text{column total}}{n}
+  = \frac{\text{row total} \times \text{column total}}{n}
+$$
+
+For web and came back that is $120 \times 150 / 300 = 60$. In plain words: half
+of everyone came back, so if the route made no difference, half of the 120
+website customers would have come back too. We saw 72.
+
+<svg viewBox="0 0 680 342" role="img" aria-labelledby="cs-title cs-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="cs-title">Observed counts compared with expected counts</title>
+<desc id="cs-desc">Two tables side by side. On the left, the counts we observed: phone 52 no and 48 yes, store 50 no and 30 yes, web 48 no and 72 yes. On the right, the counts we would expect if sign-up route made no difference: 50 and 50, 40 and 40, 60 and 60. Phone is close to expected. Store and web are far off, and they supply almost all of the chi-square statistic of 9.96.</desc>
+<text x="155" y="22" text-anchor="middle" font-size="13.5" font-weight="700" fill="var(--md-default-fg-color)">What we counted</text>
+<text x="155" y="40" text-anchor="middle" font-size="11" fill="var(--h-space)">observed, O</text>
+<text x="150.0" y="68" text-anchor="middle" font-size="11" font-weight="700" fill="var(--h-space)" dy="0.36em">came back: no</text>
+<text x="240.0" y="68" text-anchor="middle" font-size="11" font-weight="700" fill="var(--h-space)" dy="0.36em">yes</text>
+<text x="98" y="104.0" text-anchor="end" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)" dy="0.36em">phone</text>
+<rect x="110" y="84" width="80" height="40" rx="7" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="150.0" y="104.0" text-anchor="middle" font-size="15" font-weight="700" fill="var(--md-default-fg-color)" dy="0.36em">52</text>
+<rect x="200" y="84" width="80" height="40" rx="7" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="240.0" y="104.0" text-anchor="middle" font-size="15" font-weight="700" fill="var(--md-default-fg-color)" dy="0.36em">48</text>
+<text x="98" y="152.0" text-anchor="end" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)" dy="0.36em">store</text>
+<rect x="110" y="132" width="80" height="40" rx="7" fill="var(--h-cherry-wash)" stroke="var(--h-cherry)" stroke-width="1.5"/>
+<text x="150.0" y="152.0" text-anchor="middle" font-size="15" font-weight="700" fill="var(--h-cherry)" dy="0.36em">50</text>
+<rect x="200" y="132" width="80" height="40" rx="7" fill="var(--h-cherry-wash)" stroke="var(--h-cherry)" stroke-width="1.5"/>
+<text x="240.0" y="152.0" text-anchor="middle" font-size="15" font-weight="700" fill="var(--h-cherry)" dy="0.36em">30</text>
+<text x="98" y="200.0" text-anchor="end" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)" dy="0.36em">web</text>
+<rect x="110" y="180" width="80" height="40" rx="7" fill="var(--h-cherry-wash)" stroke="var(--h-cherry)" stroke-width="1.5"/>
+<text x="150.0" y="200.0" text-anchor="middle" font-size="15" font-weight="700" fill="var(--h-cherry)" dy="0.36em">48</text>
+<rect x="200" y="180" width="80" height="40" rx="7" fill="var(--h-cherry-wash)" stroke="var(--h-cherry)" stroke-width="1.5"/>
+<text x="240.0" y="200.0" text-anchor="middle" font-size="15" font-weight="700" fill="var(--h-cherry)" dy="0.36em">72</text>
+<text x="515" y="22" text-anchor="middle" font-size="13.5" font-weight="700" fill="var(--md-default-fg-color)">What no relationship looks like</text>
+<text x="515" y="40" text-anchor="middle" font-size="11" fill="var(--h-space)">expected, E = row total × column total / n</text>
+<text x="510.0" y="68" text-anchor="middle" font-size="11" font-weight="700" fill="var(--h-space)" dy="0.36em">came back: no</text>
+<text x="600.0" y="68" text-anchor="middle" font-size="11" font-weight="700" fill="var(--h-space)" dy="0.36em">yes</text>
+<text x="458" y="104.0" text-anchor="end" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)" dy="0.36em">phone</text>
+<rect x="470" y="84" width="80" height="40" rx="7" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="510.0" y="104.0" text-anchor="middle" font-size="15" font-weight="700" fill="var(--md-default-fg-color)" dy="0.36em">50</text>
+<rect x="560" y="84" width="80" height="40" rx="7" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="600.0" y="104.0" text-anchor="middle" font-size="15" font-weight="700" fill="var(--md-default-fg-color)" dy="0.36em">50</text>
+<text x="458" y="152.0" text-anchor="end" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)" dy="0.36em">store</text>
+<rect x="470" y="132" width="80" height="40" rx="7" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="510.0" y="152.0" text-anchor="middle" font-size="15" font-weight="700" fill="var(--md-default-fg-color)" dy="0.36em">40</text>
+<rect x="560" y="132" width="80" height="40" rx="7" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="600.0" y="152.0" text-anchor="middle" font-size="15" font-weight="700" fill="var(--md-default-fg-color)" dy="0.36em">40</text>
+<text x="458" y="200.0" text-anchor="end" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)" dy="0.36em">web</text>
+<rect x="470" y="180" width="80" height="40" rx="7" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="510.0" y="200.0" text-anchor="middle" font-size="15" font-weight="700" fill="var(--md-default-fg-color)" dy="0.36em">60</text>
+<rect x="560" y="180" width="80" height="40" rx="7" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="600.0" y="200.0" text-anchor="middle" font-size="15" font-weight="700" fill="var(--md-default-fg-color)" dy="0.36em">60</text>
+<line x1="300" y1="160" x2="352" y2="160" stroke="var(--h-steel)" stroke-width="1.5"/>
+<polyline points="345,154 353,160 345,166" fill="none" stroke="var(--h-steel)" stroke-width="1.5"/>
+<text x="326" y="148" text-anchor="middle" font-size="11" fill="var(--h-space)">compare</text>
+<text x="340" y="246" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)">Each cell adds (O − E)² / E to the total</text>
+<rect x="70" y="258" width="160" height="34" rx="8" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="150" y="275" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)" dy="0.36em">phone: 0.08 + 0.08</text>
+<rect x="260" y="258" width="160" height="34" rx="8" fill="var(--h-cherry)"/>
+<text x="340" y="275" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ffffff" dy="0.36em">store: 2.5 + 2.5</text>
+<rect x="450" y="258" width="160" height="34" rx="8" fill="var(--h-cherry)"/>
+<text x="530" y="275" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ffffff" dy="0.36em">web: 2.4 + 2.4</text>
+<text x="340" y="322" text-anchor="middle" font-size="12.5" fill="var(--h-graphite)">Total χ² = 9.96. Luck alone would typically give about 2 here.</text>
+</svg>
+
+### Measuring the gap
+
+The **chi-square statistic** adds up how far each cell is from its expected
+count.
+
+$$
+\chi^2 = \sum_{\text{all cells}} \frac{(O - E)^2}{E}
+$$
+
+The difference is squared so that too many and too few both count. It is
+divided by $E$ so that a gap of 12 matters more in a cell expecting 60 than in a
+cell expecting 6000. Here the total is 9.96, and almost all of it comes from the
+store and web rows.
+
+Is 9.96 big? Here is a handy rule: when nothing is going on, $\chi^2$ averages
+about its **degrees of freedom**, which for a table is
+
+$$
+\text{df} = (\text{rows} - 1)(\text{columns} - 1) = (3 - 1)(2 - 1) = 2
+$$
+
+The name makes sense once you see it: with the row and column totals fixed, you
+can choose only 2 cells freely, and the rest are forced. So luck typically gives
+a value around 2, and 9.96 is far out in the tail. SciPy does the whole
+calculation in one call.
+
+```python
+from scipy import stats
+
+table = pd.crosstab(df["signup"], df["came_back"])
+chi2, p, dof, expected = stats.chi2_contingency(table)
+print(round(chi2, 2), round(p, 4), dof)
+print(expected)
+```
+
+```
+9.96 0.0069 2
+[[50. 50.]
+ [40. 40.]
+ [60. 60.]]
+```
+
+Notice that the table passed to the test has no `margins=True`. The totals are
+not data, and counting them as cells would give a wrong answer.
+
+A p-value of 0.007 means luck alone would produce a gap this large about 7 times
+in 1000. So the sign-up route and coming back look genuinely related.
+
+### What to keep in mind
+
+- **Feed it counts, never percentages.** 60 percent of 10 people and 60 percent
+  of 10,000 people are very different amounts of evidence, and only the counts
+  carry that difference.
+- **Each individual is counted once**, in exactly one cell, and individuals do
+  not influence each other.
+- **Expected counts should be at least about 5** in every cell. With smaller
+  ones the formula stops being reliable. Merge rare categories, or for a 2 by 2
+  table use `stats.fisher_exact`.
+- **For a 2 by 2 table, SciPy applies the Yates correction by default.** It
+  shrinks each $|O - E|$ by 0.5 before squaring, which makes the test a little
+  more cautious with small counts. Your hand calculation will not match SciPy
+  unless you pass `correction=False`. Both are acceptable; just know which one
+  you used.
+- **It tells you whether, not how much.** The finding people care about is "60
+  percent against 37.5 percent". The p-value only tells you that gap is unlikely
+  to be luck.
+
+## Two groups of numbers: Welch's t-test
+
+When the thing you measure is a number, such as a score, a bill or a number of
+months, you compare means. Back to the two revision classes and their 7 point
+gap.
+
+Whether 7 points is a lot depends on how noisy the scores are. A 7 point gap
+between groups whose scores barely vary is striking. A 7 point gap between
+groups whose scores swing by 30 points is nothing.
+
+<svg viewBox="0 0 680 300" role="img" aria-labelledby="wt-title wt-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="wt-title">The same gap with little noise and with lots of noise</title>
+<desc id="wt-desc">Two panels. In both, two bell curves have their centres the same distance apart. On the left the curves are narrow and barely overlap, so the gap is clear and t is large. On the right the curves are wide and overlap heavily, so the same gap could easily be luck and t is small.</desc>
+<text x="180.0" y="24" text-anchor="middle" font-size="13.5" font-weight="700" fill="var(--md-default-fg-color)">Little noise</text>
+<polygon points="40.0,200 40.0,200.0 42.0,200.0 44.0,200.0 46.0,200.0 48.0,200.0 50.0,200.0 52.0,200.0 54.0,200.0 56.0,200.0 58.0,200.0 60.0,200.0 62.0,200.0 64.0,200.0 66.0,200.0 68.0,200.0 70.0,200.0 72.0,200.0 74.0,200.0 76.0,200.0 78.0,200.0 80.0,200.0 82.0,200.0 84.0,200.0 86.0,200.0 88.0,200.0 90.0,200.0 92.0,200.0 94.0,200.0 96.0,200.0 98.0,200.0 100.0,200.0 102.0,200.0 104.0,199.9 106.0,199.9 108.0,199.8 110.0,199.6 112.0,199.4 114.0,199.0 116.0,198.3 118.0,197.4 120.0,196.1 122.0,194.1 124.0,191.4 126.0,187.7 128.0,182.8 130.0,176.6 132.0,168.7 134.0,159.2 136.0,147.9 138.0,135.0 140.0,120.7 142.0,105.4 144.0,89.7 146.0,74.2 148.0,59.7 150.0,47.1 152.0,37.0 154.0,30.2 156.0,27.0 158.0,27.6 160.0,32.1 162.0,40.1 164.0,51.1 166.0,64.4 168.0,79.3 170.0,94.9 172.0,110.6 174.0,125.6 176.0,139.4 178.0,151.8 180.0,162.5 182.0,171.5 184.0,178.8 186.0,184.6 188.0,189.0 190.0,192.4 192.0,194.8 194.0,196.6 196.0,197.8 198.0,198.6 200.0,199.1 202.0,199.5 204.0,199.7 206.0,199.8 208.0,199.9 210.0,199.9 212.0,200.0 214.0,200.0 216.0,200.0 218.0,200.0 220.0,200.0 222.0,200.0 224.0,200.0 226.0,200.0 228.0,200.0 230.0,200.0 232.0,200.0 234.0,200.0 236.0,200.0 238.0,200.0 240.0,200.0 242.0,200.0 244.0,200.0 246.0,200.0 248.0,200.0 250.0,200.0 252.0,200.0 254.0,200.0 256.0,200.0 258.0,200.0 260.0,200.0 262.0,200.0 264.0,200.0 266.0,200.0 268.0,200.0 270.0,200.0 272.0,200.0 274.0,200.0 276.0,200.0 278.0,200.0 280.0,200.0 282.0,200.0 284.0,200.0 286.0,200.0 288.0,200.0 290.0,200.0 292.0,200.0 294.0,200.0 296.0,200.0 298.0,200.0 300.0,200.0 302.0,200.0 304.0,200.0 306.0,200.0 308.0,200.0 310.0,200.0 312.0,200.0 314.0,200.0 316.0,200.0 318.0,200.0 320.0,200.0 320.0,200" fill="var(--h-steel)" opacity="0.18"/>
+<polyline points="40.0,200.0 42.0,200.0 44.0,200.0 46.0,200.0 48.0,200.0 50.0,200.0 52.0,200.0 54.0,200.0 56.0,200.0 58.0,200.0 60.0,200.0 62.0,200.0 64.0,200.0 66.0,200.0 68.0,200.0 70.0,200.0 72.0,200.0 74.0,200.0 76.0,200.0 78.0,200.0 80.0,200.0 82.0,200.0 84.0,200.0 86.0,200.0 88.0,200.0 90.0,200.0 92.0,200.0 94.0,200.0 96.0,200.0 98.0,200.0 100.0,200.0 102.0,200.0 104.0,199.9 106.0,199.9 108.0,199.8 110.0,199.6 112.0,199.4 114.0,199.0 116.0,198.3 118.0,197.4 120.0,196.1 122.0,194.1 124.0,191.4 126.0,187.7 128.0,182.8 130.0,176.6 132.0,168.7 134.0,159.2 136.0,147.9 138.0,135.0 140.0,120.7 142.0,105.4 144.0,89.7 146.0,74.2 148.0,59.7 150.0,47.1 152.0,37.0 154.0,30.2 156.0,27.0 158.0,27.6 160.0,32.1 162.0,40.1 164.0,51.1 166.0,64.4 168.0,79.3 170.0,94.9 172.0,110.6 174.0,125.6 176.0,139.4 178.0,151.8 180.0,162.5 182.0,171.5 184.0,178.8 186.0,184.6 188.0,189.0 190.0,192.4 192.0,194.8 194.0,196.6 196.0,197.8 198.0,198.6 200.0,199.1 202.0,199.5 204.0,199.7 206.0,199.8 208.0,199.9 210.0,199.9 212.0,200.0 214.0,200.0 216.0,200.0 218.0,200.0 220.0,200.0 222.0,200.0 224.0,200.0 226.0,200.0 228.0,200.0 230.0,200.0 232.0,200.0 234.0,200.0 236.0,200.0 238.0,200.0 240.0,200.0 242.0,200.0 244.0,200.0 246.0,200.0 248.0,200.0 250.0,200.0 252.0,200.0 254.0,200.0 256.0,200.0 258.0,200.0 260.0,200.0 262.0,200.0 264.0,200.0 266.0,200.0 268.0,200.0 270.0,200.0 272.0,200.0 274.0,200.0 276.0,200.0 278.0,200.0 280.0,200.0 282.0,200.0 284.0,200.0 286.0,200.0 288.0,200.0 290.0,200.0 292.0,200.0 294.0,200.0 296.0,200.0 298.0,200.0 300.0,200.0 302.0,200.0 304.0,200.0 306.0,200.0 308.0,200.0 310.0,200.0 312.0,200.0 314.0,200.0 316.0,200.0 318.0,200.0 320.0,200.0" fill="none" stroke="var(--h-steel)" stroke-width="2.5"/>
+<line x1="156.7" y1="200" x2="156.7" y2="58" stroke="var(--h-steel)" stroke-width="1.5" stroke-dasharray="4 3"/>
+<polygon points="40.0,200 40.0,200.0 42.0,200.0 44.0,200.0 46.0,200.0 48.0,200.0 50.0,200.0 52.0,200.0 54.0,200.0 56.0,200.0 58.0,200.0 60.0,200.0 62.0,200.0 64.0,200.0 66.0,200.0 68.0,200.0 70.0,200.0 72.0,200.0 74.0,200.0 76.0,200.0 78.0,200.0 80.0,200.0 82.0,200.0 84.0,200.0 86.0,200.0 88.0,200.0 90.0,200.0 92.0,200.0 94.0,200.0 96.0,200.0 98.0,200.0 100.0,200.0 102.0,200.0 104.0,200.0 106.0,200.0 108.0,200.0 110.0,200.0 112.0,200.0 114.0,200.0 116.0,200.0 118.0,200.0 120.0,200.0 122.0,200.0 124.0,200.0 126.0,200.0 128.0,200.0 130.0,200.0 132.0,200.0 134.0,200.0 136.0,200.0 138.0,200.0 140.0,200.0 142.0,200.0 144.0,200.0 146.0,200.0 148.0,200.0 150.0,199.9 152.0,199.9 154.0,199.8 156.0,199.7 158.0,199.5 160.0,199.1 162.0,198.6 164.0,197.8 166.0,196.6 168.0,194.8 170.0,192.4 172.0,189.0 174.0,184.6 176.0,178.8 178.0,171.5 180.0,162.5 182.0,151.8 184.0,139.4 186.0,125.6 188.0,110.6 190.0,94.9 192.0,79.3 194.0,64.4 196.0,51.1 198.0,40.1 200.0,32.1 202.0,27.6 204.0,27.0 206.0,30.2 208.0,37.0 210.0,47.1 212.0,59.7 214.0,74.2 216.0,89.7 218.0,105.4 220.0,120.7 222.0,135.0 224.0,147.9 226.0,159.2 228.0,168.7 230.0,176.6 232.0,182.8 234.0,187.7 236.0,191.4 238.0,194.1 240.0,196.1 242.0,197.4 244.0,198.3 246.0,199.0 248.0,199.4 250.0,199.6 252.0,199.8 254.0,199.9 256.0,199.9 258.0,200.0 260.0,200.0 262.0,200.0 264.0,200.0 266.0,200.0 268.0,200.0 270.0,200.0 272.0,200.0 274.0,200.0 276.0,200.0 278.0,200.0 280.0,200.0 282.0,200.0 284.0,200.0 286.0,200.0 288.0,200.0 290.0,200.0 292.0,200.0 294.0,200.0 296.0,200.0 298.0,200.0 300.0,200.0 302.0,200.0 304.0,200.0 306.0,200.0 308.0,200.0 310.0,200.0 312.0,200.0 314.0,200.0 316.0,200.0 318.0,200.0 320.0,200.0 320.0,200" fill="var(--h-cherry)" opacity="0.18"/>
+<polyline points="40.0,200.0 42.0,200.0 44.0,200.0 46.0,200.0 48.0,200.0 50.0,200.0 52.0,200.0 54.0,200.0 56.0,200.0 58.0,200.0 60.0,200.0 62.0,200.0 64.0,200.0 66.0,200.0 68.0,200.0 70.0,200.0 72.0,200.0 74.0,200.0 76.0,200.0 78.0,200.0 80.0,200.0 82.0,200.0 84.0,200.0 86.0,200.0 88.0,200.0 90.0,200.0 92.0,200.0 94.0,200.0 96.0,200.0 98.0,200.0 100.0,200.0 102.0,200.0 104.0,200.0 106.0,200.0 108.0,200.0 110.0,200.0 112.0,200.0 114.0,200.0 116.0,200.0 118.0,200.0 120.0,200.0 122.0,200.0 124.0,200.0 126.0,200.0 128.0,200.0 130.0,200.0 132.0,200.0 134.0,200.0 136.0,200.0 138.0,200.0 140.0,200.0 142.0,200.0 144.0,200.0 146.0,200.0 148.0,200.0 150.0,199.9 152.0,199.9 154.0,199.8 156.0,199.7 158.0,199.5 160.0,199.1 162.0,198.6 164.0,197.8 166.0,196.6 168.0,194.8 170.0,192.4 172.0,189.0 174.0,184.6 176.0,178.8 178.0,171.5 180.0,162.5 182.0,151.8 184.0,139.4 186.0,125.6 188.0,110.6 190.0,94.9 192.0,79.3 194.0,64.4 196.0,51.1 198.0,40.1 200.0,32.1 202.0,27.6 204.0,27.0 206.0,30.2 208.0,37.0 210.0,47.1 212.0,59.7 214.0,74.2 216.0,89.7 218.0,105.4 220.0,120.7 222.0,135.0 224.0,147.9 226.0,159.2 228.0,168.7 230.0,176.6 232.0,182.8 234.0,187.7 236.0,191.4 238.0,194.1 240.0,196.1 242.0,197.4 244.0,198.3 246.0,199.0 248.0,199.4 250.0,199.6 252.0,199.8 254.0,199.9 256.0,199.9 258.0,200.0 260.0,200.0 262.0,200.0 264.0,200.0 266.0,200.0 268.0,200.0 270.0,200.0 272.0,200.0 274.0,200.0 276.0,200.0 278.0,200.0 280.0,200.0 282.0,200.0 284.0,200.0 286.0,200.0 288.0,200.0 290.0,200.0 292.0,200.0 294.0,200.0 296.0,200.0 298.0,200.0 300.0,200.0 302.0,200.0 304.0,200.0 306.0,200.0 308.0,200.0 310.0,200.0 312.0,200.0 314.0,200.0 316.0,200.0 318.0,200.0 320.0,200.0" fill="none" stroke="var(--h-cherry)" stroke-width="2.5"/>
+<line x1="203.3" y1="200" x2="203.3" y2="58" stroke="var(--h-cherry)" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="156.7" y1="52" x2="203.3" y2="52" stroke="var(--md-default-fg-color)" stroke-width="1.5"/>
+<text x="180.0" y="42" text-anchor="middle" font-size="11" font-weight="700" fill="var(--md-default-fg-color)" dy="0.36em">gap</text>
+<line x1="40" y1="200" x2="320" y2="200" stroke="var(--h-steel)" stroke-width="1.5"/>
+<text x="180.0" y="226" text-anchor="middle" font-size="12" font-weight="700" fill="var(--md-default-fg-color)">Same gap, groups barely overlap</text>
+<text x="180.0" y="244" text-anchor="middle" font-size="12" fill="var(--h-graphite)">t is large, small p-value</text>
+<text x="500.0" y="24" text-anchor="middle" font-size="13.5" font-weight="700" fill="var(--md-default-fg-color)">Lots of noise</text>
+<polygon points="360.0,200 360.0,198.6 362.0,198.4 364.0,198.2 366.0,198.0 368.0,197.7 370.0,197.4 372.0,197.1 374.0,196.8 376.0,196.4 378.0,196.0 380.0,195.6 382.0,195.1 384.0,194.6 386.0,194.0 388.0,193.4 390.0,192.8 392.0,192.1 394.0,191.4 396.0,190.6 398.0,189.7 400.0,188.9 402.0,187.9 404.0,186.9 406.0,185.9 408.0,184.8 410.0,183.7 412.0,182.5 414.0,181.3 416.0,180.0 418.0,178.7 420.0,177.3 422.0,175.9 424.0,174.5 426.0,173.1 428.0,171.6 430.0,170.1 432.0,168.7 434.0,167.2 436.0,165.7 438.0,164.2 440.0,162.7 442.0,161.3 444.0,159.9 446.0,158.5 448.0,157.2 450.0,155.9 452.0,154.7 454.0,153.5 456.0,152.4 458.0,151.4 460.0,150.5 462.0,149.7 464.0,148.9 466.0,148.3 468.0,147.7 470.0,147.3 472.0,147.0 474.0,146.8 476.0,146.7 478.0,146.7 480.0,146.8 482.0,147.1 484.0,147.5 486.0,147.9 488.0,148.5 490.0,149.2 492.0,149.9 494.0,150.8 496.0,151.7 498.0,152.8 500.0,153.9 502.0,155.1 504.0,156.3 506.0,157.6 508.0,159.0 510.0,160.3 512.0,161.8 514.0,163.2 516.0,164.7 518.0,166.2 520.0,167.7 522.0,169.2 524.0,170.6 526.0,172.1 528.0,173.6 530.0,175.0 532.0,176.4 534.0,177.8 536.0,179.1 538.0,180.4 540.0,181.7 542.0,182.9 544.0,184.1 546.0,185.2 548.0,186.2 550.0,187.3 552.0,188.2 554.0,189.2 556.0,190.0 558.0,190.8 560.0,191.6 562.0,192.3 564.0,193.0 566.0,193.6 568.0,194.2 570.0,194.8 572.0,195.3 574.0,195.7 576.0,196.1 578.0,196.5 580.0,196.9 582.0,197.2 584.0,197.5 586.0,197.8 588.0,198.0 590.0,198.3 592.0,198.5 594.0,198.6 596.0,198.8 598.0,198.9 600.0,199.1 602.0,199.2 604.0,199.3 606.0,199.4 608.0,199.5 610.0,199.5 612.0,199.6 614.0,199.6 616.0,199.7 618.0,199.7 620.0,199.8 622.0,199.8 624.0,199.8 626.0,199.9 628.0,199.9 630.0,199.9 632.0,199.9 634.0,199.9 636.0,199.9 638.0,199.9 640.0,200.0 640.0,200" fill="var(--h-steel)" opacity="0.18"/>
+<polyline points="360.0,198.6 362.0,198.4 364.0,198.2 366.0,198.0 368.0,197.7 370.0,197.4 372.0,197.1 374.0,196.8 376.0,196.4 378.0,196.0 380.0,195.6 382.0,195.1 384.0,194.6 386.0,194.0 388.0,193.4 390.0,192.8 392.0,192.1 394.0,191.4 396.0,190.6 398.0,189.7 400.0,188.9 402.0,187.9 404.0,186.9 406.0,185.9 408.0,184.8 410.0,183.7 412.0,182.5 414.0,181.3 416.0,180.0 418.0,178.7 420.0,177.3 422.0,175.9 424.0,174.5 426.0,173.1 428.0,171.6 430.0,170.1 432.0,168.7 434.0,167.2 436.0,165.7 438.0,164.2 440.0,162.7 442.0,161.3 444.0,159.9 446.0,158.5 448.0,157.2 450.0,155.9 452.0,154.7 454.0,153.5 456.0,152.4 458.0,151.4 460.0,150.5 462.0,149.7 464.0,148.9 466.0,148.3 468.0,147.7 470.0,147.3 472.0,147.0 474.0,146.8 476.0,146.7 478.0,146.7 480.0,146.8 482.0,147.1 484.0,147.5 486.0,147.9 488.0,148.5 490.0,149.2 492.0,149.9 494.0,150.8 496.0,151.7 498.0,152.8 500.0,153.9 502.0,155.1 504.0,156.3 506.0,157.6 508.0,159.0 510.0,160.3 512.0,161.8 514.0,163.2 516.0,164.7 518.0,166.2 520.0,167.7 522.0,169.2 524.0,170.6 526.0,172.1 528.0,173.6 530.0,175.0 532.0,176.4 534.0,177.8 536.0,179.1 538.0,180.4 540.0,181.7 542.0,182.9 544.0,184.1 546.0,185.2 548.0,186.2 550.0,187.3 552.0,188.2 554.0,189.2 556.0,190.0 558.0,190.8 560.0,191.6 562.0,192.3 564.0,193.0 566.0,193.6 568.0,194.2 570.0,194.8 572.0,195.3 574.0,195.7 576.0,196.1 578.0,196.5 580.0,196.9 582.0,197.2 584.0,197.5 586.0,197.8 588.0,198.0 590.0,198.3 592.0,198.5 594.0,198.6 596.0,198.8 598.0,198.9 600.0,199.1 602.0,199.2 604.0,199.3 606.0,199.4 608.0,199.5 610.0,199.5 612.0,199.6 614.0,199.6 616.0,199.7 618.0,199.7 620.0,199.8 622.0,199.8 624.0,199.8 626.0,199.9 628.0,199.9 630.0,199.9 632.0,199.9 634.0,199.9 636.0,199.9 638.0,199.9 640.0,200.0" fill="none" stroke="var(--h-steel)" stroke-width="2.5"/>
+<line x1="476.7" y1="200" x2="476.7" y2="58" stroke="var(--h-steel)" stroke-width="1.5" stroke-dasharray="4 3"/>
+<polygon points="360.0,200 360.0,200.0 362.0,199.9 364.0,199.9 366.0,199.9 368.0,199.9 370.0,199.9 372.0,199.9 374.0,199.9 376.0,199.8 378.0,199.8 380.0,199.8 382.0,199.7 384.0,199.7 386.0,199.6 388.0,199.6 390.0,199.5 392.0,199.5 394.0,199.4 396.0,199.3 398.0,199.2 400.0,199.1 402.0,198.9 404.0,198.8 406.0,198.6 408.0,198.5 410.0,198.3 412.0,198.0 414.0,197.8 416.0,197.5 418.0,197.2 420.0,196.9 422.0,196.5 424.0,196.1 426.0,195.7 428.0,195.3 430.0,194.8 432.0,194.2 434.0,193.6 436.0,193.0 438.0,192.3 440.0,191.6 442.0,190.8 444.0,190.0 446.0,189.2 448.0,188.2 450.0,187.3 452.0,186.2 454.0,185.2 456.0,184.1 458.0,182.9 460.0,181.7 462.0,180.4 464.0,179.1 466.0,177.8 468.0,176.4 470.0,175.0 472.0,173.6 474.0,172.1 476.0,170.6 478.0,169.2 480.0,167.7 482.0,166.2 484.0,164.7 486.0,163.2 488.0,161.8 490.0,160.3 492.0,159.0 494.0,157.6 496.0,156.3 498.0,155.1 500.0,153.9 502.0,152.8 504.0,151.7 506.0,150.8 508.0,149.9 510.0,149.2 512.0,148.5 514.0,147.9 516.0,147.5 518.0,147.1 520.0,146.8 522.0,146.7 524.0,146.7 526.0,146.8 528.0,147.0 530.0,147.3 532.0,147.7 534.0,148.3 536.0,148.9 538.0,149.7 540.0,150.5 542.0,151.4 544.0,152.4 546.0,153.5 548.0,154.7 550.0,155.9 552.0,157.2 554.0,158.5 556.0,159.9 558.0,161.3 560.0,162.7 562.0,164.2 564.0,165.7 566.0,167.2 568.0,168.7 570.0,170.1 572.0,171.6 574.0,173.1 576.0,174.5 578.0,175.9 580.0,177.3 582.0,178.7 584.0,180.0 586.0,181.3 588.0,182.5 590.0,183.7 592.0,184.8 594.0,185.9 596.0,186.9 598.0,187.9 600.0,188.9 602.0,189.7 604.0,190.6 606.0,191.4 608.0,192.1 610.0,192.8 612.0,193.4 614.0,194.0 616.0,194.6 618.0,195.1 620.0,195.6 622.0,196.0 624.0,196.4 626.0,196.8 628.0,197.1 630.0,197.4 632.0,197.7 634.0,198.0 636.0,198.2 638.0,198.4 640.0,198.6 640.0,200" fill="var(--h-cherry)" opacity="0.18"/>
+<polyline points="360.0,200.0 362.0,199.9 364.0,199.9 366.0,199.9 368.0,199.9 370.0,199.9 372.0,199.9 374.0,199.9 376.0,199.8 378.0,199.8 380.0,199.8 382.0,199.7 384.0,199.7 386.0,199.6 388.0,199.6 390.0,199.5 392.0,199.5 394.0,199.4 396.0,199.3 398.0,199.2 400.0,199.1 402.0,198.9 404.0,198.8 406.0,198.6 408.0,198.5 410.0,198.3 412.0,198.0 414.0,197.8 416.0,197.5 418.0,197.2 420.0,196.9 422.0,196.5 424.0,196.1 426.0,195.7 428.0,195.3 430.0,194.8 432.0,194.2 434.0,193.6 436.0,193.0 438.0,192.3 440.0,191.6 442.0,190.8 444.0,190.0 446.0,189.2 448.0,188.2 450.0,187.3 452.0,186.2 454.0,185.2 456.0,184.1 458.0,182.9 460.0,181.7 462.0,180.4 464.0,179.1 466.0,177.8 468.0,176.4 470.0,175.0 472.0,173.6 474.0,172.1 476.0,170.6 478.0,169.2 480.0,167.7 482.0,166.2 484.0,164.7 486.0,163.2 488.0,161.8 490.0,160.3 492.0,159.0 494.0,157.6 496.0,156.3 498.0,155.1 500.0,153.9 502.0,152.8 504.0,151.7 506.0,150.8 508.0,149.9 510.0,149.2 512.0,148.5 514.0,147.9 516.0,147.5 518.0,147.1 520.0,146.8 522.0,146.7 524.0,146.7 526.0,146.8 528.0,147.0 530.0,147.3 532.0,147.7 534.0,148.3 536.0,148.9 538.0,149.7 540.0,150.5 542.0,151.4 544.0,152.4 546.0,153.5 548.0,154.7 550.0,155.9 552.0,157.2 554.0,158.5 556.0,159.9 558.0,161.3 560.0,162.7 562.0,164.2 564.0,165.7 566.0,167.2 568.0,168.7 570.0,170.1 572.0,171.6 574.0,173.1 576.0,174.5 578.0,175.9 580.0,177.3 582.0,178.7 584.0,180.0 586.0,181.3 588.0,182.5 590.0,183.7 592.0,184.8 594.0,185.9 596.0,186.9 598.0,187.9 600.0,188.9 602.0,189.7 604.0,190.6 606.0,191.4 608.0,192.1 610.0,192.8 612.0,193.4 614.0,194.0 616.0,194.6 618.0,195.1 620.0,195.6 622.0,196.0 624.0,196.4 626.0,196.8 628.0,197.1 630.0,197.4 632.0,197.7 634.0,198.0 636.0,198.2 638.0,198.4 640.0,198.6" fill="none" stroke="var(--h-cherry)" stroke-width="2.5"/>
+<line x1="523.3" y1="200" x2="523.3" y2="58" stroke="var(--h-cherry)" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="476.7" y1="52" x2="523.3" y2="52" stroke="var(--md-default-fg-color)" stroke-width="1.5"/>
+<text x="500.0" y="42" text-anchor="middle" font-size="11" font-weight="700" fill="var(--md-default-fg-color)" dy="0.36em">gap</text>
+<line x1="360" y1="200" x2="640" y2="200" stroke="var(--h-steel)" stroke-width="1.5"/>
+<text x="500.0" y="226" text-anchor="middle" font-size="12" font-weight="700" fill="var(--md-default-fg-color)">Same gap, groups overlap a lot</text>
+<text x="500.0" y="244" text-anchor="middle" font-size="12" fill="var(--h-graphite)">t is small, large p-value</text>
+<rect x="90" y="262" width="500" height="30" rx="6" fill="var(--h-cherry-wash)" stroke="var(--h-cherry-line)"/>
+<text x="340" y="277" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--h-cherry)" dy="0.36em">t = gap ÷ noise. More data shrinks the noise.</text>
+</svg>
+
+The **t statistic** puts signal and noise into one number.
+
+$$
+t = \frac{\bar{x}_1 - \bar{x}_2}{\text{SE}},
+\qquad
+\text{SE} = \sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}
+$$
+
+The top is the signal, the gap between the two means. The bottom is the noise,
+called the **standard error** of the gap: how much that gap would wobble if you
+ran the whole study again with new students. Each group contributes its own
+variance $s^2$ divided by its own size $n$. This is the same square root of $n$
+you met in the rough rule for accuracy. More data means less wobble, so the same
+gap produces a bigger $t$.
+
+```python
+gap = new_way.mean() - usual.mean()
+se = np.sqrt(new_way.var(ddof=1) / 12 + usual.var(ddof=1) / 12)
+print(round(se, 2), round(gap / se, 2))
+```
+
+```
+2.97 2.36
+```
+
+The gap is about 2.4 times the size of its own wobble. When nothing is going on,
+$t$ mostly lands between about $-2$ and $2$, for the same reason averages form a
+bell curve. So 2.36 sits just outside the usual range. SciPy turns that into a
+p-value.
+
+```python
+result = stats.ttest_ind(new_way, usual, equal_var=False)
+print(round(result.statistic, 2), round(result.pvalue, 3))
+```
+
+```
+2.36 0.028
+```
+
+Shuffling gave 0.032. The formula gives 0.028. Two completely different routes,
+nearly the same answer. That agreement is the whole point: the formula is a fast
+shortcut for the shuffling idea.
+
+### Why Welch
+
+The original version, Student's t-test, assumes both groups have the same
+spread. Welch's version does not. Each group keeps its own variance in the
+standard error, exactly as in the formula above. Real groups rarely have
+identical spreads, and when they do, Welch gives practically the same answer
+anyway. So pass `equal_var=False` every time. SciPy's default is still the old
+version, so remembering it is your job.
+
+Welch also adjusts the degrees of freedom with a slightly messy formula that
+SciPy handles for you (`result.df` is about 21.2 here). You do not need to
+compute it by hand.
+
+### What to keep in mind
+
+- **It compares means, so outliers push it around.** One customer with a bill
+  of 10,000 can create a difference or hide one. Look at a box plot of each group
+  before you trust the number.
+- **It leans on the central limit theorem.** With about 30 or more in each
+  group, the means behave like a bell curve even when the data is skewed, and the
+  p-value is trustworthy. With small, skewed groups, also compare the medians, or
+  run the permutation test, which makes no assumption about shape.
+- **Observations must be independent.** If the same people are measured twice,
+  before and after, the groups are not separate. Use the paired version,
+  `stats.ttest_rel`.
+- **It tells you whether, not how much.** Always report the gap in means next to
+  the p-value.
+
+## Reading a p-value without fooling yourself
+
+Running a test takes one line of code. Reading the result well is the real
+skill, and five mistakes catch almost everyone.
+
+**1. The p-value is not the probability that nothing is going on.** A p-value of
+0.03 says: if nothing were going on, data like this would turn up 3 percent of
+the time. That is $P(\text{data} \mid \text{null})$. People hear
+$P(\text{null} \mid \text{data})$. You have seen this swap before, in the medical
+test, where $P(\text{positive} \mid \text{healthy})$ was 5 percent and
+$P(\text{healthy} \mid \text{positive})$ was 85 percent. It is the same trap in a
+new place.
+
+**2. Significant does not mean important.** With enough data, even tiny
+differences become significant. So always report the **effect size**, the
+difference itself in units people understand: percentage points, euros, exam
+points. Then ask whether a difference of that size matters to anyone.
+
+**3. Not significant does not mean no effect.** A large p-value means you could
+not tell, which is not the same as there being nothing to tell. Small samples
+miss real effects all the time. "No evidence of a difference" is not "evidence
+of no difference".
+
+The size of the difference and the p-value answer two separate questions, and
+you need both.
+
+<svg viewBox="0 0 680 340" role="img" aria-labelledby="pg-title pg-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="pg-title">Effect size and p-value answer different questions</title>
+<desc id="pg-desc">A two by two grid. Rows are the size of the difference, large or small. Columns are the p-value, small or large. Large difference with small p-value: real and worth acting on. Small difference with small p-value: real but possibly too small to matter, which happens with huge samples. Large difference with large p-value: could matter but there is too little data to tell. Small difference with large p-value: probably nothing there.</desc>
+<text x="275.0" y="30" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)">small p-value</text>
+<text x="537.0" y="30" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)">large p-value</text>
+<text x="275.0" y="44" text-anchor="middle" font-size="11" fill="var(--h-space)">luck rarely does this</text>
+<text x="537.0" y="44" text-anchor="middle" font-size="11" fill="var(--h-space)">luck often does this</text>
+<text x="70" y="118.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)">large</text>
+<text x="70" y="135.0" text-anchor="middle" font-size="11" fill="var(--h-space)">difference</text>
+<text x="70" y="262.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)">small</text>
+<text x="70" y="279.0" text-anchor="middle" font-size="11" fill="var(--h-space)">difference</text>
+<rect x="150" y="56" width="250" height="132" rx="10" fill="var(--h-cherry)"/>
+<text x="275.0" y="110" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff" dy="0.36em">Real and worth acting on</text>
+<text x="275.0" y="140" text-anchor="middle" font-size="11.5" fill="#ffffff" dy="0.36em">Return rate 60% vs 38%,</text>
+<text x="275.0" y="158" text-anchor="middle" font-size="11.5" fill="#ffffff" dy="0.36em">300 people, p = 0.007</text>
+<rect x="412" y="56" width="250" height="132" rx="10" fill="var(--h-cherry-wash)" stroke="var(--h-cherry)" stroke-width="2"/>
+<text x="537.0" y="84" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--h-cherry)" dy="0.36em">WATCH OUT</text>
+<text x="537.0" y="110" text-anchor="middle" font-size="13" font-weight="700" fill="var(--h-cherry)" dy="0.36em">Could matter, too little data</text>
+<text x="537.0" y="140" text-anchor="middle" font-size="11.5" fill="var(--h-graphite)" dy="0.36em">Scores 82 vs 70, only 4</text>
+<text x="537.0" y="158" text-anchor="middle" font-size="11.5" fill="var(--h-graphite)" dy="0.36em">students per group, p ≈ 0.14</text>
+<rect x="150" y="200" width="250" height="132" rx="10" fill="var(--h-cherry-wash)" stroke="var(--h-cherry)" stroke-width="2"/>
+<text x="275.0" y="228" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--h-cherry)" dy="0.36em">WATCH OUT</text>
+<text x="275.0" y="254" text-anchor="middle" font-size="13" font-weight="700" fill="var(--h-cherry)" dy="0.36em">Real, but maybe too small to care</text>
+<text x="275.0" y="284" text-anchor="middle" font-size="11.5" fill="var(--h-graphite)" dy="0.36em">Return rate 50.4% vs 50.0%,</text>
+<text x="275.0" y="302" text-anchor="middle" font-size="11.5" fill="var(--h-graphite)" dy="0.36em">a million per group, p &lt; 0.001</text>
+<rect x="412" y="200" width="250" height="132" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="537.0" y="254" text-anchor="middle" font-size="13" font-weight="700" fill="var(--md-default-fg-color)" dy="0.36em">Probably nothing there</text>
+<text x="537.0" y="284" text-anchor="middle" font-size="11.5" fill="var(--h-graphite)" dy="0.36em">Scores 75.3 vs 75.0,</text>
+<text x="537.0" y="302" text-anchor="middle" font-size="11.5" fill="var(--h-graphite)" dy="0.36em">500 per group, p ≈ 0.6</text>
+</svg>
+
+**4. Run enough tests and something will come out significant.** At 0.05, 1 test
+in 20 is significant by luck alone. Here are 40 comparisons where both groups
+come from exactly the same distribution, so nothing is going on in any of them.
+
+```python
+rng = np.random.default_rng(4)
+false_alarms = 0
+for _ in range(40):
+    a, b = rng.normal(0, 1, 50), rng.normal(0, 1, 50)
+    false_alarms += stats.ttest_ind(a, b, equal_var=False).pvalue < 0.05
+print(false_alarms)
+```
+
+```
+2
+```
+
+Two "discoveries", both pure luck. The simplest protection is the **Bonferroni
+correction**: divide 0.05 by the number of tests you ran. With 40 tests, only
+trust results with $p < 0.05 / 40 = 0.00125$. It is strict, but it is honest.
+
+**5. One column at a time misses combinations.** A test looks at one column
+against the target, alone. A column that seems useless on its own can matter in
+combination with another. Two columns that both look strong may be telling you
+the same thing twice. A model sees all the columns together; a test sees one.
+
+!!! ml "ML connection"
+
+    In a project you will often run a chi-square test on every categorical
+    column and a t-test on every numeric column against the target, and then
+    think about dropping the columns with large p-values. Treat the results as a
+    screen, not a verdict. A small p-value says the column is related to the
+    target, so a model may find it useful. A large p-value says you could not see
+    a relationship in that column on its own, not that it is useless. Before you
+    drop anything, look at the effect size, remember how many tests you ran, and
+    remember that the model will see the columns together. When in doubt, keep
+    the column and let the model's test score decide.
+
 ## Likelihood, and where loss functions come from
 
 Here is the idea that connects this page to every model you will train.
@@ -654,6 +1190,24 @@ quietly stops holding.
     and pandas defaults to $n-1$, which is why the two sometimes disagree by a
     little. For large datasets the difference is negligible.
 
+??? note "The p-value is the chance my result is a fluke"
+
+    Close, but backwards. It is the chance of data at least this extreme
+    assuming it is a fluke. Whether it actually is a fluke also depends on how
+    plausible a real effect was to begin with, just as in the medical test.
+
+??? note "The p-value is tiny, so the difference must be big"
+
+    The p-value mixes the size of the difference with the amount of data. With a
+    million rows, a difference nobody would notice can still give $p < 0.001$.
+    Look at the difference itself to judge whether it matters.
+
+??? note "The p-value is 0.4, so the groups are the same"
+
+    It means the data could not tell them apart. With small groups, real
+    differences often give large p-values. Absence of evidence is not evidence
+    of absence.
+
 ## Check yourself
 
 Use NumPy rather than algebra wherever you can. Simulating is a legitimate way
@@ -674,6 +1228,15 @@ to answer these.
 6. Compute the cross-entropy loss for a model that gives the right answer 0.99,
    0.99, 0.99 and 0.01, and for one that gives 0.7 four times. Which is the
    better model, and does the number agree with your instinct?
+7. Run the permutation test on `new_way` and `usual` with 1,000, 10,000 and
+   100,000 shuffles and compare each p-value with
+   `stats.ttest_ind(new_way, usual, equal_var=False)`. Then change one score in
+   `usual` from 80 to 40 and run both again. Which method moves more, and why?
+8. Put the sign-up table `[[52, 48], [50, 30], [48, 72]]` in a NumPy array.
+   Compute the expected counts yourself from the row totals, column totals and
+   $n$ (hint: `np.outer`), then the chi-square statistic. Check both against
+   `stats.chi2_contingency`. Repeat with a 2 by 2 table of your own and explain
+   why your answer and SciPy's no longer agree.
 
 ## Quick reference
 
@@ -694,6 +1257,15 @@ to answer these.
 | Uniform sample | `rng.random(size)` |
 | Cross-entropy | `-np.log(p_correct).mean()` |
 | Accuracy uncertainty | $\sqrt{p(1-p)/n}$ |
+| Contingency table | `pd.crosstab(df["a"], df["b"])` |
+| Rates per row | `pd.crosstab(df["a"], df["b"], normalize="index")` |
+| Expected count | row total $\times$ column total $/ n$ |
+| Chi-square statistic | $\sum (O - E)^2 / E$, df $= (r-1)(c-1)$ |
+| Chi-square test | `chi2, p, dof, expected = stats.chi2_contingency(table)` |
+| Standard error of a gap | $\sqrt{s_1^2/n_1 + s_2^2/n_2}$ |
+| Welch's t-test | `stats.ttest_ind(a, b, equal_var=False)` |
+| Permutation p-value | `(np.abs(diffs) >= abs(observed)).mean()` |
+| Bonferroni | trust only $p < 0.05 / \text{number of tests}$ |
 
 ## Questions to sit with
 
@@ -710,6 +1282,8 @@ to answer these.
    about projects that promise big gains from collecting a bit more?
 5. A feature correlates strongly with your target and you have no idea why.
    Do you use it? Does your answer change if the model decides who gets a loan?
+6. A chi-square test of one column against your target gives $p = 0.3$. Do you
+   drop the column? What would you want to know before you decide?
 
 ## Next
 

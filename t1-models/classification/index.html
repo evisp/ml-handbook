@@ -1,0 +1,3269 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A practical, project-based machine learning curriculum for Holberton School Albania. Real projects, real skills, real careers.">
+      
+      
+        <meta name="author" content="Evis Plaku">
+      
+      
+        <link rel="canonical" href="https://evisp.github.io/ml-handbook/t1-models/classification/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../linear-models/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Classification - Holberton ML Handbook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Host+Grotesk:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Host Grotesk";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/brand.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#classification" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Holberton ML Handbook" class="md-header__button md-logo" aria-label="Holberton ML Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Holberton ML Handbook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Classification
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/evisp/ml-handbook" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    evisp/ml-handbook
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../roadmap/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Roadmap
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../01-tools/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Tools
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../02-fundamentals/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Fundamentals
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../t1-maths-tools/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Data Analyst
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../projects/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Projects
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Holberton ML Handbook" class="md-nav__button md-logo" aria-label="Holberton ML Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Holberton ML Handbook
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/evisp/ml-handbook" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    evisp/ml-handbook
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../01-tools/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/zero-day/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Zero day
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/git-and-github/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git & GitHub
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/notebook-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jupyter notebook setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/vscode-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-tools/python-warm-up/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python warm up
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../02-fundamentals/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Fundamentals
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-fundamentals/what-is-ai/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    What AI is
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-fundamentals/what-is-ml/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How machines learn
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-fundamentals/framing-ml-problems/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Framing a problem
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-fundamentals/working-with-data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Working with data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-fundamentals/ethics-and-responsibility/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ethics and responsibility
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-fundamentals/how-training-works/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    What training actually does
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Analyst
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Data Analyst
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../t1-maths-tools/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Maths and tools
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5_1" id="__nav_5_1_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Maths and tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-maths-tools/linear-algebra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linear Algebra
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-maths-tools/pandas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pandas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-maths-tools/plotting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plotting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-maths-tools/probability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Probability
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../t1-real-data/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Real data
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5_2" id="__nav_5_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Real data
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-real-data/web-scraping/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Scraping
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-real-data/apis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    APIs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-real-data/data-preparation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Preparation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../t1-real-data/data-preprocessing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Preprocessing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classic models
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5_3" id="__nav_5_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Classic models
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this matters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-models-sit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where models sit
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#classification-and-regression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Classification and regression
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Classification and regression">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#classification-comes-in-three-shapes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Classification comes in three shapes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-classifier-gives-you-a-probability-not-an-answer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A classifier gives you a probability, not an answer
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-families-of-algorithms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The families of algorithms
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The families of algorithms">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#unsupervised-learning-is-on-this-map-too" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unsupervised learning is on this map too
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-the-families-actually-differ-on" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the families actually differ on
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#one-interface-for-all-of-them" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        One interface for all of them
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#start-with-something-stupid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Start with something stupid
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#too-simple-too-complex" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Too simple, too complex
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-you-will-be-judged" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How you will be judged
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-comes-next-in-this-group" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What comes next in this group
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#questions-to-sit-with" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Questions to sit with
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../linear-models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linear Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tree-models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tree-Based Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bias-variance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bias, variance and tuning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../unsupervised-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unsupervised Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../clustering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../projects/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Projects
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Projects
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../projects/rock-paper-scissors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rock, paper, scissors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../projects/one-page-finding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    One page, one finding
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../projects/how-sure-are-you/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How sure are you?
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../projects/beat-the-baseline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Beat the baseline
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this matters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-models-sit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where models sit
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#classification-and-regression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Classification and regression
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Classification and regression">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#classification-comes-in-three-shapes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Classification comes in three shapes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-classifier-gives-you-a-probability-not-an-answer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A classifier gives you a probability, not an answer
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-families-of-algorithms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The families of algorithms
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The families of algorithms">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#unsupervised-learning-is-on-this-map-too" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unsupervised learning is on this map too
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-the-families-actually-differ-on" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the families actually differ on
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#one-interface-for-all-of-them" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        One interface for all of them
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#start-with-something-stupid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Start with something stupid
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#too-simple-too-complex" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Too simple, too complex
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-you-will-be-judged" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How you will be judged
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-comes-next-in-this-group" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What comes next in this group
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#questions-to-sit-with" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Questions to sit with
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../../t1-maths-tools/" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Data Analyst
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Classic models
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/evisp/ml-handbook/edit/main/docs/t1-models/classification.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="classification">Classification<a class="headerlink" href="#classification" title="Link to this section">&para;</a></h1>
+<p><span class="badge badge--time">70 min</span>
+<span class="badge badge--level">Classic models</span>
+<span class="badge">The map for this group</span></p>
+<p>This page teaches no algorithm. It is the map you will read the next four
+projects against, so that each one feels like filling in a region rather than
+arriving somewhere unfamiliar.</p>
+<h2 id="why-this-matters">Why this matters<a class="headerlink" href="#why-this-matters" title="Link to this section">&para;</a></h2>
+<p>You have spent a trimester producing a clean, encoded, split table. A model is
+what finally reads it.</p>
+<p>Newcomers assume that this is where the skill lives, and that choosing the right
+algorithm is the job. It is not. Switching between reasonable models usually
+moves your score by a couple of points. What moves it far more is the work you
+already did, and what protects it is knowing how to tell a real improvement from
+a flattering one.</p>
+<p>So this page covers four things: what kind of question you are asking, what
+kinds of model exist, how they all share one interface, and how you will know
+whether any of them worked.</p>
+<h2 id="where-models-sit">Where models sit<a class="headerlink" href="#where-models-sit" title="Link to this section">&para;</a></h2>
+<p><svg viewBox="0 0 680 262" role="img" aria-labelledby="m1-title m1-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="m1-title">The model half of the pipeline</title>
+<desc id="m1-desc">The data half ends with a prepared table. The model half runs from a baseline through training, evaluation and tuning, to deployment, and sends you back to the data whenever the answer is disappointing.</desc>
+<defs><marker id="m1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--h-steel)"/></marker></defs>
+<rect x="5" y="52" width="150" height="62" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)" stroke-dasharray="5 4"/>
+<text x="80" y="78" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--h-graphite)">a prepared table</text>
+<text x="80" y="97" text-anchor="middle" font-size="10" fill="var(--h-space)">everything so far</text>
+<line x1="159" y1="83" x2="175" y2="83" stroke="var(--h-steel)" stroke-width="2" marker-end="url(#m1)"/>
+<rect x="179" y="52" width="114" height="62" rx="10" fill="var(--h-cherry)" stroke="var(--h-cherry)"/>
+<text x="236" y="78" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ffffff">baseline</text>
+<text x="236" y="97" text-anchor="middle" font-size="10" fill="#ffffff" opacity="0.9">the score to beat</text>
+<line x1="297" y1="83" x2="305" y2="83" stroke="var(--h-steel)" stroke-width="2" marker-end="url(#m1)"/>
+<rect x="305" y="52" width="114" height="62" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="362" y="78" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)">train</text>
+<text x="362" y="97" text-anchor="middle" font-size="10" fill="var(--h-graphite)" opacity="0.9">fit on train</text>
+<line x1="423" y1="83" x2="431" y2="83" stroke="var(--h-steel)" stroke-width="2" marker-end="url(#m1)"/>
+<rect x="431" y="52" width="114" height="62" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="488" y="78" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)">evaluate</text>
+<text x="488" y="97" text-anchor="middle" font-size="10" fill="var(--h-graphite)" opacity="0.9">on held back data</text>
+<line x1="549" y1="83" x2="557" y2="83" stroke="var(--h-steel)" stroke-width="2" marker-end="url(#m1)"/>
+<rect x="557" y="52" width="114" height="62" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="614" y="78" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)">tune</text>
+<text x="614" y="97" text-anchor="middle" font-size="10" fill="var(--h-graphite)" opacity="0.9">then evaluate again</text>
+<polyline points="629,118 629,150 240,150 240,120" fill="none" stroke="var(--h-steel)" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#m1)"/>
+<text x="434" y="168" text-anchor="middle" font-size="11" font-weight="700" fill="var(--h-graphite)">not good enough yet</text>
+<polyline points="400,118 400,196 80,196 80,120" fill="none" stroke="var(--h-cherry)" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#m1)"/>
+<text x="240" y="214" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--h-cherry)">usually the data, not the model</text>
+<text x="340" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="var(--h-graphite)">the model half of the same pipeline</text>
+<text x="340" y="244" text-anchor="middle" font-size="12" fill="var(--h-graphite)">Beginners loop on the short arrow. Experienced people loop on the long one.</text>
+</svg></p>
+<p>Notice the two loops. The short one sends you back to try another model or
+another setting. The long one sends you back to the data.</p>
+<p>Beginners spend most of their time on the short loop. People who have done this
+for a while spend most of theirs on the long one, because that is where the
+gains are.</p>
+<h2 id="classification-and-regression">Classification and regression<a class="headerlink" href="#classification-and-regression" title="Link to this section">&para;</a></h2>
+<p>Every supervised problem is one of these two, and the difference is what the
+answer looks like.</p>
+<p><svg viewBox="0 0 680 286" role="img" aria-labelledby="m2-title m2-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="m2-title">Classification compared with regression</title>
+<desc id="m2-desc">A classifier draws a boundary between groups and answers with a category. A regressor fits a line or surface through the points and answers with a number.</desc>
+<rect x="10" y="30" width="320" height="180" rx="12" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="170" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--md-default-fg-color)">classification</text>
+<circle cx="198.2" cy="153.9" r="4" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="244.7" cy="181.9" r="4" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="229.8" cy="179.1" r="4" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="37.8" cy="115.2" r="4" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="284.7" cy="140.9" r="4" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="273.2" cy="65.8" r="4" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="156.6" cy="84.5" r="4" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="176.8" cy="130.4" r="4" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="33.5" cy="80.3" r="4" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="105.5" cy="178.3" r="4" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="236.7" cy="72.3" r="4" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="245.2" cy="69.4" r="4" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="196.7" cy="67.7" r="4" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="30.5" cy="172.0" r="4" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="86.6" cy="80.2" r="4" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="295.3" cy="172.1" r="4" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="108.1" cy="184.6" r="4" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="175.6" cy="144.9" r="4" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="85.3" cy="181.7" r="4" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="216.5" cy="185.3" r="4" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="271.3" cy="91.8" r="4" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="127.5" cy="73.2" r="4" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="69.3" cy="59.1" r="4" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="111.4" cy="134.4" r="4" fill="var(--h-cherry)" opacity="0.85"/>
+<line x1="22" y1="198" x2="318" y2="36" stroke="var(--md-default-fg-color)" stroke-width="2.5"/>
+<text x="170" y="232" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--h-graphite)">a boundary between groups</text>
+<text x="170" y="250" text-anchor="middle" font-size="11" fill="var(--h-space)">the answer is a category, with a probability behind it</text>
+<rect x="350" y="30" width="320" height="180" rx="12" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="510" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--md-default-fg-color)">regression</text>
+<circle cx="370.9" cy="183.2" r="4" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="456.8" cy="140.5" r="4" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="599.2" cy="79.9" r="4" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="504.7" cy="135.1" r="4" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="567.3" cy="147.9" r="4" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="376.4" cy="196.0" r="4" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="579.9" cy="103.5" r="4" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="590.6" cy="94.8" r="4" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="472.5" cy="145.0" r="4" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="383.1" cy="183.5" r="4" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="420.7" cy="178.9" r="4" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="581.6" cy="98.2" r="4" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="630.3" cy="94.4" r="4" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="469.3" cy="143.0" r="4" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="516.9" cy="129.5" r="4" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="579.6" cy="94.4" r="4" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="593.2" cy="99.0" r="4" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="634.8" cy="75.4" r="4" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="395.5" cy="167.4" r="4" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="627.1" cy="100.5" r="4" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="465.2" cy="167.9" r="4" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="457.5" cy="144.0" r="4" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="458.7" cy="155.6" r="4" fill="var(--h-cherry)" opacity="0.75"/>
+<circle cx="411.7" cy="178.3" r="4" fill="var(--h-cherry)" opacity="0.75"/>
+<line x1="368" y1="191" x2="654" y2="71" stroke="var(--md-default-fg-color)" stroke-width="2.5"/>
+<text x="510" y="232" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--h-graphite)">a line through the points</text>
+<text x="510" y="250" text-anchor="middle" font-size="11" fill="var(--h-space)">the answer is a number, with an error either side</text>
+<text x="340" y="278" text-anchor="middle" font-size="12" fill="var(--h-graphite)">Same data, same features, different question. The question decides the model family, the metric and the loss.</text>
+</svg></p>
+<p><strong>Classification</strong> predicts a category. Will this customer churn, is this email
+spam, which of ten digits is this.</p>
+<p><strong>Regression</strong> predicts a number. How much will this flat sell for, how many
+units will we ship next month.</p>
+<p>The same features can serve either. From the churn data you could predict whether
+somebody leaves, which is classification, or how many months they will stay,
+which is regression. The question you ask determines the model family, the metric
+and the loss function, so it is worth being explicit about it before you start.</p>
+<h3 id="classification-comes-in-three-shapes">Classification comes in three shapes<a class="headerlink" href="#classification-comes-in-three-shapes" title="Link to this section">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Shape</th>
+<th>One example gets</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Binary</strong></td>
+<td>One of two labels</td>
+<td>Churn or stay</td>
+</tr>
+<tr>
+<td><strong>Multi-class</strong></td>
+<td>One of many labels</td>
+<td>Which of three internet plans</td>
+</tr>
+<tr>
+<td><strong>Multi-label</strong></td>
+<td>Any number of labels at once</td>
+<td>Which services a customer holds</td>
+</tr>
+</tbody>
+</table>
+<p>You met these on the Framing a Problem page. The distinction matters here
+because it changes which metrics are available to you and how the model's output
+is shaped.</p>
+<h3 id="a-classifier-gives-you-a-probability-not-an-answer">A classifier gives you a probability, not an answer<a class="headerlink" href="#a-classifier-gives-you-a-probability-not-an-answer" title="Link to this section">&para;</a></h3>
+<p>This is the part that surprises people, and it is the most useful thing in this
+section.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>[&#39;No&#39; &#39;Yes&#39; &#39;No&#39;]
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>[[0.82 0.18]
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a> [0.31 0.69]
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a> [0.95 0.05]]
+</span></code></pre></div>
+<p>The model produces a probability for each class. <code>predict</code> then applies a
+threshold, by default 0.5, and hands you a label.</p>
+<p>That threshold is a choice, and it is yours. Lower it to 0.3 and you catch more
+churners and raise more false alarms. Raise it to 0.7 and the opposite. Nothing
+about the model changed. You moved a dial that trades one kind of mistake
+against the other.</p>
+<div class="admonition ml">
+<p class="admonition-title">ML connection</p>
+<p>The probability comes from the cross-entropy loss you met on the Probability
+page. The model is trained to make the probability it assigns to the correct
+answer as high as possible, which is why <code>predict_proba</code> exists at all.</p>
+<p>Where to put the threshold is a business decision. If missing a churner costs
+you a customer and a false alarm costs you a phone call, those are not
+equally bad and 0.5 is almost certainly the wrong place.</p>
+</div>
+<h2 id="the-families-of-algorithms">The families of algorithms<a class="headerlink" href="#the-families-of-algorithms" title="Link to this section">&para;</a></h2>
+<p>Each of these gets its own project. What follows is what they are, so the map is
+complete before you walk into the first one.</p>
+<p><strong>Linear models.</strong> Logistic regression for classification, linear regression for
+numbers. They assume the effect of each feature adds up. Fast, and the
+coefficients tell you what the model thinks, which is why they are still the
+default in medicine and finance. Need scaling.</p>
+<p><strong>Tree-based models.</strong> A decision tree asks a series of yes or no questions. One
+tree is easy to read and unstable. Many trees combined, as a random forest or a
+gradient boosted ensemble, are the strongest thing you will use on tabular data
+all year. No scaling needed, handles mixed types, less interpretable as the
+ensemble grows.</p>
+<p><strong>Distance-based models.</strong> K-nearest neighbours answers by looking at the most
+similar rows it has seen. No training as such, all the work happens at prediction
+time. Scaling is critical here, because the distance is meaningless without it.</p>
+<p><strong>Probabilistic models.</strong> Naive Bayes applies Bayes' theorem while assuming the
+features are independent. That assumption is almost never true and the model
+often works anyway. Very fast, still competitive for text.</p>
+<p><strong>Margin-based models.</strong> Support vector machines find the boundary with the
+widest gap between classes, and can bend it into curves. Strong on small and
+medium datasets, slow on large ones, and the results are hard to explain.</p>
+<table>
+<thead>
+<tr>
+<th>Family</th>
+<th>Scaling</th>
+<th>Categoricals</th>
+<th>Interpretable</th>
+<th>Good first choice for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Linear</td>
+<td>Required</td>
+<td>Encode first</td>
+<td>Very</td>
+<td>Anything you must explain</td>
+</tr>
+<tr>
+<td>Trees, single</td>
+<td>No</td>
+<td>Encode first</td>
+<td>Very</td>
+<td>Understanding the data</td>
+</tr>
+<tr>
+<td>Trees, ensemble</td>
+<td>No</td>
+<td>Encode first</td>
+<td>Somewhat</td>
+<td>Tabular data, usually the winner</td>
+</tr>
+<tr>
+<td>Distance based</td>
+<td>Critical</td>
+<td>Encode first</td>
+<td>Poorly</td>
+<td>Small clean datasets</td>
+</tr>
+<tr>
+<td>Probabilistic</td>
+<td>No</td>
+<td>Naturally</td>
+<td>Somewhat</td>
+<td>Text, and speed</td>
+</tr>
+<tr>
+<td>Margin based</td>
+<td>Required</td>
+<td>Encode first</td>
+<td>Poorly</td>
+<td>Small, hard boundaries</td>
+</tr>
+</tbody>
+</table>
+<h3 id="unsupervised-learning-is-on-this-map-too">Unsupervised learning is on this map too<a class="headerlink" href="#unsupervised-learning-is-on-this-map-too" title="Link to this section">&para;</a></h3>
+<div class="admonition tip">
+<p class="admonition-title">Where clustering fits</p>
+<p>Everything above is <strong>supervised</strong>: you have labels and the model learns to
+reproduce them.</p>
+<p>Two of the projects in this group have no labels at all. <strong>Unsupervised
+Learning</strong> and <strong>Clustering</strong> ask a different question: given these rows and
+no answers, what natural groups exist? There is no target column, so none of
+the metrics on this page apply, and success is judged differently.</p>
+<p>It is the same map, a different continent. Keep it in view, because when
+somebody hands you data with no labels, the supervised toolkit is not an
+option.</p>
+</div>
+<h2 id="what-the-families-actually-differ-on">What the families actually differ on<a class="headerlink" href="#what-the-families-actually-differ-on" title="Link to this section">&para;</a></h2>
+<p>One picture explains more than the table above.</p>
+<p><svg viewBox="0 0 680 266" role="img" aria-labelledby="m3-title m3-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="m3-title">The shape of boundary each family can draw</title>
+<desc id="m3-desc">A linear model draws one straight line. A tree draws rectangles aligned to the axes. A distance based model draws an irregular boundary that follows the individual points.</desc>
+<rect x="5" y="30" width="214" height="150" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="112" y="22" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)">linear</text>
+<text x="112" y="202" text-anchor="middle" font-size="10.5" fill="var(--h-space)">one straight cut</text>
+<rect x="233" y="30" width="214" height="150" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="340" y="22" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)">tree</text>
+<text x="340" y="202" text-anchor="middle" font-size="10.5" fill="var(--h-space)">boxes, axis aligned</text>
+<rect x="461" y="30" width="214" height="150" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="568" y="22" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)">distance based</text>
+<text x="568" y="202" text-anchor="middle" font-size="10.5" fill="var(--h-space)">follows the points</text>
+<line x1="18" y1="168" x2="208" y2="44" stroke="var(--md-default-fg-color)" stroke-width="2.5"/>
+<circle cx="47.0" cy="129.7" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="107.9" cy="68.1" r="3.6" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="171.7" cy="106.6" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="60.8" cy="40.4" r="3.6" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="128.6" cy="49.0" r="3.6" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="60.1" cy="70.3" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="158.3" cy="153.8" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="21.6" cy="82.8" r="3.6" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="37.5" cy="163.8" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="45.0" cy="146.3" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="195.0" cy="98.9" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="81.5" cy="103.0" r="3.6" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="22.2" cy="152.6" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="166.4" cy="67.1" r="3.6" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="188.4" cy="138.1" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="127.7" cy="134.9" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="107.4" cy="147.5" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="194.1" cy="155.4" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="85.9" cy="98.7" r="3.6" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="208.0" cy="90.3" r="3.6" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="154.3" cy="169.1" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="110.4" cy="111.6" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="58.1" cy="119.2" r="3.6" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="135.8" cy="63.5" r="3.6" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="82.6" cy="160.5" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="130.9" cy="79.9" r="3.6" fill="var(--h-cherry)" opacity="0.85"/>
+<polyline points="240,110 340,110 340,60 448,60" fill="none" stroke="var(--md-default-fg-color)" stroke-width="2.5"/>
+<polyline points="340,110 340,168" fill="none" stroke="var(--md-default-fg-color)" stroke-width="2.5"/>
+<circle cx="275.0" cy="129.7" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="335.9" cy="68.1" r="3.6" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="399.7" cy="106.6" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="288.8" cy="40.4" r="3.6" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="356.6" cy="49.0" r="3.6" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="288.1" cy="70.3" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="386.3" cy="153.8" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="249.6" cy="82.8" r="3.6" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="265.5" cy="163.8" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="273.0" cy="146.3" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="423.0" cy="98.9" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="309.5" cy="103.0" r="3.6" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="250.2" cy="152.6" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="394.4" cy="67.1" r="3.6" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="416.4" cy="138.1" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="355.7" cy="134.9" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="335.4" cy="147.5" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="422.1" cy="155.4" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="313.9" cy="98.7" r="3.6" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="436.0" cy="90.3" r="3.6" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="382.3" cy="169.1" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="338.4" cy="111.6" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="286.1" cy="119.2" r="3.6" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="363.8" cy="63.5" r="3.6" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="310.6" cy="160.5" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="358.9" cy="79.9" r="3.6" fill="var(--h-cherry)" opacity="0.85"/>
+<polyline points="472,172 494,140 512,150 530,118 552,128 570,96 592,104 612,72 636,80 660,52" fill="none" stroke="var(--md-default-fg-color)" stroke-width="2.5"/>
+<circle cx="503.0" cy="129.7" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="563.9" cy="68.1" r="3.6" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="627.7" cy="106.6" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="516.8" cy="40.4" r="3.6" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="584.6" cy="49.0" r="3.6" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="516.1" cy="70.3" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="614.3" cy="153.8" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="477.6" cy="82.8" r="3.6" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="493.5" cy="163.8" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="501.0" cy="146.3" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="651.0" cy="98.9" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="537.5" cy="103.0" r="3.6" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="478.2" cy="152.6" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="622.4" cy="67.1" r="3.6" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="644.4" cy="138.1" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="583.7" cy="134.9" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="563.4" cy="147.5" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="650.1" cy="155.4" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="541.9" cy="98.7" r="3.6" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="664.0" cy="90.3" r="3.6" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="610.3" cy="169.1" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="566.4" cy="111.6" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="514.1" cy="119.2" r="3.6" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="591.8" cy="63.5" r="3.6" fill="var(--h-cherry)" opacity="0.85"/>
+<circle cx="538.6" cy="160.5" r="3.6" fill="var(--h-steel)" opacity="0.55"/>
+<circle cx="586.9" cy="79.9" r="3.6" fill="var(--h-cherry)" opacity="0.85"/>
+<text x="340" y="220" text-anchor="middle" font-size="12" fill="var(--h-graphite)">Same points every time. What differs is the shape of boundary the family is able to express.</text>
+<text x="340" y="240" text-anchor="middle" font-size="12" fill="var(--h-graphite)">That shape is the model’s assumption about the world, made before it ever saw your data.</text>
+</svg></p>
+<p>Every model family can only draw certain shapes. That constraint is the
+assumption it makes about the world, fixed before it ever saw your data.</p>
+<p>A linear model assumes one straight cut separates the classes. A tree assumes the
+boundary can be built from rectangles aligned to the axes, which is why trees
+cope so well with a feature that only matters above a threshold. A distance-based
+model assumes similar rows have similar answers, and its boundary bends around
+individual points.</p>
+<p>When a model performs badly, this is the first thing to ask: <strong>is the boundary it
+needs a shape this family can draw?</strong></p>
+<h2 id="one-interface-for-all-of-them">One interface for all of them<a class="headerlink" href="#one-interface-for-all-of-them" title="Link to this section">&para;</a></h2>
+<p>The practical consequence of everything above is small and liberating.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">LogisticRegression</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.neighbors</span><span class="w"> </span><span class="kn">import</span> <span class="n">KNeighborsClassifier</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">models</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    <span class="s2">&quot;logistic&quot;</span><span class="p">:</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">),</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    <span class="s2">&quot;forest&quot;</span><span class="p">:</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">),</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    <span class="s2">&quot;knn&quot;</span><span class="p">:</span> <span class="n">KNeighborsClassifier</span><span class="p">(),</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="p">}</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">models</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">))</span>
+</span></code></pre></div>
+<p>Four methods cover almost everything: <code>fit</code> to learn, <code>predict</code> for labels,
+<code>predict_proba</code> for probabilities, <code>score</code> for a quick number.</p>
+<p>Swapping a model is one line. That is why the pipeline you built on the last page
+matters so much: with the preprocessing fixed inside it, every model sees
+identically prepared data and the comparison is fair.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">model</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([(</span><span class="s2">&quot;prep&quot;</span><span class="p">,</span> <span class="n">preprocess</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;clf&quot;</span><span class="p">,</span> <span class="n">RandomForestClassifier</span><span class="p">())])</span>
+</span></code></pre></div>
+<p>Change the final step and nothing else moves.</p>
+<h2 id="start-with-something-stupid">Start with something stupid<a class="headerlink" href="#start-with-something-stupid" title="Link to this section">&para;</a></h2>
+<p>Before any real model, build one that cannot possibly be good.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.dummy</span><span class="w"> </span><span class="kn">import</span> <span class="n">DummyClassifier</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">dummy</span> <span class="o">=</span> <span class="n">DummyClassifier</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;most_frequent&quot;</span><span class="p">)</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">dummy</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="nb">print</span><span class="p">(</span><span class="n">dummy</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">))</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>0.735
+</span></code></pre></div>
+<p>On the churn data, predicting "nobody leaves" is 73.5 percent accurate. That is
+your baseline, and it is the number every result must be compared against.</p>
+<p><svg viewBox="0 0 680 266" role="img" aria-labelledby="m6-title m6-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="m6-title">Choosing a first model</title>
+<desc id="m6-desc">Start with a dummy baseline. Then a linear model if you need to explain it. Then a tree ensemble for tabular data. Reach for anything more complicated only when the simpler options have been beaten.</desc>
+<defs><marker id="m6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--h-steel)"/></marker></defs>
+<rect x="5" y="60" width="152" height="74" rx="10" fill="var(--h-cherry)" stroke="var(--h-cherry)" stroke-dasharray="none"/>
+<text x="81" y="90" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ffffff">a dummy</text>
+<text x="81" y="110" text-anchor="middle" font-size="10" fill="#ffffff" opacity="0.9">the score to beat</text>
+<line x1="163" y1="97" x2="175" y2="97" stroke="var(--h-steel)" stroke-width="2" marker-end="url(#m6)"/>
+<rect x="175" y="60" width="152" height="74" rx="10" fill="var(--h-cherry)" stroke="var(--h-cherry)" stroke-dasharray="none"/>
+<text x="251" y="90" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ffffff">a linear model</text>
+<text x="251" y="110" text-anchor="middle" font-size="10" fill="#ffffff" opacity="0.9">explainable, fast</text>
+<line x1="333" y1="97" x2="345" y2="97" stroke="var(--h-steel)" stroke-width="2" marker-end="url(#m6)"/>
+<rect x="345" y="60" width="152" height="74" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)" stroke-dasharray="none"/>
+<text x="421" y="90" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)">a tree ensemble</text>
+<text x="421" y="110" text-anchor="middle" font-size="10" fill="var(--md-default-fg-color)" opacity="0.9">usually wins on tables</text>
+<line x1="503" y1="97" x2="515" y2="97" stroke="var(--h-steel)" stroke-width="2" marker-end="url(#m6)"/>
+<rect x="515" y="60" width="152" height="74" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)" stroke-dasharray="5 4"/>
+<text x="591" y="90" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)">something fancier</text>
+<text x="591" y="110" text-anchor="middle" font-size="10" fill="var(--md-default-fg-color)" opacity="0.9">only if it earns it</text>
+<text x="340" y="42" text-anchor="middle" font-size="12" font-weight="700" fill="var(--h-graphite)">stop at the first one that is good enough</text>
+<text x="340" y="172" text-anchor="middle" font-size="12" fill="var(--h-graphite)">Every step costs you something: time to train, difficulty explaining it, and more ways to fool yourself.</text>
+<text x="340" y="192" text-anchor="middle" font-size="12" fill="var(--h-graphite)">A logistic regression you can explain to the person who has to act on it often beats a better model they will not trust.</text>
+<text x="340" y="228" text-anchor="middle" font-size="12" font-weight="700" fill="var(--h-cherry)">For tabular data like the churn file, a gradient boosted tree is usually the strongest thing you will try.</text>
+<text x="340" y="248" text-anchor="middle" font-size="12" fill="var(--h-graphite)">Deep learning is for images, audio and text, which is trimester two.</text>
+</svg></p>
+<p>A model at 76 percent accuracy sounds respectable and is barely better than
+answering the same thing every time. Without the baseline on the page you would
+not know that, and neither would the person reading your report.</p>
+<div class="admonition warning">
+<p class="admonition-title">Simple first, complicated only if it earns it</p>
+<p>Every step up in complexity costs you: longer training, harder explanations,
+more hyperparameters, and more opportunities to fool yourself.</p>
+<p>A logistic regression that the person acting on it can understand often
+beats a better model they will not trust. Reach for something heavier when
+the simpler thing has been tried and found wanting, not before.</p>
+</div>
+<h2 id="too-simple-too-complex">Too simple, too complex<a class="headerlink" href="#too-simple-too-complex" title="Link to this section">&para;</a></h2>
+<p><svg viewBox="0 0 680 262" role="img" aria-labelledby="m4-title m4-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="m4-title">Underfitting, a good fit, and overfitting</title>
+<desc id="m4-desc">A model that is too simple misses the pattern. A model of the right complexity follows the trend. A model that is too complex passes through every point including the noise.</desc>
+<rect x="5" y="30" width="214" height="150" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="112" y="22" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)">too simple</text>
+<text x="112" y="202" text-anchor="middle" font-size="10.5" fill="var(--h-space)">misses the pattern</text>
+<polyline points="21,150 203,74" fill="none" stroke="var(--md-default-fg-color)" stroke-width="2.5"/>
+<circle cx="21.0" cy="114.2" r="3.6" fill="var(--h-cherry)" opacity="0.8"/>
+<circle cx="36.2" cy="94.1" r="3.6" fill="var(--h-cherry)" opacity="0.8"/>
+<circle cx="51.3" cy="75.3" r="3.6" fill="var(--h-cherry)" opacity="0.8"/>
+<circle cx="66.5" cy="63.5" r="3.6" fill="var(--h-cherry)" opacity="0.8"/>
+<circle cx="81.7" cy="57.8" r="3.6" fill="var(--h-cherry)" opacity="0.8"/>
+<circle cx="96.8" cy="59.9" r="3.6" fill="var(--h-cherry)" opacity="0.8"/>
+<circle cx="112.0" cy="55.6" r="3.6" fill="var(--h-cherry)" opacity="0.8"/>
+<circle cx="127.2" cy="60.0" r="3.6" fill="var(--h-cherry)" opacity="0.8"/>
+<circle cx="142.3" cy="70.8" r="3.6" fill="var(--h-cherry)" opacity="0.8"/>
+<circle cx="157.5" cy="71.8" r="3.6" fill="var(--h-cherry)" opacity="0.8"/>
+<circle cx="172.7" cy="71.6" r="3.6" fill="var(--h-cherry)" opacity="0.8"/>
+<circle cx="187.8" cy="87.1" r="3.6" fill="var(--h-cherry)" opacity="0.8"/>
+<circle cx="203.0" cy="103.0" r="3.6" fill="var(--h-cherry)" opacity="0.8"/>
+<rect x="233" y="30" width="214" height="150" rx="10" fill="var(--h-surface)" stroke="var(--h-cherry-line)"/>
+<text x="340" y="22" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--h-cherry)">about right</text>
+<text x="340" y="202" text-anchor="middle" font-size="10.5" fill="var(--h-space)">follows the trend</text>
+<polyline points="249,108 264,96 279,84 294,74 310,66 325,60 340,58 355,58 370,62 386,69 401,78 416,89 431,101" fill="none" stroke="var(--md-default-fg-color)" stroke-width="2.5"/>
+<circle cx="249.0" cy="114.2" r="3.6" fill="var(--h-cherry)" opacity="0.8"/>
+<circle cx="264.2" cy="94.1" r="3.6" fill="var(--h-cherry)" opacity="0.8"/>
+<circle cx="279.3" cy="75.3" r="3.6" fill="var(--h-cherry)" opacity="0.8"/>
+<circle cx="294.5" cy="63.5" r="3.6" fill="var(--h-cherry)" opacity="0.8"/>
+<circle cx="309.7" cy="57.8" r="3.6" fill="var(--h-cherry)" opacity="0.8"/>
+<circle cx="324.8" cy="59.9" r="3.6" fill="var(--h-cherry)" opacity="0.8"/>
+<circle cx="340.0" cy="55.6" r="3.6" fill="var(--h-cherry)" opacity="0.8"/>
+<circle cx="355.2" cy="60.0" r="3.6" fill="var(--h-cherry)" opacity="0.8"/>
+<circle cx="370.3" cy="70.8" r="3.6" fill="var(--h-cherry)" opacity="0.8"/>
+<circle cx="385.5" cy="71.8" r="3.6" fill="var(--h-cherry)" opacity="0.8"/>
+<circle cx="400.7" cy="71.6" r="3.6" fill="var(--h-cherry)" opacity="0.8"/>
+<circle cx="415.8" cy="87.1" r="3.6" fill="var(--h-cherry)" opacity="0.8"/>
+<circle cx="431.0" cy="103.0" r="3.6" fill="var(--h-cherry)" opacity="0.8"/>
+<rect x="461" y="30" width="214" height="150" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="568" y="22" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)">too complex</text>
+<text x="568" y="202" text-anchor="middle" font-size="10.5" fill="var(--h-space)">memorises the noise</text>
+<polyline points="477,114 492,94 507,75 522,64 538,58 553,60 568,56 583,60 598,71 614,72 629,72 644,87 659,103" fill="none" stroke="var(--md-default-fg-color)" stroke-width="2.5"/>
+<circle cx="477.0" cy="114.2" r="3.6" fill="var(--h-cherry)" opacity="0.8"/>
+<circle cx="492.2" cy="94.1" r="3.6" fill="var(--h-cherry)" opacity="0.8"/>
+<circle cx="507.3" cy="75.3" r="3.6" fill="var(--h-cherry)" opacity="0.8"/>
+<circle cx="522.5" cy="63.5" r="3.6" fill="var(--h-cherry)" opacity="0.8"/>
+<circle cx="537.7" cy="57.8" r="3.6" fill="var(--h-cherry)" opacity="0.8"/>
+<circle cx="552.8" cy="59.9" r="3.6" fill="var(--h-cherry)" opacity="0.8"/>
+<circle cx="568.0" cy="55.6" r="3.6" fill="var(--h-cherry)" opacity="0.8"/>
+<circle cx="583.2" cy="60.0" r="3.6" fill="var(--h-cherry)" opacity="0.8"/>
+<circle cx="598.3" cy="70.8" r="3.6" fill="var(--h-cherry)" opacity="0.8"/>
+<circle cx="613.5" cy="71.8" r="3.6" fill="var(--h-cherry)" opacity="0.8"/>
+<circle cx="628.7" cy="71.6" r="3.6" fill="var(--h-cherry)" opacity="0.8"/>
+<circle cx="643.8" cy="87.1" r="3.6" fill="var(--h-cherry)" opacity="0.8"/>
+<circle cx="659.0" cy="103.0" r="3.6" fill="var(--h-cherry)" opacity="0.8"/>
+<text x="340" y="232" text-anchor="middle" font-size="12" fill="var(--h-graphite)">The left one is wrong on the training data too. The right one is perfect on it and useless on anything else.</text>
+<text x="340" y="252" text-anchor="middle" font-size="12" fill="var(--h-graphite)">Only a held back set can tell the middle one from the right one.</text>
+</svg></p>
+<p><strong>Underfitting</strong> means the model is too simple to represent the pattern. It is
+wrong on the training data as well as on new data, which makes it easy to spot.</p>
+<p><strong>Overfitting</strong> means the model has memorised the training data, including its
+noise. Perfect where it trained and poor everywhere else.</p>
+<p>The gap between the two scores is the diagnosis:</p>
+<table>
+<thead>
+<tr>
+<th>Training score</th>
+<th>Test score</th>
+<th>What it means</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Low</td>
+<td>Low</td>
+<td>Underfitting. More capacity, or better features</td>
+</tr>
+<tr>
+<td>High</td>
+<td>High</td>
+<td>You are done</td>
+</tr>
+<tr>
+<td>High</td>
+<td>Low</td>
+<td>Overfitting. Simpler model, more data, or regularisation</td>
+</tr>
+<tr>
+<td>Low</td>
+<td>High</td>
+<td>Something is wrong with your split</td>
+</tr>
+</tbody>
+</table>
+<p>This is the same picture as the training and validation curves from the
+Fundamentals page, now with a model attached instead of a neural network. It is
+also why the held back set exists at all: without it, the third row and the
+second row look identical.</p>
+<h2 id="how-you-will-be-judged">How you will be judged<a class="headerlink" href="#how-you-will-be-judged" title="Link to this section">&para;</a></h2>
+<p>Accuracy is the number everyone quotes and the one that hides most.</p>
+<p>On the churn data, 73.5 percent accuracy is achievable by a model that never
+predicts churn. Any serious evaluation starts with the full picture.</p>
+<p><svg viewBox="0 0 680 310" role="img" aria-labelledby="m5-title m5-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="m5-title">The confusion matrix, with precision and recall marked</title>
+<desc id="m5-desc">Rows are the truth and columns are the prediction. Precision is the share of predicted churners who really churned. Recall is the share of real churners the model found.</desc>
+<text x="330" y="30" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--h-graphite)">what the model predicted</text>
+<text x="270" y="56" text-anchor="middle" font-size="12" font-weight="700" fill="var(--md-default-fg-color)">churn</text>
+<text x="430" y="56" text-anchor="middle" font-size="12" font-weight="700" fill="var(--md-default-fg-color)">stay</text>
+<text x="178" y="30" text-anchor="end" font-size="12.5" font-weight="700" fill="var(--h-graphite)">truth</text>
+<text x="178" y="104" text-anchor="end" font-size="12" font-weight="700" fill="var(--md-default-fg-color)">churned</text>
+<text x="178" y="184" text-anchor="end" font-size="12" font-weight="700" fill="var(--md-default-fg-color)">stayed</text>
+<rect x="190" y="66" width="160" height="72" rx="6" fill="var(--h-cherry)"/>
+<text x="270" y="98" text-anchor="middle" font-size="20" font-weight="700" fill="#ffffff">280</text>
+<text x="270" y="120" text-anchor="middle" font-size="10.5" fill="#ffffff" opacity="0.9">true positives</text>
+<rect x="350" y="66" width="160" height="72" rx="6" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="430" y="98" text-anchor="middle" font-size="20" font-weight="700" fill="var(--h-graphite)">94</text>
+<text x="430" y="120" text-anchor="middle" font-size="10.5" fill="var(--h-space)">missed churners</text>
+<rect x="190" y="146" width="160" height="72" rx="6" fill="var(--h-cherry-wash)" stroke="var(--h-cherry-line)"/>
+<text x="270" y="178" text-anchor="middle" font-size="20" font-weight="700" fill="var(--h-cherry)">120</text>
+<text x="270" y="200" text-anchor="middle" font-size="10.5" fill="var(--h-cherry)">false alarms</text>
+<rect x="350" y="146" width="160" height="72" rx="6" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="430" y="178" text-anchor="middle" font-size="20" font-weight="700" fill="var(--h-graphite)">915</text>
+<text x="430" y="200" text-anchor="middle" font-size="10.5" fill="var(--h-space)">correctly left alone</text>
+<rect x="186" y="62" width="168" height="160" rx="8" fill="none" stroke="var(--h-cherry)" stroke-width="2.5" stroke-dasharray="6 4"/>
+<text x="270" y="240" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--h-cherry)">precision, the column</text>
+<text x="270" y="256" text-anchor="middle" font-size="11" fill="var(--h-graphite)">280 of 400, 70 percent</text>
+<rect x="186" y="62" width="328" height="80" rx="8" fill="none" stroke="var(--md-default-fg-color)" stroke-width="2.5"/>
+<text x="548" y="98" font-size="11.5" font-weight="700" fill="var(--md-default-fg-color)">recall, the row</text>
+<text x="548" y="116" font-size="11" fill="var(--h-graphite)">280 of 374,</text>
+<text x="548" y="132" font-size="11" fill="var(--h-graphite)">75 percent</text>
+<text x="340" y="286" text-anchor="middle" font-size="12" fill="var(--h-graphite)">Accuracy here is 85 percent and says nothing about the 94 churners who walked out unnoticed.</text>
+<text x="340" y="304" text-anchor="middle" font-size="12" fill="var(--h-graphite)">Which of the two off-diagonal cells costs more is a business question, not a modelling one.</text>
+</svg></p>
+<p><strong>Precision</strong> answers: of everyone the model flagged, how many really were
+churners? It is the column. Low precision means wasted effort on false alarms.</p>
+<p><strong>Recall</strong> answers: of everyone who really churned, how many did the model find?
+It is the row. Low recall means customers walking out unnoticed.</p>
+<p>The two trade against each other, and the dial is the threshold from earlier.
+Lower it and recall rises while precision falls.</p>
+<p><strong>F1</strong> combines them into one number, the harmonic mean, which stays low unless
+both are decent. It is the usual single figure to quote when the classes are
+imbalanced.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">classification_report</span><span class="p">,</span> <span class="n">confusion_matrix</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)))</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)))</span>
+</span></code></pre></div>
+<p><strong>ROC AUC</strong> measures how well the model ranks, across every possible threshold
+at once. It is useful for comparing models before you have chosen a threshold,
+and it can look flattering on very imbalanced data.</p>
+<p>For regression the equivalents are <strong>MAE</strong>, the average size of the error in the
+original units, and <strong>RMSE</strong>, which punishes large errors more because of the
+squaring you met in Probability.</p>
+<div class="admonition warning">
+<p class="admonition-title">Choose the metric before you see the scores</p>
+<p>If you pick the metric afterwards, you will pick the one that makes your
+model look best. Write down which number matters, and why, while you are
+still framing the problem.</p>
+<p>For churn, ask what the company does with a prediction. If they phone the
+customer, false alarms are cheap and recall matters. If they send a three
+month discount, false alarms are expensive and precision matters.</p>
+</div>
+<h2 id="what-comes-next-in-this-group">What comes next in this group<a class="headerlink" href="#what-comes-next-in-this-group" title="Link to this section">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Project</th>
+<th>Family</th>
+<th>The question it answers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Linear Models</td>
+<td>Linear</td>
+<td>How do coefficients turn features into a prediction?</td>
+</tr>
+<tr>
+<td>Tree-Based Models</td>
+<td>Trees and ensembles</td>
+<td>How do splits and ensembles beat single models?</td>
+</tr>
+<tr>
+<td>Unsupervised Learning</td>
+<td>No labels</td>
+<td>What can you learn with no target at all?</td>
+</tr>
+<tr>
+<td>Clustering</td>
+<td>No labels</td>
+<td>How do you find the groups, and how do you know they are real?</td>
+</tr>
+</tbody>
+</table>
+<p>Each one goes deep on a region of the map. Come back to this page whenever you
+lose sight of where you are.</p>
+<h2 id="questions-to-sit-with">Questions to sit with<a class="headerlink" href="#questions-to-sit-with" title="Link to this section">&para;</a></h2>
+<ol>
+<li>A classifier outputs a probability and a threshold turns it into a decision.
+   Who in an organisation should choose that threshold, and what would they need
+   to know to choose it well?</li>
+<li>Your model scores 76 percent where the baseline is 73.5. Is that a result?
+   What would you need to say alongside the number for it to be honest?</li>
+<li>Every model family can only draw certain shapes of boundary. What does that
+   mean for the claim that a model learns from data with no assumptions?</li>
+<li>Precision and recall trade against each other. Describe a problem where you
+   would accept terrible precision for high recall, and one where you would do
+   the reverse.</li>
+<li>The long loop in the first diagram goes back to the data. Why do beginners
+   prefer the short one, and what does that preference cost them?</li>
+</ol>
+<h2 id="quick-reference">Quick reference<a class="headerlink" href="#quick-reference" title="Link to this section">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Baseline</td>
+<td><code>DummyClassifier(strategy="most_frequent")</code></td>
+</tr>
+<tr>
+<td>Fit and score</td>
+<td><code>model.fit(X_train, y_train)</code>, <code>model.score(X_test, y_test)</code></td>
+</tr>
+<tr>
+<td>Labels</td>
+<td><code>model.predict(X_test)</code></td>
+</tr>
+<tr>
+<td>Probabilities</td>
+<td><code>model.predict_proba(X_test)</code></td>
+</tr>
+<tr>
+<td>Custom threshold</td>
+<td><code>(proba[:, 1] &gt; 0.3).astype(int)</code></td>
+</tr>
+<tr>
+<td>Confusion matrix</td>
+<td><code>confusion_matrix(y_test, y_pred)</code></td>
+</tr>
+<tr>
+<td>All the metrics</td>
+<td><code>classification_report(y_test, y_pred)</code></td>
+</tr>
+<tr>
+<td>Ranking quality</td>
+<td><code>roc_auc_score(y_test, proba[:, 1])</code></td>
+</tr>
+<tr>
+<td>Honest comparison</td>
+<td><code>cross_val_score(pipeline, X_train, y_train, cv=5)</code></td>
+</tr>
+<tr>
+<td>Swap the model</td>
+<td>change the last step of the <code>Pipeline</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="next">Next<a class="headerlink" href="#next" title="Link to this section">&para;</a></h2>
+<p>You have the map. The first region is the one whose coefficients you can read
+straight off.</p>
+<p><a class="h-button" href="../linear-models/">Linear Models</a></p>
+<p>Worth your time: the
+<a href="https://scikit-learn.org/stable/tutorial/machine_learning_map/">scikit-learn model selection guide</a>
+is a decision chart for choosing an estimator, and the
+<a href="https://scikit-learn.org/stable/modules/model_evaluation.html">classification metrics page</a>
+is the reference for everything in the evaluation section.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Classic models">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Classic models
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../linear-models/" class="md-footer__link md-footer__link--next" aria-label="Next: Linear Models">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Linear Models
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Holberton School Albania
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://github.com/evisp" target="_blank" rel="noopener" title="GitHub" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://www.linkedin.com/school/holbertonschool/" target="_blank" rel="noopener" title="Holberton School" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.indexes", "navigation.path", "navigation.top", "navigation.tracking", "navigation.footer", "toc.follow", "search.highlight", "search.share", "search.suggest", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.action.edit"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

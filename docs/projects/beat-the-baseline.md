@@ -1,9 +1,9 @@
 # Project 4: Beat the baseline
 
-<span class="badge badge--time">Two weeks</span>
+<span class="badge badge--time">Due 2 December</span>
 <span class="badge badge--level">Classic models</span>
-<span class="badge">Groups of 3 or 4</span>
-<span class="badge">Presented 14 December</span>
+<span class="badge">Teams of 2 or 3</span>
+<span class="badge">Five datasets</span>
 
 Project 3 banned models. This one is built around them. But a model is only
 worth something next to the simplest guess you could have made without one, so
@@ -11,12 +11,13 @@ that is where you start, and that is the number you have to beat.
 
 ## What you are doing
 
-Two groups predict a number. Two groups predict a class. Everybody follows the
-same pipeline, and everybody answers the same question at the end: how much
-better than the obvious guess is your model, give or take?
+Five teams, five datasets, all from scikit-learn. Two teams predict a number.
+Three teams predict a class. Everybody follows the same pipeline, and everybody
+answers the same question at the end: how much better than the obvious guess is
+your model, give or take?
 
 <svg viewBox="0 0 680 240" role="img" aria-labelledby="p4-f1-title p4-f1-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
-<title id="p4-f1-title">The pipeline every group follows</title>
+<title id="p4-f1-title">The pipeline every team follows</title>
 <desc id="p4-f1-desc">Seven phases: data, split, baseline, model, tune, evaluate, explain. Baseline and evaluate are highlighted. Cached data, a data contract and ranges carry over from Project 3.</desc>
 <defs><marker id="p4a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--h-steel)"/></marker></defs>
 <rect x="5" y="40" width="86" height="86" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
@@ -37,11 +38,11 @@ better than the obvious guess is your model, give or take?
 <rect x="290" y="40" width="86" height="86" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
 <text x="333" y="68" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)">model</text>
 <text x="333" y="92" text-anchor="middle" font-size="10" fill="var(--h-graphite)">linear first,</text>
-<text x="333" y="106" text-anchor="middle" font-size="10" fill="var(--h-graphite)">then a tree</text>
+<text x="333" y="106" text-anchor="middle" font-size="10" fill="var(--h-graphite)">then one more</text>
 <line x1="377" y1="83" x2="384" y2="83" stroke="var(--h-steel)" stroke-width="2" marker-end="url(#p4a)"/>
 <rect x="385" y="40" width="86" height="86" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
 <text x="428" y="68" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)">tune</text>
-<text x="428" y="92" text-anchor="middle" font-size="10" fill="var(--h-graphite)">on validation,</text>
+<text x="428" y="92" text-anchor="middle" font-size="10" fill="var(--h-graphite)">cross-validate,</text>
 <text x="428" y="106" text-anchor="middle" font-size="10" fill="var(--h-graphite)">never on test</text>
 <line x1="472" y1="83" x2="479" y2="83" stroke="var(--h-steel)" stroke-width="2" marker-end="url(#p4a)"/>
 <rect x="480" y="40" width="86" height="86" rx="10" fill="var(--h-cherry)" stroke="var(--h-cherry)"/>
@@ -61,15 +62,15 @@ better than the obvious guess is your model, give or take?
 
 ## What everyone must show
 
-Same objectives for every group. What they mean for your data is in your tab.
+Same objectives for every team. What they mean for your data is in your tab.
 
 | | Objective |
 |---|---|
-| 0 | Load the data, write the data contract, look at what is there |
-| 1 | Split by time into train, validation and test, before modelling anything |
+| 0 | Load the data, cache it, write the data contract, look at what is there |
+| 1 | Split off a test set before modelling anything, with a fixed seed (stratified if you predict a class) |
 | 2 | Score a baseline, exactly the way you will score your models |
-| 3 | Train at least two models: one linear, one tree-based |
-| 4 | Tune on the validation set, or with cross-validation on the training set |
+| 3 | Train at least two models: a plain linear one, and one with more to tune (regularised, or a kernel) |
+| 4 | Tune with cross-validation on the training set |
 | 5 | Score the final model on the test set once, with a bootstrap range, next to the baseline |
 | 6 | Find where the model fails, show examples, and explain why |
 | 7 | Write it up: the notebook in full, the poster in one page |
@@ -84,26 +85,36 @@ Same objectives for every group. What they mean for your data is in your tab.
     become a second validation set, and your result is now an overestimate that
     nobody can correct.
 
-All four datasets are ordered in time, which makes the split the first place
-where projects go wrong.
+These datasets are small, between 442 and 20,640 rows. Holding out a separate
+validation set as well would leave very little to train on, so you tune with
+cross-validation instead.
 
-<svg viewBox="0 0 680 160" role="img" aria-labelledby="p4-f2-title p4-f2-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
-<title id="p4-f2-title">Splitting by time</title>
-<desc id="p4-f2-desc">The earliest data is for training, the next block is for validation, and the latest block is the test set, opened once.</desc>
-<defs><marker id="p4b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--h-steel)"/></marker></defs>
-<rect x="5" y="30" width="430" height="52" rx="10" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
-<text x="220" y="52" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)">train</text>
-<text x="220" y="70" text-anchor="middle" font-size="10" fill="var(--h-graphite)">fit every model here</text>
-<rect x="441" y="30" width="110" height="52" rx="10" fill="var(--h-surface)" stroke="var(--h-steel)"/>
-<text x="496" y="52" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)">validation</text>
-<text x="496" y="70" text-anchor="middle" font-size="10" fill="var(--h-graphite)">choose and tune</text>
-<rect x="557" y="30" width="118" height="52" rx="10" fill="var(--h-cherry)" stroke="var(--h-cherry)"/>
-<text x="616" y="52" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ffffff">test</text>
-<text x="616" y="70" text-anchor="middle" font-size="10" fill="#ffffff" opacity="0.9">opened once</text>
-<line x1="5" y1="98" x2="672" y2="98" stroke="var(--h-steel)" stroke-width="1.4" marker-end="url(#p4b)"/>
-<text x="5" y="116" font-size="10" fill="var(--h-space)">earlier</text>
-<text x="668" y="116" text-anchor="end" font-size="10" fill="var(--h-space)">later</text>
-<text x="340" y="146" text-anchor="middle" font-size="12" fill="var(--h-graphite)">Split by date, not by shuffling rows. A random split lets the model see the days around the ones it is tested on.</text>
+<svg viewBox="0 0 680 190" role="img" aria-labelledby="p4-f2-title p4-f2-desc" style="width:100%;height:auto;margin:1.2rem 0;font-family:var(--md-text-font-family, system-ui, sans-serif)">
+<title id="p4-f2-title">Splitting and cross-validation</title>
+<desc id="p4-f2-desc">The data is split once into a training set of about 80 percent and a test set of about 20 percent, which is locked away and opened once. Inside the training set, five-fold cross-validation trains on four folds and scores on the fifth, rotating, to choose and tune models.</desc>
+<rect x="5" y="22" width="530" height="30" rx="8" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="270" y="37" dy="0.36em" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--md-default-fg-color)">training set, about 80%</text>
+<rect x="541" y="22" width="134" height="30" rx="8" fill="var(--h-cherry)" stroke="var(--h-cherry)"/>
+<text x="608" y="37" dy="0.36em" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ffffff">test, 20%</text>
+<g font-size="10" text-anchor="middle">
+<rect x="5" y="66" width="102" height="22" rx="5" fill="var(--h-steel)"/>
+<rect x="112" y="66" width="102" height="22" rx="5" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<rect x="219" y="66" width="102" height="22" rx="5" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<rect x="326" y="66" width="102" height="22" rx="5" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<rect x="433" y="66" width="102" height="22" rx="5" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="56" y="77" dy="0.36em" font-weight="700" fill="var(--md-default-fg-color)">score</text>
+<rect x="5" y="94" width="102" height="22" rx="5" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<rect x="112" y="94" width="102" height="22" rx="5" fill="var(--h-steel)"/>
+<rect x="219" y="94" width="102" height="22" rx="5" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<rect x="326" y="94" width="102" height="22" rx="5" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<rect x="433" y="94" width="102" height="22" rx="5" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
+<text x="163" y="105" dy="0.36em" font-weight="700" fill="var(--md-default-fg-color)">score</text>
+<text x="270" y="134" fill="var(--h-graphite)">… and so on, five rounds, each fold scored once</text>
+</g>
+<rect x="541" y="66" width="134" height="50" rx="8" fill="var(--h-cherry-wash)" stroke="var(--h-cherry-line)" stroke-dasharray="4 3"/>
+<text x="608" y="84" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--h-cherry)">locked</text>
+<text x="608" y="100" text-anchor="middle" font-size="10" fill="var(--h-cherry)">opened once, at the end</text>
+<text x="340" y="170" text-anchor="middle" font-size="12" fill="var(--h-graphite)">Split once, with a fixed seed. Every choice is made from the cross-validation scores on the left.</text>
 </svg>
 
 ## What you hand in
@@ -144,7 +155,7 @@ The poster follows this layout. Fill the frame; do not redesign it.
 <rect x="5" y="8" width="670" height="318" rx="12" fill="var(--h-surface)" stroke="var(--h-surface-line)"/>
 <rect x="20" y="22" width="640" height="42" rx="8" fill="var(--md-default-fg-color)"/>
 <text x="340" y="39" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--md-default-bg-color)">title: your finding, as one sentence</text>
-<text x="340" y="55" text-anchor="middle" font-size="10" fill="var(--md-default-bg-color)" opacity="0.75">group members · dataset · date</text>
+<text x="340" y="55" text-anchor="middle" font-size="10" fill="var(--md-default-bg-color)" opacity="0.75">team members · dataset · date</text>
 <rect x="20" y="76" width="190" height="50" rx="8" fill="var(--md-default-bg-color)" stroke="var(--h-surface-line)"/>
 <text x="115" y="96" text-anchor="middle" font-size="11" font-weight="700" fill="var(--md-default-fg-color)">the question</text>
 <text x="115" y="112" text-anchor="middle" font-size="10" fill="var(--h-graphite)">one sentence</text>
@@ -156,9 +167,9 @@ The poster follows this layout. Fill the frame; do not redesign it.
 <text x="115" y="228" text-anchor="middle" font-size="10" fill="var(--h-graphite)">the pipeline in one strip</text>
 <rect x="222" y="76" width="220" height="166" rx="8" fill="var(--h-cherry)"/>
 <text x="332" y="104" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">main result</text>
-<text x="332" y="146" text-anchor="middle" font-size="24" font-weight="700" fill="#ffffff">MAE 1.6 °C</text>
-<text x="332" y="170" text-anchor="middle" font-size="11" fill="#ffffff" opacity="0.9">give or take 0.1</text>
-<text x="332" y="208" text-anchor="middle" font-size="10" fill="#ffffff" opacity="0.9">baseline: 2.3 °C, give or take 0.1</text>
+<text x="332" y="146" text-anchor="middle" font-size="24" font-weight="700" fill="#ffffff">recall 0.94</text>
+<text x="332" y="170" text-anchor="middle" font-size="11" fill="#ffffff" opacity="0.9">give or take 0.04</text>
+<text x="332" y="208" text-anchor="middle" font-size="10" fill="#ffffff" opacity="0.9">baseline: 0.81, give or take 0.07</text>
 <rect x="454" y="76" width="206" height="166" rx="8" fill="var(--md-default-bg-color)" stroke="var(--h-surface-line)"/>
 <text x="557" y="100" text-anchor="middle" font-size="11" font-weight="700" fill="var(--md-default-fg-color)">one key figure</text>
 <line x1="478" y1="206" x2="638" y2="206" stroke="var(--h-steel)" stroke-width="1.2"/>
@@ -178,14 +189,19 @@ The poster follows this layout. Fill the frame; do not redesign it.
 <text x="340" y="372" text-anchor="middle" font-size="12" fill="var(--h-graphite)">If the poster needs zooming to read, it has too much on it.</text>
 </svg>
 
-Hand both in from your group repository:
+Hand both in from your team repository:
 
 ```text
 project-4/
-├── data/raw/        # cached source files, committed
+├── data/raw/        # the dataset saved as CSV, committed
 ├── notebook.ipynb
 └── poster.pdf
 ```
+
+Three of the datasets ship inside scikit-learn. California Housing and German
+Credit download the first time you load them. Either way, save the table to
+`data/raw/` once and load it from there, so the notebook runs without the
+internet.
 
 ## Same pipeline, different scoreboard
 
@@ -195,121 +211,193 @@ how you keep score.
 | | Regression | Classification |
 |---|---|---|
 | You predict | a number | a class, and the probability behind it |
-| Baseline | a simple rule given in your tab | the majority class, then a simple rule |
+| Baseline | the training mean, then a simple rule given in your tab | the majority class, then a simple rule given in your tab |
 | Main metric | MAE, in the target's own units | precision, recall and F1 on the class you care about |
 | Always show | residuals against predictions | the confusion matrix |
 | The range | bootstrap the test set | bootstrap the test set |
 
 ## Regression: predict a number
 
-=== "Group A: what will tomorrow's high be?"
+=== "Team A: what is a district's house worth?"
 
-    **The question.** A forecast that says "tomorrow will be like today" is
-    right more often than you would think. Can a model do meaningfully better
-    for Tirana?
+    **The question.** Income, house age, rooms and location describe every
+    district in California. How well can a linear model turn them into a
+    house price, and where does a straight line stop being enough?
 
-    **The data.** Daily weather for Tirana from the
-    [Open-Meteo archive API](https://open-meteo.com/en/docs/historical-weather-api),
-    1991 to 2025. You collected this kind of data in Project 3. Target:
-    tomorrow's maximum temperature.
+    **The data.** California Housing, 20,640 districts from the 1990 census,
+    8 numeric columns. Target: median house value, in units of $100,000.
 
-    **Baseline.** Persistence: tomorrow's high equals today's.
+    ```python
+    from sklearn import datasets
+    housing = datasets.fetch_california_housing(as_frame=True)
+    df = housing.frame
+    ```
 
-    **Must do.** Beat persistence on MAE and check whether the two ranges
-    overlap. If they do, say so: that is a finding too. Then report your error separately for each season, and say which season is
-    hardest and why.
+    **Baseline.** First the training mean for every district. Then a one-column
+    rule: split median income into ten bands and predict the average value of
+    the band, from the training data.
 
-    **Watch out for.** Shifting the target the wrong way, so that tomorrow
-    quietly ends up among your features. Day of year is circular: 31 December
-    sits next to 1 January, not 364 days away from it. And ERA5 is a grid
-    reconstruction, as Group C found in Project 3.
+    **Must do.** Beat the income rule on MAE, with a range, and report it in
+    dollars. Then report your error separately for cheap, middle and
+    expensive districts, and say where the model struggles and why.
 
-    **If you finish early.** Predict three days ahead instead of one, and watch
-    what happens to the gap between your model and persistence.
+    **Watch out for.** The target is capped at 5.0: every district worth more
+    than $500,000 is recorded as exactly $500,000. You will see it as a hard
+    edge in your residual plot, so decide what to do about it and say so. House
+    age is capped too, at 52. A few districts have absurd averages for rooms
+    and occupancy, because only a handful of households live there. Latitude and
+    longitude matter, but not in a straight line.
 
-=== "Group B: how busy will the bikes be?"
+    **If you finish early.** Split by geography instead of at random: train on
+    the north of the state and test on the south. How much worse does the
+    model get, and what does that say about using it somewhere new?
 
-    **The question.** A bike-sharing system has to move bikes to where people
-    will want them before they want them. How well can you predict demand an
-    hour at a time?
+=== "Team B: how fast will the disease progress?"
 
-    **The data.** The
-    [UCI Bike Sharing dataset](https://archive.ics.uci.edu/dataset/275/bike+sharing+dataset):
-    hourly rentals in Washington, D.C. for 2011 and 2012, with weather and
-    calendar columns. One download, cached. Target: `cnt`, rentals in the hour.
+    **The question.** Ten measurements taken at a first visit, one number a year
+    later. With only 442 patients, can a model do meaningfully better than the
+    average, and can you prove it is not luck?
 
-    **Baseline.** The average count for that hour of the day, from the
-    training data.
+    **The data.** The diabetes dataset: age, sex, body mass index, blood
+    pressure and six blood serum measurements (`s1` to `s6`) for 442 patients.
+    Target: a measure of disease progression one year later.
 
-    **Must do.** Beat the hourly average on MAE, with a range. Then compare
-    your errors on working days against weekends and say what the model finds
-    harder.
+    ```python
+    from sklearn import datasets
+    diabetes = datasets.load_diabetes(as_frame=True, scaled=False)
+    df = diabetes.frame
+    ```
 
-    **Watch out for.** `casual` plus `registered` equals `cnt`, so either one
-    as a feature is the answer in disguise. Counts are skewed, so try a log
-    target, but report MAE back in rentals. Demand grew between 2011 and 2012,
-    which your test set will notice even if your training set does not.
+    **Baseline.** First the training mean. Then a one-column rule: split body
+    mass index into four bands and predict the average target of the band.
 
-    **If you finish early.** Model `casual` and `registered` separately and
-    find out which kind of rider the weather affects more.
+    **Must do.** Compare `LinearRegression`, `Ridge` and `Lasso`, choosing
+    `alpha` with cross-validation. Beat the BMI rule on MAE, with a range, and
+    say honestly whether the ranges of your best model and the baseline
+    overlap. Show which measurements Lasso keeps as `alpha` grows.
+
+    **Watch out for.** Load it with `scaled=False`. The default version was
+    scaled using all 442 patients, test set included, which is a small leak.
+    Scale it yourself, on the training set only. With so few rows a single
+    split can swing your score a lot, so your ranges will be wide, and that is a
+    finding, not a failure. `s1` and `s2` are strongly related, which is exactly
+    where Ridge and Lasso disagree.
+
+    **If you finish early.** Repeat the whole split 50 times with different
+    seeds and plot the 50 test scores. How much could one unlucky split have
+    fooled you?
 
 ## Classification: predict a class
 
-=== "Group C: will it rain tomorrow?"
+=== "Team C: is the tumour malignant?"
 
-    **The question.** The simplest useful forecast there is. Can a model say
-    whether tomorrow is a rain day better than a rule anyone could apply?
+    **The question.** Thirty measurements of cell nuclei from a scan. A model
+    that misses a malignant tumour is far worse than one that raises a false
+    alarm. How many malignant cases can you catch, and at what price?
 
-    **The data.** Daily weather for one Albanian city from the
-    [Open-Meteo archive API](https://open-meteo.com/en/docs/historical-weather-api),
-    1991 to 2025. Target: whether tomorrow is a rain day. You choose the
-    millimetre threshold and defend it, as Group D did in Project 3.
+    **The data.** The breast cancer dataset: 569 tumours, 30 numeric
+    measurements. Target: malignant or benign.
 
-    **Baseline.** Two of them. Always predict the majority class, then
-    persistence: rain tomorrow if it rained today.
+    ```python
+    from sklearn import datasets
+    cancer = datasets.load_breast_cancer(as_frame=True)
+    df = cancer.frame
+    ```
 
-    **Must do.** Beat persistence on F1 for rain days, with a range. Show the
-    confusion matrix for summer and for winter separately.
+    **Baseline.** Two of them. Always predict the majority class (benign).
+    Then a one-column rule: pick a single measurement and a threshold from the
+    training data, and call everything above it malignant.
 
-    **Watch out for.** Two thresholds that are easy to confuse: the millimetres
-    that make a rain day, and the probability above which you predict rain. In
-    July almost every day is dry, so a model that never predicts rain scores
-    high accuracy and is useless. Look at recall before you celebrate.
+    **Must do.** Beat the one-column rule on recall for malignant tumours,
+    with a range, without letting precision collapse. Choose your probability
+    threshold, defend it in one paragraph, and show the confusion matrix at
+    that threshold.
 
-    **If you finish early.** Move the probability threshold and plot precision
-    against recall. Pick the threshold you would use to plan an outdoor
-    wedding, and the one you would use to plan a harvest.
+    **Watch out for.** In this dataset `0` means malignant and `1` means
+    benign, the opposite of what you would guess. If you do not flip it, your
+    "recall" is measuring the wrong class. The 30 columns are 10 measurements
+    each recorded three ways (mean, standard error, worst), so radius,
+    perimeter and area say almost the same thing. With accuracy around 95
+    percent for almost any model, accuracy tells you nothing here.
 
-=== "Group D: podium or not?"
+    **If you finish early.** Use an L1 penalty on logistic regression and find
+    the smallest set of measurements that keeps recall within your range.
 
-    **The question.** Group B in Project 3 found that the grid explains a lot.
-    Can a model that knows more than the grid position say who finishes on the
-    podium?
+=== "Team D: which digit is it?"
 
-    **The data.** Race results and qualifying from the
-    [Jolpica-F1 API](https://github.com/jolpica/jolpica-f1/blob/main/docs/README.md),
-    2000 to 2025, cached under the same rules as Project 3. Target: whether a
-    driver finishes in the top three.
+    **The question.** Ten classes instead of two, and pixels instead of
+    columns with names. When does a straight boundary stop being enough, and
+    which digits does every model confuse?
 
-    **Baseline.** Always predict "no podium", then: podium if the driver starts
-    in the top three.
+    **The data.** The digits dataset: 1,797 handwritten digits, each an 8 × 8
+    image, so 64 pixel columns with values from 0 to 16. Target: the digit,
+    0 to 9.
 
-    **Must do.** Beat the grid rule on F1 for podium finishes, with a range.
-    Then name the kind of race where your model and the grid rule disagree most.
+    ```python
+    from sklearn import datasets
+    digits = datasets.load_digits(as_frame=True)
+    df = digits.frame
+    ```
 
-    **Watch out for.** Only features known before the lights go out. Laps led,
-    finishing status or anything else from the race itself is leakage. Rolling
-    form, such as points over the last three races, must use previous races
-    only. Split by season, never by row, so that the twenty drivers of one race
-    stay on the same side of the split. Only 3 in 20 rows are podiums.
+    **Baseline.** Always predicting one digit scores about 10 percent, so that
+    is not much of a bar. The real baseline: average all training images of
+    each digit, and label a new image with the closest average
+    (`neighbors.NearestCentroid`). Expect it to be right close to 9 times in 10.
 
-    **If you finish early.** Train on 2000 to 2013 and test on the hybrid era
-    from 2014, and see how much of what the model learned survives a change of
-    rules.
+    **Must do.** Beat the average-image rule on macro F1, with a range. Compare
+    a linear model with an SVM using the RBF kernel. Show the 10 × 10
+    confusion matrix and at least nine misclassified images, and say what they
+    have in common.
+
+    **Watch out for.** With ten classes, precision, recall and F1 need an
+    `average=` argument: use `"macro"` so every digit counts equally, and say
+    so. The images come from a few dozen writers, so a random split puts the
+    same handwriting on both sides, and your score is probably a little
+    optimistic for a new writer. Scale the pixels before the SVM.
+
+    **If you finish early.** Reshape the 64 weights a linear model learned for
+    each digit back into an 8 × 8 image and plot all ten. What is each one
+    looking for?
+
+=== "Team E: will this customer repay?"
+
+    **The question.** A bank has to decide who gets a loan. Lending to someone
+    who does not repay costs much more than turning away someone who would
+    have. Can a model make those decisions more cheaply than a simple rule?
+
+    **The data.** The German Credit dataset: 1,000 loan applicants described by
+    20 columns, most of them categories. Target: good or bad credit risk.
+
+    ```python
+    from sklearn import datasets
+    credit = datasets.fetch_openml("credit-g", version=1, as_frame=True)
+    df = credit.frame
+    ```
+
+    **Baseline.** Always predict "good". Then a one-column rule: flag an
+    applicant as "bad" based on their checking account status alone, choosing
+    the rule from the training data.
+
+    **Must do.** Beat the one-column rule on F1 for "bad", with a range. Then
+    use the cost the dataset comes with: approving a bad applicant costs 5,
+    rejecting a good one costs 1. Choose the probability threshold that gives
+    the lowest total cost on cross-validation, and report the test cost next to
+    the baseline's.
+
+    **Watch out for.** Thirteen columns are text, so they need encoding, and
+    the encoders and scalers must learn from the training set only. A pipeline
+    makes that automatic. Only 3 in 10 applicants are "bad", so the always-good
+    baseline scores 70 percent accuracy and catches nobody. Two columns,
+    `personal_status` (sex combined with marital status) and `foreign_worker`,
+    describe who someone is rather than what they did. Should a credit model use
+    them?
+
+    **If you finish early.** Drop those two columns, retrain, and measure what
+    it costs in money and in F1. Is the difference larger than your range?
 
 ## What you will be asked
 
-Every group gets these questions on presentation day. Prepare the answers in
+Every team gets these questions on presentation day. Prepare the answers in
 the notebook, not on the morning.
 
 1. What does your baseline score, and how much did you beat it by, give or take?
@@ -320,9 +408,9 @@ the notebook, not on the morning.
 
 !!! tip "Before you train anything"
 
-    Each group writes down two numbers on paper: what you expect the baseline
+    Each team writes down two numbers on paper: what you expect the baseline
     to score, and what you expect your best model to score. Fold it up and give
     it to me.
 
-    Most groups overestimate the model and underestimate the baseline. Finding
+    Most teams overestimate the model and underestimate the baseline. Finding
     out which way you were wrong is half of what this project is for.

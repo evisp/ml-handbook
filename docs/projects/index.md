@@ -1,13 +1,10 @@
 # Projects
 
-Every few weeks the lectures stop and you build something. Projects are where
-the ideas stop being words on a page and start being decisions you have to
-defend.
+Don't learn tech. Build it.
 
-They work the same way each time. You get a spec, you work in a small group,
-you produce something that runs, and then you stand in front of the cohort and
-answer questions about it. The questions are published with the spec, so you
-know from day one what you will be asked.
+Every few weeks we make sure you ship something. You get a spec and a
+team, you build something that runs, and you defend it in front of the cohort.
+
 
 <div class="grid cards" markdown>
 
@@ -53,12 +50,12 @@ know from day one what you will be asked.
 
     ---
 
-    Build your first real models, then prove they do better than the simplest
-    guess you could have made without one.
+    Pick one of five scikit-learn datasets, build your first real models, then
+    prove they do better than the simplest guess you could have made without one.
 
     <span class="badge badge--time">Two weeks</span>
-    <span class="badge">Groups of 3 or 4</span>
-    <span class="badge">14 December</span>
+    <span class="badge">Teams of 2 or 3</span>
+    <span class="badge">2 December</span>
 
     [Open the brief](beat-the-baseline.md)
 

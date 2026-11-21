@@ -49,6 +49,19 @@ know from day one what you will be asked.
 
     [Open the brief](how-sure-are-you.md)
 
+-   :material-target: **Project 4: Beat the baseline**
+
+    ---
+
+    Build your first real models, then prove they do better than the simplest
+    guess you could have made without one.
+
+    <span class="badge badge--time">Two weeks</span>
+    <span class="badge">Groups of 3 or 4</span>
+    <span class="badge">14 December</span>
+
+    [Open the brief](beat-the-baseline.md)
+
 </div>
 
 More projects appear here as each block of modules finishes.
